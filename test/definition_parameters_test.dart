@@ -12,12 +12,12 @@ void main() {
 
   test("shoud get the first component", () {
     var object = definitionParameters.component1();
-    var first = definitionParameters.first();
+    var objectT = definitionParameters.getWhere<String>();
 
     expect(object, isNotNull);
     expect(object, isA<String>());
     expect(object, "Buda");
-    expect(object, first);
+    expect(object, objectT);
   });
 
   test("shoud get the size", () {
@@ -37,10 +37,10 @@ void main() {
   test("shoud return in a row", () {
     var objects = <Object>[];
 
-    objects.add(definitionParameters.get());
-    objects.add(definitionParameters.get());
-    objects.add(definitionParameters.get());
-    objects.add(definitionParameters.get());
+    objects.add(definitionParameters.get(0));
+    objects.add(definitionParameters.get(1));
+    objects.add(definitionParameters.get(2));
+    objects.add(definitionParameters.get(3));
 
     expect(objects, parameters);
   });

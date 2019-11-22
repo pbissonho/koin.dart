@@ -15,7 +15,7 @@
  * */
 
 /*
- * Qualifier
+ * Koin Logger
  *
  * @author - Arnaud GIULIANI
  * 
@@ -23,37 +23,44 @@
  * @author - Pedro Bissonho 
  */
 
-import 'package:equatable/equatable.dart';
+const koinTage = "[Koin]";
 
-/// Help qualify a component
-abstract class Qualifier {}
+enum Level { info, error, debug }
 
-/// Give a String qualifier
-Qualifier named(String name) => StringQualifier(name);
+abstract class Logger {
+  final Level level;
 
-/// Give a Type based qualifier
-Qualifier qualifier<T>(T type) => TypeQualifier(type);
+  const Logger([this.level = Level.info]);
 
-class StringQualifier extends Equatable implements Qualifier {
-  final String value;
-  StringQualifier(this.value);
+  void log(Level level, String msg);
 
-  String toString() {
-    return value;
+  void info(String msg) {
+    log(Level.info, msg);
   }
 
-  @override
-  List<Object> get props => [value];
+  void error(String msg) {
+    log(Level.error, msg);
+  }
+
+  void debug(String msg) {
+    log(Level.debug, msg);
+  }
+
+  bool isAt(Level level) => this.level == level;
 }
 
-class TypeQualifier<T> extends Equatable implements Qualifier {
-  final T type;
-  TypeQualifier(this.type);
-
-  String toString() {
-    return type.toString();
-  }
+class EmptyLogger extends Logger {
+  EmptyLogger(Level loglevel);
 
   @override
-  List<Object> get props => [type];
+  void log(Level level, String message) {}
+}
+
+class PrintLogger extends Logger {
+  PrintLogger(Level level) : super(level);
+
+  @override
+  void log(Level level, String msg) {
+    print("[$level] $koinTage $msg");
+  }
 }

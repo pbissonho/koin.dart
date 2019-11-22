@@ -9,9 +9,9 @@ enum Modules { app, auth }
 
 void main() {
   test("type qualifier with class", () {
-    Qualifier typedA = typed(Auth);
-    Qualifier typedEquas = typed(Auth);
-    Qualifier typedQ = typed(App);
+    Qualifier typedA = qualifier(Auth);
+    Qualifier typedEquas = qualifier(Auth);
+    Qualifier typedQ = qualifier(App);
 
     var notEquas = typedA == typedQ;
     expect(notEquas, false);
@@ -24,9 +24,9 @@ void main() {
   });
 
   test("type qualifier with enum", () {
-    Qualifier typedA = typed(Modules.app);
-    Qualifier typedEquas = typed(Modules.app);
-    Qualifier typedQ = typed(Modules.auth);
+    Qualifier typedA = qualifier(Modules.app);
+    Qualifier typedEquas = qualifier(Modules.app);
+    Qualifier typedQ = qualifier(Modules.auth);
 
     var notEquas = typedA == typedQ;
     expect(notEquas, false);
