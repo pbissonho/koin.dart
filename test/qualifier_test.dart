@@ -3,24 +3,52 @@ import 'package:test/test.dart';
 
 class App {}
 
+class Auth {}
+
 enum Modules { app, auth }
 
 void main() {
-  test("qualifier", () {
-    Qualifier qualifier = StringQualifier("app");
-    expect("app", qualifier.toString());
-  });
-
-  test("type qualifier", () {
-    Qualifier qualifier = TypeQualifier(App);
-    print(qualifier);
-    expect("App", qualifier.toString());
-  });
-
-  test("type qualifier", () {
-    Qualifier namedQ = named("App");
+  test("type qualifier with class", () {
+    Qualifier typedA = typed(Auth);
+    Qualifier typedEquas = typed(Auth);
     Qualifier typedQ = typed(App);
-    expect("App", namedQ.toString());
+
+    var notEquas = typedA == typedQ;
+    expect(notEquas, false);
+
+    var equas = typedA == typedEquas;
+    expect(equas, true);
+
+    expect("Auth", typedA.toString());
     expect("App", typedQ.toString());
+  });
+
+  test("type qualifier with enum", () {
+    Qualifier typedA = typed(Modules.app);
+    Qualifier typedEquas = typed(Modules.app);
+    Qualifier typedQ = typed(Modules.auth);
+
+    var notEquas = typedA == typedQ;
+    expect(notEquas, false);
+
+    var equas = typedA == typedEquas;
+    expect(equas, true);
+
+    expect("Modules.app", typedA.toString());
+    expect("Modules.auth", typedQ.toString());
+  });
+  test("string qualifier ", () {
+    Qualifier typedA = named("App");
+    Qualifier typedEquas = named("App");
+    Qualifier typedQ = named("Auth");
+
+    var notEquas = typedA == typedQ;
+    expect(notEquas, false);
+
+    var equas = typedA == typedEquas;
+    expect(equas, true);
+
+    expect("App", typedA.toString());
+    expect("Auth", typedQ.toString());
   });
 }

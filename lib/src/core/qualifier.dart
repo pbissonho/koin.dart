@@ -1,3 +1,5 @@
+import 'package:equatable/equatable.dart';
+
 /// Help qualify a component
 abstract class Qualifier {
   Qualifier(String s);
@@ -11,29 +13,26 @@ Qualifier named(String name) => StringQualifier(name);
 
 Qualifier typed<T>(T type) => TypeQualifier(type);
 
-class StringQualifier implements Qualifier {
+class StringQualifier extends Equatable implements Qualifier {
   final String value;
   StringQualifier(this.value);
 
   String toString() {
     return value;
   }
+
+  @override
+  List<Object> get props => [value];
 }
 
-class TypeQualifier<T> implements Qualifier {
+class TypeQualifier<T> extends Equatable implements Qualifier {
   final T type;
   TypeQualifier(this.type);
 
   String toString() {
     return type.toString();
   }
-}
 
-class EnumQualifier<T> implements Qualifier {
-  final T enumType;
-  EnumQualifier(this.enumType);
-
-  String toString() {
-    return enumType.toString();
-  }
+  @override
+  List<Object> get props => [type];
 }
