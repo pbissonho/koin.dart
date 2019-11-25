@@ -7,7 +7,7 @@ void main() {
   List<Object> parameters;
 
   setUp(() {
-    parameters = ["Buda", 22, "Juca", "5555"];
+    parameters = ["Buda", 22, "Juca", "5555", 600];
     definitionParameters = DefinitionParameters(parameters);
   });
 
@@ -24,7 +24,7 @@ void main() {
   test("shoud get the size", () {
     var size = definitionParameters.size();
 
-    expect(size, 4);
+    expect(size, 5);
   });
 
   test("verificar se está empty ou nao", () {
@@ -42,13 +42,14 @@ void main() {
     objects.add(definitionParameters.get(1));
     objects.add(definitionParameters.get(2));
     objects.add(definitionParameters.get(3));
-
+    objects.add(definitionParameters.get(4));
     var objectsX = <Object>[];
 
     objectsX.add(definitionParameters.component1());
     objectsX.add(definitionParameters.component2());
     objectsX.add(definitionParameters.component3());
     objectsX.add(definitionParameters.component4());
+    objectsX.add(definitionParameters.component5());
 
     expect(objects, parameters);
     expect(objectsX, parameters);
@@ -67,8 +68,7 @@ void main() {
   });
 
   test("create a definition with more 5 arguments", () {
-    expect(
-        () => DefinitionParameters.parametersOf(["1", "2", "3", "4", "5", "6"]),
+    expect(() => DefinitionParameters(["1", "2", "3", "4", "5", "6"]),
         throwsA((value) => value is IllegalStateException));
   });
 }

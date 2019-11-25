@@ -82,17 +82,6 @@ class DefinitionParameters {
   /// return [T]
   ///
   Object getWhere<T>() => _values.firstWhere((value) => value is T);
-
-  factory DefinitionParameters.parametersOf(List<Object> parameters) {
-    if (parameters.length <= maxParams) {
-      return DefinitionParameters(parameters);
-    } else {
-      String message =
-          "Can't build DefinitionParameters for more than 5 arguments";
-
-      throw IllegalStateException(message);
-    }
-  }
 }
 
 ///
@@ -102,7 +91,7 @@ class DefinitionParameters {
 /// return ParameterList
 ///
 DefinitionParameters parametersOf(List<Object> parameters) {
-  return DefinitionParameters.parametersOf(parameters);
+  return DefinitionParameters(parameters);
 }
 
 DefinitionParameters emptyParametersHolder() =>
