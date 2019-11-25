@@ -15,10 +15,12 @@
  */
 
 import 'package:koin/src/core/definition/bean_definition.dart';
+import 'package:koin/src/error/error.dart';
 import 'package:koin/src/error/exceptions.dart';
+import '../logger.dart';
 import 'definition_instance.dart';
 
-/**
+/*
  * Scope definition Instance holder
  * @author Arnaud Giuliani
  */
@@ -78,10 +80,9 @@ class ScopeDefinitionInstance<T> extends DefinitionInstance<T> {
       throw ("ScopeDefinitionInstance has no scope in context");
     }
 
-    /*
-    if (logger.isAt(Level.DEBUG)) {
-        logger.debug("releasing '$scope' ~ $beanDefinition ")
-    }*/
+    if (logger.isAt(Level.debug)) {
+      logger.debug("releasing '$scope' ~ $beanDefinition ");
+    }
 
     OnReleaseCallback<T> onRelease = beanDefinition.getOnRelease();
 
@@ -95,13 +96,5 @@ class ScopeDefinitionInstance<T> extends DefinitionInstance<T> {
     Function onClose = beanDefinition.getOnClose();
     onClose();
     _values.clear();
-  }
-}
-
-class Intrinsics {
-  static void checkParameterIsNotNull(dynamic value, String s) {
-    if (value == null) {
-      throw "";
-    }
   }
 }

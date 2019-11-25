@@ -15,7 +15,7 @@
  * */
 
 /*
- * Koin Logger
+ * Koin Loggers
  *
  * @author - Arnaud GIULIANI
  * 
@@ -27,10 +27,18 @@ const koinTage = "[Koin]";
 
 enum Level { info, error, debug }
 
+var logger = Logger.logger;
+
 abstract class Logger {
   final Level level;
 
   const Logger([this.level = Level.info]);
+
+  static Logger logger = PrintLogger(Level.debug);
+
+  static setLogger(Logger logger) {
+    Logger.logger = logger;
+  }
 
   void log(Level level, String msg);
 
@@ -50,14 +58,14 @@ abstract class Logger {
 }
 
 class EmptyLogger extends Logger {
-  EmptyLogger(Level loglevel);
+  const EmptyLogger(Level loglevel);
 
   @override
   void log(Level level, String message) {}
 }
 
 class PrintLogger extends Logger {
-  PrintLogger(Level level) : super(level);
+  const PrintLogger(Level level) : super(level);
 
   @override
   void log(Level level, String msg) {

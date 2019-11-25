@@ -33,7 +33,12 @@ class IllegalStateException extends KoinException {
 }
 
 class InstanceCreationException extends KoinException {
-  InstanceCreationException(String msg, Exception e) : super(msg);
+  Exception e;
+
+  InstanceCreationException(String msg, this.e) : super(msg);
+
+  @override
+  String get msg => "${super.msg}  ${e.toString()}";
 }
 
 class KoinAppAlreadyStartedException extends KoinException {

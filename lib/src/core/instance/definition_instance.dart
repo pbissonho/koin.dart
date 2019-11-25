@@ -17,9 +17,11 @@
 import 'package:koin/src/core/definition/bean_definition.dart';
 import 'package:koin/src/core/instance/scope_definition_instance.dart';
 import 'package:koin/src/core/instance/singleton_definition_instance.dart';
+import 'package:koin/src/error/error.dart';
 import 'package:koin/src/error/exceptions.dart';
 
 import '../definition_parameters.dart';
+import '../logger.dart';
 import '../qualifier.dart';
 import 'factory_definition_instance.dart';
 
@@ -76,21 +78,21 @@ abstract class DefinitionInstance<T> {
   /// @return T
   ///
   T create(InstanceContext context) {
-    //Logger.logger.info("| create instance for $beanDefinition");
+    if (logger.isAt(Level.debug)) {
+      logger.debug("| create instance for $beanDefinition");
+    }
 
     try {
       var parameters = context.getParameters;
-      var definition = beanDefinition.definition;
-      var result = definition(context.scope, parameters);
+      if (context.scope == null) {
+        error(
+            "Can't execute definition instance while this context is not registered against any Koin instance");
+      }
+      var result = beanDefinition.definition(context.scope, parameters);
       return result;
-
-      // Todo
-      // Verificar o por que do error.
-      // return error("Can't execute definition instance while this context is not registered against any Koin instance"), parameters);
-
     } catch (e) {
-      //  Logger.logger.error(
-      //      "Instance creation error : could not create instance for $beanDefinition: ${e.toString()}");
+      logger.error(
+          "Instance creation error : could not create instance for $beanDefinition: ${e.toString()}");
       throw InstanceCreationException(
           "Could not create instance for $beanDefinition", e);
     }
