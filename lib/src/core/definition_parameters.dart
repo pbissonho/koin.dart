@@ -102,7 +102,7 @@ class DefinitionParameters {
 /// return ParameterList
 ///
 DefinitionParameters parametersOf(List<Object> parameters) {
-  return DefinitionParameters(parameters);
+  return DefinitionParameters.parametersOf(parameters);
 }
 
 DefinitionParameters emptyParametersHolder() =>

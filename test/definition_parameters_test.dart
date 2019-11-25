@@ -1,4 +1,5 @@
 import 'package:koin/src/core/definition_parameters.dart';
+import 'package:koin/src/error/exceptions.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -34,7 +35,7 @@ void main() {
     expect(false, isEmpty);
   });
 
-  test("shoud return in a row", () {
+  test("shoud return each value", () {
     var objects = <Object>[];
 
     objects.add(definitionParameters.get(0));
@@ -42,6 +43,32 @@ void main() {
     objects.add(definitionParameters.get(2));
     objects.add(definitionParameters.get(3));
 
+    var objectsX = <Object>[];
+
+    objectsX.add(definitionParameters.component1());
+    objectsX.add(definitionParameters.component2());
+    objectsX.add(definitionParameters.component3());
+    objectsX.add(definitionParameters.component4());
+
     expect(objects, parameters);
+    expect(objectsX, parameters);
+  });
+
+  test("parametersOf", () {
+    var definitionParamateres = parametersOf(["Teste", "Test2"]);
+    expect(definitionParamateres, isA<DefinitionParameters>());
+    expect(definitionParamateres.size(), 2);
+  });
+
+  test("parametersOf", () {
+    var definitionParamateres = emptyParametersHolder();
+    expect(definitionParamateres, isA<DefinitionParameters>());
+    expect(definitionParamateres.size(), 0);
+  });
+
+  test("create a definition with more 5 arguments", () {
+    expect(
+        () => DefinitionParameters.parametersOf(["1", "2", "3", "4", "5", "6"]),
+        throwsA((value) => value is IllegalStateException));
   });
 }
