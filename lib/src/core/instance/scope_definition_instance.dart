@@ -15,7 +15,7 @@
  */
 
 import 'package:koin/src/core/definition/bean_definition.dart';
-
+import 'package:koin/src/error/exceptions.dart';
 import 'definition_instance.dart';
 
 /**
@@ -29,28 +29,30 @@ class ScopeDefinitionInstance<T> extends DefinitionInstance<T> {
   Map<String, T> _values = Map<String, T>();
 
   T get(InstanceContext context) {
-    // Todo
-    // Adicionar validations
-    // if (context.koin == null) {
-    //     error("ScopeDefinitionInstance has no registered Koin instance");
-    // }
+    if (context.koin == null) {
+      throw IllegalStateException(
+          "ScopeDefinitionInstance has no registered Koin instance");
+    }
 
-    // if (context.scope == context.koin.rootScope) {
-    //     throw ScopeNotCreatedException("No scope instance created to resolve $beanDefinition")
-    // }
+    if (context.scope == context.koin.rootScope) {
+      throw ScopeNotCreatedException(
+          "No scope instance created to resolve $beanDefinition");
+    }
 
-    // val scope = context.scope ?: error("ScopeDefinitionInstance has no scope in context");
-    // checkScopeResolution(beanDefinition, scope)
+    if (context.scope == null) {
+      throw ("ScopeDefinitionInstance has no scope in context");
+    }
 
-    // var internalId = scope.id;
-    String internalId = "000";
+    checkScopeResolution(beanDefinition, context.scope);
+
+    String internalId = context.scope.id;
 
     var current = _values[internalId];
     if (current == null) {
       current = create(context);
 
       if (current == null) {
-        //  error("Instance creation from $beanDefinition should not be null");
+        throw ("Instance creation from $beanDefinition should not be null.");
       }
 
       _values[internalId] = current;
@@ -60,7 +62,7 @@ class ScopeDefinitionInstance<T> extends DefinitionInstance<T> {
 
   @override
   bool isCreated(InstanceContext context) {
-    // Intrinsics.checkParameterIsNotNull(context, "context");
+    Intrinsics.checkParameterIsNotNull(context, "context");
     if (context.scope != null) {
       return _values[context.scope.id] != null;
     } else {
@@ -71,13 +73,17 @@ class ScopeDefinitionInstance<T> extends DefinitionInstance<T> {
   @override
   void release(InstanceContext context) {
     var scope = context.scope;
-    //error("ScopeDefinitionInstance has no scope in context")
-    //if (logger.isAt(Level.DEBUG)) {
-    //    logger.debug("releasing '$scope' ~ $beanDefinition ")
-    //}
 
-    OnReleaseCallback<T> onRelease =
-        beanDefinition.getOnRelease() as OnReleaseCallback<T>;
+    if (scope == null) {
+      throw ("ScopeDefinitionInstance has no scope in context");
+    }
+
+    /*
+    if (logger.isAt(Level.DEBUG)) {
+        logger.debug("releasing '$scope' ~ $beanDefinition ")
+    }*/
+
+    OnReleaseCallback<T> onRelease = beanDefinition.getOnRelease();
 
     T value = _values[scope.id];
     onRelease(value);
@@ -89,5 +95,13 @@ class ScopeDefinitionInstance<T> extends DefinitionInstance<T> {
     Function onClose = beanDefinition.getOnClose();
     onClose();
     _values.clear();
+  }
+}
+
+class Intrinsics {
+  static void checkParameterIsNotNull(dynamic value, String s) {
+    if (value == null) {
+      throw "";
+    }
   }
 }

@@ -50,7 +50,9 @@ class Scope {
   Object get id => null;
 }
 
-class Koin {}
+class Koin {
+  get rootScope => null;
+}
 
 ///
 /// Koin Instance Holder

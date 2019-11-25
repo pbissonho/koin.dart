@@ -55,3 +55,7 @@ class NoParameterFoundException extends KoinException {
 class NoBeanDefFoundException extends KoinException {
   NoBeanDefFoundException(String msg) : super(msg);
 }
+
+class ScopeNotCreatedException extends KoinException {
+  ScopeNotCreatedException(String msg) : super(msg);
+}
