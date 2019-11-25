@@ -2,6 +2,7 @@ import 'package:koin/src/core/definition/bean_definition.dart';
 import 'package:koin/src/core/definition_parameters.dart';
 import 'package:koin/src/core/instance/definition_instance.dart';
 import 'package:koin/src/core/instance/factory_definition_instance.dart';
+import 'package:koin/src/core/instance/scope_definition_instance.dart';
 import 'package:koin/src/core/instance/singleton_definition_instance.dart';
 import 'package:koin/src/core/qualifier.dart';
 import 'package:test/test.dart';
@@ -72,13 +73,16 @@ void main() {
   });
 
   test("get ScopeDefinitionInstance ", () {
-    BeanDefinition<Service> beanDefinitionSingle = BeanDefinition.createSingle(
+    BeanDefinition<Service> beanDefinitionScope = BeanDefinition.createScoped(
         qualifierDefinition, qualifierScope, (s, p) => Service());
-    var factoryInstance = SingleDefinitionInstance(beanDefinitionSingle);
+
+    var factoryInstance = ScopeDefinitionInstance(beanDefinitionScope);
 
     expect(false, factoryInstance.isCreated(InstanceContext()));
-    var result1 = factoryInstance.get(InstanceContext());
-    var result2 = factoryInstance.get(InstanceContext());
+    var result1 = factoryInstance.get(InstanceContext(
+        koin: Koin(), scope: Scope(), parameters: parametersOf([])));
+    var result2 = factoryInstance.get(InstanceContext(
+        koin: Koin(), scope: Scope(), parameters: parametersOf([])));
 
     expect(result1, isNotNull);
     expect(result1, isA<Service>());

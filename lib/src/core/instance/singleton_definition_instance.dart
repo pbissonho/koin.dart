@@ -15,6 +15,7 @@
  */
 
 import 'package:koin/src/core/definition/bean_definition.dart';
+import 'package:koin/src/error/error.dart';
 import 'definition_instance.dart';
 
 /**
@@ -40,11 +41,11 @@ class SingleDefinitionInstance<T> extends DefinitionInstance<T> {
       _value = create(context);
     }
 
-    return _value;
+    if (_value == null) {
+      error("Single instance created couldn't return value");
+    }
 
-    // Todo
-    // Error handler
-    //   error("Single instance created couldn't return value")
+    return _value;
   }
 
   @override
