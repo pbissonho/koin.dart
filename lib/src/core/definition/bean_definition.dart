@@ -66,10 +66,10 @@ class BeanDefinition<T> with EquatableMixin {
   OnReleaseCallback<T> _onRelease;
   OnCloseCallback<T> _onClose;
 
-  OnReleaseCallback<T> get onRelease => this._onRelease;
-  OnCloseCallback<T> get onClose => this._onClose;
-  set onRelease(OnReleaseCallback<T> onRelease) => _onRelease = onRelease;
-  set onClose(OnCloseCallback<T> onClose) => _onClose = onClose;
+  OnReleaseCallback<T> get getOnRelease => this._onRelease;
+  OnCloseCallback<T> get getOnClose => this._onClose;
+  set setOnRelease(OnReleaseCallback<T> onRelease) => _onRelease = onRelease;
+  set setOnClose(OnCloseCallback<T> onClose) => _onClose = onClose;
 
   @override
   List<Object> get props => [qualifier, primaryType];
@@ -141,13 +141,38 @@ class BeanDefinition<T> with EquatableMixin {
     this._instance = null;
   }
 
+  //  BeanDefinition specific functions
+  ///
+  /// Add a compatible type to match for definition
+  /// @param clazz
+  ///
   BeanDefinition<T> bind(Type type) {
     this.secondaryTypes.add(type);
     return this;
   }
 
+  ///
+  /// Add compatible types to match for definition
+  /// @param classes
+  ///
   BeanDefinition<T> binds(List<Type> types) {
     this.secondaryTypes.addAll(types);
+    return this;
+  }
+
+  ///
+  /// Callback when releasing instance
+  ///
+  BeanDefinition<T> onRelease(OnReleaseCallback<T> onReleaseCallback) {
+    _onRelease = onReleaseCallback;
+    return this;
+  }
+
+  ///
+  /// Callback when closing instance from registry (called just before final close)
+  ///
+  BeanDefinition<T> onClose(OnCloseCallback onCloseCallback) {
+    onCloseCallback = onCloseCallback;
     return this;
   }
 }

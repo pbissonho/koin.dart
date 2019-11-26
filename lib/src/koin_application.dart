@@ -30,7 +30,7 @@ import 'koin_dart.dart';
  */
 class KoinApplication {
   var koin = Koin();
-  static Logger logger;
+  static Logger logger = PrintLogger(Level.debug);
 
   void loadDefaults() {
     koin.scopeRegistry.loadDefaultScopes(koin);
