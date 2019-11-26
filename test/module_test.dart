@@ -40,5 +40,11 @@ void main() {
       app.printLogger();
       app.modules([appModule, authModule]);
     });
+
+    var service = koinApp.koin.get<IService>(null, null);
+    var serviceBind = koinApp.koin.get<ServiceImpl>(null, null);
+
+    expect(service, isNotNull);
+    expect(serviceBind, isNotNull);
   });
 }

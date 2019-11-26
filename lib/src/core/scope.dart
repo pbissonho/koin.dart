@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import 'package:koin/src/core/measure.dart';
+
 import '../koin_application.dart';
 import '../koin_dart.dart';
 import 'definition/bean_definition.dart';
@@ -69,14 +71,14 @@ class Scope {
       : beanRegistry = BeanRegistry(),
         callbacks = List<ScopeCallback>();
 
-  /**
-     * Lazy inject a Koin instance
-     * @param qualifier
-     * @param scope
-     * @param parameters
-     *
-     * @return Lazy instance of type T
-     */
+  ///
+  ///Lazy inject a Koin instance
+  /// @param qualifier
+  /// @param scope
+  /// @param parameters
+  ///
+  /// @return Lazy instance of type T
+  ///
   T inject<T>([
     DefinitionParameters parameters,
     Qualifier qualifier,
@@ -87,12 +89,12 @@ class Scope {
     return get<T>(qualifier, parameters);
   }
 
-  /**
-     * Get a Koin instance
-     * @param qualifier
-     * @param scope
-     * @param parameters
-     */
+  ///
+  /// Get a Koin instance
+  /// @param qualifier
+  /// @param scope
+  /// @param parameters
+  ///
   T get<T>(Qualifier qualifier, DefinitionParameters parameters) {
     Type type = T;
     return getWithType(type, qualifier, parameters);
@@ -141,20 +143,17 @@ class Scope {
 
   T getWithType<T>(
       Type type, Qualifier qualifier, DefinitionParameters parameters) {
-    // Todo
-    // Calcular o tempo
-
-    //return if (KoinApplication.logger.isAt(Level.DEBUG)) {
-    //  KoinApplication.logger.debug("+- get '${clazz.getFullName()}'")
-    //  val (instance: T, duration: Double) = measureDuration {
-    //     resolveInstance<T>(qualifier, clazz, parameters)
-    // }
-    T instance = resolveInstance<T>(type, qualifier, parameters);
-    // KoinApplication.logger.debug("+- got '${clazz.getFullName()}' in $duration ms")
-    return instance;
-    //} else {
-    //resolveInstance(qualifier, clazz, parameters);
-    //}
+    if (KoinApplication.logger.isAt(Level.debug)) {
+      KoinApplication.logger.debug("+- get '${type.toString()}'");
+      var result = Measure.measureDuration(() {
+        resolveInstance<T>(type, qualifier, parameters);
+      });
+      KoinApplication.logger
+          .debug("+- got '${type.toString()}' in ${result.duration} ms");
+      return result.result;
+    } else {
+      return resolveInstance<T>(type, qualifier, parameters);
+    }
   }
 
   void declareDefinitionsFromScopeSet() {
@@ -164,9 +163,9 @@ class Scope {
     });
   }
 
-  /**
-     * Close all instances from this scope
-     */
+  ///
+  /// Close all instances from this scope
+  ///
   void close() {
     if (KoinApplication.logger.isAt(Level.debug)) {
       KoinApplication.logger.info("closing scope:'$id'");
