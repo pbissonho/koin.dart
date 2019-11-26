@@ -27,10 +27,10 @@ class Measure {
   ///
   /// Measure code execution
   ///
-  static double measureDurationOnly(function()) {
+  static double measureDurationOnly(void function()) {
     var start = Stopwatch()..start();
     function();
-    return start.elapsedMilliseconds.toDouble();
+    return start.elapsed.inMilliseconds.toDouble();
   }
 
   ///
@@ -39,7 +39,7 @@ class Measure {
   static Pair<T> measureDuration<T>(T function()) {
     var start = Stopwatch()..start();
     T result = function();
-    var duration = start.elapsedMilliseconds.toDouble();
+    var duration = start.elapsed.inMilliseconds.toDouble();
     return Pair<T>(duration, result);
   }
 }
@@ -49,4 +49,7 @@ class Pair<T> {
   final T result;
 
   Pair(this.duration, this.result);
+
+  @override
+  String toString() => "Duration: ${duration}ms - Result: ${result}";
 }
