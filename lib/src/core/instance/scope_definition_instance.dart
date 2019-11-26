@@ -93,7 +93,9 @@ class ScopeDefinitionInstance<T> extends DefinitionInstance<T> {
   @override
   void close() {
     Function onClose = beanDefinition.getOnClose;
-    onClose();
-    _values.clear();
+    if (onClose != null) {
+      onClose();
+      _values.clear();
+    }
   }
 }

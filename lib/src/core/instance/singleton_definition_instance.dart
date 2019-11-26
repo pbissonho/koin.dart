@@ -31,8 +31,10 @@ class SingleDefinitionInstance<T> extends DefinitionInstance<T> {
   @override
   void close() {
     var onClose = beanDefinition.getOnClose;
-    onClose(_value);
-    _value = null;
+    if (onClose != null) {
+      onClose(_value);
+      _value = null;
+    }
   }
 
   @override

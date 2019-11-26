@@ -110,8 +110,5 @@ class MyWidget with KoinComponent {
     bloc = currentScope.inject<MyBloc>();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  void dispose() {}
 }

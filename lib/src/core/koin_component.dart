@@ -69,8 +69,10 @@ mixin KoinComponent {
     scope = getKoin().getOrCreateScope(id, named(name));
   }
 
-  void dispose() {
-    getKoin().deleteScope(this.hashCode.toString());
+  void close() {
+    if (scope != null) {
+      getKoin().deleteScope(this.hashCode.toString());
+    }
   }
 }
 
