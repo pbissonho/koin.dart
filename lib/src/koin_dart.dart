@@ -147,7 +147,7 @@ class Koin {
      *
      * @return instance of type S
      */
-  void bind<S, P>(DefinitionParameters parameters) {
+  S bind<S, P>(DefinitionParameters parameters) {
     //
     //Todo
     //rootScope.bind<S, P>(parameters);

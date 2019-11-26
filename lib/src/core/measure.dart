@@ -36,11 +36,11 @@ class Measure {
   ///
   /// Measure code execution and get result
   ///
-  static Pair<T> measureDuration<T>(T function()) {
+  static Pair measureDuration(Object function()) {
     var start = Stopwatch()..start();
-    T result = function();
+    Object result = function();
     var duration = start.elapsed.inMilliseconds.toDouble();
-    return Pair<T>(duration, result);
+    return Pair(duration, result);
   }
 }
 

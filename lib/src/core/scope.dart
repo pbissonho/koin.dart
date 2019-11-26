@@ -146,7 +146,7 @@ class Scope {
     if (KoinApplication.logger.isAt(Level.debug)) {
       KoinApplication.logger.debug("+- get '${type.toString()}'");
       var result = Measure.measureDuration(() {
-        resolveInstance<T>(type, qualifier, parameters);
+        return resolveInstance<T>(type, qualifier, parameters);
       });
       KoinApplication.logger
           .debug("+- got '${type.toString()}' in ${result.duration} ms");

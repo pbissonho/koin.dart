@@ -101,3 +101,22 @@ class Module {
     return beanDefinition;
   }
 }
+
+/**
+ * Define a Module
+ * @param createdAtStart
+ * @param override
+ *
+ * @author Arnaud Giuliani
+ */
+/*
+Module module(
+    {void moduleDeclaration(Module module),
+    bool createdAtStart = false,
+    bool override = false}) {
+  var module = Module(createdAtStart, override);
+  moduleDeclaration(module);
+  return module;
+}*/
+
+Module get module => Module(false, false);

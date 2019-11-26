@@ -29,7 +29,12 @@ import 'package:equatable/equatable.dart';
 abstract class Qualifier {}
 
 /// Give a String qualifier
-Qualifier named(String name) => StringQualifier(name);
+Qualifier named<T>([String name]) {
+  if (name == null) {
+    return StringQualifier(T.toString());
+  }
+  return StringQualifier(name);
+}
 
 /// Give a Type based qualifier
 Qualifier qualifier<T>(T type) => TypeQualifier(type);

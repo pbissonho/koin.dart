@@ -134,6 +134,7 @@ class ScopeRegistry {
       throw ScopeNotCreatedException(
           "ScopeInstance with id '$id' not found. Create a scope instance with id '$id'");
     }
+    return instance;
   }
 
   void _saveInstance(Scope instance) {
