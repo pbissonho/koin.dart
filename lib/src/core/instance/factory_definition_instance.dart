@@ -28,8 +28,8 @@ class FactoryDefinitionInstance<T> extends DefinitionInstance<T> {
 
   @override
   void close() {
-    Function onClose = beanDefinition.getOnClose();
-    if (onClose != null) {
+    Function onClose = beanDefinition.onClose;
+    if (beanDefinition.onClose != null) {
       onClose();
     }
   }

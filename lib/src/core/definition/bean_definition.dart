@@ -56,27 +56,24 @@ class BeanDefinition<T> with EquatableMixin {
   Properties _properties = Properties();
   final Kind kind;
 
+  Options get options => _options;
+  Properties get properties => _properties;
+  DefinitionInstance<T> get intance => this._instance;
+
   /// lifecycle
   OnReleaseCallback<T> _onRelease;
   OnCloseCallback<T> _onClose;
+
+  OnReleaseCallback<T> get onRelease => this._onRelease;
+  OnCloseCallback<T> get onClose => this._onClose;
+  set onRelease(OnReleaseCallback<T> onRelease) => _onRelease = onRelease;
+  set onClose(OnCloseCallback<T> onClose) => _onClose = onClose;
 
   @override
   List<Object> get props => [qualifier, primaryType];
 
   BeanDefinition(this.qualifier, this.scopeName, this.kind, this.definition)
       : primaryType = T;
-
-  BeanDefinition.completed(this.qualifier, this.scopeName, this.primaryType,
-      {this.definition, this.kind}) {
-    Intrinsics.checkParameterIsNotNull(primaryType, "primaryType");
-    this.secondaryTypes = List<Type>();
-    this._options = Options(isCreatedAtStart: false, override: false);
-    this._properties = Properties();
-  }
-
-  DefinitionInstance<T> getInstance() {
-    return this._instance;
-  }
 
   void setInstance(DefinitionInstance<T> instance) {
     this._instance = instance;
@@ -142,14 +139,6 @@ class BeanDefinition<T> with EquatableMixin {
     this._instance = null;
   }
 
-  OnReleaseCallback<T> getOnRelease() {
-    return this._onRelease;
-  }
-
-  OnCloseCallback<T> getOnClose() {
-    return this._onClose;
-  }
-
   BeanDefinition<T> bind(Type type) {
     this.secondaryTypes.add(type);
     return this;
@@ -157,16 +146,6 @@ class BeanDefinition<T> with EquatableMixin {
 
   BeanDefinition<T> binds(List<Type> types) {
     this.secondaryTypes.addAll(types);
-    return this;
-  }
-
-  BeanDefinition<T> onRelease(OnReleaseCallback<T> onRelease) {
-    _onRelease = onRelease;
-    return this;
-  }
-
-  BeanDefinition<T> onClose(OnCloseCallback<T> onClose) {
-    _onClose = onClose;
     return this;
   }
 }

@@ -84,8 +84,7 @@ class ScopeDefinitionInstance<T> extends DefinitionInstance<T> {
       logger.debug("releasing '$scope' ~ $beanDefinition ");
     }
 
-    OnReleaseCallback<T> onRelease = beanDefinition.getOnRelease();
-
+    OnReleaseCallback<T> onRelease = beanDefinition.onRelease;
     T value = _values[scope.id];
     onRelease(value);
     _values.remove(scope.id);
@@ -93,7 +92,7 @@ class ScopeDefinitionInstance<T> extends DefinitionInstance<T> {
 
   @override
   void close() {
-    Function onClose = beanDefinition.getOnClose();
+    Function onClose = beanDefinition.onClose;
     onClose();
     _values.clear();
   }

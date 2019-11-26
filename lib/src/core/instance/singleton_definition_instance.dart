@@ -30,7 +30,7 @@ class SingleDefinitionInstance<T> extends DefinitionInstance<T> {
 
   @override
   void close() {
-    var onClose = beanDefinition.getOnClose();
+    var onClose = beanDefinition.onClose;
     onClose(_value);
     _value = null;
   }
