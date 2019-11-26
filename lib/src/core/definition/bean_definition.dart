@@ -19,6 +19,8 @@ import 'package:equatable/equatable.dart';
 import 'package:koin/src/core/definition/properties.dart';
 import 'package:koin/src/core/definition_parameters.dart';
 import 'package:koin/src/core/instance/definition_instance.dart';
+import 'package:koin/src/error/error.dart';
+import 'package:koin/src/error/exceptions.dart';
 
 import '../qualifier.dart';
 import 'options.dart';
@@ -42,27 +44,21 @@ enum Kind {
  * @author - Pedro Bissonho 
  */
 class BeanDefinition<T> with EquatableMixin {
-  DefinitionInstance<T> _instance;
-
-  final Definition<T> definition;
-
-  Options _options;
-
-  Properties _properties;
-
-  final Kind kind;
-
-  OnReleaseCallback<T> _onRelease;
-
-  OnCloseCallback<T> _onClose;
-
   final Qualifier qualifier;
-
   final Qualifier scopeName;
-
   final Type primaryType;
 
-  var secondaryTypes = <Type>[];
+  /// Main data
+  List<Type> secondaryTypes = <Type>[];
+  DefinitionInstance<T> _instance;
+  final Definition<T> definition;
+  Options _options = Options();
+  Properties _properties = Properties();
+  final Kind kind;
+
+  /// lifecycle
+  OnReleaseCallback<T> _onRelease;
+  OnCloseCallback<T> _onClose;
 
   @override
   List<Object> get props => [qualifier, primaryType];
@@ -72,10 +68,18 @@ class BeanDefinition<T> with EquatableMixin {
 
   BeanDefinition.completed(this.qualifier, this.scopeName, this.primaryType,
       {this.definition, this.kind}) {
-    // Intrinsics.checkParameterIsNotNull(primaryType, "primaryType");
+    Intrinsics.checkParameterIsNotNull(primaryType, "primaryType");
     this.secondaryTypes = List<Type>();
     this._options = Options(isCreatedAtStart: false, override: false);
     this._properties = Properties();
+  }
+
+  DefinitionInstance<T> getInstance() {
+    return this._instance;
+  }
+
+  void setInstance(DefinitionInstance<T> instance) {
+    this._instance = instance;
   }
 
   factory BeanDefinition.createSingle(
@@ -92,51 +96,14 @@ class BeanDefinition<T> with EquatableMixin {
     return BeanDefinition<T>(qualifier, scopeName, Kind.Scoped, definition);
   }
 
-  List<Type> getSecondaryTypes() {
-    return this.secondaryTypes;
-  }
-
-  void setSecondaryTypes(List<Type> secondarysTypes) {
-    // Intrinsics.checkParameterIsNotNull(var1, "<set-?>");
-    this.secondaryTypes = secondarysTypes;
-  }
-
-  DefinitionInstance<T> getInstance() {
-    return this._instance;
-  }
-
-  void setInstance(DefinitionInstance<T> instance) {
-    this._instance = instance;
-  }
-
-  OnReleaseCallback<T> getOnRelease() {
-    return this._onRelease;
-  }
-
-  void setOnRelease(OnReleaseCallback<T> onRelease) {
-    this._onRelease = onRelease;
-  }
-
-  OnCloseCallback<T> getOnClose() {
-    return this._onClose;
-  }
-
-  void setOnClose(OnCloseCallback<T> onclose) {
-    this._onClose = onclose;
-  }
-
   bool hasScopeSet() {
     return this.scopeName != null;
   }
 
-  /**
-     * Create the associated Instance Holder
-     */
+  ///
+  /// Create the associated Instance Holder
+  ///
   void createInstanceHolder() {
-    if (kind == null) {
-      // Intrinsics.throwUninitializedPropertyAccessException("kind");
-    }
-
     switch (kind) {
       case Kind.Single:
         _instance = DefinitionInstance.single(this);
@@ -150,23 +117,21 @@ class BeanDefinition<T> with EquatableMixin {
     }
   }
 
-  /**
-     * Resolve instance
-     */
+  ///
+  /// Resolve instance
+  ///
   T resolveInstance(InstanceContext context) {
-    //Intrinsics.checkParameterIsNotNull(context, "context");
+    Intrinsics.checkParameterIsNotNull(context, "context");
 
     if (_instance != null) {
       T value = _instance.get(context);
       if (value != null) {
         return value;
       }
+    } else {
+      throw IllegalStateException(
+          "Definition without any InstanceContext -  $this");
     }
-
-    /*
-    String message = "Definition without any InstanceContext -  $this";
-    throw IllegalStateException(message);
-    */
   }
 
   void close() {
@@ -175,6 +140,14 @@ class BeanDefinition<T> with EquatableMixin {
     }
 
     this._instance = null;
+  }
+
+  OnReleaseCallback<T> getOnRelease() {
+    return this._onRelease;
+  }
+
+  OnCloseCallback<T> getOnClose() {
+    return this._onClose;
   }
 
   BeanDefinition<T> bind(Type type) {
