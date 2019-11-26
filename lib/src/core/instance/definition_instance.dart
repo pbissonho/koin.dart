@@ -20,9 +20,11 @@ import 'package:koin/src/core/instance/singleton_definition_instance.dart';
 import 'package:koin/src/error/error.dart';
 import 'package:koin/src/error/exceptions.dart';
 
+import '../../koin_dart.dart';
 import '../definition_parameters.dart';
 import '../logger.dart';
 import '../qualifier.dart';
+import '../scope.dart';
 import 'factory_definition_instance.dart';
 
 ///
@@ -44,16 +46,6 @@ class InstanceContext {
   DefinitionParameters get getParameters => _parameters;
   Scope get getScope => scope;
   Koin get getKoin => koin;
-}
-
-class Scope {
-  get scopeDefinition => null;
-
-  Object get id => null;
-}
-
-class Koin {
-  get rootScope => null;
 }
 
 ///

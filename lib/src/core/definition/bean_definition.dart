@@ -23,6 +23,7 @@ import 'package:koin/src/error/error.dart';
 import 'package:koin/src/error/exceptions.dart';
 
 import '../qualifier.dart';
+import '../scope.dart';
 import 'options.dart';
 
 typedef T OnReleaseCallback<T>(T value);
@@ -57,6 +58,7 @@ class BeanDefinition<T> with EquatableMixin {
   final Kind kind;
 
   Options get options => _options;
+  set options(Options options) => _options = options;
   Properties get properties => _properties;
   DefinitionInstance<T> get intance => this._instance;
 

@@ -47,17 +47,17 @@ void main() {
         qualifierDefinition, qualifierScope, (s, p) => Service());
 
     beanDefinitionSingle.createInstanceHolder();
-    var single = beanDefinitionSingle.getInstance();
+    var single = beanDefinitionSingle.intance;
     expect(single, isNotNull);
     expect(single, isA<SingleDefinitionInstance>());
 
     beanDefinitionFactory.createInstanceHolder();
-    var factory = beanDefinitionFactory.getInstance();
+    var factory = beanDefinitionFactory.intance;
     expect(factory, isNotNull);
     expect(factory, isA<FactoryDefinitionInstance>());
 
     beanDefinitionScoped.createInstanceHolder();
-    var scope = beanDefinitionScoped.getInstance();
+    var scope = beanDefinitionScoped.intance;
     expect(scope, isNotNull);
     expect(scope, isA<ScopeDefinitionInstance>());
   });

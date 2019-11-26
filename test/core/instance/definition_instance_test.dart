@@ -5,6 +5,8 @@ import 'package:koin/src/core/instance/factory_definition_instance.dart';
 import 'package:koin/src/core/instance/scope_definition_instance.dart';
 import 'package:koin/src/core/instance/singleton_definition_instance.dart';
 import 'package:koin/src/core/qualifier.dart';
+import 'package:koin/src/core/scope.dart';
+import 'package:koin/src/koin_dart.dart';
 import 'package:test/test.dart';
 
 class Service {}

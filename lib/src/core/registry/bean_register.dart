@@ -19,6 +19,7 @@ import 'package:koin/src/error/exceptions.dart';
 import 'package:kt_dart/collection.dart';
 
 import '../logger.dart';
+import '../module.dart';
 import '../qualifier.dart';
 
 /*
@@ -305,8 +306,4 @@ class BeanRegistry {
         it.primaryType == type ||
         it.secondaryTypes.contains(type) && !it.hasScopeSet());
   }
-}
-
-class Module {
-  get definitions => null;
 }

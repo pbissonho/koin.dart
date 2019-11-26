@@ -64,3 +64,11 @@ class NoBeanDefFoundException extends KoinException {
 class ScopeNotCreatedException extends KoinException {
   ScopeNotCreatedException(String msg) : super(msg);
 }
+
+class ScopeAlreadyCreatedException extends KoinException {
+  ScopeAlreadyCreatedException(String msg) : super(msg);
+}
+
+class NoScopeDefinitionFoundException extends KoinException {
+  NoScopeDefinitionFoundException(String msg) : super(msg);
+}
