@@ -15,6 +15,7 @@
  */
 
 import 'package:koin/src/core/measure.dart';
+import 'package:koin/src/error/exceptions.dart';
 
 import '../koin_application.dart';
 import '../koin_dart.dart';
@@ -95,7 +96,7 @@ class Scope {
   /// @param scope
   /// @param parameters
   ///
-  T get<T>(Qualifier qualifier, DefinitionParameters parameters) {
+  T get<T>([Qualifier qualifier, DefinitionParameters parameters]) {
     Type type = T;
     return getWithType(type, qualifier, parameters);
   }
@@ -125,6 +126,7 @@ class Scope {
   T resolveInstance<T>(
       Type type, Qualifier qualifier, DefinitionParameters parameters) {
     var definition = _findDefinition(type, qualifier);
+
     return definition.resolveInstance(
         InstanceContext(koin: koin, scope: this, parameters: parameters));
   }
@@ -132,13 +134,14 @@ class Scope {
   BeanDefinition _findDefinition(Type type, Qualifier qualifier) {
     var definition = beanRegistry.findDefinition(qualifier, type);
 
-    if (definition != null) {
-      return definition;
-    } else {
-      return koin.rootScope._findDefinition(type, qualifier);
+    if (definition != null) return definition;
+
+    if (isRoot) {
+      throw NoBeanDefFoundException(
+          "No definition for '${type.toString()}' has been found. Check your module definitions.");
     }
 
-    //throw NoBeanDefFoundException("No definition for '${clazz.getFullName()}' has been found. Check your module definitions.")
+    return koin.rootScope._findDefinition(type, qualifier);
   }
 
   T getWithType<T>(

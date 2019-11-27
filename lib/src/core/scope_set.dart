@@ -25,12 +25,16 @@ class ScopeSet {
   final Qualifier qualifier;
   var definitions = List<BeanDefinition>();
 
-  ScopeSet(this.qualifier);
+  ScopeSet([this.qualifier]);
+
+  ScopeSet call() {
+    return this;
+  }
 
   BeanDefinition<T> scoped<T>(
       [Definition<T> definition, Qualifier qualifier, bool override]) {
     var beanDefinition =
-        BeanDefinition.createScoped(qualifier, this.qualifier, definition);
+        BeanDefinition<T>.createScoped(qualifier, this.qualifier, definition);
     declareDefinition(
         beanDefinition, Options(isCreatedAtStart: false, override: override));
     if (!definitions.contains(beanDefinition)) {
@@ -52,7 +56,7 @@ class ScopeSet {
     bool override,
   ]) {
     var beanDefinition =
-        BeanDefinition.createFactory(qualifier, this.qualifier, definition);
+        BeanDefinition<T>.createFactory(qualifier, this.qualifier, definition);
     declareDefinition(
         beanDefinition, Options(isCreatedAtStart: false, override: override));
     if (!definitions.contains(beanDefinition)) {

@@ -127,10 +127,9 @@ class BeanDefinition<T> with EquatableMixin {
       if (value != null) {
         return value;
       }
-    } else {
-      throw IllegalStateException(
-          "Definition without any InstanceContext -  $this");
     }
+    throw IllegalStateException(
+        "Definition without any InstanceContext -  $this");
   }
 
   void close() {

@@ -30,7 +30,9 @@ class Measure {
   static double measureDurationOnly(void function()) {
     var start = Stopwatch()..start();
     function();
-    return start.elapsed.inMilliseconds.toDouble();
+    var resultInt = start.elapsed.inMilliseconds;
+    var result = start.elapsed.inMilliseconds.toDouble();
+    return result;
   }
 
   ///
@@ -41,6 +43,17 @@ class Measure {
     Object result = function();
     var duration = start.elapsed.inMilliseconds.toDouble();
     return Pair(duration, result);
+  }
+
+  ///
+  /// Measure code execution and get result
+  ///
+
+  static double measureMicroseconds(void function()) {
+    var start = Stopwatch()..start();
+    function();
+    var result = start.elapsedMicroseconds.toDouble();
+    return result;
   }
 }
 

@@ -47,7 +47,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> with KoinComponent {
+class _MyHomePageState extends State<MyHomePage> with InjectComponent {
   CounterController counterController;
 
   @override

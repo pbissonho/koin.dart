@@ -91,7 +91,11 @@ class DefinitionParameters {
 /// return ParameterList
 ///
 DefinitionParameters parametersOf(List<Object> parameters) {
-  return DefinitionParameters(parameters);
+  if (parameters != null) {
+    return DefinitionParameters(parameters);
+  }
+
+  return emptyParametersHolder();
 }
 
 DefinitionParameters emptyParametersHolder() =>

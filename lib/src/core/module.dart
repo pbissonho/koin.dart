@@ -59,11 +59,11 @@ class Module {
   /// @param definition - definition function
   ///
   BeanDefinition<T> single<T>(
-    Definition<T> definition, [
+    Definition<T> definition, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
-  ]) {
+  }) {
     BeanDefinition<T> beanDefinition =
         BeanDefinition<T>.createSingle(qualifier, null, definition);
     declareDefinition(beanDefinition,
@@ -76,7 +76,14 @@ class Module {
   /// Declare a group a scoped definition with a given scope qualifier
   /// @param scopeName
   ///
-  ScopeSet scope(Qualifier scopeName) {
+  ScopeSet scope(Qualifier scopeName, scopeDeclaration(ScopeSet scope)) {
+    var scopeX = ScopeSet(scopeName);
+    scopeDeclaration(scopeX);
+    declareScope(scopeX);
+    return scopeX;
+  }
+
+  ScopeSet scopeOld(Qualifier scopeName) {
     var scopeX = ScopeSet(scopeName);
     declareScope(scopeX);
     return scopeX;

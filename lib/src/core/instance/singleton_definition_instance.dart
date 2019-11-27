@@ -38,10 +38,12 @@ class SingleDefinitionInstance<T> extends DefinitionInstance<T> {
   }
 
   @override
-  get(InstanceContext context) {
-    if (_value == null) {
-      _value = create(context);
+  T get(InstanceContext context) {
+    if (_value != null) {
+      return _value;
     }
+
+    _value = create(context);
 
     if (_value == null) {
       error("Single instance created couldn't return value");

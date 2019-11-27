@@ -16,7 +16,6 @@
 
 import 'package:koin/src/core/global_context.dart';
 import 'package:koin/src/core/qualifier.dart';
-import 'package:koin/src/core/scope.dart';
 import '../koin_dart.dart';
 import 'definition_parameters.dart';
 
@@ -31,14 +30,17 @@ abstract class KoinComponent {
   
 }*/
 
-mixin KoinComponent {
-  Scope scope;
+abstract class KoinComponent {
+  ///
+  /// Get the associated Koin instance
+  ///
+  Koin getKoin() => GlobalContext.instance.get().koin;
+}
 
-  ///
-  /// Get instance instance from Koin
-  /// @param qualifier
-  /// @param parameters
-  ///
+mixin InjectComponent implements KoinComponent {
+  @override
+  Koin getKoin() => GlobalContext.instance.get().koin;
+
   T get<T>(Qualifier qualifier, DefinitionParameters parameters) =>
       getKoin().get(qualifier, parameters);
 
@@ -47,7 +49,13 @@ mixin KoinComponent {
   /// @param qualifier
   /// @param parameters
   ///
-  T inject<T>() => getKoin().inject(null, null);
+  T inject<T>([Qualifier qualifier, List<Object> parameters]) {
+    if (parameters != null) {
+      return getKoin().get(qualifier, parametersOf(parameters));
+    } else {
+      return getKoin().get(qualifier, null);
+    }
+  }
 
   ///
   /// Get instance instance from Koin by Primary Type P, as secondary type S
@@ -55,25 +63,6 @@ mixin KoinComponent {
   ///
   S bind<S, P>(Qualifier qualifier, DefinitionParameters parameters) =>
       getKoin().bind<S, P>(parameters);
-
-  ///
-  /// Get the associated Koin instance
-  ///
-  Koin getKoin() => GlobalContext.instance.get().koin;
-
-  Scope get currentScope => scope;
-
-  void init() {
-    var name = this.runtimeType.toString();
-    var id = "$this.hashCode.toString()$name";
-    scope = getKoin().getOrCreateScope(id, named(name));
-  }
-
-  void close() {
-    if (scope != null) {
-      getKoin().deleteScope(this.hashCode.toString());
-    }
-  }
 }
 
 /*

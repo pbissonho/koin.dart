@@ -1,5 +1,6 @@
+import 'package:koin/koin.dart';
 import 'package:koin/src/core/global_context.dart';
-import 'package:koin/src/core/koin_component.dart';
+import 'package:koin/src/core/logger.dart';
 import 'package:koin/src/core/module.dart';
 import 'package:koin/src/core/qualifier.dart';
 import 'package:koin/src/koin_application.dart';
@@ -10,15 +11,16 @@ abstract class IService {
 }
 
 class ServiceImpl implements IService {
-  @override
-  void dispose() {
-    print("ServiceImpl closed");
-  }
+  void dispose() {}
 }
 
 abstract class IAuthService {
   void dispose();
 }
+
+class Carro {}
+
+class Moto {}
 
 class AuthServiceImpl implements IAuthService {
   @override
@@ -36,14 +38,16 @@ var authModule = Module()
   ..single<IAuthService>((s, p) => AuthServiceImpl())
       .bind(AuthServiceImpl)
       .onClose((service) => service.dispose())
-  ..scope(named("myScope")).scoped<IAuthService>();
+  ..scopeOld(named("myScope")).scoped<IAuthService>();
 
 var scopeName = named("MY_SCOPE");
 
 var scopeName2 = named("MY_SCOPE2");
 
 var scopeModule = Module()
-  ..scope(scopeName).scoped<IService>((s, p) => ServiceImpl());
+  ..factory<IAuthService>((s, p) => AuthServiceImpl())
+  ..factory<Moto>((s, p) => Moto())
+  ..single<IService>((s, p) => ServiceImpl());
 
 void main() {
   test("start koin", () {
@@ -75,40 +79,23 @@ void main() {
     expect(true, equas);
   });
 
-  test("KoinComponent", () {
-    var koinApp = startKoin((app) {
-      app.printLogger();
-      app.module(blocModule);
+  test("tempo", () {
+    Logger.setLogger(EmptyLogger(Level.info));
+
+    var app = KoinApplication()
+      ..module(scopeModule)
+      ..setLogger(EmptyLogger(Level.info));
+
+    var koin = app.koin;
+    // var scope = koin.createScope("myScope", scopeName);
+    // var service = koin.get<IService>(null, null);
+
+    var result = Measure.measureMicroseconds(() {
+      for (int i = 0; i < 2000; i++) {
+        var service = koin.rootScope.get<IService>();
+      }
     });
 
-    var myWidget = MyWidget();
-    myWidget.initState();
-
-    var widget2 = MyWidget();
-    widget2.initState();
-    var equas = myWidget.bloc == widget2.bloc;
-
-    expect(myWidget.bloc, isNotNull);
-    expect(widget2.bloc, isNotNull);
-    expect(false, equas);
-
-    myWidget.dispose();
-    widget2.dispose();
+    print("${result}micro");
   });
-}
-
-var blocModule = Module()
-  ..scope(named<MyWidget>()).scoped<MyBloc>((s, p) => MyBloc());
-
-class MyBloc {}
-
-class MyWidget with KoinComponent {
-  MyBloc bloc;
-
-  void initState() {
-    init();
-    bloc = currentScope.inject<MyBloc>();
-  }
-
-  void dispose() {}
 }
