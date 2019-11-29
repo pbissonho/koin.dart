@@ -5,17 +5,11 @@ import 'package:koin_and_bloc/di.dart';
 void main() {
   test("description", () {
     var app = startKoin((app) {
-      app.modules([appModule, otherModule]);
+      app.modules([appModule]);
     });
 
-    var scope = GlobalContext.instance.app.koin
-        .createScope("test", named("CounterScopePage"));
-
-    Teste teste = scope.inject<Teste>();
-
-    Teteca teteca = app.koin.rootScope.get<Teteca>();
-
-    expect(teste, isNotNull);
-    expect(teteca, isNotNull);
+    var local = KoinApplication()..koin;
   });
 }
+
+// 169.640.397-26

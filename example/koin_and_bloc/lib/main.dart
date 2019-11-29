@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:koin/koin.dart';
-import 'package:koin_and_bloc/counter_page.dart';
 
 import 'di.dart';
-
-class CounterEvent {}
+import 'scope_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -36,7 +34,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: CounterPage(),
+      home: ScopePage(),
     );
   }
 }

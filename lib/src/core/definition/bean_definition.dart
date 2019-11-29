@@ -170,7 +170,7 @@ class BeanDefinition<T> with EquatableMixin {
   ///
   /// Callback when closing instance from registry (called just before final close)
   ///
-  BeanDefinition<T> onClose(OnCloseCallback onCloseCallback) {
+  BeanDefinition<T> onClose(OnCloseCallback<T> onCloseCallback) {
     onCloseCallback = onCloseCallback;
     return this;
   }

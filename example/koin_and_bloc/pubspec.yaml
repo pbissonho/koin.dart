@@ -26,7 +26,7 @@ dependencies:
   koin:
     path: ../../
   bloc: ^2.0.0  
-
+  flutter_bloc: ^2.0.0  
 dev_dependencies:
   flutter_test:
     sdk: flutter

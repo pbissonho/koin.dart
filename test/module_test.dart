@@ -99,3 +99,11 @@ void main() {
     print("${result}micro");
   });
 }
+
+class First {
+  Second second;
+}
+
+class Second {
+  First first;
+}

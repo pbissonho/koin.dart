@@ -125,5 +125,3 @@ Module module(
   moduleDeclaration(module);
   return module;
 }*/
-
-Module get module => Module(false, false);
