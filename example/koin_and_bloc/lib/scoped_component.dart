@@ -6,6 +6,10 @@ import 'package:koin/src/core/definition_parameters.dart';
 import 'package:koin_and_bloc/scope_builder.dart';
 import 'package:koin_and_bloc/scope_provider.dart';
 
+// koin_core
+// koin_flutter
+// koin_test
+
 class FModule extends Module {
   BeanDefinition<T> bloc<T extends Bloc>(
     Definition<T> definition, {
@@ -23,12 +27,25 @@ class FModule extends Module {
   }
 }
 
-// Todo
-// Possibilida a injeção de bloc
-// Criar um bloc passando um contexto, e somente permitir o acesso a quem for do mesmo contexto.
+class LoginPage extends ScopedWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: StreamBuilder(
+        stream: inject<Bloc>(context),
+      ),
+    );
+  }
+}
 
-mixin ScopedComponent<St extends StatefulWidget> on State<St>
-    implements KoinComponent {
+abstract class ScopedWidget extends StatefulWidget with Injector {
+  Widget build(BuildContext context);
+
+  @override
+  _ScopedWidgetState createState() => _ScopedWidgetState();
+}
+
+class _ScopedWidgetState extends State<ScopedWidget> {
   Qualifier _scopeName;
   String id;
 
@@ -62,7 +79,6 @@ mixin ScopedComponent<St extends StatefulWidget> on State<St>
     return getKoin().getScope(id);
   }
 
-  @override
   Koin getKoin() {
     return GlobalContext.instance.get().koin;
   }
@@ -80,6 +96,14 @@ mixin ScopedComponent<St extends StatefulWidget> on State<St>
     getKoin().deleteScope(id);
     super.dispose();
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return ScopeProvider(
+      child: build(context),
+      scopeName: scopeName,
+    );
+  }
 }
 
 mixin Injector on Widget {
@@ -89,7 +113,6 @@ mixin Injector on Widget {
   /// @param parameters
   ///
   ///
-
   T inject<T>(BuildContext context,
       [Qualifier qualifier, List<Object> parameters]) {
     var scopeBuilder = ScopeProvider.of<ScopeBuilder>(context);
