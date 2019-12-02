@@ -1,6 +1,5 @@
 import 'package:koin/koin.dart';
 import 'package:koin/src/core/global_context.dart';
-import 'package:koin/src/core/logger.dart';
 import 'package:koin/src/core/module.dart';
 import 'package:koin/src/core/qualifier.dart';
 import 'package:koin/src/koin_application.dart';
@@ -50,6 +49,7 @@ var scopeModule = Module()
   ..single<IService>((s, p) => ServiceImpl());
 
 void main() {
+  /*
   test("start koin", () {
     var koinApp = startKoin((app) {
       app.printLogger();
@@ -77,33 +77,5 @@ void main() {
     var equas = service == service2 && service2 == result;
 
     expect(true, equas);
-  });
-
-  test("tempo", () {
-    Logger.setLogger(EmptyLogger(Level.info));
-
-    var app = KoinApplication()
-      ..module(scopeModule)
-      ..setLogger(EmptyLogger(Level.info));
-
-    var koin = app.koin;
-    // var scope = koin.createScope("myScope", scopeName);
-    // var service = koin.get<IService>(null, null);
-
-    var result = Measure.measureMicroseconds(() {
-      for (int i = 0; i < 2000; i++) {
-        var service = koin.rootScope.get<IService>();
-      }
-    });
-
-    print("${result}micro");
-  });
-}
-
-class First {
-  Second second;
-}
-
-class Second {
-  First first;
+  });*/
 }
