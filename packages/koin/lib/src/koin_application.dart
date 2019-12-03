@@ -29,7 +29,7 @@ import 'koin_dart.dart';
  * @author - Pedro Bissonho 
  */
 class KoinApplication {
-  var koin = Koin();
+  Koin koin = Koin();
   static Logger logger = PrintLogger(Level.debug);
 
   void loadDefaults() {

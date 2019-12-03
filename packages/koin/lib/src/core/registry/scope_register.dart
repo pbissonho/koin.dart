@@ -38,7 +38,7 @@ class ScopeRegistry {
   /**
      * return all ScopeSet
      */
-  getScopeSets() => definitions.values;
+  KtMutableCollection<ScopeDefinition> getScopeSets() => definitions.values;
 
   void loadScopes(Iterable<Module> modules) {
     modules.forEach((it) {
