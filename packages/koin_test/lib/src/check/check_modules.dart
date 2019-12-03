@@ -30,13 +30,8 @@ void appCheckModules(CheckParameters checkParameters, KoinApplication app) {
  * Check all definition's dependencies - start all modules and check if definitions can run
  */
 void koincheckModules(CheckParameters parametersDefinition, Koin koin) {
-  var bindings = ParametersBinding();
-  bindings.koin = koin;
-  bindings.creators = parametersDefinition.creators;
-  checkMainDefinitions(bindings.creators, koin);
-
-  checkScopedDefinitions(bindings.creators, koin);
-
+  checkMainDefinitions(parametersDefinition.creators, koin);
+  checkScopedDefinitions(parametersDefinition.creators, koin);
   koin.close();
 }
 
