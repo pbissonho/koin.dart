@@ -86,7 +86,11 @@ class ScopeDefinitionInstance<T> extends DefinitionInstance<T> {
 
     OnReleaseCallback<T> onRelease = beanDefinition.getOnRelease;
     T value = _values[scope.id];
-    onRelease(value);
+
+    if (onRelease != null) {
+      onRelease(value);
+    }
+
     _values.remove(scope.id);
   }
 

@@ -113,7 +113,7 @@ class ScopeRegistry {
       throw NoScopeDefinitionFoundException(
           "No scope definition found for scopeName '$scopeName'");
     }
-    var instance = Scope(id: id, koin: koin);
+    var instance = Scope(id: id, koin: koin, isRoot: false);
     instance.scopeDefinition = definition;
     instance.declareDefinitionsFromScopeSet();
     registerScopeInstance(instance);

@@ -86,7 +86,7 @@ abstract class DefinitionInstance<T> {
       logger.error(
           "Instance creation error : could not create instance for $beanDefinition: ${e.toString()}");
       throw InstanceCreationException(
-          "Could not create instance for $beanDefinition", e);
+          "Could not create instance for $beanDefinition", e.toString());
     }
   }
 

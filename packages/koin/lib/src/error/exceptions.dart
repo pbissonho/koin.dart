@@ -41,12 +41,12 @@ class IllegalStateException extends KoinException {
 }
 
 class InstanceCreationException extends KoinException {
-  Exception e;
+  String exceptionMessage;
 
-  InstanceCreationException(String msg, this.e) : super(msg);
+  InstanceCreationException(String msg, this.exceptionMessage) : super(msg);
 
   @override
-  String get msg => "${super.msg}  ${e.toString()}";
+  String get msg => "${super.msg}  ${exceptionMessage}";
 }
 
 class KoinAppAlreadyStartedException extends KoinException {

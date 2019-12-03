@@ -78,6 +78,7 @@ class Module {
   ///
   ScopeSet scope(Qualifier scopeName, scopeDeclaration(ScopeSet scope)) {
     var scopeX = ScopeSet(scopeName);
+
     scopeDeclaration(scopeX);
     declareScope(scopeX);
     return scopeX;
