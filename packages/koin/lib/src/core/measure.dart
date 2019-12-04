@@ -49,11 +49,11 @@ class Measure {
   /// Measure code execution and get result
   ///
 
-  static double measureMicroseconds(void function()) {
+  static Pair measureMicroseconds(function()) {
     var start = Stopwatch()..start();
-    function();
+    var resultF = function();
     var result = start.elapsedMicroseconds.toDouble();
-    return result;
+    return Pair(result, resultF);
   }
 }
 

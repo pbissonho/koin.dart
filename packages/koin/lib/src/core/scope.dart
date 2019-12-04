@@ -90,6 +90,16 @@ class Scope {
     return get<T>(qualifier, parameters);
   }
 
+  T call<T>([
+    DefinitionParameters parameters,
+    Qualifier qualifier,
+  ]) {
+    if (parameters == null) {
+      parameters = emptyParametersHolder();
+    }
+    return get<T>(qualifier, parameters);
+  }
+
   ///
   /// Get a Koin instance
   /// @param qualifier
@@ -144,15 +154,35 @@ class Scope {
     return koin.rootScope._findDefinition(type, qualifier);
   }
 
+  /*
   T getWithType<T>(
       Type type, Qualifier qualifier, DefinitionParameters parameters) {
     if (KoinApplication.logger.isAt(Level.debug)) {
-      KoinApplication.logger.debug("+- get '${type.toString()}'");
+      // KoinApplication.logger.debug("+- get '${type.toString()}'");
       var result = Measure.measureDuration(() {
         return resolveInstance<T>(type, qualifier, parameters);
       });
       KoinApplication.logger
-          .debug("+- got '${type.toString()}' in ${result.duration} ms");
+          .debug("+- get '${type.toString()} in ${result.duration} ms '");
+      // KoinApplication.logger
+      //     .debug("+- got '${type.toString()}' in ${result.duration} ms");
+      return result.result;
+    } else {
+      return resolveInstance<T>(type, qualifier, parameters);
+    }
+  }*/
+
+  T getWithType<T>(
+      Type type, Qualifier qualifier, DefinitionParameters parameters) {
+    if (KoinApplication.logger.isAt(Level.debug)) {
+      // KoinApplication.logger.debug("+- get '${type.toString()}'");
+      var result = Measure.measureMicroseconds(() {
+        return resolveInstance<T>(type, qualifier, parameters);
+      });
+      KoinApplication.logger
+          .debug("+- get '${type.toString()} in ${result.duration} ms '");
+      // KoinApplication.logger
+      //     .debug("+- got '${type.toString()}' in ${result.duration} ms");
       return result.result;
     } else {
       return resolveInstance<T>(type, qualifier, parameters);

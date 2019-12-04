@@ -69,7 +69,12 @@ class PrintLogger extends Logger {
 
   @override
   void log(Level level, String msg) {
-    print("[${level.runtimeType}] $koinTage $msg");
+    print("[${parse(level)}] $koinTage $msg");
+  }
+
+  String parse(enumItem) {
+    if (enumItem == null) return "LogLevel";
+    return enumItem.toString().split('.')[1];
   }
 }
 

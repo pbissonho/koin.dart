@@ -78,3 +78,7 @@ class ScopeSet {
     return "Scope['$qualifier']";
   }
 }
+
+ScopeSet create(Qualifier qualifier) {
+  return ScopeSet(qualifier);
+}
