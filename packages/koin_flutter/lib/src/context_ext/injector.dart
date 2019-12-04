@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:koin/koin.dart';
-import 'package:koin_flutter/src/scope_builder.dart';
-import 'package:koin_flutter/src/scope_provider.dart';
+import 'package:koin_flutter/koin_flutter.dart';
 
 mixin Injector {
   ///

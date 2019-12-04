@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:koin/koin.dart';
-import 'package:koin_flutter/src/scope_builder.dart';
+import 'package:koin_flutter/src/context_ext/scope_builder.dart';
 import 'package:provider/provider.dart';
 
 class ScopeProvider extends ValueDelegateWidget<ScopeBuilder>
