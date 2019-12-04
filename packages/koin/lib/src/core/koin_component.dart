@@ -79,7 +79,7 @@ class Lazy<T> {
 
   T _inject() {
     if (_parameters != null) {
-      return _scope().get<T>(_qualifier, parametersOf(_parameters));
+      return _scope().get<T>(_qualifier, _parameters);
     } else {
       return _scope().get<T>(_qualifier, null);
     }
