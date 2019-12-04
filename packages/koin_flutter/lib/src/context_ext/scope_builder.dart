@@ -22,7 +22,8 @@ class ScopeBuilder implements KoinComponent {
   /// @param qualifier
   /// @param parameters
   ///
-  T inject<T>({Qualifier qualifier, List<Object> parameters}) => scope.inject(
+  Lazy<T> inject<T>({Qualifier qualifier, List<Object> parameters}) =>
+      scope.inject(
         parametersOf(parameters),
         qualifier,
       );

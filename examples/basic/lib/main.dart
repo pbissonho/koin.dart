@@ -1,6 +1,7 @@
 import 'package:koin/koin.dart';
 import 'package:flutter/material.dart';
-import 'package:koin_flutter/koin_flutter.dart';
+
+import 'app.dart';
 
 var appModule = Module()..single((s, p) => CounterController());
 
@@ -20,26 +21,6 @@ class CounterController {
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  // This widget is the root of your application.
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: ScopeProvider.root(
-          child: MyHomePage(title: 'Flutter Demo Home Page'),
-        ));
-  }
-}
-
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
@@ -49,15 +30,13 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> with Injector {
+class _MyHomePageState extends State<MyHomePage> with InjectComponent {
   CounterController counterController;
 
   @override
   void initState() {
+    counterController = get<CounterController>();
     super.initState();
-    startKoin((app) {
-      app.module(appModule);
-    });
   }
 
   @override
@@ -68,7 +47,6 @@ class _MyHomePageState extends State<MyHomePage> with Injector {
 
   @override
   Widget build(BuildContext context) {
-    counterController = inject<CounterController>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),

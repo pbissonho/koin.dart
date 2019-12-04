@@ -1,9 +1,6 @@
 import 'package:koin/koin.dart';
-import 'package:koin/src/core/global_context.dart';
 import 'package:koin/src/core/module.dart';
 import 'package:koin/src/core/qualifier.dart';
-import 'package:koin/src/koin_application.dart';
-import 'package:test/test.dart';
 
 abstract class IService {
   void dispose();

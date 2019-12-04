@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import 'package:koin/src/core/koin_component.dart';
 import 'package:koin/src/core/measure.dart';
 import 'package:koin/src/error/exceptions.dart';
 
@@ -80,14 +81,17 @@ class Scope {
   ///
   /// @return Lazy instance of type T
   ///
-  T inject<T>([
+  Lazy<T> inject<T>([
     DefinitionParameters parameters,
     Qualifier qualifier,
   ]) {
     if (parameters == null) {
       parameters = emptyParametersHolder();
     }
-    return get<T>(qualifier, parameters);
+
+    return Lazy<T>(this, qualifier, parameters);
+
+    //  return get<T>(qualifier, parameters);
   }
 
   T call<T>([
@@ -176,7 +180,7 @@ class Scope {
       Type type, Qualifier qualifier, DefinitionParameters parameters) {
     if (KoinApplication.logger.isAt(Level.debug)) {
       // KoinApplication.logger.debug("+- get '${type.toString()}'");
-      var result = Measure.measureMicroseconds(() {
+      var result = Measure.measureDuration(() {
         return resolveInstance<T>(type, qualifier, parameters);
       });
       KoinApplication.logger

@@ -56,16 +56,16 @@ packages:
   koin:
     dependency: "direct main"
     description:
-      name: koin
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.0"
+      path: "/home/pedro/Documents/Github/koin_folder/koin_dart/packages/koin"
+      relative: false
+    source: path
+    version: "0.2.0"
   koin_flutter:
     dependency: "direct main"
     description:
-      name: koin_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "/home/pedro/Documents/Github/koin_folder/koin_dart/packages/koin_flutter"
+      relative: false
+    source: path
     version: "0.1.0"
   kt_dart:
     dependency: transitive

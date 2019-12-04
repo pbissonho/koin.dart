@@ -27,7 +27,7 @@ mixin ScopeComponent<St extends StatefulWidget> on State<St> {
 
   @override
   void initState() {
-    createScope(getScopeId(), getScopeName());
+    getOrCreateCurrentScope();
     super.initState();
   }
 
@@ -37,7 +37,7 @@ mixin ScopeComponent<St extends StatefulWidget> on State<St> {
     super.dispose();
   }
 
-  Qualifier getScopeName() => TypeQualifier(this.runtimeType);
+  Qualifier getScopeName() => named(this.widget.runtimeType.toString());
 
   String getScopeId() =>
       "${this.widget.runtimeType}@${getScopeName().toString()}";
@@ -47,13 +47,8 @@ mixin ScopeComponent<St extends StatefulWidget> on State<St> {
 
     var scopeId = getScopeId();
     var scope = getKoin().getOrCreateScope(scopeId, getScopeName());
-
-    return scope;
-  }
-
-  Scope createScope(String scopeId, Qualifier qualifier) {
-    var scope = getKoin().createScope(scopeId, qualifier);
     _currentScope = scope;
+
     return scope;
   }
 
@@ -70,7 +65,7 @@ mixin ScopeComponent<St extends StatefulWidget> on State<St> {
   /// @param parameters - injection parameters
   ///
   Lazy<T> inject<T>([Qualifier qualifier, DefinitionParameters parameters]) {
-    return Lazy<T>(getKoin().rootScope, qualifier, parameters);
+    return getKoin().rootScope.inject<T>(parameters, qualifier);
     //return //= lazy { get<T>(qualifier, parameters) };
   }
 

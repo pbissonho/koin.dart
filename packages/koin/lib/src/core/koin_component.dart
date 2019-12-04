@@ -42,7 +42,7 @@ mixin InjectComponent implements KoinComponent {
   @override
   Koin getKoin() => GlobalContext.instance.get().koin;
 
-  T get<T>(Qualifier qualifier, DefinitionParameters parameters) =>
+  T get<T>([Qualifier qualifier, DefinitionParameters parameters]) =>
       getKoin().get(qualifier, parameters);
 
   ///
@@ -50,11 +50,11 @@ mixin InjectComponent implements KoinComponent {
   /// @param qualifier
   /// @param parameters
   ///
-  T inject<T>([Qualifier qualifier, List<Object> parameters]) {
+  Lazy<T> inject<T>([Qualifier qualifier, List<Object> parameters]) {
     if (parameters != null) {
-      return getKoin().get(qualifier, parametersOf(parameters));
+      return getKoin().inject(qualifier, parametersOf(parameters));
     } else {
-      return getKoin().get(qualifier, null);
+      return getKoin().inject(qualifier, null);
     }
   }
 

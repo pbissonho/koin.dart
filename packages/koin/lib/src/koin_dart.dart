@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import 'package:koin/src/core/koin_component.dart';
 import 'package:koin/src/core/logger.dart';
 
 import 'core/definition_parameters.dart';
@@ -49,7 +50,7 @@ class Koin {
      *
      * @return Lazy instance of type T
      */
-  T inject<T>(Qualifier qualifier, DefinitionParameters parameters) {
+  Lazy<T> inject<T>(Qualifier qualifier, DefinitionParameters parameters) {
     return rootScope.inject(parameters, qualifier);
   }
 
@@ -62,7 +63,8 @@ class Koin {
      * @return Lazy instance of type T or null
      */
 
-  T injectOrNull<T>(Qualifier qualifier, DefinitionParameters parameters) {
+  Lazy<T> injectOrNull<T>(
+      Qualifier qualifier, DefinitionParameters parameters) {
     // Todo
     // inject or null
     return rootScope.inject(parameters, qualifier);
