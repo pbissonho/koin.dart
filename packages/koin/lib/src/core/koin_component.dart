@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import 'package:koin/koin.dart';
 import 'package:koin/src/core/global_context.dart';
 import 'package:koin/src/core/qualifier.dart';
 import '../koin_dart.dart';
@@ -65,21 +66,28 @@ mixin InjectComponent implements KoinComponent {
       getKoin().bind<S, P>(parameters);
 }
 
-/*
 class Lazy<T> {
   T _cache;
-  Lazy();
+  final Qualifier _qualifier;
+  final DefinitionParameters _parameters;
+  final Scope _scope;
 
-  T get inject => call();
-
-  T call() {
-    if (_cache != null) {
-      return _cache;
-    }
-    _cache = getKoin().get<T>(null, null);
-
-    return _cache;
+  Lazy(this._scope, this._qualifier, this._parameters);
+  T get value {
+    return call();
   }
 
-  Koin getKoin() => GlobalContext.instance.get().koin;
-}*/
+  T _inject() {
+    if (_parameters != null) {
+      return _scope().get<T>(_qualifier, parametersOf(_parameters));
+    } else {
+      return _scope().get<T>(_qualifier, null);
+    }
+  }
+
+  T call() {
+    if (_cache != null) return _cache;
+    _cache = _inject();
+    return _cache;
+  }
+}
