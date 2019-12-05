@@ -1,3 +1,10 @@
-## [0.0.1] - TODO: Add release date.
+## 0.2.0
 
-* TODO: Describe initial release.
+- Added ScopeComponent
+- Minor improvements
+
+## 0.1.0
+
+- Initial version
+
+
