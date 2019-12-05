@@ -10,8 +10,8 @@ environment:
 dependencies:
   path: ^1.6.0
   equatable: ^1.0.0
-  koin:
-    path: /home/pedro/Documents/Github/koin_folder/koin_dart/packages/koin
+  koin: ^0.2.0
+   
   mockito: ^4.0.0
   test: ^1.6.0
   meta: ^1.1.6
