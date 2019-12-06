@@ -27,7 +27,7 @@ import 'package:test/test.dart';
 /// @author Pedro Bissonho
 ///
 
-/// Configures the testing environment to automatically start and close Koin.
+/// Configures the testing environment to automatically start and close Koin for each test.
 ///
 /// Register a setUp function that starts koin before tests and register a tearDown
 /// function that close Koin afters tests.

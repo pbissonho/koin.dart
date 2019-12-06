@@ -4,7 +4,6 @@
 [![codecov](https://codecov.io/gh/pbissonho/koin.dart/branch/master/graph/badge.svg)](https://codecov.io/gh/pbissonho/koin.dart)
 
 
-
 A pragmatic lightweight dependency injection framework. This is a port of [Koin](https://github.com/InsertKoinIO/koin) for Dart projects.
 
 | Package                                                                            | Pub                                                                                                    |

@@ -1,22 +1,12 @@
-A library for Dart developers.
+# KoinTest
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+[![Build Status](https://travis-ci.org/pbissonho/koin.dart.svg?branch=master)](https://travis-ci.org/pbissonho/koin.dart)
+[![codecov](https://codecov.io/gh/pbissonho/koin.dart/branch/master/graph/badge.svg)](https://codecov.io/gh/pbissonho/koin.dart)
+
+
+A testing library for koin.
 
 ## Usage
 
-A simple usage example:
 
-```dart
-import 'package:koin_test/koin_test.dart';
 
-main() {
-  var awesome = new Awesome();
-}
-```
-
-## Features and bugs
-
-Please file feature requests and bugs at the [issue tracker][tracker].
-
-[tracker]: http://example.com/issues/replaceme
