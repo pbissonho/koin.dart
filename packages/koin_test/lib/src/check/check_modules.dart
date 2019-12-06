@@ -15,21 +15,27 @@
  */
 
 import 'package:koin/koin.dart';
-
 import 'check_module_dsl.dart';
 
-/**
- * Check all definition's dependencies - start all modules and check if definitions can run
- */
+///
+/// Check all definition's dependencies.
+///
+/// Start all modules and check if definitions can run.
+///
 
-void appCheckModules(CheckParameters checkParameters, KoinApplication app) {
-  koincheckModules(checkParameters, app.koin);
+void checkModules(List<Module> modules, CheckParameters checkParameters) {
+  KoinApplication app = KoinApplication.create();
+  app.modules(modules);
+  app.createEagerInstances();
+  checkKoinModules(checkParameters, app.koin);
 }
 
-/**
- * Check all definition's dependencies - start all modules and check if definitions can run
- */
-void koincheckModules(CheckParameters parametersDefinition, Koin koin) {
+///
+///Check all definition's dependencies.
+///
+///Start all modules and check if definitions can run
+///
+void checkKoinModules(CheckParameters parametersDefinition, Koin koin) {
   checkMainDefinitions(parametersDefinition.creators, koin);
   checkScopedDefinitions(parametersDefinition.creators, koin);
   koin.close();

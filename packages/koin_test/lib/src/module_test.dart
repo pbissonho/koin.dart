@@ -7,28 +7,44 @@ import 'package:test/test.dart';
 void moduleTest(
   String description,
   Module module,
-  CheckParameters checkParameters,
-) {
+  CheckParameters checkParameters, {
+  String testOn,
+  Timeout timeout,
+  dynamic skip,
+  dynamic tags,
+  Map<String, dynamic> onPlatform,
+  int retry,
+}) {
   test(description, () {
-    KoinApplication app = KoinApplication.create();
-    app.module(module);
-    app.createEagerInstances();
-    appCheckModules(checkParameters, app);
-  });
+    checkModules([module], checkParameters);
+  },
+      testOn: testOn,
+      tags: tags,
+      timeout: timeout,
+      skip: skip,
+      retry: retry,
+      onPlatform: onPlatform);
 }
 
 @isTest
-void modulesTest(String description,
-    {List<Module> modules,
-    CheckParameters checkParameters,
-    List<Module> dependencies}) {
+void modulesTest(
+    String description, List<Module> modules, CheckParameters checkParameters,
+    {String testOn,
+    Timeout timeout,
+    dynamic skip,
+    dynamic tags,
+    Map<String, dynamic> onPlatform,
+    int retry}) {
   test(description, () {
     if (checkParameters == null) {
       checkParameters = CheckParameters();
     }
-    KoinApplication app = KoinApplication.create();
-    app.modules(modules);
-    app.createEagerInstances();
-    appCheckModules(checkParameters, app);
-  });
+    checkModules(modules, checkParameters);
+  },
+      testOn: testOn,
+      tags: tags,
+      timeout: timeout,
+      skip: skip,
+      retry: retry,
+      onPlatform: onPlatform);
 }

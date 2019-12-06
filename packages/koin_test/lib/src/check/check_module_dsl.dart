@@ -33,8 +33,16 @@ class ParametersBinding {
   Koin koin;
   void create<T>(DefinitionParameters creator, {Qualifier qualifier}) {
     creators[CheckedComponent(qualifier, T)] = creator;
-    print(creators);
   }
 }
 
 class CheckParameters extends ParametersBinding {}
+
+CheckParameters checkParametersOf(Map<Type, DefinitionParameters> creators) {
+  var checkParameters = CheckParameters();
+  creators.forEach((type, creator) {
+    checkParameters.creators[CheckedComponent(null, type)] = creator;
+  });
+
+  return checkParameters;
+}

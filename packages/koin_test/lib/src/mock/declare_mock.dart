@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 the original author or authors.
+ * Copyright 2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,81 +16,76 @@
 
 import 'package:koin/koin.dart';
 
-/**
- * Declare & Create a mock in Koin container for given type
- *
- * @author Arnaud Giuliani
- */
-/*
- T declareMock<T>(
-        Qualifier qualifier,
-        T stubbing
+/// Declare a Mock instance in Koin container for given type
+///
+/// @author Pedro Bissonho
+
+T declareMock<T>(
+  T stubbing, [
+  Qualifier qualifier,
+]) {
+  var koin = GlobalContext.instance.get().koin;
+  var type = T;
+
+  var foundDefinition = getDefinition<T>(type, koin, qualifier);
+  declareMockedDefinition(koin, foundDefinition, stubbing);
+
+  return koin.get<T>(qualifier, null);
+}
+
+BeanDefinition<T> getDefinition<T>(Type type, Koin koin, Qualifier qualifier) {
+  logger.info("declare mock for '${type}'");
+
+  var definition = koin.rootScope.beanRegistry.findDefinition(qualifier, type);
+
+  if (definition == null) {
+    // TOdo
+    // added NoBeanDefFoundException
+    throw ("No definition found for qualifier='$qualifier' & type='$type'");
+  }
+
+  return definition;
+}
+
+void declareMockedDefinition<T>(
+  Koin koin,
+  BeanDefinition foundDefinition,
+  T stubbing,
 ) {
-    var koin = GlobalContext.instance.get().koin;
-    Type type = T;
-    BeanDefinition<T> foundDefinition   = getDefinition(type, koin, qualifier);
-
-    koin.declareMockedDefinition(foundDefinition, stubbing)
-
-    //return koin.get<T>();
+  var definition = createMockedDefinition(stubbing, foundDefinition);
+  koin.rootScope.beanRegistry.saveDefinition(definition);
 }
 
-// TODO declaremock on Scopes
+BeanDefinition<T> createMockedDefinition<T>(
+    T stubbing, BeanDefinition original) {
+  BeanDefinition<T> copy;
 
-@Suppress("UNCHECKED_CAST")
-inline fun <reified T : Any> getDefinition(
-        clazz: KClass<T>,
-        koin: Koin,
-        qualifier: Qualifier?
-): BeanDefinition<T> {
-    logger.info("declare mock for '${clazz.getFullName()}'")
+  Definition<T> definition =
+      (Scope scope, DefinitionParameters params) => stubbing;
+  // var pairResult = Measure.measureDuration(() {
+  //  return stubbing;
+  // });
 
-    return koin.rootScope.beanRegistry.findDefinition(qualifier, clazz) as BeanDefinition<T>?
-            ?: throw NoBeanDefFoundException("No definition found for qualifier='$qualifier' & class='$clazz'")
+  // logger.debug("| mock created in ${pairResult.duration} ms");
+
+  switch (original.kind) {
+    case Kind.Single:
+      copy = BeanDefinition<T>.createSingle(
+          original.qualifier, original.scopeName, definition);
+      break;
+    case Kind.Factory:
+      copy = BeanDefinition<T>.createFactory(
+          original.qualifier, original.scopeName, definition);
+      break;
+    case Kind.Scoped:
+      copy = BeanDefinition<T>.createScoped(
+          original.qualifier, original.scopeName, definition);
+      break;
+  }
+
+  copy.secondaryTypes = original.secondaryTypes;
+  copy.options = Options(
+      isCreatedAtStart: original.options.isCreatedAtStart, override: true);
+  copy.createInstanceHolder();
+  return copy;
 }
-
-/**
- * Declare & Create a mock in Koin container for given type
- *
- * @author Arnaud Giuliani
- */
-inline fun <reified T : Any> Koin.declareMock(
-        qualifier: Qualifier? = null,
-        noinline stubbing: (T.() -> Unit)? = null
-): T {
-
-    val clazz = T::class
-    val foundDefinition: BeanDefinition<T> = getDefinition(clazz, this, qualifier)
-
-    declareMockedDefinition(foundDefinition, stubbing)
-
-    return get(qualifier)
-}
-
-inline fun <reified T : Any> Koin.declareMockedDefinition(
-        foundDefinition: BeanDefinition<T>,
-        noinline stubbing: (T.() -> Unit)?
-) {
-    val definition: BeanDefinition<T> = foundDefinition.createMockedDefinition(stubbing)
-    rootScope.beanRegistry.saveDefinition(definition)
-}
-
-inline fun <reified T : Any> BeanDefinition<T>.createMockedDefinition(noinline stubbing: (T.() -> Unit)? = null): BeanDefinition<T> {
-    val copy = BeanDefinition<T>(qualifier, scopeName, primaryType)
-    copy.secondaryTypes = this.secondaryTypes
-    copy.definition = {
-        val (instance: T, time: Double) = measureDuration {
-            mock(T::class.java)
-        }
-        logger.debug("| mock created in $time ms")
-        stubbing?.let { instance.apply(stubbing) }
-        instance
-    }
-    copy.properties = this.properties.copy()
-    copy.options = this.options.copy()
-    copy.options.override = true
-    copy.kind = this.kind
-    copy.createInstanceHolder()
-    return copy
-}
-*/
