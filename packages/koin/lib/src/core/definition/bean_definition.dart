@@ -171,7 +171,11 @@ class BeanDefinition<T> with EquatableMixin {
   /// Callback when closing instance from registry (called just before final close)
   ///
   BeanDefinition<T> onClose(OnCloseCallback<T> onCloseCallback) {
-    onCloseCallback = onCloseCallback;
+    // Todo
+    // Fix the Close and remove this.
+    if (kind == Kind.Scoped) return this;
+
+    this._onClose = onCloseCallback;
     return this;
   }
 }
