@@ -14,39 +14,90 @@
  * limitations under the License.
  */
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:koin/koin.dart';
+
+class Cavalo {}
+
+class Test extends StatefulWidget {
+  @override
+  _TestState createState() => _TestState();
+}
+
+class _TestState extends State<Test> with ScopeComponentMixin {
+  Lazy<Cavalo> layzCavalo;
+
+  @override
+  void initState() {
+    layzCavalo = inject<Cavalo>();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
 
 ///
 /// Provide an scope for given State from a StatefulWidget
 ///
 /// @author Pedro Bissonho
 ///
-mixin ScopeComponent<St extends StatefulWidget> on State<St> {
+///
+// Todo
+// Renomeado para ScopeComponentMixin
+mixin ScopeComponentMixin<St extends StatefulWidget> on State<St>
+    implements KoinComponent {
   Scope _currentScope;
 
   @override
   void initState() {
-    getOrCreateCurrentScope();
+    _getOrCreateCurrentScope();
     super.initState();
   }
 
   @override
   void dispose() {
-    getKoin().deleteScope(getScopeId());
+    getKoin().deleteScope(_getScopeId());
+    _currentScope = null;
     super.dispose();
   }
 
-  Qualifier getScopeName() => named(this.widget.runtimeType.toString());
+  ///
+  /// Inject lazily given dependency for State
+  ///
+  Lazy<T> inject<T>([Qualifier qualifier, DefinitionParameters parameters]) {
+    return getKoin().rootScope.inject<T>(parameters, qualifier);
+    //return //= lazy { get<T>(qualifier, parameters) };
+  }
 
-  String getScopeId() =>
-      "${this.widget.runtimeType}@${getScopeName().toString()}";
+  ///
+  /// get given dependency for State
+  ///
+  T get<T>([Qualifier qualifier, DefinitionParameters parameters]) {
+    var scope = _getOrCreateCurrentScope();
+    return scope.get<T>(qualifier, parameters);
+  }
 
-  Scope getOrCreateCurrentScope() {
+  ///
+  /// get given dependency State, from primary and secondary types
+  ///
+  S bind<S, P>(DefinitionParameters parameters) {
+    return getKoin().bind<S, P>(parameters);
+  }
+
+  Qualifier _getScopeName() => named(this.widget.runtimeType.toString());
+
+  String _getScopeId() =>
+      "${this.widget.runtimeType}@${_getScopeName().toString()}";
+
+  Scope _getOrCreateCurrentScope() {
     if (_currentScope != null) return _currentScope;
 
-    var scopeId = getScopeId();
-    var scope = getKoin().getOrCreateScope(scopeId, getScopeName());
+    var scopeId = _getScopeId();
+    var scope = getKoin().getOrCreateScope(scopeId, _getScopeName());
     _currentScope = scope;
 
     return scope;
@@ -60,36 +111,18 @@ mixin ScopeComponent<St extends StatefulWidget> on State<St> {
   }
 
   ///
-  /// inject lazily given dependency for StatefulWidget State
-  /// @param qualifier - bean qualifier / optional
-  /// @param parameters - injection parameters
-  ///
-  Lazy<T> inject<T>([Qualifier qualifier, DefinitionParameters parameters]) {
-    return getKoin().rootScope.inject<T>(parameters, qualifier);
-    //return //= lazy { get<T>(qualifier, parameters) };
-  }
-
-  ///
-  /// get given dependency for StatefulWidget State
-  /// @param name - bean name
-  /// @param scope
-  /// @param parameters - injection parameters
-  ///
-  T get<T>([Qualifier qualifier, DefinitionParameters parameters]) {
-    var scope = getOrCreateCurrentScope();
-    return scope.get<T>(qualifier, parameters);
-  }
-
-  ///
-  /// get given dependency for Flutter Widget, from primary and secondary types
-  /// @param parameters - injection parameters
-  ///
-  S bind<S, P>(DefinitionParameters parameters) {
-    return getKoin().bind<S, P>(parameters);
-  }
-
-  ///
   /// Get current Koin scope, bound to current lifecycle
   ///
-  Scope get currentScope => getOrCreateCurrentScope();
+  Scope get currentScope => _getOrCreateCurrentScope();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<Scope>(
+      'CurrentScope',
+      _currentScope,
+      description: "CurrentScope of this widget",
+      defaultValue: null,
+    ));
+  }
 }
