@@ -92,25 +92,28 @@ KoinApplication startKoin([void appDeclaration(KoinApplication koin)]) {
 void stopKoin() => GlobalContext.instance.stop();
 
 ///
-/// load Koin modules in global Koin context
+/// Load a Koin module in global Koin context
 ///
 void loadKoinModule(Module module) {
   GlobalContext.instance.get().modules([module]);
 }
 
+///
+/// Load Koin a list of modules in global Koin context
+///
 void loadKoinModules(List<Module> modules) {
   GlobalContext.instance.get().modules(modules);
 }
 
 ///
-/// unload Koin modules from global Koin context
+/// Unload Koin modules from global Koin context
 ///
 void unloadKoinModule(Module module) {
   GlobalContext.instance.get().unloadModules([module]);
 }
 
 ///
-/// unload Koin modules from global Koin context
+/// Unload Koin modules from global Koin context
 ///
 void unloadKoinModules(List<Module> modules) {
   GlobalContext.instance.get().unloadModules(modules);

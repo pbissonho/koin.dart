@@ -20,14 +20,14 @@ import 'definition/bean_definition.dart';
 import 'definition/options.dart';
 import 'qualifier.dart';
 
-/*
- * Koin Module
- * Gather/help compose Koin definitions
- * @author - Arnaud GIULIANI
- * 
- * Ported to Dart from Kotlin by:
- * @author - Pedro Bissonho 
- */
+///
+/// Koin Module
+/// Gather/help compose Koin definitions
+/// @author - Arnaud GIULIANI
+///
+/// Ported to Dart from Kotlin by:
+/// @author - Pedro Bissonho
+///
 class Module {
   List<BeanDefinition> definitions = [];
   List<ScopeSet> scopes = [];
@@ -37,7 +37,7 @@ class Module {
   Module([this.isCreatedAtStart, this.override]);
 
   ///
-  /// Declare a definition in current Module
+  /// Declare a [BeanDefinition] in current [Module]
   ///
   void declareDefinition<T>(BeanDefinition<T> definition, Options options) {
     definition.options = options;
@@ -45,7 +45,7 @@ class Module {
   }
 
   ///
-  ///Declare a definition in current Module
+  ///Declare a definition in current [Module]
   ///
   void declareScope(ScopeSet scope) {
     scopes.add(scope);
@@ -53,10 +53,6 @@ class Module {
 
   ///
   /// Declare a Single definition
-  /// @param qualifier
-  /// @param createdAtStart
-  /// @param override
-  /// @param definition - definition function
   ///
   BeanDefinition<T> single<T>(
     Definition<T> definition, {
@@ -73,8 +69,7 @@ class Module {
   }
 
   ///
-  /// Declare a group a scoped definition with a given scope qualifier
-  /// @param scopeName
+  /// Declare a group a scoped definition with a given scope [Qualifier]
   ///
   ScopeSet scope(Qualifier scopeName, scopeDeclaration(ScopeSet scope)) {
     var scopeX = ScopeSet(scopeName);
@@ -96,10 +91,7 @@ class Module {
   }
 
   ///
-  /// Declare a Factory definition
-  /// @param qualifier
-  /// @param override
-  /// @param definition - definition function
+  /// Declare a factory definition
   ///
   BeanDefinition<T> factory<T>(
     Definition<T> definition, [
@@ -115,19 +107,10 @@ class Module {
   }
 }
 
-/**
- * Define a Module
- * @param createdAtStart
- * @param override
- *
- * @author Arnaud Giuliani
- */
-/*
-Module module(
-    {void moduleDeclaration(Module module),
-    bool createdAtStart = false,
-    bool override = false}) {
+///
+/// Define a Module
+///
+Module module({bool createdAtStart = false, bool override = false}) {
   var module = Module(createdAtStart, override);
-  moduleDeclaration(module);
   return module;
-}*/
+}

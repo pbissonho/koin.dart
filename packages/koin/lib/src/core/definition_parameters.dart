@@ -30,6 +30,7 @@ import 'package:koin/src/error/exceptions.dart';
 class DefinitionParameters {
   final List<Object> _values;
 
+  /// Maximum number of parameters that [DefinitionParameters] can support.
   static final int maxParams = 5;
 
   DefinitionParameters(this._values) {
@@ -54,12 +55,12 @@ class DefinitionParameters {
   Object component4() => elementAt(3);
   Object component5() => elementAt(4);
 
-  /// get element at given index
-  /// return T
+  
+  /// Get element at given index and return as [T]
   ///
-  Object get(int index) {
+  T get<T>(int index) {
     var object = elementAt(index);
-    return object;
+    return object as T;
   }
 
   ///
@@ -70,25 +71,21 @@ class DefinitionParameters {
   ///
   /// Tells if it has parameters
   ///
-  bool isEmpty() => size() == 0;
+  bool isEmpty() => _values.isEmpty;
 
   ///
-  /// Tells if it has parameters
+  /// Tells if it not has parameters
   ///
-  bool isNotEmpty() => !isEmpty();
+  bool isNotEmpty() => _values.isNotEmpty;
 
   ///
-  /// Get first element of given type [T]
-  /// return [T]
+  /// Get first element of given type [T].
   ///
-  Object getWhere<T>() => _values.firstWhere((value) => value is T);
+  T getWhere<T>() => _values.firstWhere((value) => value is T);
 }
 
 ///
-/// Build a `DefinitionParameters`
-///
-/// @see `DefinitionParameters`
-/// return ParameterList
+/// Build a `DefinitionParameters` with the [parameters] elements.
 ///
 DefinitionParameters parametersOf(List<Object> parameters) {
   if (parameters != null) {
@@ -98,5 +95,8 @@ DefinitionParameters parametersOf(List<Object> parameters) {
   return emptyParametersHolder();
 }
 
+///
+/// Build a [DefinitionParameters] without elements
+///
 DefinitionParameters emptyParametersHolder() =>
     DefinitionParameters(<Object>[]);

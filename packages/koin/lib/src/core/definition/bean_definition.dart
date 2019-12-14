@@ -140,19 +140,16 @@ class BeanDefinition<T> with EquatableMixin {
     this._instance = null;
   }
 
-  //  BeanDefinition specific functions
+  ///  BeanDefinition specific functions
   ///
-  /// Add a compatible type to match for definition
-  /// @param clazz
-  ///
+  /// Add a compatible [Type] to match for definition
   BeanDefinition<T> bind(Type type) {
     this.secondaryTypes.add(type);
     return this;
   }
 
   ///
-  /// Add compatible types to match for definition
-  /// @param classes
+  /// Add compatible Types to match for definition
   ///
   BeanDefinition<T> binds(List<Type> types) {
     this.secondaryTypes.addAll(types);

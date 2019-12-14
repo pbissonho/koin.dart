@@ -22,7 +22,6 @@
  * Ported to Dart from Kotlin by:
  * @author - Pedro Bissonho 
  */
-
 class Measure {
   ///
   /// Measure code execution
@@ -30,7 +29,6 @@ class Measure {
   static double measureDurationOnly(void function()) {
     var start = Stopwatch()..start();
     function();
-    var resultInt = start.elapsed.inMilliseconds;
     var result = start.elapsed.inMilliseconds.toDouble();
     return result;
   }
@@ -48,7 +46,6 @@ class Measure {
   ///
   /// Measure code execution and get result
   ///
-
   static Pair measureMicroseconds(function()) {
     var start = Stopwatch()..start();
     var resultF = function();
