@@ -5,12 +5,6 @@ import 'package:test/test.dart';
 
 import '../classes.dart';
 
-class ComponentInterface1 {}
-
-class Component1 implements ComponentInterface1 {}
-
-class ComponentImpl implements ComponentA {}
-
 void main() {
   test("can declare a single on the fly", () {
     var koin = KoinApplication().printLogger().koin;

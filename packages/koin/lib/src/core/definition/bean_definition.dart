@@ -81,6 +81,10 @@ class BeanDefinition<T> with EquatableMixin {
     this._instance = instance;
   }
 
+  DefinitionInstance getInstance() {
+    return _instance;
+  }
+
   factory BeanDefinition.createSingle(
       Qualifier qualifier, Qualifier scopeName, Definition<T> definition) {
     return BeanDefinition<T>(qualifier, scopeName, Kind.Single, definition);

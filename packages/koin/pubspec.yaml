@@ -5,7 +5,7 @@ homepage: https://github.com/pbissonho/koin.dart
 author: Pedro Bissonho <pedro.bissonho@gmail.com>
 
 environment:
-  sdk: '>=2.5.0 <3.0.0'
+  sdk: '>=2.6.0 <3.0.0'
 
 dependencies:
   path: ^1.6.0
