@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import 'package:koin/src/core/definition/options.dart';
 import 'package:koin/src/core/koin_component.dart';
 import 'package:koin/src/core/measure.dart';
 import 'package:koin/src/error/exceptions.dart';
@@ -158,23 +159,32 @@ class Scope {
     return koin.rootScope._findDefinition(type, qualifier);
   }
 
-  /*
-  T getWithType<T>(
-      Type type, Qualifier qualifier, DefinitionParameters parameters) {
-    if (KoinApplication.logger.isAt(Level.debug)) {
-      // KoinApplication.logger.debug("+- get '${type.toString()}'");
-      var result = Measure.measureDuration(() {
-        return resolveInstance<T>(type, qualifier, parameters);
-      });
-      KoinApplication.logger
-          .debug("+- get '${type.toString()} in ${result.duration} ms '");
-      // KoinApplication.logger
-      //     .debug("+- got '${type.toString()}' in ${result.duration} ms");
-      return result.result;
+  /// Declare a component definition from the given [instance]
+  /// This result of declaring a scoped/single definition of type [T], returning the given instance
+  /// (single definition of th current scope is root)
+  ///
+  /// [instance] The instance you're declaring.
+  /// [qualifier] Qualifier for this declaration
+  /// [secondaryTypes] List of secondary bound types
+  /// [override] Allows to override a previous declaration of the same type (default to false).
+  ///
+  void declare<T>(T instance,
+      {Qualifier qualifier, List<Type> secondaryTypes, bool override = false}) {
+    BeanDefinition<T> definition;
+    if (isRoot) {
+      definition =
+          BeanDefinition<T>.createSingle(qualifier, null, (s, p) => instance);
     } else {
-      return resolveInstance<T>(type, qualifier, parameters);
+      definition = BeanDefinition<T>.createScoped(
+          qualifier, scopeDefinition.qualifier, (s, p) => instance);
     }
-  }*/
+
+    if (secondaryTypes != null) {
+      definition.secondaryTypes.addAll(secondaryTypes);
+    }
+    definition.options = Options(override: override);
+    beanRegistry.saveDefinition(definition);
+  }
 
   T getWithType<T>(
       Type type, Qualifier qualifier, DefinitionParameters parameters) {

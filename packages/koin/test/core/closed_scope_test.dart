@@ -2,21 +2,7 @@ import 'package:koin/koin.dart';
 import 'package:koin/src/koin_application.dart';
 import 'package:test/test.dart';
 
-class ScopeType {}
-
-class ComponentA {}
-
-class ComponentB {
-  final ComponentA a;
-
-  ComponentB(this.a);
-}
-
-class MySingle {
-  final int value;
-
-  MySingle(this.value);
-}
+import '../classes.dart';
 
 void main() {
   var scopeName = "MY_SCOPE";
@@ -183,7 +169,7 @@ void main() {
           })
           ..scope(named("SCOPE_2"), (scope) {
             scope.scoped((s, p) {
-              var scope = p.getWhere<Scope>() as Scope;
+              var scope = p.getWhere<Scope>();
               return ComponentB(scope.get());
             });
           }))
