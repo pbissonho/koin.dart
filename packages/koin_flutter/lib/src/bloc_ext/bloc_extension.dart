@@ -1,17 +1,10 @@
 import 'package:koin/koin.dart';
 
-// Todo
-
-// bloc<Type>(WidgetScope)
-
-// Cada bloc ter um scopo.
-
 mixin Disposable {
   void dispose();
 }
 
-
-class BlocModule extends Module {
+extension BlocModuleExtension on Module {
   BeanDefinition<T> bloc<T extends Disposable>(
     Definition<T> definition, {
     Qualifier qualifier,
@@ -32,20 +25,9 @@ class BlocModule extends Module {
     });
     return beanDefinition;
   }
-
-  @override
-  ScopeSet scope(
-      Qualifier scopeName, Function(BlocScopeSet scope) scopeDeclaration) {
-    var scopeX = BlocScopeSet(scopeName);
-    scopeDeclaration(scopeX);
-    declareScope(scopeX);
-    return scopeX;
-  }
 }
 
-class BlocScopeSet extends ScopeSet {
-  BlocScopeSet(Qualifier scopeName) : super(scopeName);
-
+extension ScopeSetBlocExtension on ScopeSet {
   BeanDefinition<T> scopedBloc<T extends Disposable>(
       [Definition<T> definition, Qualifier qualifier, bool override]) {
     var beanDefinition =
@@ -62,3 +44,5 @@ class BlocScopeSet extends ScopeSet {
     return beanDefinition;
   }
 }
+
+
