@@ -14,9 +14,9 @@
 /// limitations under the License.
 ///
 
-import 'package:koin/src/core/koin_component.dart';
 import 'package:koin/src/core/logger.dart';
 import 'core/definition_parameters.dart';
+import 'core/lazy/lazy.dart';
 import 'core/qualifier.dart';
 import 'core/registry/scope_register.dart';
 import 'core/scope.dart';

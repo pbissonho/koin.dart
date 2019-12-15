@@ -16,7 +16,6 @@
 
 import 'package:koin/src/error/error.dart';
 import 'package:koin/src/error/exceptions.dart';
-
 import '../koin_application.dart';
 import 'module.dart';
 

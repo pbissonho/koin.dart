@@ -19,6 +19,7 @@ import 'package:koin/src/core/global_context.dart';
 import 'package:koin/src/core/qualifier.dart';
 import '../koin_dart.dart';
 import 'definition_parameters.dart';
+import 'lazy/lazy.dart';
 
 ///
 /// KoinComponent interface marker to bring Koin extensions features
@@ -64,30 +65,4 @@ mixin InjectComponent implements KoinComponent {
   ///
   S bind<S, P>(Qualifier qualifier, DefinitionParameters parameters) =>
       getKoin().bind<S, P>(parameters);
-}
-
-class Lazy<T> {
-  T _cache;
-  final Qualifier _qualifier;
-  final DefinitionParameters _parameters;
-  final Scope _scope;
-
-  Lazy(this._scope, this._qualifier, this._parameters);
-  T get value {
-    return call();
-  }
-
-  T _inject() {
-    if (_parameters != null) {
-      return _scope().get<T>(_qualifier, _parameters);
-    } else {
-      return _scope().get<T>(_qualifier, null);
-    }
-  }
-
-  T call() {
-    if (_cache != null) return _cache;
-    _cache = _inject();
-    return _cache;
-  }
 }
