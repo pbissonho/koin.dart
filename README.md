@@ -14,6 +14,8 @@ A pragmatic lightweight dependency injection framework. This is a port of [Koin]
 
 
 
-## Usage
+## Warning
+
+This port does not have all the koin features implemented yet, and what it already has is not fully tested. For now I do not recommend the use.
 
 

@@ -1,14 +1,20 @@
-# koin_flutter
+# KoinFlutter
 
-A new Flutter package project.
+[![Build Status](https://travis-ci.org/pbissonho/koin.dart.svg?branch=master)](https://travis-ci.org/pbissonho/koin.dart)
+[![codecov](https://codecov.io/gh/pbissonho/koin.dart/branch/master/graph/badge.svg)](https://codecov.io/gh/pbissonho/koin.dart)
 
-## Getting Started
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+A pragmatic lightweight dependency injection framework. This is a port of [Koin](https://github.com/InsertKoinIO/koin) for Dart projects.
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+| Package                                                                            | Pub                                                                                                    |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| [koin](https://github.com/pbissonho/koin.dart/tree/master/packages/koin)                 | [![pub package](https://img.shields.io/pub/v/koin.svg)](https://pub.dev/packages/koin)                 |
+| [koin_test](https://github.com/pbissonho/koin.dart/tree/master/packages/koin_test)       | [![pub package](https://img.shields.io/pub/v/koin_test.svg)](https://pub.dev/packages/koin_test)       |
+| [koin_flutter](https://github.com/pbissonho/koin.dart/tree/master/packages/koin_flutter) | [![pub package](https://img.shields.io/pub/v/koin_flutter.svg)](https://pub.dev/packages/koin_flutte) |
+
+
+
+## Warning
+
+Koin.dart does not have all the koin features implemented yet, and what it already has is not fully tested. For now I do not recommend the use. 
+

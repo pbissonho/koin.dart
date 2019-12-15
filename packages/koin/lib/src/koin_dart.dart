@@ -43,7 +43,7 @@ class Koin {
   ///
   /// Lazy inject a Koin instance
   ///
-  Lazy<T> inject<T>(Qualifier qualifier, DefinitionParameters parameters) {
+  Lazy<T> inject<T>([Qualifier qualifier, DefinitionParameters parameters]) {
     return rootScope.inject(parameters, qualifier);
   }
 
