@@ -17,15 +17,15 @@
 import 'dart:core';
 import 'package:koin/src/error/exceptions.dart';
 
-/*
- * DefinitionParameters - Parameter holder
- * Usable with exploded declaration
- *
- * @author - Arnaud GIULIANI
- * 
- * Ported to Dart from Kotlin by:
- * @author - Pedro Bissonho 
- */
+
+/// DefinitionParameters - Parameter holder
+/// 
+/// Usable with exploded declaration
+///
+// @author - Arnaud GIULIANI
+//
+// Ported to Dart from Kotlin by:
+// @author - Pedro Bissonho
 
 class DefinitionParameters {
   final List<Object> _values;
@@ -55,7 +55,6 @@ class DefinitionParameters {
   Object component4() => elementAt(3);
   Object component5() => elementAt(4);
 
-  
   /// Get element at given index and return as [T]
   ///
   T get<T>(int index) {

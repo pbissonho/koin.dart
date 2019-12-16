@@ -20,14 +20,14 @@ import 'core/logger.dart';
 import 'core/module.dart';
 import 'koin_dart.dart';
 
-/*
- * Koin Application
- * Help prepare resources for Koin context
- * @author - Arnaud Giuliani
- * 
- * Ported to Dart from Kotlin by:
- * @author - Pedro Bissonho 
- */
+//
+/// Koin Application
+/// Help prepare resources for Koin context
+// @author - Arnaud Giuliani
+//
+// Ported to Dart from Kotlin by:
+// @author - Pedro Bissonho
+//
 class KoinApplication {
   Koin koin = Koin();
   static Logger logger = PrintLogger(Level.debug);

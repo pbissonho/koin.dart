@@ -17,11 +17,11 @@
 import 'package:koin/src/core/definition/bean_definition.dart';
 import 'package:koin/src/core/instance/definition_instance.dart';
 
-/**
- * Factory Instance Holder
- *
- * @author Arnaud Giuliani
- */
+//
+/// Factory Instance Holder
+///
+// @author Arnaud Giuliani
+//
 class FactoryDefinitionInstance<T> extends DefinitionInstance<T> {
   FactoryDefinitionInstance(BeanDefinition<T> beanDefinition)
       : super(beanDefinition);

@@ -14,14 +14,14 @@
  * limitations under the License.
  * */
 
-/*
- * Qualifier
- *
- * @author - Arnaud GIULIANI
- * 
- * Ported to Dart from Kotlin by:
- * @author - Pedro Bissonho 
- */
+///
+/// Qualifier
+///
+/// @author - Arnaud GIULIANI
+///
+/// Ported to Dart from Kotlin by:
+/// @author - Pedro Bissonho
+///
 
 import 'package:equatable/equatable.dart';
 

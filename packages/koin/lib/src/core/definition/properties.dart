@@ -17,14 +17,13 @@
 import 'dart:collection';
 import 'package:koin/src/error/exceptions.dart';
 
-/*
- * Definitions Properties
- *
- * @author - Arnaud GIULIANI
- * 
- * Ported to Dart from Kotlin by:
- * @author - Pedro Bissonho 
- */
+///
+/// Definitions Properties
+// @author - Arnaud GIULIANI
+//
+// Ported to Dart from Kotlin by:
+// @author - Pedro Bissonho
+//
 class Properties {
   final HashMap<String, dynamic> _data = HashMap<String, dynamic>();
 

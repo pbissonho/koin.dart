@@ -25,19 +25,19 @@ import '../qualifier.dart';
 import '../scope.dart';
 import '../scope_set.dart';
 
-/**
- * Scope Registry
- * create/find scopes for Koin
- *
- * @author Arnaud Giuliani
- */
+///
+/// Scope Registry
+/// create/find scopes for Koin
+///
+// @author Arnaud Giuliani
+///
 class ScopeRegistry {
   var definitions = KtHashMap<String, ScopeDefinition>.empty();
   var _instances = KtHashMap<String, Scope>.empty();
 
-  /**
-     * return all ScopeSet
-     */
+  ///
+  /// return all ScopeSet
+  ///
   KtMutableCollection<ScopeDefinition> getScopeSets() => definitions.values;
 
   void loadScopes(Iterable<Module> modules) {
@@ -101,11 +101,9 @@ class ScopeRegistry {
   ScopeDefinition getScopeDefinition(String scopeName) =>
       definitions[scopeName];
 
-  /**
-     * Create a scope instance for given scope
-     * @param id - scope instance id
-     * @param scopeName - scope qualifier
-     */
+  ///
+  /// Create a scope instance for given scope
+  ///
   Scope createScopeInstance(Koin koin, String id, Qualifier scopeName) {
     var definition = definitions[scopeName.toString()];
 

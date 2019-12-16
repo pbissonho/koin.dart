@@ -14,14 +14,14 @@
  * limitations under the License.
  * */
 
-/*
- * Koin Loggers
- *
- * @author - Arnaud GIULIANI
- * 
- * Ported to Dart from Kotlin by:
- * @author - Pedro Bissonho 
- */
+//
+// Koin Loggers
+//
+// @author - Arnaud GIULIANI
+//
+// Ported to Dart from Kotlin by:
+// @author - Pedro Bissonho
+//
 
 const koinTage = "[Koin]";
 

@@ -20,10 +20,10 @@ import 'package:koin/src/error/exceptions.dart';
 import '../logger.dart';
 import 'definition_instance.dart';
 
-/*
- * Scope definition Instance holder
- * @author Arnaud Giuliani
- */
+///
+/// Scope definition Instance holder
+// @author Arnaud Giuliani
+///
 class ScopeDefinitionInstance<T> extends DefinitionInstance<T> {
   ScopeDefinitionInstance(BeanDefinition<T> beanDefinition)
       : super(beanDefinition);

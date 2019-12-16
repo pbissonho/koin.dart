@@ -27,11 +27,6 @@ import 'lazy/lazy.dart';
 /// @author Arnaud Giuliani
 ///
 
-/*
-abstract class KoinComponent {
-  
-}*/
-
 abstract class KoinComponent {
   ///
   /// Get the associated Koin instance

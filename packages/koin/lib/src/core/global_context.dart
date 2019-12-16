@@ -19,14 +19,14 @@ import 'package:koin/src/error/exceptions.dart';
 import '../koin_application.dart';
 import 'module.dart';
 
-/*
- * Global context - current Koin Application available globally
- *
- * Support to help inject automatically instances once KoinApp has been started
- 
- * Ported to Dart from Kotlin by:
- * @author - Pedro Bissonho 
- */
+//
+// Global context - current Koin Application available globally
+//
+// Support to help inject automatically instances once KoinApp has been started
+
+// Ported to Dart from Kotlin by:
+// @author - Pedro Bissonho
+//
 class GlobalContext {
   KoinApplication app;
 

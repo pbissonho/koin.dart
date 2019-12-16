@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-/*
- * Bean Definitions options
- *
- * @author - Arnaud GIULIANI
- * 
- * Ported to Dart from Kotlin by:
- * @author - Pedro Bissonho 
- */
+///
+/// Bean Definitions options
+///
+// @author - Arnaud GIULIANI
+//
+// Ported to Dart from Kotlin by:
+// @author - Pedro Bissonho
+
 class Options {
   final bool isCreatedAtStart;
   final bool override;

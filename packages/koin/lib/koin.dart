@@ -1,6 +1,3 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
 library koin;
 
 export 'src/core/module.dart';

@@ -36,14 +36,14 @@ enum Kind {
   Scoped,
 }
 
-/*
- * Koin bean definition
- * main structure to make definition in Koin
- * @author - Arnaud GIULIANI
- * 
- * Ported to Dart from Kotlin by:
- * @author - Pedro Bissonho 
- */
+///
+/// Koin bean definition
+/// main structure to make definition in Koin
+// @author - Arnaud GIULIANI
+//
+// Ported to Dart from Kotlin by:
+// @author - Pedro Bissonho
+//
 class BeanDefinition<T> with EquatableMixin {
   final Qualifier qualifier;
   final Qualifier scopeName;

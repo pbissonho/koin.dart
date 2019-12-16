@@ -18,10 +18,10 @@ import 'package:koin/src/core/definition/bean_definition.dart';
 import 'package:koin/src/error/error.dart';
 import 'definition_instance.dart';
 
-/**
- * Single definition Instance holder
- * @author Arnaud Giuliani
- */
+///
+/// Single definition Instance holder
+// @author Arnaud Giuliani
+///
 class SingleDefinitionInstance<T> extends DefinitionInstance<T> {
   SingleDefinitionInstance(BeanDefinition<T> beanDefinition)
       : super(beanDefinition);
