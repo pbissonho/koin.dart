@@ -94,11 +94,11 @@ class Module {
   /// Declare a factory definition
   ///
   BeanDefinition<T> factory<T>(
-    Definition<T> definition, [
+    Definition<T> definition, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
-  ]) {
+  }) {
     BeanDefinition<T> beanDefinition =
         BeanDefinition<T>.createFactory(qualifier, null, definition);
     declareDefinition(beanDefinition,

@@ -32,7 +32,7 @@ class ScopeSet {
   }
 
   BeanDefinition<T> scoped<T>(
-      [Definition<T> definition, Qualifier qualifier, bool override]) {
+    Definition<T> definition,{Qualifier qualifier, bool override}) {
     var beanDefinition =
         BeanDefinition<T>.createScoped(qualifier, this.qualifier, definition);
     declareDefinition(
@@ -51,10 +51,10 @@ class ScopeSet {
   }
 
   BeanDefinition<T> factory<T>(
-    Definition<T> definition, [
+    Definition<T> definition, {
     Qualifier qualifier,
-    bool override,
-  ]) {
+    bool override}
+  ) {
     var beanDefinition =
         BeanDefinition<T>.createFactory(qualifier, this.qualifier, definition);
     declareDefinition(

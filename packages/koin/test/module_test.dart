@@ -34,7 +34,8 @@ var authModule = Module()
   ..single<IAuthService>((s, p) => AuthServiceImpl())
       .bind(AuthServiceImpl)
       .onClose((service) => service.dispose())
-  ..scopeOld(named("myScope")).scoped<IAuthService>();
+  ..scopeOld(named("myScope"))
+      .scoped<IAuthService>((s, p) => AuthServiceImpl());
 
 var scopeName = named("MY_SCOPE");
 

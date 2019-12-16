@@ -1,9 +1,9 @@
 typedef Initializer<T> = T Function();
 
 /// A class that provides lazy object initialization.
-/// 
+///
 /// The [value] is initialized by the initializer function only when being called for the first time.
-/// 
+///
 /// Example of use:
 ///```
 /// class Service {
