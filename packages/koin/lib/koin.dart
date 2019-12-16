@@ -13,3 +13,4 @@ export 'src/core/measure.dart';
 export 'src/core/definition/bean_definition.dart';
 export 'src/core/definition/options.dart';
 export 'src/core/logger.dart';
+export 'src/core/lazy/lazy.dart';

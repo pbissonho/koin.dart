@@ -1,3 +1,8 @@
+
+## 0.3.1
+
+- Exported lazy class
+
 ## 0.3.0
 
 - Parameters of the definition functions configured as named
