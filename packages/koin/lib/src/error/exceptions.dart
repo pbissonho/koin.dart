@@ -65,6 +65,10 @@ class NoParameterFoundException extends KoinException {
   NoParameterFoundException(String msg) : super(msg);
 }
 
+class NullParameterFoundException extends KoinException {
+  NullParameterFoundException(String msg) : super(msg);
+}
+
 class NoBeanDefFoundException extends KoinException {
   NoBeanDefFoundException(String msg) : super(msg);
 }

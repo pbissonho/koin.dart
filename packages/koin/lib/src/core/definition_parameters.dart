@@ -17,9 +17,8 @@
 import 'dart:core';
 import 'package:koin/src/error/exceptions.dart';
 
-
 /// DefinitionParameters - Parameter holder
-/// 
+///
 /// Usable with exploded declaration
 ///
 // @author - Arnaud GIULIANI
@@ -41,12 +40,20 @@ class DefinitionParameters {
   }
 
   Object elementAt(int i) {
+    Object value;
     if (this._values.length > i) {
-      return this._values[i];
+      value = this._values[i];
     } else {
       throw NoParameterFoundException(
-          "Can't get parameter value $i from $this");
+          "Can't get parameter value at position $i from $this");
     }
+
+    if (value == null) {
+      throw NullParameterFoundException(
+          "Can't get parameter value at position $i from $this. The Parameter is null.");
+    }
+
+    return value;
   }
 
   Object component1() => elementAt(0);
@@ -63,7 +70,7 @@ class DefinitionParameters {
   }
 
   ///
-  /// Number of contained elements
+  /// Returns the number of contained elements
   ///
   int size() => _values.length;
 
@@ -84,7 +91,7 @@ class DefinitionParameters {
 }
 
 ///
-/// Build a `DefinitionParameters` with the [parameters] elements.
+/// Builds a `DefinitionParameters` with the [parameters] list elements.
 ///
 DefinitionParameters parametersOf(List<Object> parameters) {
   if (parameters != null) {
@@ -95,7 +102,7 @@ DefinitionParameters parametersOf(List<Object> parameters) {
 }
 
 ///
-/// Build a [DefinitionParameters] without elements
+/// Builds a [DefinitionParameters] without elements
 ///
 DefinitionParameters emptyParametersHolder() =>
     DefinitionParameters(<Object>[]);
