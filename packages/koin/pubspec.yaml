@@ -1,6 +1,6 @@
 name: koin
 description: A pragmatic lightweight dependency injection framework. This is a port of [Koin Kotlin](https://github.com/InsertKoinIO/koin) for Dart projects.
-version: 0.3.1
+version: 0.3.2
 homepage: https://github.com/pbissonho/koin.dart
 
 environment:

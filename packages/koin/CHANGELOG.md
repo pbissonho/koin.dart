@@ -1,3 +1,7 @@
+## 0.3.2
+
+- Added NullParameterFoundException
+- Remove Analysis reports
 
 ## 0.3.1
 
