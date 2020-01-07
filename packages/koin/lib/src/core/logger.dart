@@ -36,7 +36,7 @@ abstract class Logger {
 
   static Logger logger = PrintLogger(Level.debug);
 
-  static setLogger(Logger logger) {
+  static void setLogger(Logger logger) {
     Logger.logger = logger;
   }
 
@@ -85,7 +85,7 @@ abstract class FastLogger {
 
   static FastLogger logger;
 
-  static setLogger(Logger logger) {
+  static void setLogger(Logger logger) {
     Logger.logger = logger;
   }
 

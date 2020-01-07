@@ -23,7 +23,6 @@ import 'package:koin/src/error/exceptions.dart';
 import '../../koin_dart.dart';
 import '../definition_parameters.dart';
 import '../logger.dart';
-import '../qualifier.dart';
 import '../scope.dart';
 import 'factory_definition_instance.dart';
 
@@ -117,8 +116,8 @@ abstract class DefinitionInstance<T> {
 }
 
 void checkScopeResolution(BeanDefinition definition, Scope scope) {
-  Qualifier scopeInstanceName = scope.scopeDefinition?.qualifier;
-  Qualifier beanScopeName = definition.scopeName;
+  var scopeInstanceName = scope.scopeDefinition?.qualifier;
+  var beanScopeName = definition.scopeName;
   if (beanScopeName != scopeInstanceName) {
     if (scopeInstanceName == null) {
       throw BadScopeInstanceException(

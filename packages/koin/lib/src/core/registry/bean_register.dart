@@ -137,7 +137,7 @@ class BeanRegistry {
   }
 
   List<BeanDefinition> createSecondaryType(Type type) {
-    definitionsSecondaryTypes[type] = List<BeanDefinition>();
+    definitionsSecondaryTypes[type] = <BeanDefinition>[];
     return definitionsSecondaryTypes[type];
   }
 
@@ -166,9 +166,7 @@ class BeanRegistry {
 
   void saveDefinitionForSecondaryType(BeanDefinition definition, Type type) {
     var secondaryTypeDefinitions = definitionsSecondaryTypes[type];
-    if (secondaryTypeDefinitions == null) {
-      secondaryTypeDefinitions = createSecondaryType(type);
-    }
+    secondaryTypeDefinitions ??= createSecondaryType(type);
     if (secondaryTypeDefinitions.contains(definition)) {
       secondaryTypeDefinitions[secondaryTypeDefinitions.indexOf(definition)] =
           definition;
@@ -210,7 +208,7 @@ class BeanRegistry {
   void saveDefinitionForName(BeanDefinition definition) {
     if (definition.qualifier != null) {
       var key = definition.qualifier.toString();
-      BeanDefinition definitionName = definitionsNames[key];
+      var definitionName = definitionsNames[key];
       if (definitionName != null && !definition.options.override) {
         throw DefinitionOverrideException(
             "Already existing definition or try to override an existing one with qualifier '${definitionName}");
@@ -302,8 +300,8 @@ class BeanRegistry {
   ///
   /// Find all definition compatible with given type
   ///
-  getDefinitionsForClass(Type type) {
-    getAllDefinitions().filter((it) =>
+  KtList<BeanDefinition<dynamic>> getDefinitionsForClass(Type type) {
+    return getAllDefinitions().filter((it) =>
         it.primaryType == type ||
         it.secondaryTypes.contains(type) && !it.hasScopeSet());
   }

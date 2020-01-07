@@ -77,7 +77,7 @@ class GlobalContext {
 ///
 /// Start a Koin Application as StandAlone
 ///
-KoinApplication startKoin([void appDeclaration(KoinApplication koin)]) {
+KoinApplication startKoin([void Function(KoinApplication koin) appDeclaration]) {
   var koinApplication = KoinApplication.create();
   GlobalContext.instance.start(koinApplication);
   appDeclaration(koinApplication);

@@ -48,7 +48,7 @@ class ScopeDefinitionInstance<T> extends DefinitionInstance<T> {
 
     checkScopeResolution(beanDefinition, context.scope);
 
-    String internalId = context.scope.id;
+    var internalId = context.scope.id;
 
     var current = _values[internalId];
     if (current == null) {
@@ -85,8 +85,8 @@ class ScopeDefinitionInstance<T> extends DefinitionInstance<T> {
       logger.debug("releasing '$scope' ~ $beanDefinition ");
     }
 
-    OnReleaseCallback<T> onRelease = beanDefinition.getOnRelease;
-    T value = _values[scope.id];
+    var onRelease = beanDefinition.getOnRelease;
+    var value = _values[scope.id];
 
     if (onRelease != null) {
       onRelease(value);

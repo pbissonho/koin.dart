@@ -108,7 +108,7 @@ class KoinApplication {
   /// Set Koin to use [PrintLogger], by default at [Level.INFO]
   ///
   KoinApplication printLogger() {
-    return this.setLogger(PrintLogger(Level.debug));
+    return setLogger(PrintLogger(Level.debug));
   }
 
   ///

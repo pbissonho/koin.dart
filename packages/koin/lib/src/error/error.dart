@@ -3,7 +3,7 @@ import 'package:koin/src/error/exceptions.dart';
 void error(String msg) => Error.error(msg);
 
 class Error {
-  static error(String msg) {
+  static void error(String msg) {
     throw IllegalStateException(msg);
   }
 }

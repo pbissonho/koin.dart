@@ -71,6 +71,7 @@ class ScopeSet {
     return scopeDefinition;
   }
 
+  @override
   String toString() {
     return "Scope['$qualifier']";
   }

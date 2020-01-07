@@ -67,8 +67,8 @@ class BeanDefinition<T> with EquatableMixin {
   OnReleaseCallback<T> _onRelease;
   OnCloseCallback<T> _onClose;
 
-  OnReleaseCallback<T> get getOnRelease => this._onRelease;
-  OnCloseCallback<T> get getOnClose => this._onClose;
+  OnReleaseCallback<T> get getOnRelease => _onRelease;
+  OnCloseCallback<T> get getOnClose => _onClose;
   set setOnRelease(OnReleaseCallback<T> onRelease) => _onRelease = onRelease;
   set setOnClose(OnCloseCallback<T> onClose) => _onClose = onClose;
 
@@ -79,7 +79,7 @@ class BeanDefinition<T> with EquatableMixin {
       : primaryType = T;
 
   void setInstance(DefinitionInstance<T> instance) {
-    this._instance = instance;
+    _instance = instance;
   }
 
   DefinitionInstance getInstance() {
@@ -101,7 +101,7 @@ class BeanDefinition<T> with EquatableMixin {
   }
 
   bool hasScopeSet() {
-    return this.scopeName != null;
+    return scopeName != null;
   }
 
   ///
@@ -125,16 +125,16 @@ class BeanDefinition<T> with EquatableMixin {
   /// Resolve instance
   ///
   T resolveInstance(InstanceContext context) {
-    Intrinsics.checkParameterIsNotNull(context, "context");
+    Intrinsics.checkParameterIsNotNull(context, 'context');
 
     if (_instance != null) {
-      T value = _instance.get(context);
+      var value = _instance.get(context);
       if (value != null) {
         return value;
       }
     }
     throw IllegalStateException(
-        "Definition without any InstanceContext -  $this");
+        'Definition without any InstanceContext -  $this');
   }
 
   void close() {
@@ -142,14 +142,14 @@ class BeanDefinition<T> with EquatableMixin {
       _instance.close();
     }
 
-    this._instance = null;
+    _instance = null;
   }
 
   ///  BeanDefinition specific functions
   ///
   /// Add a compatible [Type] to match for definition
   BeanDefinition<T> bind(Type type) {
-    this.secondaryTypes.add(type);
+    secondaryTypes.add(type);
     return this;
   }
 
@@ -157,7 +157,7 @@ class BeanDefinition<T> with EquatableMixin {
   /// Add compatible Types to match for definition
   ///
   BeanDefinition<T> binds(List<Type> types) {
-    this.secondaryTypes.addAll(types);
+    secondaryTypes.addAll(types);
     return this;
   }
 
@@ -177,7 +177,7 @@ class BeanDefinition<T> with EquatableMixin {
     // Fix the Close and remove this.
     if (kind == Kind.Scoped) return this;
 
-    this._onClose = onCloseCallback;
+    _onClose = onCloseCallback;
     return this;
   }
 }

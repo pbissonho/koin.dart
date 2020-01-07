@@ -60,7 +60,7 @@ class Module {
     bool createdAtStart = false,
     bool override = false,
   }) {
-    BeanDefinition<T> beanDefinition =
+    var beanDefinition =
         BeanDefinition<T>.createSingle(qualifier, null, definition);
     declareDefinition(beanDefinition,
         Options(isCreatedAtStart: createdAtStart, override: override));
@@ -71,7 +71,8 @@ class Module {
   ///
   /// Declare a group a scoped definition with a given scope [Qualifier]
   ///
-  ScopeSet scope(Qualifier scopeName, scopeDeclaration(ScopeSet scope)) {
+  ScopeSet scope(
+      Qualifier scopeName, void Function(ScopeSet scope) scopeDeclaration) {
     var scopeX = ScopeSet(scopeName);
 
     scopeDeclaration(scopeX);
@@ -99,7 +100,7 @@ class Module {
     bool createdAtStart = false,
     bool override = false,
   }) {
-    BeanDefinition<T> beanDefinition =
+    var beanDefinition =
         BeanDefinition<T>.createFactory(qualifier, null, definition);
     declareDefinition(beanDefinition,
         Options(isCreatedAtStart: createdAtStart, override: override));

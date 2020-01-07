@@ -73,7 +73,7 @@ class Scope {
 
   Scope({this.id, this.isRoot, this.koin})
       : beanRegistry = BeanRegistry(),
-        callbacks = List<ScopeCallback>();
+        callbacks = <ScopeCallback>[];
 
   ///
   ///Lazy inject a Koin instance
@@ -87,9 +87,7 @@ class Scope {
     DefinitionParameters parameters,
     Qualifier qualifier,
   ]) {
-    if (parameters == null) {
-      parameters = emptyParametersHolder();
-    }
+    parameters ??= emptyParametersHolder();
     return lazy<T>(() => get<T>(qualifier, parameters));
   }
 
@@ -97,9 +95,7 @@ class Scope {
     DefinitionParameters parameters,
     Qualifier qualifier,
   ]) {
-    if (parameters == null) {
-      parameters = emptyParametersHolder();
-    }
+    parameters ??= emptyParametersHolder();
     return get<T>(qualifier, parameters);
   }
 
@@ -110,15 +106,15 @@ class Scope {
   /// @param parameters
   ///
   T get<T>([Qualifier qualifier, DefinitionParameters parameters]) {
-    Type type = T;
+    var type = T;
     return getWithType(type, qualifier, parameters);
   }
 
   BeanRegistry getBeanRegistry() {
-    return this.beanRegistry;
+    return beanRegistry;
   }
 
-  bool checkDefinitions() {
+  void checkDefinitions() {
     var definitions = beanRegistry.getAllDefinitions();
     definitions.forEach((definition) {
       definition.resolveInstance(InstanceContext(
@@ -129,11 +125,11 @@ class Scope {
   }
 
   ScopeDefinition getScopeDefinition() {
-    return this.scopeDefinition;
+    return scopeDefinition;
   }
 
   void setScopeDefinition(ScopeDefinition definition) {
-    this.scopeDefinition = definition;
+    scopeDefinition = definition;
   }
 
   T resolveInstance<T>(
@@ -222,12 +218,12 @@ class Scope {
 
     scopeDefinition?.release(this);
     beanRegistry.close();
-    koin.deleteScope(this.id);
+    koin.deleteScope(id);
   }
 
   @override
   String toString() {
-    var scopeDef = "set: ${scopeDefinition.getQualifier()}";
+    var scopeDef = 'set: ${scopeDefinition.getQualifier()}';
     return "Scope[id:'$id'$scopeDef]";
   }
 }
