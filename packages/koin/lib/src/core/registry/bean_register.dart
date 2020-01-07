@@ -149,7 +149,7 @@ class BeanRegistry {
     var added = definitions.add(definition);
     if (!added && !definition.options.override) {
       throw DefinitionOverrideException(
-          "Already existing definition or try to override an existing one: $definition");
+          'Already existing definition or try to override an existing one: $definition');
     }
     // definition.primaryType.saveCache();
   }
@@ -308,4 +308,3 @@ class BeanRegistry {
         it.secondaryTypes.contains(type) && !it.hasScopeSet());
   }
 }
-

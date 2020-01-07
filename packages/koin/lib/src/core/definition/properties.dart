@@ -41,7 +41,7 @@ class Properties {
     if (value != null) {
       return value;
     } else {
-      throw MissingPropertyException("Missing property for $key");
+      throw MissingPropertyException('Missing property for $key');
     }
   }
 }

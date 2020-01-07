@@ -32,8 +32,8 @@ import '../scope_set.dart';
 // @author Arnaud Giuliani
 ///
 class ScopeRegistry {
-  var definitions = KtHashMap<String, ScopeDefinition>.empty();
-  var _instances = KtHashMap<String, Scope>.empty();
+  final definitions = KtHashMap<String, ScopeDefinition>.empty();
+  final _instances = KtHashMap<String, Scope>.empty();
 
   ///
   /// return all ScopeSet

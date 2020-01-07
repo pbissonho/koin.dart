@@ -28,21 +28,22 @@ class ScopeDefinitionInstance<T> extends DefinitionInstance<T> {
   ScopeDefinitionInstance(BeanDefinition<T> beanDefinition)
       : super(beanDefinition);
 
-  Map<String, T> _values = Map<String, T>();
+  final Map<String, T> _values = <String, T>{};
 
+  @override
   T get(InstanceContext context) {
     if (context.koin == null) {
       throw IllegalStateException(
-          "ScopeDefinitionInstance has no registered Koin instance");
+          'ScopeDefinitionInstance has no registered Koin instance');
     }
 
     if (context.scope == context.koin.rootScope) {
       throw ScopeNotCreatedException(
-          "No scope instance created to resolve $beanDefinition");
+          'No scope instance created to resolve $beanDefinition');
     }
 
     if (context.scope == null) {
-      throw ("ScopeDefinitionInstance has no scope in context");
+      throw ('ScopeDefinitionInstance has no scope in context');
     }
 
     checkScopeResolution(beanDefinition, context.scope);
@@ -54,7 +55,7 @@ class ScopeDefinitionInstance<T> extends DefinitionInstance<T> {
       current = create(context);
 
       if (current == null) {
-        throw ("Instance creation from $beanDefinition should not be null.");
+        throw ('Instance creation from $beanDefinition should not be null.');
       }
 
       _values[internalId] = current;
@@ -64,7 +65,7 @@ class ScopeDefinitionInstance<T> extends DefinitionInstance<T> {
 
   @override
   bool isCreated(InstanceContext context) {
-    Intrinsics.checkParameterIsNotNull(context, "context");
+    Intrinsics.checkParameterIsNotNull(context, 'context');
     if (context.scope != null) {
       return _values[context.scope.id] != null;
     } else {
@@ -77,7 +78,7 @@ class ScopeDefinitionInstance<T> extends DefinitionInstance<T> {
     var scope = context.scope;
 
     if (scope == null) {
-      throw ("ScopeDefinitionInstance has no scope in context");
+      throw ('ScopeDefinitionInstance has no scope in context');
     }
 
     if (logger.isAt(Level.debug)) {

@@ -56,8 +56,8 @@ class KoinApplication {
 
       var count =
           0; // koin.rootScope.beanRegistry.getAllDefinitions().size + koin.scopeRegistry.getScopeSets().map { it.definitions.size }.sum();
-      logger.info("total $count registered definitions");
-      logger.info("load modules in $duration ms");
+      logger.info('total $count registered definitions');
+      logger.info('load modules in $duration ms');
     } else {
       _loadModulesAndScopes(modules);
     }
@@ -82,7 +82,7 @@ class KoinApplication {
   /// Load properties from file
   /// @param fileName
   ///
-  KoinApplication fileProperties({String fileName = "/koin.properties"}) {
+  KoinApplication fileProperties({String fileName = '/koin.properties'}) {
     // koin.propertyRegistry.loadPropertiesFromFile(fileName);
     return this;
   }
@@ -120,7 +120,7 @@ class KoinApplication {
         koin.createEagerInstances();
       });
 
-      logger.debug("instances started in $duration ms");
+      logger.debug('instances started in $duration ms');
     } else {
       koin.createEagerInstances();
     }
@@ -133,7 +133,7 @@ class KoinApplication {
   void close() {
     koin.close();
     if (logger.isAt(Level.info)) {
-      logger.info("stopped");
+      logger.info('stopped');
     }
   }
 

@@ -37,7 +37,7 @@ class ScopeDefinition {
   final Qualifier qualifier;
 
   Set getDefinitions() {
-    return this.definitions;
+    return definitions;
   }
 
   void release(Scope scopeInstance) {
@@ -51,13 +51,14 @@ class ScopeDefinition {
   }
 
   Qualifier getQualifier() {
-    return this.qualifier;
+    return qualifier;
   }
 
-  ScopeDefinition(this.qualifier) : definitions = Set<BeanDefinition>();
+  ScopeDefinition(this.qualifier) : definitions = <BeanDefinition>{};
 
+  @override
   String toString() {
-    return "ScopeDefinition(qualifier = $qualifier)";
+    return 'ScopeDefinition(qualifier = $qualifier)';
   }
 }
 

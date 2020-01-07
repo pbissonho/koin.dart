@@ -41,8 +41,8 @@ class DefinitionParameters {
 
   Object elementAt(int i) {
     Object value;
-    if (this._values.length > i) {
-      value = this._values[i];
+    if (_values.length > i) {
+      value = _values[i];
     } else {
       throw NoParameterFoundException(
           "Can't get parameter value at position $i from $this");

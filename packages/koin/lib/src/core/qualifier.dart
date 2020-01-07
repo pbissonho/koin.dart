@@ -43,6 +43,7 @@ class StringQualifier extends Equatable implements Qualifier {
   final String value;
   StringQualifier(this.value);
 
+  @override
   String toString() {
     return value;
   }
@@ -55,6 +56,7 @@ class TypeQualifier<T> extends Equatable implements Qualifier {
   final T type;
   TypeQualifier(this.type);
 
+  @override
   String toString() {
     return type.toString();
   }

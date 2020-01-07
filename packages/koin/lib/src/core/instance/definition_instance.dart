@@ -1,14 +1,14 @@
 /*
  * Copyright 2017-2018 the original author or authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an 'AS IS' BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -71,7 +71,7 @@ abstract class DefinitionInstance<T> {
   ///
   T create(InstanceContext context) {
     if (logger.isAt(Level.debug)) {
-      logger.debug("| create instance for $beanDefinition");
+      logger.debug('| create instance for $beanDefinition');
     }
 
     try {
@@ -84,9 +84,9 @@ abstract class DefinitionInstance<T> {
       return result;
     } catch (e) {
       logger.error(
-          "Instance creation error : could not create instance for $beanDefinition: ${e.toString()}");
+          'Instance creation error : could not create instance for $beanDefinition: ${e.toString()}');
       throw InstanceCreationException(
-          "Could not create instance for $beanDefinition", e.toString());
+          'Could not create instance for $beanDefinition', e.toString());
     }
   }
 

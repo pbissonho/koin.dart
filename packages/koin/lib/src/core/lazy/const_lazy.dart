@@ -1,9 +1,7 @@
-
 /// Creates a cons Lazy
-/// 
-/// 
+///
+///
 /// /*
-
 
 /*
 class ConstLazy<T> implements Lazy<T> {

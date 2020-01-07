@@ -26,9 +26,10 @@ import '../qualifier.dart';
 import '../scope.dart';
 import 'options.dart';
 
-typedef T OnReleaseCallback<T>(T value);
-typedef void OnCloseCallback<T>(T value);
-typedef T Definition<T>(Scope scope, DefinitionParameters parameters);
+typedef OnReleaseCallback<T> = T Function(T value);
+typedef OnCloseCallback<T> = void Function(T value);
+typedef Definition<T> = T Function(
+    Scope scope, DefinitionParameters parameters);
 
 enum Kind {
   Single,
@@ -54,13 +55,13 @@ class BeanDefinition<T> with EquatableMixin {
   DefinitionInstance<T> _instance;
   final Definition<T> definition;
   Options _options = Options();
-  Properties _properties = Properties();
+  final Properties _properties = Properties();
   final Kind kind;
 
   Options get options => _options;
   set options(Options options) => _options = options;
   Properties get properties => _properties;
-  DefinitionInstance<T> get intance => this._instance;
+  DefinitionInstance<T> get intance => _instance;
 
   /// lifecycle
   OnReleaseCallback<T> _onRelease;

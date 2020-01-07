@@ -11,7 +11,7 @@ class Error {
 class Intrinsics {
   static void checkParameterIsNotNull(dynamic value, String name) {
     if (value == null) {
-      throw IllegalStateException("$name cannot be null.");
+      throw IllegalStateException('$name cannot be null.');
     }
   }
 }

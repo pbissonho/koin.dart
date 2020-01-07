@@ -23,7 +23,7 @@ import 'definition/options.dart';
 
 class ScopeSet {
   final Qualifier qualifier;
-  var definitions = List<BeanDefinition>();
+  final definitions = <BeanDefinition>[];
 
   ScopeSet([this.qualifier]);
 
@@ -31,8 +31,8 @@ class ScopeSet {
     return this;
   }
 
-  BeanDefinition<T> scoped<T>(
-    Definition<T> definition,{Qualifier qualifier, bool override}) {
+  BeanDefinition<T> scoped<T>(Definition<T> definition,
+      {Qualifier qualifier, bool override}) {
     var beanDefinition =
         BeanDefinition<T>.createScoped(qualifier, this.qualifier, definition);
     declareDefinition(
@@ -50,11 +50,8 @@ class ScopeSet {
     definition.options = options;
   }
 
-  BeanDefinition<T> factory<T>(
-    Definition<T> definition, {
-    Qualifier qualifier,
-    bool override}
-  ) {
+  BeanDefinition<T> factory<T>(Definition<T> definition,
+      {Qualifier qualifier, bool override}) {
     var beanDefinition =
         BeanDefinition<T>.createFactory(qualifier, this.qualifier, definition);
     declareDefinition(

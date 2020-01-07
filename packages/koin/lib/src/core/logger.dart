@@ -1,14 +1,14 @@
 /*
  * Copyright 2017-2018 the original author or authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an 'AS IS' BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -23,7 +23,7 @@
 // @author - Pedro Bissonho
 //
 
-const koinTage = "[Koin]";
+const koinTage = '[Koin]';
 
 enum Level { info, error, debug }
 
@@ -69,11 +69,11 @@ class PrintLogger extends Logger {
 
   @override
   void log(Level level, String msg) {
-    print("[${parse(level)}] $koinTage $msg");
+    print('[${parse(level)}] $koinTage $msg');
   }
 
   String parse(enumItem) {
-    if (enumItem == null) return "LogLevel";
+    if (enumItem == null) return 'LogLevel';
     return enumItem.toString().split('.')[1];
   }
 }

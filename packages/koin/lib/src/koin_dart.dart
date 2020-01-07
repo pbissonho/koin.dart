@@ -37,7 +37,7 @@ class Koin {
   Scope rootScope;
 
   Koin() {
-    rootScope = Scope(id: "-Root-", isRoot: true, koin: this);
+    rootScope = Scope(id: '-Root-', isRoot: true, koin: this);
   }
 
   ///
@@ -147,7 +147,7 @@ class Koin {
   ///
   Scope createScope(String scopeId, Qualifier qualifier) {
     if (logger.isAt(Level.debug)) {
-      logger.debug("!- create scope - id:$scopeId q:$qualifier");
+      logger.debug('!- create scope - id:$scopeId q:$qualifier');
     }
     return scopeRegistry.createScopeInstance(this, scopeId, qualifier);
   }
