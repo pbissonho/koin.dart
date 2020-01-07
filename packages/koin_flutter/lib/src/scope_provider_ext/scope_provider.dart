@@ -1,9 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:koin/koin.dart';
-import 'package:koin_flutter/src/context_ext/scope_builder.dart';
 import 'package:provider/provider.dart';
 
-class ScopeProvider extends ValueDelegateWidget<ScopeBuilder>
+import 'scope_builder.dart';
+
+class ScopeProvider extends ValueDelegateWidget<ScopeBuilderComponent>
     implements SingleChildCloneableWidget {
   final Widget child;
   final Qualifier scopeName;
@@ -14,9 +15,9 @@ class ScopeProvider extends ValueDelegateWidget<ScopeBuilder>
     Widget child,
   }) : this._(
             key: key,
-            delegate: BuilderStateDelegate<ScopeBuilder>(
+            delegate: BuilderStateDelegate<ScopeBuilderComponent>(
               (context) {
-                return ScopeBuilder(scopeName: scopeName)..init();
+                return ScopeBuilderComponent(scopeName: scopeName)..init();
               },
               dispose: (_, scope) {
                 scope.close();
@@ -27,7 +28,7 @@ class ScopeProvider extends ValueDelegateWidget<ScopeBuilder>
 
   ScopeProvider._({
     Key key,
-    @required ValueStateDelegate<ScopeBuilder> delegate,
+    @required ValueStateDelegate<ScopeBuilderComponent> delegate,
     this.child,
     this.scopeName,
   }) : super(key: key, delegate: delegate);
@@ -64,9 +65,9 @@ class ScopeProvider extends ValueDelegateWidget<ScopeBuilder>
   factory ScopeProvider.root({Key key, Widget child}) {
     return ScopeProvider._(
         key: key,
-        delegate: BuilderStateDelegate<ScopeBuilder>(
+        delegate: BuilderStateDelegate<ScopeBuilderComponent>(
           (context) {
-            return ScopeBuilder(scopeName: StringQualifier("-Root-"))
+            return ScopeBuilderComponent(scopeName: StringQualifier("-Root-"))
               ..id = "-Root-";
           },
           dispose: (_, scope) {},
@@ -77,7 +78,7 @@ class ScopeProvider extends ValueDelegateWidget<ScopeBuilder>
 
   @override
   Widget build(BuildContext context) {
-    return InheritedProvider<ScopeBuilder>(
+    return InheritedProvider<ScopeBuilderComponent>(
       value: delegate.value,
       child: child,
     );

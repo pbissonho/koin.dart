@@ -1,4 +1,13 @@
 import 'package:koin/koin.dart';
+import '../scope_component.dart';
+
+class Scope {}
+
+extension KoinComponentExtension on ScopeComponentMixin {
+  T bloc<T>([Qualifier qualifier, DefinitionParameters parameters]) {
+    return get<T>(qualifier, parameters);
+  }
+}
 
 mixin Disposable {
   void dispose();
@@ -44,5 +53,3 @@ extension ScopeSetBlocExtension on ScopeSet {
     return beanDefinition;
   }
 }
-
-

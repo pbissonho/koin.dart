@@ -1,6 +1,6 @@
 name: koin_flutter
 description: A new Flutter package project.
-version: 0.2.0
+version: 0.3.0
 homepage: https://github.com/pbissonho/koin.dart
 author: Pedro Bissonho <pedro.bissonho@gmail.com>
 
@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  koin: ^0.2.0
+  koin: ^0.3.1
   provider: ^3.2.0
 dev_dependencies:
   flutter_test:
