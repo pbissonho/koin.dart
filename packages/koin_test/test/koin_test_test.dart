@@ -46,6 +46,16 @@ var invalidModule = Module()..single<ServiceB>(((s, p) => ServiceB(s.get())));
 void main() {
   koinTest();
 
+  testModule("MyModule", customModule,
+      checkParameters: checkParametersOf({
+        ServiceC: parametersOf(["Name", "LastName"])
+      }));
+
+  testModule("valid module", customModule,
+      checkParameters: checkParametersOf({
+        ServiceC: parametersOf(["Name", "LastName"]),
+      }));
+
   test(("shoud be a valid module "), () {
     checkModules(
         [customModule],

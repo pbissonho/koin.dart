@@ -31,6 +31,18 @@ void checkModules(List<Module> modules, CheckParameters checkParameters) {
 }
 
 ///
+/// Check all definition's dependencies.
+///
+/// Start the module and check if definitions can run.
+///
+
+void checkModule(Module module, CheckParameters checkParameters) {
+  KoinApplication app = KoinApplication.create();
+  app.module(module);
+  app.createEagerInstances();
+  checkKoinModules(checkParameters, app.koin);
+}
+
 ///Check all definition's dependencies.
 ///
 ///Start all modules and check if definitions can run

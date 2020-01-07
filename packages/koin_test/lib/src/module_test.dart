@@ -4,10 +4,10 @@ import 'package:meta/meta.dart';
 import 'package:test/test.dart';
 
 @isTest
-void moduleTest(
+void testModule(
   String description,
-  Module module,
-  CheckParameters checkParameters, {
+  Module module, {
+  CheckParameters checkParameters,
   String testOn,
   Timeout timeout,
   dynamic skip,
@@ -27,9 +27,10 @@ void moduleTest(
 }
 
 @isTest
-void modulesTest(
-    String description, List<Module> modules, CheckParameters checkParameters,
-    {String testOn,
+void testModules(String description,
+    {List<Module> modules,
+    CheckParameters checkParameters,
+    String testOn,
     Timeout timeout,
     dynamic skip,
     dynamic tags,

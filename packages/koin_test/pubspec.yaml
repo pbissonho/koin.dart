@@ -6,7 +6,7 @@ author: Pedro Bissonho <pedro.bissonho@gmail.com>
 
 
 environment:
-  sdk: '>=2.5.0 <3.0.0'
+  sdk: '>=2.6.0 <3.0.0'
 
 dependencies:
   koin: ^0.2.0
