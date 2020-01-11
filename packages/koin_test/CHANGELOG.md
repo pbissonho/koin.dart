@@ -1,3 +1,10 @@
+## 0.7.0
+
+- Added extension functions to module test
+- Update readme
+- Renamed moduleTest to testModule
+- Renamed modulesTest to testModules
+
 ## 0.5.0
 
 - Added functions to improve koin tests.

@@ -1,12 +1,13 @@
 import 'package:koin/koin.dart';
 import 'package:koin_test/koin_test.dart';
+import 'package:koin_test/src/check/check_modules.dart';
 import 'package:koin_test/src/mock/declare_mock.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
 class Service {
   String getName() {
-    return "Name";
+    return 'Name';
   }
 }
 
@@ -15,7 +16,7 @@ class ServiceB {
 
   ServiceB(this.service);
   String getName() {
-    return "Name";
+    return 'Name';
   }
 }
 
@@ -33,8 +34,9 @@ class ServiceC {
 class ServiceMock extends Mock implements Service {}
 
 class ServiceFake extends Fake implements Service {
+  @override
   String getName() {
-    return "FakeName";
+    return 'FakeName';
   }
 }
 
@@ -46,35 +48,35 @@ var invalidModule = Module()..single<ServiceB>(((s, p) => ServiceB(s.get())));
 void main() {
   koinTest();
 
-  testModule("MyModule", customModule,
+  testModule('MyModule', customModule,
       checkParameters: checkParametersOf({
-        ServiceC: parametersOf(["Name", "LastName"])
+        ServiceC: parametersOf(['Name', 'LastName'])
       }));
 
-  testModule("valid module", customModule,
+  testModule('valid module', customModule,
       checkParameters: checkParametersOf({
-        ServiceC: parametersOf(["Name", "LastName"]),
+        ServiceC: parametersOf(['Name', 'LastName']),
       }));
 
-  test(("shoud be a valid module "), () {
+  test(('shoud be a valid module '), () {
     checkModules(
         [customModule],
         checkParametersOf({
-          ServiceC: parametersOf(["Name", "LastName"]),
+          ServiceC: parametersOf(['Name', 'LastName']),
         }));
   });
 
-  test(("shoud be a invalid module "), () {
+  test(('shoud be a invalid module '), () {
     expect(() {
       checkModules([customModule], CheckParameters());
     }, throwsException);
   });
 
-  test("shoud return mock instance", () {
+  test('shoud return mock instance', () {
     declare(customModule);
 
     var serviceMock = ServiceMock();
-    when(serviceMock.getName()).thenReturn("MockName");
+    when(serviceMock.getName()).thenReturn('MockName');
 
     declareMock<Service>(serviceMock);
 
@@ -82,10 +84,10 @@ void main() {
 
     expect(service, isNotNull);
     expect(service, isA<ServiceMock>());
-    expect(service.getName(), "MockName");
+    expect(service.getName(), 'MockName');
   });
 
-  test(("shoud return a Fake instance"), () {
+  test(('shoud return a Fake instance'), () {
     declare(customModule);
 
     var serviceMock = ServiceFake();
@@ -96,6 +98,6 @@ void main() {
 
     expect(service, isNotNull);
     expect(service, isA<ServiceFake>());
-    expect(service.getName(), "FakeName");
+    expect(service.getName(), 'FakeName');
   });
 }

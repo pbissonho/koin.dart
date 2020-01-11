@@ -16,10 +16,12 @@
 
 library koin_test;
 
-export 'src/check/check_module_dsl.dart';
 export 'src/check/check_modules.dart';
+export 'src/check/check_module_dsl.dart';
 export 'src/module_test.dart';
 export 'src/mock/declare_mock.dart';
+export 'src/extension/module_extension.dart';
+
 import 'package:koin/koin.dart';
 import 'package:test/test.dart';
 

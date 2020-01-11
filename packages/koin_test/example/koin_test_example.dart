@@ -5,14 +5,14 @@ import 'package:test/test.dart';
 
 // Just a few services to exemplify.
 class ServiceA {
-  String getName() => "Name";
+  String getName() => 'Name';
 }
 
 class ServiceB {
   final ServiceA service;
 
   ServiceB(this.service);
-  String getName() => "Name";
+  String getName() => 'Name';
 }
 
 class ServiceC {
@@ -21,7 +21,7 @@ class ServiceC {
 
   ServiceC(this.firstName, this.lastName);
 
-  String getName() => "$firstName $lastName";
+  String getName() => '$firstName $lastName';
 }
 
 // Create a Mock for a particular service as usual.
@@ -30,7 +30,7 @@ class ServiceAMock extends Mock implements ServiceA {}
 // Create a Fake for a particular service as usual.
 class ServiceFake extends Fake implements ServiceA {
   String getName() {
-    return "FakeName";
+    return 'FakeName';
   }
 }
 
@@ -46,25 +46,25 @@ void main() {
   // Configures the testing environment to automatically start and close Koin for each test.
   koinTest();
 
-  test(("shoud be a valid module "), () {
+  test(('shoud be a valid module '), () {
     checkModules(
         [customModule],
         checkParametersOf({
-          ServiceC: parametersOf(["Name", "LastName"]),
+          ServiceC: parametersOf(['Name', 'LastName']),
         }));
   });
 
-  test(("shoud be a invalid module "), () {
+  test(('shoud be a invalid module '), () {
     expect(() {
       checkModules([customModule], CheckParameters());
     }, throwsException);
   });
 
-  test("shoud return mock instance", () {
+  test('shoud return mock instance', () {
     declare(customModule);
 
     var serviceMock = ServiceAMock();
-    when(serviceMock.getName()).thenReturn("MockName");
+    when(serviceMock.getName()).thenReturn('MockName');
 
     // Declare a MockInstance for te ServiceA
     declareMock<ServiceA>(serviceMock);
@@ -73,10 +73,10 @@ void main() {
 
     expect(service, isNotNull);
     expect(service, isA<ServiceAMock>());
-    expect(service.getName(), "MockName");
+    expect(service.getName(), 'MockName');
   });
 
-  test(("shoud return a Fake instance"), () {
+  test(('shoud return a Fake instance'), () {
     declare(customModule);
 
     var serviceMock = ServiceFake();
@@ -87,6 +87,6 @@ void main() {
 
     expect(service, isNotNull);
     expect(service, isA<ServiceFake>());
-    expect(service.getName(), "FakeName");
+    expect(service.getName(), 'FakeName');
   });
 }

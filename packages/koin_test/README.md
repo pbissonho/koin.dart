@@ -3,18 +3,10 @@
 [![Build Status](https://travis-ci.org/pbissonho/koin.dart.svg?branch=master)](https://travis-ci.org/pbissonho/koin.dart)
 [![codecov](https://codecov.io/gh/pbissonho/koin.dart/branch/master/graph/badge.svg)](https://codecov.io/gh/pbissonho/koin.dart)
 
-A testing library for koin.
-
-| Package                                                                            | Pub                                                                                                    |
-| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| [koin](https://github.com/pbissonho/koin.dart/tree/master/packages/koin)                 | [![pub package](https://img.shields.io/pub/v/koin.svg)](https://pub.dev/packages/koin)                 |
-| [koin_test](https://github.com/pbissonho/koin.dart/tree/master/packages/koin_test)       | [![pub package](https://img.shields.io/pub/v/koin_test.svg)](https://pub.dev/packages/koin_test)       |
-| [koin_flutter](https://github.com/pbissonho/koin.dart/tree/master/packages/koin_flutter) | [![pub package](https://img.shields.io/pub/v/koin_flutter.svg)](https://pub.dev/packages/koin_flutte) |
-
-
+A testing library for [koin.dart](https://github.com/pbissonho/koin.dart).
 
 ## Warning
 
-Koin.dart does not have all the koin features implemented yet, and what it already has is not fully tested. For now I do not recommend the use. 
+Koin.dart port does not have all the koin features implemented yet, and what it already has is not fully tested. I do not recommend using it yet.
 
 

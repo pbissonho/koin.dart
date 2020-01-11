@@ -1,7 +1,9 @@
 import 'package:koin/koin.dart';
-import 'package:koin_test/koin_test.dart';
 import 'package:meta/meta.dart';
 import 'package:test/test.dart';
+
+import 'check/check_module_dsl.dart';
+import 'check/check_modules.dart';
 
 @isTest
 void testModule(
