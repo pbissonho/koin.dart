@@ -18,36 +18,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:koin/koin.dart';
 
-class Cavalo {}
-
-class Test extends StatefulWidget {
-  @override
-  _TestState createState() => _TestState();
-}
-
-class _TestState extends State<Test> with ScopeComponentMixin {
-  Lazy<Cavalo> layzCavalo;
-
-  @override
-  void initState() {
-    layzCavalo = inject<Cavalo>();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
 ///
 /// Provide an scope for given State from a StatefulWidget
 ///
 /// @author Pedro Bissonho
 ///
-///
-// Todo
-// Renomeado para ScopeComponentMixin
 mixin ScopeComponentMixin<St extends StatefulWidget> on State<St>
     implements KoinComponent {
   Scope _currentScope;
