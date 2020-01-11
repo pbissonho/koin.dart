@@ -20,6 +20,25 @@ This port does not have all the koin features implemented yet, and what it alrea
 
 ## Get started
 
+### Add dependency
 
+```yaml
+dependencies:
+  koin: ^[version]
+```
 ## Features
+
+- Pragmatic
+- Modules
+- Scopes
+- Singleton definition
+- Factory definition
+- Scoped definition
+- Support to multiple bindings
+- Support to named definition
+- Easy testing
+- Lazy inject
+- Logging
+- Support to injection parameters
+
 

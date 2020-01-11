@@ -13,6 +13,21 @@ A pragmatic lightweight dependency injection framework. This is a port of [Koin]
 | [koin_flutter](https://github.com/pbissonho/koin.dart/tree/master/packages/koin_flutter) | [![pub package](https://img.shields.io/pub/v/koin_flutter.svg)](https://pub.dev/packages/koin_flutte) |
 
 
+## Features
+
+- Pragmatic
+- Modules
+- Scopes
+- Singleton definition
+- Factory definition
+- Scoped definition
+- Support to multiple bindings
+- Support to named definition
+- Easy testing
+- Lazy inject
+- Logging
+- Support to injection parameters
+
 
 ## Warning
 
