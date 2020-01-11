@@ -1,3 +1,12 @@
+## 0.3.2+2
+
+- Update readme
+
+## 0.3.2+1
+
+- Update description
+- Code improvements with pub.dev health suggestions
+
 ## 0.3.2+1
 
 - Update description
