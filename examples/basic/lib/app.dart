@@ -1,10 +1,9 @@
+import 'package:basic/home.dart';
 import 'package:flutter/material.dart';
 import 'package:koin/koin.dart';
-
-import 'main.dart';
+import 'di.dart';
 
 class MyApp extends StatefulWidget {
-  // This widget is the root of your application.
   @override
   _MyAppState createState() => _MyAppState();
 }
