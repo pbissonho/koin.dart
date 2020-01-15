@@ -1,5 +1,5 @@
-import 'package:koin/src/core/global_context.dart';
-import 'package:koin/src/core/module.dart';
+
+import 'package:koin/koin.dart';
 
 class Post {}
 
