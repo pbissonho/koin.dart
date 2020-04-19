@@ -35,7 +35,7 @@ class DefinitionParameters {
 
   DefinitionParameters(this._values) {
     if (_values.length > maxParams) {
-      throw IllegalStateException(
+      throw DefinitionParameterException(
           "Can't build DefinitionParameters for more than 5 arguments");
     }
   }
@@ -50,7 +50,7 @@ class DefinitionParameters {
     }
 
     if (value == null) {
-      throw NullParameterFoundException(
+      throw DefinitionParameterException(
           "Can't get parameter value at position $i from $this. The Parameter is null.");
     }
 
