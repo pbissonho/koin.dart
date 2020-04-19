@@ -25,7 +25,7 @@
 
 const koinTage = '[Koin]';
 
-enum Level { info, error, debug }
+enum Level { info, error, debug, none }
 
 var logger = Logger.logger;
 
@@ -42,16 +42,26 @@ abstract class Logger {
 
   void log(Level level, String msg);
 
+  bool canLog(Level level) {
+    return this.level == level;
+  }
+
+  void doLog(Level level, String msg) {
+    if (canLog(level)) {
+      log(level, msg);
+    }
+  }
+
+  void debug(String msg) {
+    log(Level.debug, msg);
+  }
+
   void info(String msg) {
     log(Level.info, msg);
   }
 
   void error(String msg) {
     log(Level.error, msg);
-  }
-
-  void debug(String msg) {
-    log(Level.debug, msg);
   }
 
   bool isAt(Level level) => this.level == level;
@@ -76,38 +86,4 @@ class PrintLogger extends Logger {
     if (enumItem == null) return 'LogLevel';
     return enumItem.toString().split('.')[1];
   }
-}
-
-abstract class FastLogger {
-  final Level level;
-
-  const FastLogger([this.level = Level.info]);
-
-  static FastLogger logger;
-
-  static void setLogger(Logger logger) {
-    Logger.logger = logger;
-  }
-
-  void _log(Level level, Level isLevel, String msg) {
-    if (isAt(isLevel)) {
-      log(level, msg);
-    }
-  }
-
-  void log(Level level, String msg) {}
-
-  void info(Level isLevel, String msg) {
-    _log(Level.info, isLevel, msg);
-  }
-
-  void error(Level isLevel, String msg) {
-    _log(Level.error, isLevel, msg);
-  }
-
-  void debug(Level isLevel, String msg) {
-    _log(Level.debug, isLevel, msg);
-  }
-
-  bool isAt(Level level) => this.level == level;
 }
