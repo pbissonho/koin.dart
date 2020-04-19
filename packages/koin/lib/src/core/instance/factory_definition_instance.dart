@@ -15,33 +15,30 @@
  */
 
 import 'package:koin/src/core/definition/bean_definition.dart';
-import 'package:koin/src/core/instance/definition_instance.dart';
+
+import '../../koin_dart.dart';
+import 'instance_context.dart';
+import 'instance_factory.dart';
 
 //
 /// Factory Instance Holder
 ///
 // @author Arnaud Giuliani
 //
-class FactoryDefinitionInstance<T> extends DefinitionInstance<T> {
-  FactoryDefinitionInstance(BeanDefinition<T> beanDefinition)
-      : super(beanDefinition);
+class FactoryInstanceFactory<T> extends InstanceFactory<T> {
+  FactoryInstanceFactory(Koin koin, BeanDefinition<T> beanDefinition)
+      : super(koin: koin, beanDefinition: beanDefinition);
 
   @override
-  void close() {
-    Function onClose = beanDefinition.getOnClose;
-    if (onClose != null) {
-      onClose();
-    }
+  bool isCreated() => false;
+
+  @override
+  void drop(InstanceContext context) {
+    beanDefinition.callbacks.onCloseCallback(null);
   }
 
   @override
   T get(InstanceContext context) {
     return create(context);
   }
-
-  @override
-  bool isCreated(InstanceContext context) => false;
-
-  @override
-  void release(InstanceContext context) {}
 }

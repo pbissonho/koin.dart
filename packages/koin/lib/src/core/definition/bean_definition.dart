@@ -18,15 +18,17 @@ import 'dart:core';
 import 'package:equatable/equatable.dart';
 import 'package:koin/src/core/definition/properties.dart';
 import 'package:koin/src/core/definition_parameters.dart';
-import 'package:koin/src/core/error/error.dart';
-import 'package:koin/src/core/error/exceptions.dart';
-import 'package:koin/src/core/instance/definition_instance.dart';
 
 import '../qualifier.dart';
 import '../scope.dart';
 import 'options.dart';
 
-typedef OnReleaseCallback<T> = T Function(T value);
+class Callbacks<T> {
+  final OnCloseCallback onCloseCallback;
+
+  Callbacks({this.onCloseCallback});
+}
+
 typedef OnCloseCallback<T> = void Function(T value);
 
 typedef Definition<T> = T Function(
@@ -35,7 +37,6 @@ typedef Definition<T> = T Function(
 enum Kind {
   Single,
   Factory,
-  Scoped,
 }
 
 ///
@@ -47,138 +48,69 @@ enum Kind {
 // @author - Pedro Bissonho
 //
 class BeanDefinition<T> with EquatableMixin {
-  final Qualifier qualifier;
-  final Qualifier scopeName;
+  final ScopeDefinition scopeDefinition;
   final Type primaryType;
-
-  /// Main data
-  List<Type> secondaryTypes = <Type>[];
-  DefinitionInstance<T> _instance;
+  final Qualifier qualifier;
   final Definition<T> definition;
-  Options _options = Options();
-  final Properties _properties = Properties();
   final Kind kind;
+  List<Type> secondaryTypes = <Type>[];
+  final Options _options = Options();
+  final Properties _properties = Properties();
+  final Callbacks callbacks = Callbacks();
 
-  Options get options => _options;
-  set options(Options options) => _options = options;
-  Properties get properties => _properties;
-  DefinitionInstance<T> get intance => _instance;
-
-  /// lifecycle
-  OnReleaseCallback<T> _onRelease;
-  OnCloseCallback<T> _onClose;
-
-  OnReleaseCallback<T> get getOnRelease => _onRelease;
-  OnCloseCallback<T> get getOnClose => _onClose;
-  set setOnRelease(OnReleaseCallback<T> onRelease) => _onRelease = onRelease;
-  set setOnClose(OnCloseCallback<T> onClose) => _onClose = onClose;
+  BeanDefinition(
+      {this.scopeDefinition,
+      this.primaryType,
+      this.qualifier,
+      this.definition,
+      this.kind});
 
   @override
-  List<Object> get props => [qualifier, primaryType];
+  String toString() {
+    var defKind = kind.toString();
+    var defType = "'${primaryType.runtimeType}'";
 
-  BeanDefinition(this.qualifier, this.scopeName, this.kind, this.definition)
-      : primaryType = T;
+    var defName = qualifier != null ? 'qualifier:$qualifier' : '';
+    var defScope =
+        scopeDefinition.isRoot ? '' : 'scope:${scopeDefinition.qualifier}';
 
-  void setInstance(DefinitionInstance<T> instance) {
-    _instance = instance;
-  }
+    var defOtherTypes;
 
-  DefinitionInstance getInstance() {
-    return _instance;
-  }
-
-  factory BeanDefinition.createSingle(
-      Qualifier qualifier, Qualifier scopeName, Definition<T> definition) {
-    return BeanDefinition<T>(qualifier, scopeName, Kind.Single, definition);
-  }
-
-  factory BeanDefinition.createFactory(
-      Qualifier qualifier, Qualifier scopeName, Definition<T> definition) {
-    return BeanDefinition<T>(qualifier, scopeName, Kind.Factory, definition);
-  }
-  factory BeanDefinition.createScoped(
-      Qualifier qualifier, Qualifier scopeName, Definition<T> definition) {
-    return BeanDefinition<T>(qualifier, scopeName, Kind.Scoped, definition);
-  }
-
-  bool hasScopeSet() {
-    return scopeName != null;
-  }
-
-  ///
-  /// Create the associated Instance Holder
-  ///
-  void createInstanceHolder() {
-    switch (kind) {
-      case Kind.Single:
-        _instance = DefinitionInstance.single(this);
-        break;
-      case Kind.Factory:
-        _instance = DefinitionInstance.factory(this);
-        break;
-      case Kind.Scoped:
-        _instance = DefinitionInstance.scoped(this);
-        break;
-    }
-  }
-
-  ///
-  /// Resolve instance
-  ///
-  T resolveInstance(InstanceContext context) {
-    Intrinsics.checkParameterIsNotNull(context, 'context');
-
-    if (_instance != null) {
-      var value = _instance.get(context);
-      if (value != null) {
-        return value;
-      }
-    }
-    throw IllegalStateException(
-        'Definition without any InstanceContext -  $this');
-  }
-
-  void close() {
-    if (_instance != null) {
-      _instance.close();
+    if (secondaryTypes.isNotEmpty) {
+      var typesAsString = secondaryTypes
+          .map((type) => type.runtimeType.toString())
+          .join(',')
+          .toString();
+      defOtherTypes = 'binds:$typesAsString';
+    } else {
+      defOtherTypes = '';
     }
 
-    _instance = null;
+    return '[$defKind:$defType$defName$defScope$defOtherTypes]';
   }
 
-  ///  BeanDefinition specific functions
-  ///
-  /// Add a compatible [Type] to match for definition
-  BeanDefinition<T> bind(Type type) {
-    secondaryTypes.add(type);
-    return this;
+  @override
+  List<Object> get props => [primaryType, qualifier, scopeDefinition];
+
+  bool hasType(Type type) {
+    return primaryType == type || secondaryTypes.contains(type);
   }
 
-  ///
-  /// Add compatible Types to match for definition
-  ///
-  BeanDefinition<T> binds(List<Type> types) {
-    secondaryTypes.addAll(types);
-    return this;
+  bool isIt(Type type, Qualifier qualifier, ScopeDefinition scopeDefinition) {
+    return hasType(type) &&
+        qualifier == qualifier &&
+        scopeDefinition == scopeDefinition;
   }
 
-  ///
-  /// Callback when releasing instance
-  ///
-  BeanDefinition<T> onRelease(OnReleaseCallback<T> onReleaseCallback) {
-    _onRelease = onReleaseCallback;
-    return this;
+  bool canBind(Type primary, Type secondary) {
+    return primaryType == primary && secondaryTypes.contains(secondary);
   }
+}
 
-  ///
-  /// Callback when closing instance from registry (called just before final close)
-  ///
-  BeanDefinition<T> onClose(OnCloseCallback<T> onCloseCallback) {
-    // Todo
-    // Fix the Close and remove this.
-    if (kind == Kind.Scoped) return this;
-
-    _onClose = onCloseCallback;
-    return this;
+String indexKey(Type type, Qualifier qualifier) {
+  if (qualifier.value != null) {
+    return '${type.runtimeType.toString()}::${qualifier.value}';
+  } else {
+    return type.runtimeType.toString();
   }
 }

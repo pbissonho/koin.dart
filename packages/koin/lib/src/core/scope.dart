@@ -36,6 +36,8 @@ class ScopeDefinition {
   final Set<BeanDefinition> definitions;
   final Qualifier qualifier;
 
+  get isRoot => null;
+
   Set getDefinitions() {
     return definitions;
   }

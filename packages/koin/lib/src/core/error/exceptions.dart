@@ -36,8 +36,16 @@ class BadScopeInstanceException extends KoinException {
   BadScopeInstanceException(String msg) : super(msg);
 }
 
-class IllegalStateException extends KoinException {
-  IllegalStateException(String msg) : super(msg);
+class ClosedScopeException extends KoinException {
+  ClosedScopeException(String msg) : super(msg);
+}
+
+class DefinitionOverrideException extends KoinException {
+  DefinitionOverrideException(String msg) : super(msg);
+}
+
+class DefinitionParameterException extends KoinException {
+  DefinitionParameterException(String msg) : super(msg);
 }
 
 class InstanceCreationException extends KoinException {
@@ -57,33 +65,32 @@ class MissingPropertyException extends KoinException {
   MissingPropertyException(String msg) : super(msg);
 }
 
-class DefinitionOverrideException extends KoinException {
-  DefinitionOverrideException(String msg) : super(msg);
+class NoBeanDefFoundException extends KoinException {
+  NoBeanDefFoundException(String msg) : super(msg);
 }
 
 class NoParameterFoundException extends KoinException {
   NoParameterFoundException(String msg) : super(msg);
 }
 
-class NullParameterFoundException extends KoinException {
-  NullParameterFoundException(String msg) : super(msg);
+class NoPropertyFileFoundException extends KoinException {
+  NoPropertyFileFoundException(String msg) : super(msg);
 }
 
-class NoBeanDefFoundException extends KoinException {
-  NoBeanDefFoundException(String msg) : super(msg);
-}
-
-///
-/// Scope is not created error
-///
-class ScopeNotCreatedException extends KoinException {
-  ScopeNotCreatedException(String msg) : super(msg);
+class NoScopeDefinitionFoundException extends KoinException {
+  NoScopeDefinitionFoundException(String msg) : super(msg);
 }
 
 class ScopeAlreadyCreatedException extends KoinException {
   ScopeAlreadyCreatedException(String msg) : super(msg);
 }
 
-class NoScopeDefinitionFoundException extends KoinException {
-  NoScopeDefinitionFoundException(String msg) : super(msg);
+class ScopeNotCreatedException extends KoinException {
+  ScopeNotCreatedException(String msg) : super(msg);
+}
+
+///
+///
+class IllegalStateException extends KoinException {
+  IllegalStateException(String msg) : super(msg);
 }

@@ -41,6 +41,8 @@ class Koin {
     rootScope = Scope(id: '-Root-', isRoot: true, koin: this);
   }
 
+  get logger => null;
+
   ///
   /// Lazy inject a Koin instance
   ///

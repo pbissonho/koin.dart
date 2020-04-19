@@ -26,7 +26,11 @@
 import 'package:equatable/equatable.dart';
 
 /// Help qualify a component
-abstract class Qualifier {}
+abstract class Qualifier {
+  final String value;
+
+  Qualifier(this.value);
+}
 
 /// Give a String qualifier
 Qualifier named<T>([String name]) {
@@ -39,9 +43,8 @@ Qualifier named<T>([String name]) {
 /// Give a Type based qualifier
 Qualifier qualifier<T>(T type) => TypeQualifier(type);
 
-class StringQualifier extends Equatable implements Qualifier {
-  final String value;
-  StringQualifier(this.value);
+class StringQualifier extends Qualifier with EquatableMixin {
+  StringQualifier(String value) : super(value);
 
   @override
   String toString() {
@@ -52,9 +55,9 @@ class StringQualifier extends Equatable implements Qualifier {
   List<Object> get props => [value];
 }
 
-class TypeQualifier<T> extends Equatable implements Qualifier {
+class TypeQualifier<T> extends Qualifier with EquatableMixin {
   final T type;
-  TypeQualifier(this.type);
+  TypeQualifier(this.type) : super('$type');
 
   @override
   String toString() {

@@ -16,34 +16,48 @@
 
 import 'package:koin/src/core/definition/bean_definition.dart';
 import 'package:koin/src/core/error/error.dart';
-import 'definition_instance.dart';
+
+import '../../koin_dart.dart';
+import 'instance_context.dart';
+import 'instance_factory.dart';
 
 ///
 /// Single definition Instance holder
 // @author Arnaud Giuliani
 ///
-class SingleDefinitionInstance<T> extends DefinitionInstance<T> {
-  SingleDefinitionInstance(BeanDefinition<T> beanDefinition)
-      : super(beanDefinition);
+class SingleInstanceFactory<T> extends InstanceFactory<T> {
+  SingleInstanceFactory(Koin koin, BeanDefinition<T> beanDefinition)
+      : super(koin: koin, beanDefinition: beanDefinition);
 
   T _value;
 
   @override
-  void close() {
-    var onClose = beanDefinition.getOnClose;
-    if (onClose != null) {
-      onClose(_value);
-      _value = null;
+  bool isCreated() => _value != null;
+
+  @override
+  void drop(InstanceContext context) {
+    beanDefinition.callbacks.onCloseCallback(_value);
+    _value = null;
+  }
+
+  @override
+  T create(InstanceContext context) {
+    if (_value == null) {
+      var created = super.create(context);
+      if (created == null) {
+        error("Single instance created couldn't return value");
+      }
+      return created;
+    } else {
+      return _value;
     }
   }
 
   @override
   T get(InstanceContext context) {
-    if (_value != null) {
-      return _value;
+    if (!isCreated()) {
+      _value = create(context);
     }
-
-    _value = create(context);
 
     if (_value == null) {
       error("Single instance created couldn't return value");
@@ -51,10 +65,4 @@ class SingleDefinitionInstance<T> extends DefinitionInstance<T> {
 
     return _value;
   }
-
-  @override
-  bool isCreated(InstanceContext context) => _value != null;
-
-  @override
-  void release(InstanceContext context) {}
 }
