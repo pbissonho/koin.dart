@@ -28,6 +28,7 @@ import 'options.dart';
 
 typedef OnReleaseCallback<T> = T Function(T value);
 typedef OnCloseCallback<T> = void Function(T value);
+
 typedef Definition<T> = T Function(
     Scope scope, DefinitionParameters parameters);
 

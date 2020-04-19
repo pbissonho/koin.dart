@@ -152,4 +152,6 @@ class KoinApplication {
     app.loadDefaults();
     return app;
   }
+
+  static KoinApplication init() {}
 }

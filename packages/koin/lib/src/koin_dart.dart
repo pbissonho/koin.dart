@@ -15,6 +15,7 @@
 ///
 
 import 'package:koin/src/core/logger.dart';
+import 'package:koin/src/core/module.dart';
 import 'core/definition_parameters.dart';
 import 'core/lazy/lazy.dart';
 import 'core/qualifier.dart';
@@ -219,4 +220,12 @@ class Koin {
     rootScope.close();
     // propertyRegistry.close();
   }
+
+  void loadModules(List<Module> list) {}
+
+  void loadModule(Module module) {}
+
+  void unloadModule(Module module) {}
+
+  void unloadModules(List<Module> modules) {}
 }

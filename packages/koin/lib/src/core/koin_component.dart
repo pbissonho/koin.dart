@@ -15,7 +15,7 @@
  */
 
 import 'package:koin/koin.dart';
-import 'package:koin/src/core/global_context.dart';
+import 'package:koin/src/core/context/koin_context_handler.dart';
 import 'package:koin/src/core/qualifier.dart';
 import '../koin_dart.dart';
 import 'definition_parameters.dart';
@@ -31,12 +31,12 @@ abstract class KoinComponent {
   ///
   /// Get the associated Koin instance
   ///
-  Koin getKoin() => GlobalContext.instance.get().koin;
+  Koin getKoin() => KoinContextHandler.get();
 }
 
 mixin InjectComponent implements KoinComponent {
   @override
-  Koin getKoin() => GlobalContext.instance.get().koin;
+  Koin getKoin() => KoinContextHandler.get();
 
   T get<T>([Qualifier qualifier, DefinitionParameters parameters]) =>
       getKoin().get(qualifier, parameters);
