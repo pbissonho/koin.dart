@@ -77,8 +77,8 @@ class NoPropertyFileFoundException extends KoinException {
   NoPropertyFileFoundException(String msg) : super(msg);
 }
 
-class NoScopeDefinitionFoundException extends KoinException {
-  NoScopeDefinitionFoundException(String msg) : super(msg);
+class NoScopeDefFoundException extends KoinException {
+  NoScopeDefFoundException(String msg) : super(msg);
 }
 
 class ScopeAlreadyCreatedException extends KoinException {

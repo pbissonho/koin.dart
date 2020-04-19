@@ -15,7 +15,7 @@
  */
 
 import 'dart:core';
-import 'package:koin/src/core/scope_set.dart';
+import 'package:koin/src/core/scope/scope_definition.dart';
 import 'definition/bean_definition.dart';
 import 'definition/options.dart';
 import 'qualifier.dart';
@@ -34,7 +34,14 @@ class Module {
   final bool isCreatedAtStart;
   final bool override;
 
+  ScopeDefinition rootScope;
+
+  List<ScopeDefinition> otherScopes;
+
+
   Module([this.isCreatedAtStart, this.override]);
+
+  bool  isLoaded ;
 
   ///
   /// Declare a [BeanDefinition] in current [Module]
