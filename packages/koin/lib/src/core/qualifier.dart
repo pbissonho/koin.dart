@@ -35,13 +35,20 @@ abstract class Qualifier {
 /// Give a String qualifier
 Qualifier named<T>([String name]) {
   if (name == null) {
-    return StringQualifier(T.toString());
+    return TypeQualifier(T);
   }
   return StringQualifier(name);
 }
 
-/// Give a Type based qualifier
-Qualifier qualifier<T>(T type) => TypeQualifier(type);
+// Give a String qualifier
+Qualifier qualifier<T>([String name]) {
+  if (name == null) {
+    return TypeQualifier(T);
+  }
+  return StringQualifier(name);
+}
+
+
 
 class StringQualifier extends Qualifier with EquatableMixin {
   StringQualifier(String value) : super(value);
