@@ -15,7 +15,8 @@
  */
 
 import 'dart:collection';
-import 'package:koin/src/error/exceptions.dart';
+
+import 'package:koin/src/core/error/exceptions.dart';
 
 ///
 /// Definitions Properties

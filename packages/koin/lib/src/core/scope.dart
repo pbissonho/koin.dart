@@ -16,12 +16,12 @@
 
 import 'package:koin/src/core/definition/options.dart';
 import 'package:koin/src/core/measure.dart';
-import 'package:koin/src/error/exceptions.dart';
 
 import '../koin_application.dart';
 import '../koin_dart.dart';
 import 'definition/bean_definition.dart';
 import 'definition_parameters.dart';
+import 'error/exceptions.dart';
 import 'instance/definition_instance.dart';
 import 'lazy/lazy.dart';
 import 'logger.dart';

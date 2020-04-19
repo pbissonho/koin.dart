@@ -16,10 +16,10 @@
 
 import 'package:koin/src/core/qualifier.dart';
 import 'package:koin/src/core/scope.dart';
-import 'package:koin/src/error/exceptions.dart';
 
 import 'definition/bean_definition.dart';
 import 'definition/options.dart';
+import 'error/exceptions.dart';
 
 class ScopeSet {
   final Qualifier qualifier;

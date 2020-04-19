@@ -18,9 +18,9 @@ import 'dart:core';
 import 'package:equatable/equatable.dart';
 import 'package:koin/src/core/definition/properties.dart';
 import 'package:koin/src/core/definition_parameters.dart';
+import 'package:koin/src/core/error/error.dart';
+import 'package:koin/src/core/error/exceptions.dart';
 import 'package:koin/src/core/instance/definition_instance.dart';
-import 'package:koin/src/error/error.dart';
-import 'package:koin/src/error/exceptions.dart';
 
 import '../qualifier.dart';
 import '../scope.dart';

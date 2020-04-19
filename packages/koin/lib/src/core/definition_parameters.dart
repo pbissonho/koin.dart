@@ -15,7 +15,8 @@
  */
 
 import 'dart:core';
-import 'package:koin/src/error/exceptions.dart';
+
+import 'error/exceptions.dart';
 
 /// DefinitionParameters - Parameter holder
 ///

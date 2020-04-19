@@ -1,4 +1,5 @@
-import 'package:koin/src/error/exceptions.dart';
+
+import 'package:koin/src/core/error/exceptions.dart';
 
 void error(String msg) => Error.error(msg);
 

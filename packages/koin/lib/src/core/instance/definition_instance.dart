@@ -15,10 +15,10 @@
  */
 
 import 'package:koin/src/core/definition/bean_definition.dart';
+import 'package:koin/src/core/error/error.dart';
+import 'package:koin/src/core/error/exceptions.dart';
 import 'package:koin/src/core/instance/scope_definition_instance.dart';
 import 'package:koin/src/core/instance/singleton_definition_instance.dart';
-import 'package:koin/src/error/error.dart';
-import 'package:koin/src/error/exceptions.dart';
 
 import '../../koin_dart.dart';
 import '../definition_parameters.dart';

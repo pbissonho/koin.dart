@@ -1,5 +1,5 @@
 import 'package:koin/koin.dart';
-import 'package:koin/src/error/exceptions.dart';
+import 'package:koin/src/core/error/exceptions.dart';
 import 'package:koin/src/koin_application.dart';
 import 'package:test/test.dart';
 

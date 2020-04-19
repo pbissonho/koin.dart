@@ -15,7 +15,7 @@
  */
 
 import 'package:koin/src/core/definition/bean_definition.dart';
-import 'package:koin/src/error/error.dart';
+import 'package:koin/src/core/error/error.dart';
 import 'definition_instance.dart';
 
 ///
