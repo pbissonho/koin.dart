@@ -22,8 +22,6 @@ import '../../koin_dart.dart';
 import '../logger.dart';
 import '../module.dart';
 import '../qualifier.dart';
-import '../scope.dart';
-import '../scope_set.dart';
 
 ///
 /// Scope Registry

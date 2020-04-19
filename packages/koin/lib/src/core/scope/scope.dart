@@ -1,81 +1,87 @@
-/*
- * Copyright 2017-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+///
+/// Copyright 2017-2018 the original author or authors.
+///
+/// Licensed under the Apache License, Version 2.0 (the "License");
+/// you may not use this file except in compliance with the License.
+/// You may obtain a copy of the License at
+///
+///      http://www.apache.org/licenses/LICENSE-2.0
+///
+/// Unless required by applicable law or agreed to in writing, software
+/// distributed under the License is distributed on an "AS IS" BASIS,
+/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+/// See the License for the specific language governing permissions and
+/// limitations under the License.
+////
 
-import 'package:koin/src/core/definition/options.dart';
+import 'package:koin/src/core/error/error.dart';
+import 'package:koin/src/core/error/exceptions.dart';
 import 'package:koin/src/core/measure.dart';
+import 'package:koin/src/core/registry/instance_registry.dart';
 
-import '../koin_application.dart';
-import '../koin_dart.dart';
-import 'definition/bean_definition.dart';
-import 'definition_parameters.dart';
-import 'error/exceptions.dart';
-import 'instance/definition_instance.dart';
-import 'lazy/lazy.dart';
-import 'logger.dart';
-import 'qualifier.dart';
-import 'registry/bean_register.dart';
-
-abstract class ScopeCallback {
-  void onScopeClose(Scope scope);
-}
-
-class ScopeDefinition {
-  final Set<BeanDefinition> definitions;
-  final Qualifier qualifier;
-
-  get isRoot => null;
-
-  Set getDefinitions() {
-    return definitions;
-  }
-
-  void release(Scope scopeInstance) {
-    definitions.forEach((definition) {
-      var definitionInstance = definition.intance;
-
-      if (definitionInstance != null) {
-        definitionInstance.release(InstanceContext(scope: scopeInstance));
-      }
-    });
-  }
-
-  Qualifier getQualifier() {
-    return qualifier;
-  }
-
-  ScopeDefinition(this.qualifier) : definitions = <BeanDefinition>{};
-
-  @override
-  String toString() {
-    return 'ScopeDefinition(qualifier = $qualifier)';
-  }
-}
+import '../definition/bean_definition.dart';
+import '../lazy/lazy.dart';
+import '../../koin_dart.dart';
+import '../definition_parameters.dart';
+import '../logger.dart';
+import '../qualifier.dart';
+import 'scope_callback.dart';
+import 'scope_definition.dart';
 
 class Scope {
-  final BeanRegistry beanRegistry;
-  ScopeDefinition scopeDefinition;
-  final List<ScopeCallback> callbacks;
-
   final String id;
-  final bool isRoot;
+  final ScopeDefinition scopeDefinition;
   final Koin koin;
+  final dynamic source;
 
-  Scope({this.id, this.isRoot, this.koin})
-      : beanRegistry = BeanRegistry(),
-        callbacks = <ScopeCallback>[];
+  final List<Scope> _linkedScope = <Scope>[];
+  InstanceRegistry _instanceRegistry;
+
+  bool _closed = false;
+
+  List<ScopeCallback> callbacks = <ScopeCallback>[];
+
+  Scope({this.id, this.koin, this.scopeDefinition, this.source}) {
+    _instanceRegistry = InstanceRegistry(koin, this);
+  }
+
+  void create(List<Scope> links) {
+    _instanceRegistry.create(scopeDefinition.definitions);
+    _linkedScope.addAll(links);
+  }
+
+  T getSource<T>() {
+    if (source.runtimeType is T) {
+      return source as T;
+    } else {
+      error("Can't use Scope source for ${T.runtimeType} - source is:$source");
+    }
+  }
+
+  ///
+  /// Add parent Scopes to allow instance resolution
+  ///i.e: linkTo(scopeC) - allow to resolve instance to current scope and scopeC
+  ///
+  /// @param scopes - Scopes to link with
+  ///
+  void linkTo(List<Scope> scopes) {
+    if (!scopeDefinition.isRoot) {
+      _linkedScope.addAll(scopes);
+    } else {
+      error("Can't add scope link to a root scope");
+    }
+  }
+
+  ///
+  /// Remove linked scope
+  ////
+  void unlink(List<Scope> scope) {
+    if (!scopeDefinition.isRoot) {
+      _linkedScope.removeWhere((value) => scope.contains(value));
+    } else {
+      error("Can't remove scope link to a root scope");
+    }
+  }
 
   ///
   ///Lazy inject a Koin instance
@@ -93,12 +99,20 @@ class Scope {
     return lazy<T>(() => get<T>(qualifier, parameters));
   }
 
-  T call<T>([
+  ///
+  /// Lazy inject a Koin instance if available
+  ///@param qualifier
+  /// @param scope
+  /// @param parameters
+  ///
+  ///@return Lazy instance of type T or null
+  ///
+  Lazy<T> injectOrNull<T>([
     DefinitionParameters parameters,
     Qualifier qualifier,
   ]) {
     parameters ??= emptyParametersHolder();
-    return get<T>(qualifier, parameters);
+    return lazy<T>(() => get<T>(qualifier, parameters));
   }
 
   ///
@@ -112,47 +126,113 @@ class Scope {
     return getWithType(type, qualifier, parameters);
   }
 
-  BeanRegistry getBeanRegistry() {
-    return beanRegistry;
+  ///
+  /// Get a Koin instance if available
+  /// @param qualifier
+  ///@param scope
+  /// @param parameters
+  ///
+  ///@return instance of type T or null
+  ///
+  T getOrNull<T>([Qualifier qualifier, DefinitionParameters parameters]) {
+    var type = T;
+    return getWithType(type, qualifier, parameters);
   }
 
-  void checkDefinitions() {
-    var definitions = beanRegistry.getAllDefinitions();
-    definitions.forEach((definition) {
-      definition.resolveInstance(InstanceContext(
-          koin: koin, scope: this, parameters: parametersOf([])));
-
-      definition.close();
-    });
+  ///
+  /// Get a Koin instance if available
+  /// @param qualifier
+  /// @param scope
+  /// @param parameters
+  ///
+  /// @return instance of type T or null
+  ///
+  T getWithTypeOrNull<T>(
+      Type type, Qualifier qualifier, DefinitionParameters parameters) {
+    try {
+      return getWithType(type, qualifier, parameters);
+    } catch (e) {
+      koin.logger.error("Can't get instance for ${type.runtimeType}");
+      return null;
+    }
   }
 
-  ScopeDefinition getScopeDefinition() {
-    return scopeDefinition;
-  }
-
-  void setScopeDefinition(ScopeDefinition definition) {
-    scopeDefinition = definition;
+  ///
+  /// Get a Koin instance
+  /// @param clazz
+  /// @param qualifier
+  /// @param parameters
+  ///
+  /// @return instance of type T
+  ///
+  T getWithType<T>(
+      Type type, Qualifier qualifier, DefinitionParameters parameters) {
+    if (koin.logger.isAt(Level.debug)) {
+      // KoinApplication.logger.debug("+- get '${type.toString()}'");
+      var result = Measure.measureDuration(() {
+        return resolveInstance<T>(type, qualifier, parameters);
+      });
+      koin.logger
+          .debug("+- get '${type.toString()} in ${result.duration} ms '");
+      // KoinApplication.logger
+      //     .debug("+- got '${type.toString()}' in ${result.duration} ms");
+      return result.result;
+    } else {
+      return resolveInstance<T>(type, qualifier, parameters);
+    }
   }
 
   T resolveInstance<T>(
       Type type, Qualifier qualifier, DefinitionParameters parameters) {
-    var definition = _findDefinition(type, qualifier);
-
-    return definition.resolveInstance(
-        InstanceContext(koin: koin, scope: this, parameters: parameters));
-  }
-
-  BeanDefinition _findDefinition(Type type, Qualifier qualifier) {
-    var definition = beanRegistry.findDefinition(qualifier, type);
-
-    if (definition != null) return definition;
-
-    if (isRoot) {
-      throw NoBeanDefFoundException(
-          "No definition for '${type.toString()}' has been found. Check your module definitions.");
+    if (_closed) {
+      throw ClosedScopeException('Scope $id is closed');
     }
 
-    return koin.rootScope._findDefinition(type, qualifier);
+    var indexKeyCurrent = indexKey(type, qualifier);
+
+    var instance =
+        _instanceRegistry.resolveInstance(indexKeyCurrent, parameters);
+
+    if (instance == null) {
+      var inOtherScope = findInOtherScope(type, qualifier, parameters);
+
+      if (inOtherScope == null) {
+        var fromSource = getFromSource(type);
+
+        if (fromSource == null) {
+          var qualifierString =
+              qualifier != null ? " & qualifier:'$qualifier'" : '';
+          throw NoBeanDefFoundException(
+              "No definition found for class:'${type.runtimeType}'$qualifierString. Check your definitions!");
+        }
+      } else {
+        return inOtherScope;
+      }
+    } else {
+      return instance;
+    }
+  }
+
+  T getFromSource<T>(Type type) {
+    if (type == source.runtimeType) {
+      return source as T;
+    } else {
+      null;
+    }
+  }
+
+  T findInOtherScope<T>(
+      Type type, Qualifier qualifier, DefinitionParameters parameters) {
+    var scope = _linkedScope.firstWhere((scope) =>
+        scope.getWithTypeOrNull<T>(type, qualifier, parameters) != null);
+
+    return scope.getWithType(type, qualifier, parameters);
+  }
+
+  void createEagerInstances() {
+    if (scopeDefinition.isRoot) {
+      _instanceRegistry.createEagerInstances();
+    }
   }
 
   /// Declare a component definition from the given [instance]
@@ -166,66 +246,144 @@ class Scope {
   ///
   void declare<T>(T instance,
       {Qualifier qualifier, List<Type> secondaryTypes, bool override = false}) {
-    BeanDefinition<T> definition;
-    if (isRoot) {
-      definition =
-          BeanDefinition<T>.createSingle(qualifier, null, (s, p) => instance);
-    } else {
-      definition = BeanDefinition<T>.createScoped(
-          qualifier, scopeDefinition.qualifier, (s, p) => instance);
-    }
-
-    if (secondaryTypes != null) {
-      definition.secondaryTypes.addAll(secondaryTypes);
-    }
-    definition.options = Options(override: override);
-    beanRegistry.saveDefinition(definition);
+    var definition = scopeDefinition.saveNewDefinition(
+        instance, qualifier, secondaryTypes, override);
+    _instanceRegistry.saveDefinition(definition, override: true);
   }
 
-  T getWithType<T>(
-      Type type, Qualifier qualifier, DefinitionParameters parameters) {
-    if (KoinApplication.logger.isAt(Level.debug)) {
-      // KoinApplication.logger.debug("+- get '${type.toString()}'");
-      var result = Measure.measureDuration(() {
-        return resolveInstance<T>(type, qualifier, parameters);
-      });
-      KoinApplication.logger
-          .debug("+- get '${type.toString()} in ${result.duration} ms '");
-      // KoinApplication.logger
-      //     .debug("+- got '${type.toString()}' in ${result.duration} ms");
-      return result.result;
+  ///
+  ///Get current Koin instance
+  ///
+  Koin getKoin() => koin;
+
+  ///
+  /// Get Scope
+  ///@param scopeID
+  ///
+  void getScope(String scopeID) => getKoin().getScope(scopeID);
+
+  ///
+  /// Register a callback for this Scope Instance
+  ///
+  void registerCallback(ScopeCallback callback) {
+    callbacks.add(callback);
+  }
+
+  ///
+  ///Get a all instance for given inferred class (in primary or secondary type)
+  ///
+  /// @return list of instances of type T
+  ///
+  List<T> getAll<T>() => getAllWithType(T);
+
+  ///
+  /// Get a all instance for given class (in primary or secondary type)
+  /// @param clazz T
+  ///
+  /// @return list of instances of type T
+  ///
+  List<T> getAllWithType<T>(Type type) => _instanceRegistry.getAll(type);
+
+  ///
+  /// Get instance of primary type P and secondary type S
+  /// (not for scoped instances)
+  ///
+  ///@return instance of type S
+  ///
+  S bind<S, P>(DefinitionParameters parameters) {
+    var secondaryType = S.runtimeType;
+    var primaryType = P.runtimeType;
+    return bindWithType(primaryType, secondaryType, parameters);
+  }
+
+  ///
+  /// Get instance of primary type P and secondary type S
+  /// (not for scoped instances)
+  ///
+  /// @return instance of type S
+  ///
+  S bindWithType<S>(
+      Type primaryType, Type secondaryType, DefinitionParameters parameters) {
+    S definition =
+        _instanceRegistry.bind(primaryType, secondaryType, parameters);
+
+    if (definition == null) {
+      throw NoBeanDefFoundException(
+          "No definition found to bind class:'${primaryType.toString()}' & secondary type:'${secondaryType.toString()}'. Check your definitions!");
     } else {
-      return resolveInstance<T>(type, qualifier, parameters);
+      return definition;
     }
   }
 
-  void declareDefinitionsFromScopeSet() {
-    scopeDefinition.definitions.forEach((definition) {
-      beanRegistry.saveDefinition(definition);
-      definition.createInstanceHolder();
-    });
+  ///
+  /// Retrieve a property
+  /// @param key
+  /// @param defaultValue
+  ///
+  T getProperty<T>(String key, T defaultValue) {
+    return koin.getProperty(key, defaultValue);
+  }
+
+  ///
+  /// Retrieve a property
+  /// @param key
+  ///
+  // TODO
+  T getPropertyOrNull<T>(String key) {
+    return koin.getPropertyOrNull(key);
+  }
+
+  ///
+  /// Retrieve a property
+  /// @param key
+  ///
+  // TODO
+  T getPropertyWithException<T>(String key) {
+    var property = koin.getPropertyOrNull(key);
+
+    if (property == null) {
+      throw MissingPropertyException("Property '$key' not found");
+    } else {
+      return property;
+    }
   }
 
   ///
   /// Close all instances from this scope
   ///
   void close() {
-    if (KoinApplication.logger.isAt(Level.debug)) {
-      KoinApplication.logger.info("closing scope:'$id'");
-    }
+    clear();
+    koin.scopeRegistry.deleteScope(this);
+  }
 
+  void clear() {
+    _closed = true;
+    if (koin.logger.isAt(Level.debug)) {
+      koin.logger.info("closing scope:'$id'");
+    }
     // call on close from callbacks
-    callbacks.forEach((it) => it.onScopeClose(this));
+    callbacks.forEach((callback) {
+      callback.onScopeClose(this);
+    });
     callbacks.clear();
 
-    scopeDefinition?.release(this);
-    beanRegistry.close();
-    koin.deleteScope(id);
+    _instanceRegistry.close();
   }
 
   @override
   String toString() {
-    var scopeDef = 'set: ${scopeDefinition.getQualifier()}';
-    return "Scope[id:'$id'$scopeDef]";
+    return "['$id']";
+  }
+
+  void dropInstances(ScopeDefinition scopeDefinition) {
+    scopeDefinition.definitions.forEach((definition) {
+      _instanceRegistry.dropDefinition(definition);
+    });
+  }
+
+  void loadDefinitions(ScopeDefinition scopeDefinition) {
+    scopeDefinition.definitions.forEach((definition) {
+      _instanceRegistry.createDefinition(definition);
+    });
   }
 }

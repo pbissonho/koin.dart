@@ -18,9 +18,10 @@ import 'dart:core';
 import 'package:equatable/equatable.dart';
 import 'package:koin/src/core/definition/properties.dart';
 import 'package:koin/src/core/definition_parameters.dart';
+import 'package:koin/src/core/scope/scope.dart';
+import 'package:koin/src/core/scope/scope_definition.dart';
 
 import '../qualifier.dart';
-import '../scope.dart';
 import 'options.dart';
 
 class Callbacks<T> {

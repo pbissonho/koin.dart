@@ -230,4 +230,8 @@ class Koin {
   void unloadModule(Module module) {}
 
   void unloadModules(List<Module> modules) {}
+
+  getProperty(String key, defaultValue) {}
+
+  getPropertyOrNull(String key) {}
 }

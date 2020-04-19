@@ -1,6 +1,7 @@
+import 'package:koin/src/core/scope/scope.dart';
+
 import '../../koin_dart.dart';
 import '../definition_parameters.dart';
-import '../scope.dart';
 
 ///
 /// Instance resolution Context
