@@ -56,7 +56,7 @@ class ScopeRegistry {
 
   void loadModule(Module module) {
     declareScope(module.rootScope);
-    declareScopes(module.otherScopes);
+    declareScopes(module.otherScopes.asList());
   }
 
   void declareScopes(List<ScopeDefinition> list) {
@@ -179,7 +179,8 @@ class ScopeRegistry {
   }
 
   void unloadModule(Module module) {
-    var scopeDefinitions = List.from(module.otherScopes)..add(module.rootScope);
+    var scopeDefinitions = List.from(module.otherScopes.asList())
+      ..add(module.rootScope);
     scopeDefinitions.forEach((it) {
       unloadDefinitions(it);
     });

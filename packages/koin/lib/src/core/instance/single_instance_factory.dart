@@ -35,7 +35,7 @@ class SingleInstanceFactory<T> extends InstanceFactory<T> {
   bool isCreated() => _value != null;
 
   @override
-  void drop(InstanceContext context) {
+  void drop( ) {
     beanDefinition.callbacks.onCloseCallback(_value);
     _value = null;
   }

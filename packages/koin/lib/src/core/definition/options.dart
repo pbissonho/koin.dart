@@ -26,5 +26,5 @@ class Options {
   final bool isCreatedAtStart;
   final bool override;
 
-  Options({this.isCreatedAtStart = false, this.override = false});
+  const Options({this.isCreatedAtStart = false, this.override = false});
 }

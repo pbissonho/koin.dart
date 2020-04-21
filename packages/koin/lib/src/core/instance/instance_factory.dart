@@ -65,5 +65,5 @@ abstract class InstanceFactory<T> {
   ///
   /// Release the held instance (if hold)
   ///
-  void drop(InstanceContext context);
+  void drop();
 }

@@ -54,8 +54,8 @@ class BeanDefinition<T> with EquatableMixin {
   final Qualifier qualifier;
   final Definition<T> definition;
   final Kind kind;
-  List<Type> secondaryTypes = <Type>[];
-  final Options _options = Options();
+  List<Type> secondaryTypes;
+  final Options options;
   final Properties _properties = Properties();
   final Callbacks callbacks = Callbacks();
 
@@ -64,7 +64,15 @@ class BeanDefinition<T> with EquatableMixin {
       this.primaryType,
       this.qualifier,
       this.definition,
-      this.kind});
+      this.kind,
+      this.options = const Options(),
+      List<Type> secondaryTypes}) {
+    if (secondaryTypes == null) {
+      this.secondaryTypes = <Type>[];
+    } else {
+      this.secondaryTypes = secondaryTypes;
+    }
+  }
 
   @override
   String toString() {

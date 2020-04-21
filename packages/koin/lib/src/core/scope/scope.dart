@@ -46,7 +46,7 @@ class Scope {
   }
 
   void create(List<Scope> links) {
-    _instanceRegistry.create(scopeDefinition.definitions);
+    _instanceRegistry.create(scopeDefinition.definitions.toSet());
     _linkedScope.addAll(links);
   }
 

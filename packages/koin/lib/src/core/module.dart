@@ -15,7 +15,9 @@
  */
 
 import 'dart:core';
+import 'package:koin/src/core/definition/definitions.dart';
 import 'package:koin/src/core/scope/scope_definition.dart';
+import 'package:kt_dart/kt.dart';
 import 'definition/bean_definition.dart';
 import 'definition/options.dart';
 import 'qualifier.dart';
@@ -29,34 +31,34 @@ import 'qualifier.dart';
 /// @author - Pedro Bissonho
 ///
 class Module {
-  List<BeanDefinition> definitions = [];
-  List<ScopeSet> scopes = [];
-  final bool isCreatedAtStart;
+  final bool createAtStart;
   final bool override;
+  ScopeDefinition rootScope = ScopeDefinition.rootDefinition();
+  bool isLoaded = false;
+  var otherScopes = KtList<ScopeDefinition>.empty();
 
-  ScopeDefinition rootScope;
+  Module([this.createAtStart, this.override]);
 
-  List<ScopeDefinition> otherScopes;
-
-
-  Module([this.isCreatedAtStart, this.override]);
-
-  bool  isLoaded ;
-
+  /*
   ///
-  /// Declare a [BeanDefinition] in current [Module]
-  ///
-  void declareDefinition<T>(BeanDefinition<T> definition, Options options) {
-    definition.options = options;
-    definitions.add(definition);
-  }
+     /// Declare a group a scoped definition with a given scope qualifier
+     /// @param qualifier
+     ///
+    void scopeQ(Qualifier qualifier, scopeSet: ScopeDSL.() -> Unit) {
+        var scopeDefinition = ScopeDefinition(qualifier);
+        ScopeDSL(scopeDefinition).apply(scopeSet);
+        otherScopes.add(scopeDefinition);
+    }
 
-  ///
-  ///Declare a definition in current [Module]
-  ///
-  void declareScope(ScopeSet scope) {
-    scopes.add(scope);
-  }
+    ///
+    ///Class Typed Scope
+    ///
+    void <T> scope(scopeSet: ScopeDSL.() -> Unit) {
+        var scopeDefinition = ScopeDefinition(TypeQualifier(T));
+        ScopeDSL(scopeDefinition).apply(scopeSet);
+        otherScopes.add(scopeDefinition);
+    }
+*/
 
   ///
   /// Declare a Single definition
@@ -67,39 +69,18 @@ class Module {
     bool createdAtStart = false,
     bool override = false,
   }) {
-    var beanDefinition =
-        BeanDefinition<T>.createSingle(qualifier, null, definition);
-    declareDefinition(beanDefinition,
-        Options(isCreatedAtStart: createdAtStart, override: override));
+    return Definitions.saveSingle(qualifier, definition, rootScope,
+        makeOptions(override, createdAtStart));
+  }
 
-    return beanDefinition;
+  Options makeOptions(bool override, [bool createdAtStart = false]) {
+    return Options(
+        isCreatedAtStart: createAtStart || createdAtStart,
+        override: this.override || override);
   }
 
   ///
-  /// Declare a group a scoped definition with a given scope [Qualifier]
-  ///
-  ScopeSet scope(
-      Qualifier scopeName, void Function(ScopeSet scope) scopeDeclaration) {
-    var scopeX = ScopeSet(scopeName);
-
-    scopeDeclaration(scopeX);
-    declareScope(scopeX);
-    return scopeX;
-  }
-
-  ScopeSet scopeSet(ScopeSet scopeSet) {
-    declareScope(scopeSet);
-    return scopeSet;
-  }
-
-  ScopeSet scopeOld(Qualifier scopeName) {
-    var scopeX = ScopeSet(scopeName);
-    declareScope(scopeX);
-    return scopeX;
-  }
-
-  ///
-  /// Declare a factory definition
+  /// Declare a Factory definition
   ///
   BeanDefinition<T> factory<T>(
     Definition<T> definition, {
@@ -107,12 +88,25 @@ class Module {
     bool createdAtStart = false,
     bool override = false,
   }) {
-    var beanDefinition =
-        BeanDefinition<T>.createFactory(qualifier, null, definition);
-    declareDefinition(beanDefinition,
-        Options(isCreatedAtStart: createdAtStart, override: override));
-    return beanDefinition;
+    return Definitions.saveFactory(
+        qualifier, definition, rootScope, makeOptions(override));
   }
+
+  // TODO
+
+  /*
+
+   ///
+    /// Help write list of Modules
+     ///
+    operator fun plusModule(module: Module) = listOf(this, module)
+
+    ///
+     /// Help write list of Modules
+     ///
+    operator fun plusModules(modules: List<Module>) = listOf(this) + modules
+    */
+
 }
 
 ///
