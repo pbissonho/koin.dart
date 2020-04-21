@@ -16,7 +16,8 @@
 
 import 'package:koin/src/core/error/error.dart';
 
-import '../../../koin.dart';
+import '../koin_application.dart';
+import '../koin_dart.dart';
 import 'koin_context.dart';
 
 ///

@@ -2,7 +2,7 @@ import 'package:koin/src/core/context/koin_context.dart';
 import 'package:koin/src/core/context/koin_context_handler.dart';
 
 import '../../../koin.dart';
-import '../../koin_application.dart';
+import '../koin_application.dart';
 import 'global_context.dart';
 
 ///

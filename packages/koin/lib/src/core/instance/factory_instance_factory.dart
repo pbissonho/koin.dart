@@ -16,7 +16,7 @@
 
 import 'package:koin/src/core/definition/bean_definition.dart';
 
-import '../../koin_dart.dart';
+import '../koin_dart.dart';
 import 'instance_context.dart';
 import 'instance_factory.dart';
 

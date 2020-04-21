@@ -21,7 +21,7 @@ import 'package:koin/src/core/registry/instance_registry.dart';
 
 import '../definition/bean_definition.dart';
 import '../lazy/lazy.dart';
-import '../../koin_dart.dart';
+import '../koin_dart.dart';
 import '../definition_parameters.dart';
 import '../logger.dart';
 import '../qualifier.dart';

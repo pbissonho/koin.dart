@@ -1,9 +1,9 @@
 import 'package:koin/src/core/definition_parameters.dart';
 import 'package:koin/src/core/error/error.dart';
 import 'package:koin/src/core/scope/scope.dart';
-import 'package:koin/src/koin_dart.dart';
 import 'package:kt_dart/kt.dart';
 
+import '../koin_dart.dart';
 import '../definition/bean_definition.dart';
 import '../instance/instance_factory.dart';
 import '../instance/instance_context.dart';

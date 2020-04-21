@@ -18,7 +18,7 @@ import 'package:koin/src/core/error/error.dart';
 import 'package:koin/src/core/error/exceptions.dart';
 import 'package:kt_dart/kt.dart';
 
-import '../../koin_dart.dart';
+import '../koin_dart.dart';
 import '../module.dart';
 import '../qualifier.dart';
 import '../scope/scope_definition.dart';
@@ -37,6 +37,7 @@ class ScopeRegistry {
 
   ScopeDefinition _rootScopeDefinition;
   Scope _rootScope;
+  Scope get rootScope => _rootScope;
 
   int size() =>
       scopeDefinitions.values.map((definition) => definition.size).sum();

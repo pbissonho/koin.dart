@@ -17,7 +17,7 @@
 import 'package:koin/src/core/definition/bean_definition.dart';
 import 'package:koin/src/core/error/exceptions.dart';
 
-import '../../koin_dart.dart';
+import '../koin_dart.dart';
 import '../logger.dart';
 import 'instance_context.dart';
 

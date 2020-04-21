@@ -17,7 +17,8 @@
 import 'package:koin/src/core/error/error.dart';
 import 'package:koin/src/core/error/exceptions.dart';
 
-import '../../../koin.dart';
+import '../koin_application.dart';
+import '../koin_dart.dart';
 import 'koin_context.dart';
 
 //
@@ -52,7 +53,7 @@ class GlobalContext implements KoinContext {
   /// Start a Koin Application as StandAlone
   ///
   @override
-  void setup(KoinApplication koinApplication) {
+  void setup(koinApplication) {
     if (_koin != null) {
       throw KoinAppAlreadyStartedException(
           'A Koin Application has already been started');

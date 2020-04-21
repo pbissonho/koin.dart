@@ -15,10 +15,9 @@
  */
 
 import 'package:koin/src/core/measure.dart';
-
-import 'core/logger.dart';
-import 'core/module.dart';
 import 'koin_dart.dart';
+import 'logger.dart';
+import 'module.dart';
 
 //
 /// Koin Application
@@ -30,10 +29,9 @@ import 'koin_dart.dart';
 //
 class KoinApplication {
   Koin koin = Koin();
-  static Logger logger = PrintLogger(Level.debug);
 
-  void loadDefaults() {
-    koin.scopeRegistry.loadDefaultScopes(koin);
+  void initInter() {
+    koin.scopeRegistry.createRootScopeDefinition();
   }
 
   ///
@@ -49,24 +47,32 @@ class KoinApplication {
   /// @param modules
   ///
   KoinApplication modules(List<Module> modules) {
-    if (logger.isAt(Level.info)) {
+    if (koin.logger.isAt(Level.info)) {
       var duration = Measure.measureDurationOnly(() {
-        _loadModulesAndScopes(modules);
+        _loadModules(modules);
       });
 
-      var count =
-          0; // koin.rootScope.beanRegistry.getAllDefinitions().size + koin.scopeRegistry.getScopeSets().map { it.definitions.size }.sum();
-      logger.info('total $count registered definitions');
-      logger.info('load modules in $duration ms');
+      var count = koin.scopeRegistry.size();
+      koin.logger.info('loaded $count definitions - $duration ms');
     } else {
-      _loadModulesAndScopes(modules);
+      _loadModules(modules);
     }
+
+    if (koin.logger.isAt(Level.info)) {
+      var duration = Measure.measureDurationOnly(() {
+        koin.createRootScope();
+      });
+
+      koin.logger.info('create context - $duration ms');
+    } else {
+      koin.createRootScope();
+    }
+
     return this;
   }
 
-  void _loadModulesAndScopes(Iterable<Module> modules) {
-    koin.rootScope.beanRegistry.loadModules(modules);
-    koin.scopeRegistry.loadScopes(modules);
+  void _loadModules(List<Module> modules) {
+    koin.loadModules(modules);
   }
 
   ///
@@ -99,59 +105,52 @@ class KoinApplication {
   /// Set Koin Logger
   /// @param logger - logger
   ///
-  KoinApplication setLogger(Logger logger) {
-    KoinApplication.logger = logger;
+  KoinApplication logger(Logger logger) {
+    koin.logger = logger;
     return this;
   }
 
   ///
   /// Set Koin to use [PrintLogger], by default at [Level.INFO]
   ///
-  KoinApplication printLogger() {
-    return setLogger(PrintLogger(Level.debug));
+  KoinApplication printLogger({Level level = Level.info}) {
+    logger(PrintLogger(level));
+    return this;
   }
 
   ///
   /// Create Single instances Definitions marked as createdAtStart
   ///
   KoinApplication createEagerInstances() {
-    if (logger.isAt(Level.debug)) {
+    if (koin.logger.isAt(Level.debug)) {
       var duration = Measure.measureDurationOnly(() {
         koin.createEagerInstances();
       });
 
-      logger.debug('instances started in $duration ms');
+      koin.logger.debug('instances started in $duration ms');
     } else {
       koin.createEagerInstances();
     }
     return this;
   }
 
-  ///
-  /// Close all resources from Koin & remove Standalone Koin instance
-  ///
+  
   void close() {
     koin.close();
-    if (logger.isAt(Level.info)) {
-      logger.info('stopped');
-    }
   }
 
-  KoinApplication unloadModules(List<Module> modules) {
-    koin.rootScope.beanRegistry.unloadModules(modules);
-    koin.scopeRegistry.unloadScopedDefinitions(modules);
-
-    return this;
+  void unloadModules(List<Module> modules) {
+    koin.scopeRegistry.unloadModules(modules);
   }
 
-  ///
-  /// Create a new instance of KoinApplication
-  ///
-  static KoinApplication create() {
+  void unloadModule(Module modules) {
+    koin.scopeRegistry.unloadModule(modules);
+  }
+
+ 
+  static KoinApplication init() {
     var app = KoinApplication();
-    app.loadDefaults();
+    app.initInter();
     return app;
   }
-
-  static KoinApplication init() {}
 }
