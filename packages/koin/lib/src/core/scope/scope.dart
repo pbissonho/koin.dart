@@ -18,6 +18,7 @@ import 'package:koin/src/core/error/error.dart';
 import 'package:koin/src/core/error/exceptions.dart';
 import 'package:koin/src/core/measure.dart';
 import 'package:koin/src/core/registry/instance_registry.dart';
+import 'package:kt_dart/kt.dart';
 
 import '../definition/bean_definition.dart';
 import '../lazy/lazy.dart';
@@ -36,7 +37,7 @@ class Scope {
 
   final List<Scope> _linkedScope = <Scope>[];
   InstanceRegistry _instanceRegistry;
-
+  InstanceRegistry get instanceRegistry => _instanceRegistry;
   bool _closed = false;
 
   List<ScopeCallback> callbacks = <ScopeCallback>[];
@@ -46,15 +47,16 @@ class Scope {
   }
 
   void create(List<Scope> links) {
-    _instanceRegistry.create(scopeDefinition.definitions.toSet());
+    _instanceRegistry
+        .create(KtHashSet.from(scopeDefinition.definitions.asSet()));
     _linkedScope.addAll(links);
   }
 
   T getSource<T>() {
-    if (source.runtimeType is T) {
+    if (source is T) {
       return source as T;
     } else {
-      error("Can't use Scope source for ${T.runtimeType} - source is:$source");
+      error("Can't use Scope source for ${T} - source is:$source");
     }
   }
 
@@ -152,7 +154,7 @@ class Scope {
     try {
       return getWithType(type, qualifier, parameters);
     } catch (e) {
-      koin.logger.error("Can't get instance for ${type.runtimeType}");
+      koin.logger.error("Can't get instance for ${type}");
       return null;
     }
   }

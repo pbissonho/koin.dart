@@ -69,7 +69,7 @@ class Module {
     bool createdAtStart = false,
     bool override = false,
   }) {
-    return Definitions.saveSingle(qualifier, definition, rootScope,
+    return Definitions.saveSingle<T>(qualifier, definition, rootScope,
         makeOptions(override, createdAtStart));
   }
 
@@ -88,7 +88,7 @@ class Module {
     bool createdAtStart = false,
     bool override = false,
   }) {
-    return Definitions.saveFactory(
+    return Definitions.saveFactory<T>(
         qualifier, definition, rootScope, makeOptions(override));
   }
 
@@ -109,10 +109,3 @@ class Module {
 
 }
 
-///
-/// Define a Module
-///
-Module module({bool createdAtStart = false, bool override = false}) {
-  var module = Module(createdAtStart, override);
-  return module;
-}

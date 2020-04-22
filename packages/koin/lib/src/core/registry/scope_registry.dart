@@ -39,8 +39,12 @@ class ScopeRegistry {
   Scope _rootScope;
   Scope get rootScope => _rootScope;
 
-  int size() =>
-      scopeDefinitions.values.map((definition) => definition.size).sum();
+  int size() {
+    var sum =
+        scopeDefinitions.values.map<int>((definition) => definition.size()).sum();
+
+    print(sum);
+  }
 
   ScopeRegistry(this.koin);
 
@@ -105,7 +109,7 @@ class ScopeRegistry {
   }
 
   void createRootScope() {
-    _rootScope ??= createScope(ScopeDefinition.ROOT_SCOPE_ID,
+    _rootScope = createScope(ScopeDefinition.ROOT_SCOPE_ID,
         ScopeDefinition.ROOT_SCOPE_QUALIFIER, null);
   }
 
@@ -125,7 +129,7 @@ class ScopeRegistry {
       var createdScope =
           createScopeWithDefinition(scopeId, scopeDefinition, source);
       scopes[scopeId] = createdScope;
-      createdScope;
+      return createdScope;
     } else {
       throw NoScopeDefFoundException(
           "No Scope Definition found for qualifer '${qualifier.value}'");

@@ -57,7 +57,7 @@ class BeanDefinition<T> with EquatableMixin {
   List<Type> secondaryTypes;
   final Options options;
   final Properties _properties = Properties();
-  final Callbacks callbacks = Callbacks();
+  Callbacks callbacks;
 
   BeanDefinition(
       {this.scopeDefinition,
@@ -66,18 +66,36 @@ class BeanDefinition<T> with EquatableMixin {
       this.definition,
       this.kind,
       this.options = const Options(),
+      Callbacks callbacks,
       List<Type> secondaryTypes}) {
     if (secondaryTypes == null) {
       this.secondaryTypes = <Type>[];
     } else {
       this.secondaryTypes = secondaryTypes;
     }
+
+    if (callbacks == null) {
+      callbacks = Callbacks();
+    }
+  }
+
+  BeanDefinition<T> copy({List<Type> secondaryTypes, Callbacks callbacks}) {
+    return BeanDefinition<T>(
+        scopeDefinition: scopeDefinition,
+        primaryType: primaryType,
+        qualifier: qualifier,
+        definition: definition,
+        kind: kind,
+        options: options,
+        secondaryTypes: secondaryTypes =
+            null ? this.secondaryTypes : secondaryTypes,
+        callbacks: callbacks = null ? this.callbacks : callbacks);
   }
 
   @override
   String toString() {
     var defKind = kind.toString();
-    var defType = "'${primaryType.runtimeType}'";
+    var defType = "'${primaryType.toString()}'";
 
     var defName = qualifier != null ? 'qualifier:$qualifier' : '';
     var defScope =
@@ -86,10 +104,8 @@ class BeanDefinition<T> with EquatableMixin {
     var defOtherTypes;
 
     if (secondaryTypes.isNotEmpty) {
-      var typesAsString = secondaryTypes
-          .map((type) => type.runtimeType.toString())
-          .join(',')
-          .toString();
+      var typesAsString =
+          secondaryTypes.map((type) => type.toString()).join(',').toString();
       defOtherTypes = 'binds:$typesAsString';
     } else {
       defOtherTypes = '';
@@ -117,9 +133,9 @@ class BeanDefinition<T> with EquatableMixin {
 }
 
 String indexKey(Type type, Qualifier qualifier) {
-  if (qualifier.value != null) {
-    return '${type.runtimeType.toString()}::${qualifier.value}';
+  if (qualifier?.value != null) {
+    return '${type.toString()}::${qualifier.value}';
   } else {
-    return type.runtimeType.toString();
+    return type.toString();
   }
 }

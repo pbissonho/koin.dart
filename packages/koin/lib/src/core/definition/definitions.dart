@@ -9,19 +9,22 @@ class Definitions {
       Definition<T> definition,
       ScopeDefinition scopeDefinition,
       Options options) {
-    var beanDefinition =
-        createSingle(qualifier, definition, scopeDefinition, options);
+    var beanDefinition = createSingle<T>(
+        qualifier: qualifier,
+        definition: definition,
+        scopeDefinition: scopeDefinition,
+        options: options);
     scopeDefinition.save(beanDefinition);
     return beanDefinition;
   }
 
   static BeanDefinition<T> createSingle<T>(
-      Qualifier qualifier,
+      {Qualifier qualifier,
       Definition<T> definition,
       ScopeDefinition scopeDefinition,
       Options options,
-      [List<Type> secondaryTypes]) {
-    return BeanDefinition(
+      List<Type> secondaryTypes}) {
+    return BeanDefinition<T>(
         scopeDefinition: scopeDefinition,
         primaryType: T,
         qualifier: qualifier,
@@ -45,12 +48,12 @@ class Definitions {
   }
 
   static BeanDefinition<T> createFactory<T>(
-      Qualifier qualifier,
+      {Qualifier qualifier,
       Definition<T> definition,
       ScopeDefinition scopeDefinition,
       Options options,
-      [List<Type> secondaryTypes]) {
-    return BeanDefinition(
+      List<Type> secondaryTypes}) {
+    return BeanDefinition<T>(
         scopeDefinition: scopeDefinition,
         primaryType: T,
         qualifier: qualifier,
@@ -65,8 +68,11 @@ class Definitions {
       Definition<T> definition,
       ScopeDefinition scopeDefinition,
       Options options) {
-    var beanDefinition =
-        createFactory(qualifier, definition, scopeDefinition, options);
+    var beanDefinition = createFactory<T>(
+        qualifier: qualifier,
+        definition: definition,
+        scopeDefinition: scopeDefinition,
+        options: options);
     scopeDefinition.save(beanDefinition);
     return beanDefinition;
   }

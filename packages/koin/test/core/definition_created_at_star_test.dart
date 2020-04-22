@@ -1,6 +1,6 @@
 import 'package:koin/koin.dart';
-import 'package:koin/src/core/instance/definition_instance.dart';
-import 'package:koin/src/koin_application.dart';
+import 'package:koin/src/core/context/context_functions.dart';
+import 'package:koin/src/core/instance/instance_context.dart';
 import 'package:test/test.dart';
 
 import '../classes.dart';
@@ -13,11 +13,11 @@ void main() {
 
     var defA = app.getDefinition(ComponentA);
     expect(true, defA.options.isCreatedAtStart);
-    expect(false, defA.getInstance().isCreated(InstanceContext()));
+   // expect(false, defA.scopeDefinition);
   });
 
   test("is created at start", () {
-    var app = startKoin((app) {
+    var app = startKoin((app, context) {
       app.module((module()
         ..single<ComponentA>((s, p) => ComponentA(), createdAtStart: true)));
     });
