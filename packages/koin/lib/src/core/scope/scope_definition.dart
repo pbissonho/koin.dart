@@ -56,13 +56,12 @@ class ScopeDefinition extends Equatable {
       secondaryTypes2 = <Type>[];
     }
 
-    var beanDefinition = Definitions.createSingleWithType(
-        type,
-        qualifier,
-        (s, p) => instance,
-        this,
-        Options(isCreatedAtStart: false, override: override),
-        secondaryTypes2);
+    var beanDefinition = Definitions.createSingle<T>(
+        qualifier: qualifier,
+        definition: (s, p) => instance,
+        scopeDefinition: this,
+        options: Options(isCreatedAtStart: false, override: override),
+        secondaryTypes: secondaryTypes2);
 
     save(beanDefinition, override);
     return beanDefinition;

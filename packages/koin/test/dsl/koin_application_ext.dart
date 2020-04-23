@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 
 extension KoinApplicationEx<T> on KoinApplication {
   void expectDefinitionsCount(int count) {
-    expect(count, koin.scopeRegistry.size());
+    expect(koin.scopeRegistry.size(), count);
   }
 
   BeanDefinition<T> getBeanDefinition(Type type) {

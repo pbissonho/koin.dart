@@ -1,6 +1,9 @@
 import 'package:koin/koin.dart';
 import 'package:koin/src/core/lazy/lazy.dart';
 import 'package:test/test.dart';
+
+void main(){}
+
 /*
 class Service {
   const Service();

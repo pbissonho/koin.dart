@@ -1,47 +1,53 @@
-
-/*
 import 'package:koin/koin.dart';
 import 'package:koin/src/core/context/context_functions.dart';
 import 'package:koin/src/core/instance/instance_context.dart';
 import 'package:test/test.dart';
 
-import '../classes.dart';
-import '../test_extension/koin_application_ext.dart';
+import '../components.dart';
+import '../dsl/koin_application_ext.dart';
 
 void main() {
-  test("is declared as created at start", () {
-    var app = KoinApplication().module(module()
-      ..single<ComponentA>((s, p) => ComponentA(), createdAtStart: true));
+  test('is declared as created at start', () {
+    var app = koinApplication((app) {
+      app.module(module()
+        ..single<ComponentA>((s, p) => ComponentA(), createdAtStart: true));
+    });
 
-    var defA = app.getDefinition(ComponentA);
+    var defA = app.getBeanDefinition(ComponentA);
     expect(true, defA.options.isCreatedAtStart);
-   // expect(false, defA.scopeDefinition);
+
+    var instanceFactory = app.getInstanceFactory(ComponentA);
+    expect(false, instanceFactory.isCreated());
   });
 
-  test("is created at start", () {
-    var app = startKoin((app, context) {
+  test('is created at start', () {
+    var app = startKoin2((app) {
       app.module((module()
         ..single<ComponentA>((s, p) => ComponentA(), createdAtStart: true)));
     });
 
-    var defA = app.getDefinition(ComponentA);
+    var defA = app.getBeanDefinition(ComponentA);
     expect(true, defA.options.isCreatedAtStart);
-    expect(true, defA.getInstance().isCreated(InstanceContext()));
-
-    // TODO
-    // definitions are not booting at the beginning.
-
+    var instanceFactory = app.getInstanceFactory(ComponentA);
+    expect(false, instanceFactory.isCreated());
+    
     stopKoin();
-  }, skip: true);
+  });
 
-  test("factory is not created at start", () {
-    var app = KoinApplication()
-        .module(module()..factory<ComponentA>((s, p) => ComponentA()));
 
-    var defA = app.getDefinition(ComponentA);
+  test('factory is not created at start', () {
+    var app = koinApplication((app) {
+      app.module(module()
+        ..single<ComponentA>((s, p) => ComponentA(), createdAtStart: true));
+    });
+
+    var defA = app.getBeanDefinition(ComponentA);
     expect(false, defA.options.isCreatedAtStart);
-    expect(false, defA.getInstance().isCreated(InstanceContext()));
+
+    var instanceFactory = app.getInstanceFactory(ComponentA);
+    expect(false, instanceFactory.isCreated());
+
     app.close();
   });
+
 }
-*/

@@ -1,20 +1,20 @@
-/*
 import 'package:koin/koin.dart';
 import 'package:koin/src/core/error/exceptions.dart';
-import 'package:koin/src/koin_application.dart';
 import 'package:test/test.dart';
 
-import '../classes.dart';
+import '../components.dart';
 
 void main() {
-  test("can declare a single on the fly", () {
-    var koin = KoinApplication().printLogger().koin;
+  test('can declare a single on the fly', () {
+    var koin = koinApplication((app){
+      app.printLogger();
+    }).koin;
 
     var a = ComponentA();
 
     koin.declare(a);
   });
-  test("not can declare a single on the fly", () {
+  test('not can declare a single on the fly', () {
     var koin = KoinApplication()
         .printLogger()
         .module(module()..single((s, p) => ComponentA()))
@@ -25,7 +25,7 @@ void main() {
     expect(() => koin.declare(a), throwsA(isA<DefinitionOverrideException>()));
   });
 
-  test("can declare and override a single on the fly", () {
+  test('can declare and override a single on the fly', () {
     var koin = KoinApplication()
         .printLogger()
         .module(module()..single((s, p) => MySingle(1)))
@@ -34,11 +34,11 @@ void main() {
     var a = MySingle(2);
 
     koin.declare(a, override: true);
-    expect(2, koin.get<MySingle>().value);
+    expect(2, koin.get<MySingle>().id);
   });
 
   test(
-      "not can declare and override a single on the fly when override is set to false",
+      'not can declare and override a single on the fly when override is set to false',
       () {
     var koin = KoinApplication()
         .printLogger()
@@ -49,49 +49,47 @@ void main() {
 
     try {
       koin.declare(a, override: false);
-      fail("shoud trow a exception");
+      fail('shoud trow a exception');
     } catch (error) {
       print(error.toString());
     }
 
-    expect(1, koin.get<MySingle>().value);
+    expect(1, koin.get<MySingle>().id);
   });
 
-  test("can declare a single with qualifier on the fly", () {
+  test('can declare a single with qualifier on the fly', () {
     var koin = KoinApplication()
         .printLogger()
-        .module(module()..single((s, p) => ComponentA()))
+        .module(module()..single<ComponentA>((s, p) => ComponentA()))
         .koin;
 
-    var a = ComponentImpl();
-    koin.declare<ComponentA>(a, qualifier: named("another_a"));
+    var a = ComponentA();
+    koin.declare(a, qualifier: named('another_a'));
 
     // TODO
     // When get named data without pass a Type, the type is passed ay dynamic and the Definition is configured as dynamic
-    var getA = koin.get(named("another_a"));
+    var getA = koin.get<ComponentA>(named('another_a'));
     expect(a, getA);
     expect(a, isNot(equals(koin.get<ComponentA>())));
   });
 
-  test("can declare and override a single with qualifier on the fly", () {
+  test('can declare and override a single with qualifier on the fly', () {
     var koin = KoinApplication()
         .printLogger()
         .module(module()
           ..single((s, p) => ComponentA())
-          ..single((s, p) => ComponentA(), qualifier: named("another_a")))
+          ..single((s, p) => ComponentA(), qualifier: named('another_a')))
         .koin;
 
-    var a = ComponentImpl();
-    koin.declare(a, qualifier: named("another_a"), override: true);
+    var a = ComponentA();
+    koin.declare(a, qualifier: named('another_a'), override: true);
 
-    // TODO
-    // When get named data without pass a Type, the type is passed ay dynamic and the Definition is configured as dynamic
-    var getA = koin.get(named("another_a"));
+    var getA = koin.get<ComponentA>(named('another_a'));
     expect(a, getA);
     expect(a, isNot(equals(koin.get<ComponentA>())));
   });
 
-  test("can declare a single with secondary type on the fly", () {
+  test('can declare a single with secondary type on the fly', () {
     var koin = KoinApplication()
         .printLogger()
         .module(module()..single((s, p) => ComponentA()))
@@ -104,7 +102,7 @@ void main() {
     expect(a, koin.get<ComponentInterface1>());
   });
 
-  test("can declare and override a single with secondary type on the fly", () {
+  test('can declare and override a single with secondary type on the fly', () {
     var koin = KoinApplication()
         .printLogger()
         .module(module()..single((s, p) => ComponentA()))
@@ -120,18 +118,18 @@ void main() {
     expect(b, koin.get<ComponentInterface1>());
   });
 
-  test("can declare a scoped on the fly", () {
+  test('can declare a scoped on the fly', () {
     var koin = KoinApplication()
         .printLogger()
         .module(module()
-          ..scope(named("Session"), (scope) {
+          ..scopeWithType(named('Session'), (scope) {
             scope.scoped((s, p) => ComponentB(s.get()));
           }))
         .koin;
 
     var a = ComponentA();
 
-    var session1 = koin.createScope("session1", named("Session"));
+    var session1 = koin.createScope('session1', named('Session'));
     session1.declare(a);
 
     expect(a, session1.get<ComponentA>());
@@ -141,12 +139,12 @@ void main() {
   test("can't declare a scoped-single on the fly", () {
     var koin = KoinApplication()
         .printLogger()
-        .module(module()..scope(named("Session"), (scope) {}))
+        .module(module()..scopeWithType(named('Session'), (scope) {}))
         .koin;
 
     var a = ComponentA();
 
-    var session1 = koin.createScope("session1", named("Session"));
+    var session1 = koin.createScope('session1', named('Session'));
     session1.declare(a);
 
     expect(
@@ -156,13 +154,13 @@ void main() {
   test("can't declare a other scoped on the fly", () {
     var koin = KoinApplication()
         .printLogger()
-        .module(module()..scope(named("Session"), (scope) {}))
+        .module(module()..scopeWithType(named('Session'), (scope) {}))
         .koin;
 
     var a = ComponentA();
 
-    var session1 = koin.createScope("session1", named("Session"));
-    var session2 = koin.createScope("session2", named("Session"));
+    var session1 = koin.createScope('session1', named('Session'));
+    var session2 = koin.createScope('session2', named('Session'));
 
     session1.declare(a);
 
@@ -170,4 +168,3 @@ void main() {
         throwsA(isA<NoBeanDefFoundException>()));
   });
 }
-*/

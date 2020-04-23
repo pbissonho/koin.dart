@@ -109,7 +109,9 @@ class Koin {
   /// This result of declaring a single definition of type T, returning the given instance
   ///
   void declare<T>(T instance,
-      {Qualifier qualifier, List<Type> secondaryTypes, bool override = false}) {
+      {Qualifier qualifier,
+      List<Type> secondaryTypes = const <Type>[],
+      bool override = false}) {
     var firstType = T;
     var types = List.of([firstType]);
     types.addAll(secondaryTypes);

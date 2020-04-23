@@ -1,4 +1,6 @@
 
+void main () {}
+
 /*
 abstract class IService {
   void dispose();

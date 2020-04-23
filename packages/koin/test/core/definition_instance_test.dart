@@ -1,4 +1,6 @@
 
+void main(){}
+
 /*
 import 'package:koin/src/core/definition/bean_definition.dart';
 import 'package:koin/src/core/definition_parameters.dart';
@@ -8,6 +10,8 @@ import 'package:koin/src/core/koin_dart.dart';
 import 'package:koin/src/core/qualifier.dart';
 import 'package:koin/src/core/scope/scope.dart';
 import 'package:test/test.dart';
+
+
 
 class Service {}
 

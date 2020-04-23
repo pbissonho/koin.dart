@@ -43,7 +43,7 @@ class ScopeRegistry {
     var sum =
         scopeDefinitions.values.map<int>((definition) => definition.size()).sum();
 
-    print(sum);
+    return sum;
   }
 
   ScopeRegistry(this.koin);

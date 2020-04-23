@@ -123,8 +123,8 @@ class BeanDefinition<T> with EquatableMixin {
 
   bool isIt(Type type, Qualifier qualifier, ScopeDefinition scopeDefinition) {
     return hasType(type) &&
-        qualifier == qualifier &&
-        scopeDefinition == scopeDefinition;
+        qualifier == this.qualifier &&
+        this.scopeDefinition == scopeDefinition;
   }
 
   bool canBind(Type primary, Type secondary) {
