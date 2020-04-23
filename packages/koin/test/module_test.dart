@@ -1,7 +1,5 @@
-import 'package:koin/koin.dart';
-import 'package:koin/src/core/module.dart';
-import 'package:koin/src/core/qualifier.dart';
 
+/*
 abstract class IService {
   void dispose();
 }
@@ -77,3 +75,4 @@ void main() {
     expect(true, equas);
   });*/
 }
+*/

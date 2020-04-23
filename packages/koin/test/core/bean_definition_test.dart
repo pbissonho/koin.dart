@@ -7,12 +7,13 @@ import 'package:koin/src/dsl/module_dsl.dart';
 import 'package:test/test.dart';
 
 import 'package:koin/src/core/definition/options.dart';
-import 'package:koin/src/core/definition/bean_definition.dart';
 import '../components.dart';
-import '../test_extension/koin_application_ext.dart';
+import '../dsl/koin_application_ext.dart';
 
 import 'package:koin/src/core/qualifier.dart';
 import 'package:koin/src/core/definition_parameters.dart';
+
+import 'package:koin/src/core/definition/bean_definition.dart';
 
 void main() {
   Koin koin;
@@ -74,7 +75,7 @@ void main() {
   });
 
   test('definition name', () {
-    var name = named("A");
+    var name = named('A');
 
     var app = koinApplication((app) {
       app.module(module()
@@ -98,35 +99,13 @@ void main() {
     var instance = app.getInstanceFactory(ComponentA).get(InstanceContext(
         koin: app.koin, scope: rootScope, parameters: emptyParametersHolder()));
 
-    print(instance);
     expect(instance, app.koin.get<ComponentA>());
   });
 
-  test('testes', () {
-    var app = koinApplication((app) {
-      app.module(module()
-        ..single<ComponentA>(
-          (s, p) => ComponentA(),
-        )
-        ..factory<ComponentB>((s, p) => ComponentB(s.get<ComponentA>())));
-    });
-
-    app.getBeanDefinition(ComponentA);
-    var instance = app.getInstanceFactory(ComponentA).get(InstanceContext(
-        koin: app.koin, scope: rootScope, parameters: emptyParametersHolder()));
-
-    var instanceb = app.koin.get<ComponentB>();
-
-    print(instance);
-    expect(instance, app.koin.get<ComponentA>());
-
-    expect(instanceb.a, instance);
-  });
-
-  test("indexKey", () {
-    Type type = ComponentA;
+  test('indexKey', () {
+    var type = ComponentA;
     var id = indexKey(type, null);
 
-    expect(id, "ComponentA");
+    expect(id, 'ComponentA');
   });
 }

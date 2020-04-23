@@ -17,11 +17,12 @@
 import 'dart:core';
 import 'package:koin/src/core/definition/definitions.dart';
 import 'package:koin/src/core/scope/scope_definition.dart';
-import 'package:kt_dart/kt.dart';
 import 'definition/bean_definition.dart';
 import 'definition/options.dart';
 import 'qualifier.dart';
 
+import 'scope/scope.dart';
+import '../dsl/scope_dsl.dart';
 ///
 /// Koin Module
 /// Gather/help compose Koin definitions
@@ -35,30 +36,36 @@ class Module {
   final bool override;
   ScopeDefinition rootScope = ScopeDefinition.rootDefinition();
   bool isLoaded = false;
-  var otherScopes = KtList<ScopeDefinition>.empty();
+  var otherScopes = <ScopeDefinition>[];
 
-  Module([this.createAtStart, this.override]);
+  Module([this.createAtStart = false, this.override = false]);
 
-  /*
+ 
   ///
      /// Declare a group a scoped definition with a given scope qualifier
      /// @param qualifier
      ///
-    void scopeQ(Qualifier qualifier, scopeSet: ScopeDSL.() -> Unit) {
-        var scopeDefinition = ScopeDefinition(qualifier);
-        ScopeDSL(scopeDefinition).apply(scopeSet);
+    void scopeWithType(Qualifier qualifier,Function(ScopeDSL dsl) scopeCreate ) {
+        var scopeDefinition = ScopeDefinition(qualifier, false);
+        var scopeCreated = ScopeDSL(scopeDefinition);
+        scopeCreate(scopeCreated);  
+
+       // ScopeDSL(scopeDefinition).apply(scopeSet);
         otherScopes.add(scopeDefinition);
     }
 
     ///
     ///Class Typed Scope
     ///
-    void <T> scope(scopeSet: ScopeDSL.() -> Unit) {
-        var scopeDefinition = ScopeDefinition(TypeQualifier(T));
-        ScopeDSL(scopeDefinition).apply(scopeSet);
+    void scope<T>(Function(ScopeDSL dsl) makeScope ) {
+        var scopeDefinition = ScopeDefinition(TypeQualifier(T), false);
+        var scopeCreated = ScopeDSL(scopeDefinition);
+        makeScope(scopeCreated);  
+
+       // ScopeDSL(scopeDefinition).apply(scopeSet);
         otherScopes.add(scopeDefinition);
     }
-*/
+
 
   ///
   /// Declare a Single definition

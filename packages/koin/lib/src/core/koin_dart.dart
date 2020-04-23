@@ -168,7 +168,7 @@ class Koin {
   ///
   /// Create a Scope instance
   ///
-  Scope createScope(String scopeId, Qualifier qualifier, dynamic source) {
+  Scope createScope(String scopeId, Qualifier qualifier, [dynamic source]) {
     if (logger.isAt(Level.debug)) {
       logger.debug('!- create scope - id:$scopeId q:$qualifier');
     }

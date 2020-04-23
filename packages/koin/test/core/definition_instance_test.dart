@@ -1,3 +1,5 @@
+
+/*
 import 'package:koin/src/core/definition/bean_definition.dart';
 import 'package:koin/src/core/definition_parameters.dart';
 import 'package:koin/src/core/instance/instance_context.dart';
@@ -82,3 +84,4 @@ void main() {
     expect(true, factoryInstance.isCreated(context));
   });
 }
+*/

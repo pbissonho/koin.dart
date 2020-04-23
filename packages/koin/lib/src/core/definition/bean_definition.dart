@@ -75,7 +75,7 @@ class BeanDefinition<T> with EquatableMixin {
     }
 
     if (callbacks == null) {
-      callbacks = Callbacks();
+      this.callbacks = Callbacks();
     }
   }
 

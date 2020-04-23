@@ -61,7 +61,7 @@ class ScopeRegistry {
 
   void loadModule(Module module) {
     declareScope(module.rootScope);
-    declareScopes(module.otherScopes.asList());
+    declareScopes(module.otherScopes);
   }
 
   void declareScopes(List<ScopeDefinition> list) {
@@ -146,11 +146,11 @@ class ScopeRegistry {
 
     KtList<Scope> links;
     if (_rootScope == null) {
-      links = listOf(_rootScope);
-    } else {
       links = emptyList();
+    } else {
+      links = listOf(_rootScope);
     }
-    scope.create(links.asList());
+    scope.create(links);
     return scope;
   }
 
@@ -184,7 +184,7 @@ class ScopeRegistry {
   }
 
   void unloadModule(Module module) {
-    var scopeDefinitions = List.from(module.otherScopes.asList())
+    var scopeDefinitions = List.from(module.otherScopes)
       ..add(module.rootScope);
     scopeDefinitions.forEach((it) {
       unloadDefinitions(it);

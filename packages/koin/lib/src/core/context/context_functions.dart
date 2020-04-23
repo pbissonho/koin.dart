@@ -17,10 +17,10 @@ KoinApplication startKoin(
   return koinApplication;
 }
 
-KoinApplication startKoin2(
-    KoinApplication Function(KoinApplication koin) appDeclaration,
+KoinApplication startKoin2(Function(KoinApplication app) appDeclaration,
     {KoinContext koinContext}) {
   koinContext ??= GlobalContext();
+  KoinContextHandler.register(koinContext);
   var koinApplication = KoinApplication.init();
   KoinContextHandler.start(koinApplication);
   appDeclaration(koinApplication);

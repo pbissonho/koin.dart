@@ -1,4 +1,3 @@
-
 import '../core/definition/bean_definition.dart';
 
 ///
@@ -14,7 +13,7 @@ import '../core/definition/bean_definition.dart';
 ///
 
 extension<T> on BeanDefinition<T> {
-  BeanDefinition<T> bind(Type type) {
+  BeanDefinition bind(Type type) {
     var newTypes = List.from([type]);
     newTypes.addAll(secondaryTypes);
 
@@ -24,7 +23,7 @@ extension<T> on BeanDefinition<T> {
     return copyT;
   }
 
-  BeanDefinition<T> binds(List<Type> types) {
+  BeanDefinition binds(List<Type> types) {
     types.addAll(secondaryTypes);
 
     var copyT = copy(secondaryTypes: types);
@@ -33,7 +32,7 @@ extension<T> on BeanDefinition<T> {
     return copyT;
   }
 
-  BeanDefinition onClose(OnCloseCallback<T> onCloseCallback) {
+  BeanDefinition<T> onClose(OnCloseCallback<T> onCloseCallback) {
     var copyT = copy(callbacks: Callbacks(onCloseCallback: onCloseCallback));
     scopeDefinition.remove(this);
     scopeDefinition.save(copyT);

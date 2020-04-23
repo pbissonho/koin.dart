@@ -82,7 +82,9 @@ class InstanceRegistry {
   }
 
   T resolveInstance<T>(String indexKey, DefinitionParameters parameters) {
-    return instances[indexKey]?.get(defaultInstanceContext(parameters)) as T;
+
+    var instance = instances[indexKey]?.get(defaultInstanceContext(parameters)) as T;
+    return instance;
   }
 
   InstanceContext defaultInstanceContext(DefinitionParameters parameters) {

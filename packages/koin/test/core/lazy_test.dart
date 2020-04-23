@@ -1,7 +1,7 @@
 import 'package:koin/koin.dart';
 import 'package:koin/src/core/lazy/lazy.dart';
 import 'package:test/test.dart';
-
+/*
 class Service {
   const Service();
 }
@@ -60,3 +60,4 @@ void main() {
     expect(true, service.isInitialized);
   });
 }
+*/

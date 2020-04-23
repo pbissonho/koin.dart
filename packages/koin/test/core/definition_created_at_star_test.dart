@@ -1,3 +1,5 @@
+
+/*
 import 'package:koin/koin.dart';
 import 'package:koin/src/core/context/context_functions.dart';
 import 'package:koin/src/core/instance/instance_context.dart';
@@ -42,3 +44,4 @@ void main() {
     app.close();
   });
 }
+*/

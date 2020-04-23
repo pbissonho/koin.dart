@@ -1,30 +1,32 @@
-/// Creates a cons Lazy
-///
-///
-/// /*
-
 /*
-class ConstLazy<T> implements Lazy<T> {
+
+import 'lazy.dart';
+class ConstLazy<T> {
   static final _cache = Expando();
 
-  final Initializer<T> _initializer;
+  final Initializer<T> initializer;
 
-  const ConstLazy(this._initializer);
+  const ConstLazy(this.initializer);
 
-  T call() => _resolve();
+  ///
+  /// Get the lazily initialized value.
+  ///
+  T get value => _resolve();
+
+  ///
+  /// Returns whether the value has already been initialized or not.
+  ///
+  bool get isInitialized => _cache[this] != null;
 
   T _resolve() {
     var result = _cache[this];
     if (result != null) return result;
-    result = _initializer();
+    result = initializer();
     _cache[this] = result;
     return result;
   }
 
-  @override
-  T get value => _resolve();
-
-  @override
-  bool get isInitialized => _cache[this] != null;
+  T call() => _resolve();
 }
 */
+

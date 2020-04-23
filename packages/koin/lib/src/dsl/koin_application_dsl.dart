@@ -20,7 +20,7 @@ import '../core/koin_application.dart';
 /// @author Arnaud Giuliani
 ///
 KoinApplication koinApplication(
-    void Function(KoinApplication module) appDeclaration) {
+    void Function(KoinApplication app) appDeclaration) {
   var koinApplication = KoinApplication.init();
   appDeclaration(koinApplication);
   koinApplication.koin.createContextIfNeeded();

@@ -35,18 +35,19 @@ class Scope {
   final Koin koin;
   final dynamic source;
 
-  final List<Scope> _linkedScope = <Scope>[];
+  final KtHashSet<Scope> _linkedScope = KtHashSet<Scope>.empty();
   InstanceRegistry _instanceRegistry;
   InstanceRegistry get instanceRegistry => _instanceRegistry;
   bool _closed = false;
 
+  bool get closed => _closed;
   List<ScopeCallback> callbacks = <ScopeCallback>[];
 
   Scope({this.id, this.koin, this.scopeDefinition, this.source}) {
     _instanceRegistry = InstanceRegistry(koin, this);
   }
 
-  void create(List<Scope> links) {
+  void create(KtList<Scope> links) {
     _instanceRegistry
         .create(KtHashSet.from(scopeDefinition.definitions.asSet()));
     _linkedScope.addAll(links);
@@ -68,7 +69,7 @@ class Scope {
   ///
   void linkTo(List<Scope> scopes) {
     if (!scopeDefinition.isRoot) {
-      _linkedScope.addAll(scopes);
+      _linkedScope.addAll(KtList.from(scopes));
     } else {
       error("Can't add scope link to a root scope");
     }
@@ -77,9 +78,9 @@ class Scope {
   ///
   /// Remove linked scope
   ////
-  void unlink(List<Scope> scope) {
+  void unlink(List<Scope> scopes) {
     if (!scopeDefinition.isRoot) {
-      _linkedScope.removeWhere((value) => scope.contains(value));
+      _linkedScope.removeAll((KtList.from(scopes)));
     } else {
       error("Can't remove scope link to a root scope");
     }
@@ -196,7 +197,7 @@ class Scope {
         _instanceRegistry.resolveInstance(indexKeyCurrent, parameters);
 
     if (instance == null) {
-      var inOtherScope = findInOtherScope(type, qualifier, parameters);
+      var inOtherScope = findInOtherScope<T>(type, qualifier, parameters);
 
       if (inOtherScope == null) {
         var fromSource = getFromSource(type);
@@ -225,10 +226,10 @@ class Scope {
 
   T findInOtherScope<T>(
       Type type, Qualifier qualifier, DefinitionParameters parameters) {
-    var scope = _linkedScope.firstWhere((scope) =>
+    var scope = _linkedScope.firstOrNull((scope) =>
         scope.getWithTypeOrNull<T>(type, qualifier, parameters) != null);
 
-    return scope.getWithType(type, qualifier, parameters);
+    return scope?.getWithType(type, qualifier, parameters);
   }
 
   void createEagerInstances() {
