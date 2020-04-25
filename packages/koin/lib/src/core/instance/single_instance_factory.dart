@@ -36,9 +36,7 @@ class SingleInstanceFactory<T> extends InstanceFactory<T> {
 
   @override
   void drop() {
-    if (beanDefinition.callbacks.onCloseCallback != null) {
-      beanDefinition.callbacks.onCloseCallback(_value);
-    }
+    beanDefinition.callbacks.runCallback(_value);
 
     _value = null;
   }

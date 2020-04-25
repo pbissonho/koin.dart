@@ -26,13 +26,13 @@ class ScopeDSL {
 
   ScopeDSL(this.scopeDefinition);
 
-  BeanDefinition scoped<T>(Definition<T> definition,
+  BeanDefinition<T> scoped<T>(Definition<T> definition,
       {Qualifier qualifier, bool override = false, }) {
     return Definitions.saveSingle<T>(qualifier, definition, scopeDefinition,
         Options(isCreatedAtStart: false, override: override));
   }
 
-  BeanDefinition factory<T>( Definition<T> definition,
+  BeanDefinition<T> factory<T>( Definition<T> definition,
       {Qualifier qualifier, bool override = false,}) {
     return Definitions.saveFactory<T>(qualifier, definition, scopeDefinition,
         Options(isCreatedAtStart: false, override: override));

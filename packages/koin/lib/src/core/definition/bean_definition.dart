@@ -25,12 +25,23 @@ import '../qualifier.dart';
 import 'options.dart';
 
 class Callbacks<T> {
-  final OnCloseCallback onCloseCallback;
+  final void Function(T value) onCloseCallback;
+
+  bool hasCallback() {
+    var check = onCloseCallback != null;
+    return check;
+  }
+
+  void runCallback(T value) {
+    if (hasCallback()) {
+      onCloseCallback(value);
+    }
+  }
 
   Callbacks({this.onCloseCallback});
 }
 
-typedef OnCloseCallback<T> = void Function(T value);
+//typedef OnCloseCallback<T> = void Function(T value);
 
 typedef Definition<T> = T Function(
     Scope scope, DefinitionParameters parameters);
@@ -57,7 +68,7 @@ class BeanDefinition<T> with EquatableMixin {
   List<Type> secondaryTypes;
   final Options options;
   final Properties _properties = Properties();
-  Callbacks callbacks;
+  Callbacks<T> callbacks;
 
   BeanDefinition(
       {this.scopeDefinition,
@@ -66,7 +77,7 @@ class BeanDefinition<T> with EquatableMixin {
       this.definition,
       this.kind,
       this.options = const Options(),
-      Callbacks callbacks,
+      Callbacks<T> callbacks,
       List<Type> secondaryTypes}) {
     if (secondaryTypes == null) {
       this.secondaryTypes = <Type>[];
@@ -75,11 +86,28 @@ class BeanDefinition<T> with EquatableMixin {
     }
 
     if (callbacks == null) {
-      this.callbacks = Callbacks();
+      this.callbacks = Callbacks<T>();
+    } else {
+      this.callbacks = callbacks;
     }
   }
 
-  BeanDefinition<T> copy({List<Type> secondaryTypes, Callbacks callbacks}) {
+  BeanDefinition<T> copy({List<Type> secondaryTypes, Callbacks<T> callbacks}) {
+    var newSecondaryTypes;
+    var newCallbacks;
+
+    if (secondaryTypes == null) {
+      newSecondaryTypes = this.secondaryTypes;
+    } else {
+      newSecondaryTypes = secondaryTypes;
+    }
+
+    if (callbacks == null) {
+      newCallbacks = this.callbacks;
+    } else {
+      newCallbacks = callbacks;
+    }
+
     return BeanDefinition<T>(
         scopeDefinition: scopeDefinition,
         primaryType: primaryType,
@@ -87,9 +115,8 @@ class BeanDefinition<T> with EquatableMixin {
         definition: definition,
         kind: kind,
         options: options,
-        secondaryTypes: secondaryTypes =
-            null ? this.secondaryTypes : secondaryTypes,
-        callbacks: callbacks = null ? this.callbacks : callbacks);
+        secondaryTypes: newSecondaryTypes,
+        callbacks: newCallbacks);
   }
 
   @override
@@ -129,6 +156,35 @@ class BeanDefinition<T> with EquatableMixin {
 
   bool canBind(Type primary, Type secondary) {
     return primaryType == primary && secondaryTypes.contains(secondary);
+  }
+
+  ///
+  /// Definition Binding
+  ///
+  BeanDefinition bind(Type type) {
+    var newTypes = List.from([type]);
+    newTypes.addAll(secondaryTypes);
+
+    var copyT = copy(secondaryTypes: newTypes);
+    scopeDefinition.remove(this);
+    scopeDefinition.save(copyT);
+    return copyT;
+  }
+
+  BeanDefinition binds(List<Type> types) {
+    types.addAll(secondaryTypes);
+
+    var copyT = copy(secondaryTypes: types);
+    scopeDefinition.remove(this);
+    scopeDefinition.save(copyT);
+    return copyT;
+  }
+
+  BeanDefinition<T> onClose(void Function(T value) onCloseCallback) {
+    var copyT = copy(callbacks: Callbacks(onCloseCallback: onCloseCallback));
+    scopeDefinition.remove(this);
+    scopeDefinition.save(copyT);
+    return copyT;
   }
 }
 

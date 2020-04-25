@@ -21,8 +21,9 @@ import 'definition/bean_definition.dart';
 import 'definition/options.dart';
 import 'qualifier.dart';
 
-import 'scope/scope.dart';
 import '../dsl/scope_dsl.dart';
+
+///
 ///
 /// Koin Module
 /// Gather/help compose Koin definitions
@@ -40,32 +41,30 @@ class Module {
 
   Module([this.createAtStart = false, this.override = false]);
 
- 
   ///
-     /// Declare a group a scoped definition with a given scope qualifier
-     /// @param qualifier
-     ///
-    void scopeWithType(Qualifier qualifier,Function(ScopeDSL dsl) scopeCreate ) {
-        var scopeDefinition = ScopeDefinition(qualifier, false);
-        var scopeCreated = ScopeDSL(scopeDefinition);
-        scopeCreate(scopeCreated);  
+  /// Declare a group a scoped definition with a given scope qualifier
+  /// @param qualifier
+  ///
+  void scopeWithType(Qualifier qualifier, Function(ScopeDSL dsl) scopeCreate) {
+    var scopeDefinition = ScopeDefinition(qualifier, false);
+    var scopeCreated = ScopeDSL(scopeDefinition);
+    scopeCreate(scopeCreated);
 
-       // ScopeDSL(scopeDefinition).apply(scopeSet);
-        otherScopes.add(scopeDefinition);
-    }
+    // ScopeDSL(scopeDefinition).apply(scopeSet);
+    otherScopes.add(scopeDefinition);
+  }
 
-    ///
-    ///Class Typed Scope
-    ///
-    void scope<T>(Function(ScopeDSL dsl) makeScope ) {
-        var scopeDefinition = ScopeDefinition(TypeQualifier(T), false);
-        var scopeCreated = ScopeDSL(scopeDefinition);
-        makeScope(scopeCreated);  
+  ///
+  ///Class Typed Scope
+  ///
+  void scope<T>(Function(ScopeDSL dsl) makeScope) {
+    var scopeDefinition = ScopeDefinition(TypeQualifier(T), false);
+    var scopeCreated = ScopeDSL(scopeDefinition);
+    makeScope(scopeCreated);
 
-       // ScopeDSL(scopeDefinition).apply(scopeSet);
-        otherScopes.add(scopeDefinition);
-    }
-
+    // ScopeDSL(scopeDefinition).apply(scopeSet);
+    otherScopes.add(scopeDefinition);
+  }
 
   ///
   /// Declare a Single definition
@@ -115,4 +114,3 @@ class Module {
     */
 
 }
-
