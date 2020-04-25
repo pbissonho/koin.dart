@@ -206,7 +206,7 @@ class Scope {
           var qualifierString =
               qualifier != null ? " & qualifier:'$qualifier'" : '';
           throw NoBeanDefFoundException(
-              "No definition found for class:'${type.runtimeType}'$qualifierString. Check your definitions!");
+              "No definition found for class:'${type}'$qualifierString. Check your definitions!");
         }
       } else {
         return inOtherScope;

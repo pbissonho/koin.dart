@@ -7,27 +7,27 @@ void main() {
   List<Object> parameters;
 
   setUp(() {
-    parameters = ["Buda", 22, "Juca", "5555", 600];
+    parameters = ['Buda', 22, 'Juca', '5555', 600];
     definitionParameters = DefinitionParameters(parameters);
   });
 
-  test("shoud get the first component", () {
+  test('shoud get the first component', () {
     var object = definitionParameters.component1();
     var objectT = definitionParameters.getWhere<String>();
 
     expect(object, isNotNull);
     expect(object, isA<String>());
-    expect(object, "Buda");
+    expect(object, 'Buda');
     expect(object, objectT);
   });
 
-  test("shoud get the size", () {
+  test('shoud get the size', () {
     var size = definitionParameters.size();
 
     expect(size, 5);
   });
 
-  test("verificar se está empty ou nao", () {
+  test('verificar se está empty ou nao', () {
     var isEmpty = definitionParameters.isEmpty();
     var isNotEmpty = definitionParameters.isNotEmpty();
 
@@ -35,7 +35,7 @@ void main() {
     expect(false, isEmpty);
   });
 
-  test("shoud return each value", () {
+  test('shoud return each value', () {
     var objects = <Object>[];
 
     objects.add(definitionParameters.get(0));
@@ -55,20 +55,20 @@ void main() {
     expect(objectsX, parameters);
   });
 
-  test("parametersOf", () {
-    var definitionParamateres = parametersOf(["Teste", "Test2"]);
+  test('parametersOf', () {
+    var definitionParamateres = parametersOf(['Teste', 'Test2']);
     expect(definitionParamateres, isA<DefinitionParameters>());
     expect(definitionParamateres.size(), 2);
   });
 
-  test("parametersOf", () {
+  test('parametersOf', () {
     var definitionParamateres = emptyParametersHolder();
     expect(definitionParamateres, isA<DefinitionParameters>());
     expect(definitionParamateres.size(), 0);
   });
 
-  test("create a definition with more 5 arguments", () {
-    expect(() => DefinitionParameters(["1", "2", "3", "4", "5", "6"]),
-        throwsA((value) => value is IllegalStateException));
+  test('create a definition with more 5 arguments', () {
+    expect(() => DefinitionParameters(['1', '2', '3', '4', '5', '6']),
+        throwsA((value) => value is DefinitionParameterException));
   });
 }

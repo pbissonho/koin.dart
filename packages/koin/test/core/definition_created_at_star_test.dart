@@ -1,10 +1,9 @@
 import 'package:koin/koin.dart';
 import 'package:koin/src/core/context/context_functions.dart';
-import 'package:koin/src/core/instance/instance_context.dart';
 import 'package:test/test.dart';
 
 import '../components.dart';
-import '../dsl/koin_application_ext.dart';
+import '../extensions/koin_application_ext.dart';
 
 void main() {
   test('is declared as created at start', () {
@@ -29,7 +28,7 @@ void main() {
     var defA = app.getBeanDefinition(ComponentA);
     expect(true, defA.options.isCreatedAtStart);
     var instanceFactory = app.getInstanceFactory(ComponentA);
-    expect(false, instanceFactory.isCreated());
+    expect(true, instanceFactory.isCreated());
     
     stopKoin();
   });
@@ -38,7 +37,7 @@ void main() {
   test('factory is not created at start', () {
     var app = koinApplication((app) {
       app.module(module()
-        ..single<ComponentA>((s, p) => ComponentA(), createdAtStart: true));
+        ..single<ComponentA>((s, p) => ComponentA()));
     });
 
     var defA = app.getBeanDefinition(ComponentA);

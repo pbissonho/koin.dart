@@ -3,21 +3,31 @@ import 'package:koin/src/core/error/exceptions.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('get', () {
+  test('can store & get an attribute value', () {
     var propeties = Properties();
     propeties.set('myString', 'String');
 
     expect(propeties.get('myString'), 'String');
   });
 
-  test('get or null', () {
+  test('attribute empty - no value', () {
     var propeties = Properties();
-    // propeties.set('myString', 'String');
 
-    expect(propeties.getOrNull('myString'), null);
+    expect(propeties.getOrNull('myKey'), null);
   });
 
-  test('get and trowsn a exception', () {
+  test('attribute value overwrite', () {
+    var propeties = Properties();
+
+    propeties.set('myKey', 'myString');
+    propeties.set('myKey', 'myString2');
+
+    var string = propeties.get<String>('myKey');
+
+    expect('myString2', string);
+  });
+
+  test('get and trown a exception', () {
     var propeties = Properties();
     // propeties.set('myString', 'String');
     expect(() => propeties.get('myString'),
