@@ -78,6 +78,17 @@ class Koin {
   }
 
   ///
+  /// Get a Koin instance
+  ///
+  T getWithParams<T>({Qualifier qualifier, DefinitionParameters parameters}) {
+    return _scopeRegistry.rootScope.get<T>(
+      qualifier,
+      parameters,
+    );
+  }
+
+
+  ///
   /// Get a Koin instance if available with return instance of type T or null.
   ///
   T getOrNull<T>(Qualifier qualifier, DefinitionParameters parameters) {
@@ -306,9 +317,15 @@ class Koin {
     _scopeRegistry.loadModules(modules);
   }
 
-  void loadModule(Module module) {}
+  void loadModule(Module module) {
+    _modules.add(module);
+    _scopeRegistry.loadModule(module);
+  }
 
-  void unloadModule(Module module) {}
+  void unloadModule(Module module) {
+    _scopeRegistry.unloadModule(module);
+    _modules.remove(module);
+  }
 
   void unloadModules(List<Module> modules) {
     _scopeRegistry.unloadModules(modules);

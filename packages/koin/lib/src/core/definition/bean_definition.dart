@@ -161,8 +161,8 @@ class BeanDefinition<T> with EquatableMixin {
   ///
   /// Definition Binding
   ///
-  BeanDefinition bind(Type type) {
-    var newTypes = List.from([type]);
+  BeanDefinition bind<S>() {
+    var newTypes = List<Type>.from([S]);
     newTypes.addAll(secondaryTypes);
 
     var copyT = copy(secondaryTypes: newTypes);

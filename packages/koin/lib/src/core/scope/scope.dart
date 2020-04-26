@@ -194,7 +194,7 @@ class Scope {
     var indexKeyCurrent = indexKey(type, qualifier);
 
     var instance =
-        _instanceRegistry.resolveInstance(indexKeyCurrent, parameters);
+        _instanceRegistry.resolveInstance<T>(indexKeyCurrent, parameters);
 
     if (instance == null) {
       var inOtherScope = findInOtherScope<T>(type, qualifier, parameters);
