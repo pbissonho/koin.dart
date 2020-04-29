@@ -115,7 +115,7 @@ class Scope {
     Qualifier qualifier,
   ]) {
     parameters ??= emptyParametersHolder();
-    return lazy<T>(() => get<T>(qualifier, parameters));
+    return lazy<T>(() => getOrNull<T>(qualifier, parameters));
   }
 
   ///
@@ -139,7 +139,7 @@ class Scope {
   ///
   T getOrNull<T>([Qualifier qualifier, DefinitionParameters parameters]) {
     var type = T;
-    return getWithType(type, qualifier, parameters);
+    return getWithTypeOrNull(type, qualifier, parameters);
   }
 
   ///
@@ -263,7 +263,7 @@ class Scope {
   /// Get Scope
   ///@param scopeID
   ///
-  void getScope(String scopeID) => getKoin().getScope(scopeID);
+  Scope getScope(String scopeID) => getKoin().getScope(scopeID);
 
   ///
   /// Register a callback for this Scope Instance

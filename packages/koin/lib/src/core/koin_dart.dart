@@ -64,7 +64,7 @@ class Koin {
   ////
   Lazy<T> injectOrNull<T>(
       Qualifier qualifier, DefinitionParameters parameters) {
-    return _scopeRegistry.rootScope.inject(parameters, qualifier);
+    return _scopeRegistry.rootScope.injectOrNull(parameters, qualifier);
   }
 
   ///

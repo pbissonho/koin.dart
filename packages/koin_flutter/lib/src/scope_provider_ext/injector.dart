@@ -4,6 +4,7 @@ import 'package:koin/koin.dart';
 import 'scope_builder.dart';
 import 'scope_provider.dart';
 
+
 mixin ScopeProviderComponentMixin {
   ///
   /// Inject instance from Koin
