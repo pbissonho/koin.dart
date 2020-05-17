@@ -70,6 +70,10 @@ class DefinitionParameters {
     return object as T;
   }
 
+  void get2<A,B>(void Function(A a, B b) function) {
+    function( component1(),component2());
+  }
+
   ///
   /// Returns the number of contained elements
   ///
