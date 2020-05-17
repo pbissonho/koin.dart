@@ -38,7 +38,7 @@ class GlobalContext implements KoinContext {
   @override
   Koin get() {
     if (_koin == null) {
-      error('KoinApplication has not been started');
+      throw IllegalStateException('KoinApplication has not been started');
     }
     return _koin;
   }

@@ -42,16 +42,6 @@ class Measure {
     var duration = start.elapsed.inMilliseconds.toDouble();
     return Pair(duration, result);
   }
-
-  ///
-  /// Measure code execution and get result
-  ///
-  static Pair measureMicroseconds(Object Function() function) {
-    var start = Stopwatch()..start();
-    var resultF = function();
-    var result = start.elapsedMicroseconds.toDouble();
-    return Pair(result, resultF);
-  }
 }
 
 class Pair<T> {

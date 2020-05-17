@@ -15,8 +15,8 @@
  */
 
 import 'package:koin/src/core/definition/bean_definition.dart';
-import 'package:koin/src/core/error/error.dart';
 
+import '../error/exceptions.dart';
 import '../koin_dart.dart';
 import 'instance_context.dart';
 import 'instance_factory.dart';
@@ -46,7 +46,8 @@ class SingleInstanceFactory<T> extends InstanceFactory<T> {
     if (_value == null) {
       var created = super.create(context);
       if (created == null) {
-        error("Single instance created couldn't return value");
+        throw IllegalStateException(
+            "Single instance created couldn't return value");
       }
       return created;
     } else {
@@ -61,7 +62,8 @@ class SingleInstanceFactory<T> extends InstanceFactory<T> {
     }
 
     if (_value == null) {
-      error("Single instance created couldn't return value");
+      throw IllegalStateException(
+          "Single instance created couldn't return value");
     }
 
     return _value;

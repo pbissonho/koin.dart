@@ -1,5 +1,6 @@
 import 'package:koin/src/core/definition_parameters.dart';
 import 'package:koin/src/core/error/error.dart';
+import 'package:koin/src/core/error/exceptions.dart';
 import 'package:koin/src/core/scope/scope.dart';
 import 'package:kt_dart/kt.dart';
 
@@ -69,7 +70,7 @@ class InstanceRegistry {
 
   void saveInstance(String key, InstanceFactory factory, bool override) {
     if (instances.containsKey(key) && !override) {
-      error("InstanceRegistry already contains index '$key'");
+      throw IllegalStateException("InstanceRegistry already contains index '$key'");
     } else {
       instances[key] = factory;
     }

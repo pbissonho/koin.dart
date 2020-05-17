@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import 'package:koin/src/core/error/error.dart';
+import 'package:koin/src/core/error/exceptions.dart';
 
 import '../koin_application.dart';
 import '../koin_dart.dart';
@@ -28,7 +28,7 @@ class KoinContextHandler {
 
   static KoinContext getContext() {
     if (_context == null) {
-      error(
+      throw IllegalStateException(
           'No Koin Context configured. Please use startKoin or koinApplication DSL. ');
     }
     return _context;
@@ -52,7 +52,7 @@ class KoinContextHandler {
 
   static void register(KoinContext koinContext) {
     if (_context != null) {
-      error('A KoinContext is already started');
+      throw IllegalStateException('A KoinContext is already started');
     }
     _context = koinContext;
   }

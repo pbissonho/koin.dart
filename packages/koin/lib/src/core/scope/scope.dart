@@ -14,7 +14,6 @@
 /// limitations under the License.
 ////
 
-import 'package:koin/src/core/error/error.dart';
 import 'package:koin/src/core/error/exceptions.dart';
 import 'package:koin/src/core/measure.dart';
 import 'package:koin/src/core/registry/instance_registry.dart';
@@ -57,7 +56,8 @@ class Scope {
     if (source is T) {
       return source as T;
     } else {
-      error("Can't use Scope source for ${T} - source is:$source");
+      throw IllegalStateException(
+          "Can't use Scope source for ${T} - source is:$source");
     }
   }
 
@@ -71,7 +71,7 @@ class Scope {
     if (!scopeDefinition.isRoot) {
       _linkedScope.addAll(KtList.from(scopes));
     } else {
-      error("Can't add scope link to a root scope");
+      throw IllegalStateException("Can't add scope link to a root scope");
     }
   }
 
@@ -82,7 +82,7 @@ class Scope {
     if (!scopeDefinition.isRoot) {
       _linkedScope.removeAll((KtList.from(scopes)));
     } else {
-      error("Can't remove scope link to a root scope");
+      throw IllegalStateException("Can't remove scope link to a root scope");
     }
   }
 
@@ -128,7 +128,6 @@ class Scope {
     var type = T;
     return getWithType(type, qualifier, parameters);
   }
-
 
   T getParams<T>({Qualifier qualifier, DefinitionParameters parameters}) {
     var type = T;

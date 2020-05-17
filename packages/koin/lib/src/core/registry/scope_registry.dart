@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import 'package:koin/src/core/error/error.dart';
 import 'package:koin/src/core/error/exceptions.dart';
 import 'package:kt_dart/kt.dart';
 
@@ -40,8 +39,9 @@ class ScopeRegistry {
   Scope get rootScope => _rootScope;
 
   int size() {
-    var sum =
-        scopeDefinitions.values.map<int>((definition) => definition.size()).sum();
+    var sum = scopeDefinitions.values
+        .map<int>((definition) => definition.size())
+        .sum();
 
     return sum;
   }
@@ -93,7 +93,8 @@ class ScopeRegistry {
     var existing = scopeDefinitions[definition.qualifier.value];
 
     if (existing == null) {
-      error("Scope definition '$definition' not found in $scopeDefinitions");
+      throw IllegalStateException(
+          "Scope definition '$definition' not found in $scopeDefinitions");
     }
 
     definition.definitions.forEach((it) {
@@ -184,8 +185,7 @@ class ScopeRegistry {
   }
 
   void unloadModule(Module module) {
-    var scopeDefinitions = List.from(module.otherScopes)
-      ..add(module.rootScope);
+    var scopeDefinitions = List.from(module.otherScopes)..add(module.rootScope);
     scopeDefinitions.forEach((it) {
       unloadDefinitions(it);
     });
