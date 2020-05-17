@@ -22,42 +22,41 @@ import 'koin_dart.dart';
 import 'lazy/lazy.dart';
 
 ///
-/// KoinComponent interface marker to bring Koin extensions features
+/// KoinComponentMixin interface marker to bring Koin extensions features
 ///
 /// @author Arnaud Giuliani
 ///
 
-abstract class KoinComponent {
+mixin KoinComponentMixin {
   ///
   /// Get the associated Koin instance
   ///
   Koin getKoin() => KoinContextHandler.get();
-}
 
-mixin InjectComponent implements KoinComponent {
-  @override
-  Koin getKoin() => KoinContextHandler.get();
-
-  T get<T>([Qualifier qualifier, DefinitionParameters parameters]) =>
-      getKoin().get(qualifier, parameters);
+  T get<T>([Qualifier qualifier, DefinitionParameters parameters]) {
+    return getKoin().get<T>(qualifier, parameters);
+  }
 
   ///
   /// Lazy inject instance from Koin
   /// @param qualifier
   /// @param parameters
   ///
-  Lazy<T> inject<T>([Qualifier qualifier, List<Object> parameters]) {
-    if (parameters != null) {
-      return getKoin().inject(qualifier, parametersOf(parameters));
-    } else {
-      return getKoin().inject(qualifier, null);
-    }
+  Lazy<T> inject<T>([Qualifier qualifier, DefinitionParameters parameters]) {
+    return getKoin().inject<T>(qualifier, parameters);
   }
 
   ///
   /// Get instance instance from Koin by Primary Type P, as secondary type S
   /// @param parameters
   ///
-  S bind<S, P>(Qualifier qualifier, DefinitionParameters parameters) =>
-      getKoin().bind<S, P>(parameters);
+  S bind<S, P>([Qualifier qualifier, DefinitionParameters parameters]) {
+    return getKoin().bind<S, P>(parameters);
+  }
 }
+
+
+///
+/// KoinComponent interface marker to bring Koin extensions features
+///
+class KoinComponent with KoinComponentMixin {}

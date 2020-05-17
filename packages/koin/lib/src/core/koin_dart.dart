@@ -25,7 +25,7 @@ import 'qualifier.dart';
 import 'registry/proterty_registry.dart';
 import 'registry/scope_registry.dart';
 import 'scope/scope.dart';
-
+import '../ext/instance_scope_ext.dart';
 /// Koin
 ///
 /// Gather main features to use on Koin context
@@ -91,7 +91,7 @@ class Koin {
   ///
   /// Get a Koin instance if available with return instance of type T or null.
   ///
-  T getOrNull<T>(Qualifier qualifier, DefinitionParameters parameters) {
+  T getOrNull<T>([Qualifier qualifier, DefinitionParameters parameters]) {
     return _scopeRegistry.rootScope.getOrNull<T>(
       qualifier,
       parameters,
@@ -109,7 +109,7 @@ class Koin {
 
   ///
   /// Get a Koin instance if available
-  T getWithTypeOrNull<T>(
+  T getOrNullWithType<T>(
       Type type, Qualifier qualifier, DefinitionParameters parameters) {
     return _scopeRegistry.rootScope
         .getWithTypeOrNull(type, qualifier, parameters);
@@ -197,6 +197,16 @@ class Koin {
       logger.debug('!- create scope - id:$scopeId q:$qualifier');
     }
     return _scopeRegistry.createScope(scopeId, qualifier, source);
+  }
+
+  Scope createScopeT2<T>() {
+    var type = T;
+    var scopeId = type.scopeId;  
+    var qualifier = TypeQualifier(T);
+    if (logger.isAt(Level.debug)) {
+      logger.debug('!- create scope - id:$scopeId q:$qualifier');
+    }
+    return _scopeRegistry.createScope(scopeId, qualifier, null);
   }
 
   // TODO
