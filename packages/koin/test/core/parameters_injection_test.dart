@@ -6,7 +6,7 @@ import '../components.dart';
 void main() {
   test('can create a single with parameters', () {
     var app = koinApplication((app) {
-      app.module(Module()..single<MySingle>((s, p) => MySingle(p.param1)));
+      app.module(Module()..single1<MySingle, int>((s, id) => MySingle(id)));
     });
 
     var a = app.koin.getWithParams<MySingle>(parameters: parametersOf([42]));
@@ -17,7 +17,7 @@ void main() {
   test('can get a single created with parameters - no need of give it again',
       () {
     var app = koinApplication((app) {
-      app.module(Module()..single<MySingle>((s, p) => MySingle(p.param1)));
+      app.module(Module()..single1<MySingle, int>((s, id) => MySingle(id)));
     });
 
     var a = app.koin.getWithParams<MySingle>(parameters: parametersOf([42]));
@@ -32,7 +32,7 @@ void main() {
 
   test('can create a factories with parameters', () {
     var app = koinApplication((app) {
-      app.module(Module()..factory<MySingle>((s, p) => MySingle(p.param1)));
+      app.module(Module()..factory1<MySingle, int>((s, id) => MySingle(id)));
     });
 
     var a = app.koin.getWithParams<MySingle>(parameters: parametersOf([42]));
@@ -45,14 +45,15 @@ void main() {
   test('chained factory injection', () {
     var koin = koinApplication((app) {
       app.module(Module()
-        ..factory<MyIntFactory>((s, p) => MyIntFactory(p.param1))
-        ..factory<MyStringFactory>((s, p) => MyStringFactory(p.param1))
-        ..factory<AllFactory>((s, p) => AllFactory(
-            s.getParams(parameters: parametersOf([p.param1])),
-            s.getParams(parameters: parametersOf([p.param2])))));
+        ..factory1<MyIntFactory, int>((s, id) => MyIntFactory(id))
+        ..factory1<MyStringFactory, String>((s, id) => MyStringFactory(id))
+        ..factory2<AllFactory, int, String>((s, idInt, idString) => AllFactory(
+            s.getParams(parameters: parametersOf([idInt])),
+            s.getParams(parameters: parametersOf([idString])))));
     }).koin;
 
-    var f = koin.getWithParams<AllFactory>(parameters: parametersOf([42, '42']));
+    var f =
+        koin.getWithParams<AllFactory>(parameters: parametersOf([42, '42']));
 
     expect(42, f.myIntFactory.id);
     expect('42', f.myStringFactory.s);

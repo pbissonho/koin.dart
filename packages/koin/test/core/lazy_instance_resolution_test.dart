@@ -25,7 +25,7 @@ void main() {
 
   test('can lazy resolve a single', () {
     var app = koinApplication((app) {
-      app.module(Module()..single((s, p) => ComponentA()));
+      app.module(Module()..single((s) => ComponentA()));
     });
 
     var a1 = app.koin.inject<ComponentA>();

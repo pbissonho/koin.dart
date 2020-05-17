@@ -18,6 +18,7 @@ import 'dart:core';
 import 'package:koin/src/core/definition/definitions.dart';
 import 'package:koin/src/core/scope/scope_definition.dart';
 import 'definition/bean_definition.dart';
+import 'definition/definition.dart';
 import 'definition/options.dart';
 import 'qualifier.dart';
 
@@ -70,12 +71,57 @@ class Module {
   /// Declare a Single definition
   ///
   BeanDefinition<T> single<T>(
-    Definition<T> definition, {
+    DefinitionFunction<T> definition, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
-    return Definitions.saveSingle<T>(qualifier, definition, rootScope,
+    return Definitions.saveSingle<T>(qualifier, DefinitionX(definition),
+        rootScope, makeOptions(override, createdAtStart));
+  }
+
+  ///
+  /// Declare a Single definition
+  ///
+  BeanDefinition<T> single1<T, A>(
+    DefinitionFunction1<T, A> definition, {
+    Qualifier qualifier,
+    bool createdAtStart = false,
+    bool override = false,
+  }) {
+    return Definitions.saveSingle<T>(qualifier, Definition1<T, A>(definition),
+        rootScope, makeOptions(override, createdAtStart));
+  }
+
+  ///
+  /// Declare a Single definition
+  ///
+  BeanDefinition<T> single2<T, A, B>(
+    DefinitionFunction2<T, A, B> definition, {
+    Qualifier qualifier,
+    bool createdAtStart = false,
+    bool override = false,
+  }) {
+    return Definitions.saveSingle<T>(
+        qualifier,
+        Definition2<T, A, B>(definition),
+        rootScope,
+        makeOptions(override, createdAtStart));
+  }
+
+  ///
+  /// Declare a Single definition
+  ///
+  BeanDefinition<T> single3<T, A, B, C>(
+    DefinitionFunction3<T, A, B, C> definition, {
+    Qualifier qualifier,
+    bool createdAtStart = false,
+    bool override = false,
+  }) {
+    return Definitions.saveSingle<T>(
+        qualifier,
+        Definition3<T, A, B, C>(definition),
+        rootScope,
         makeOptions(override, createdAtStart));
   }
 
@@ -89,13 +135,52 @@ class Module {
   /// Declare a Factory definition
   ///
   BeanDefinition<T> factory<T>(
-    Definition<T> definition, {
+    DefinitionFunction<T> definition, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
-    return Definitions.saveFactory<T>(
-        qualifier, definition, rootScope, makeOptions(override));
+    return Definitions.saveFactory<T>(qualifier, DefinitionX<T>(definition),
+        rootScope, makeOptions(override));
+  }
+
+  ///
+  /// Declare a Factory definition
+  ///
+  BeanDefinition<T> factory1<T, A>(
+    DefinitionFunction1<T, A> definition, {
+    Qualifier qualifier,
+    bool createdAtStart = false,
+    bool override = false,
+  }) {
+    return Definitions.saveFactory<T>(qualifier, Definition1<T, A>(definition),
+        rootScope, makeOptions(override));
+  }
+
+  ///
+  /// Declare a Factory definition
+  ///
+  BeanDefinition<T> factory2<T, A, B>(
+    DefinitionFunction2<T, A, B> definition, {
+    Qualifier qualifier,
+    bool createdAtStart = false,
+    bool override = false,
+  }) {
+    return Definitions.saveFactory<T>(qualifier,
+        Definition2<T, A, B>(definition), rootScope, makeOptions(override));
+  }
+
+  ///
+  /// Declare a Factory definition
+  ///
+  BeanDefinition<T> factory3<T, A, B, C>(
+    DefinitionFunction3<T, A, B, C> definition, {
+    Qualifier qualifier,
+    bool createdAtStart = false,
+    bool override = false,
+  }) {
+    return Definitions.saveFactory<T>(qualifier,
+        Definition3<T, A, B, C>(definition), rootScope, makeOptions(override));
   }
 
   // TODO

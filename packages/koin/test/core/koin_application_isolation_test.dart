@@ -10,11 +10,11 @@ import '../extensions/koin_application_ext.dart';
 void main() {
   test('can isolate several koin apps', () {
     var app1 = koinApplication((app) {
-      app.module(module()..single((s, p) => ComponentA()));
+      app.module(module()..single((s) => ComponentA()));
     });
 
     var app2 = koinApplication((app) {
-      app.module(module()..single((s, p) => ComponentA()));
+      app.module(module()..single((s) => ComponentA()));
     });
 
     var a1 = app1.koin.get<ComponentA>();
@@ -25,7 +25,7 @@ void main() {
 
   test('can isolate several koin apps', () {
     var app = koinApplication((app) {
-      app.module(module(createdAtStart: true)..single((s, p) => ComponentA()));
+      app.module(module(createdAtStart: true)..single((s) => ComponentA()));
     });
 
     app.createEagerInstances();
@@ -42,11 +42,11 @@ void main() {
 
   test('can isolate koin apps e standalone', () {
     startKoin((app) {
-      app.module(module()..single((s, p) => ComponentA()));
+      app.module(module()..single((s) => ComponentA()));
     });
 
     var app2 = koinApplication((app) {
-      app.module(module()..single((s, p) => ComponentA()));
+      app.module(module()..single((s) => ComponentA()));
     });
 
     var a1 = KoinContextHandler.get().get<ComponentA>();
@@ -58,9 +58,9 @@ void main() {
 
   test('stopping koin releases resources', () {
     var module = Module()
-      ..single<ComponentA>((s, p) => ComponentA())
+      ..single<ComponentA>((s) => ComponentA())
       ..scope<Simple>((dsl) {
-        dsl.scoped((s, p) => ComponentB(s.get()));
+        dsl.scoped((s) => ComponentB(s.get()));
       });
 
     startKoin((app) {
@@ -92,14 +92,14 @@ void main() {
   test('create multiple context without named qualifier', () {
     var koinA = koinApplication((app) {
       app.modules([
-        Module()..single((s, p) => ModelA()),
-        Module()..single((s, p) => ModelB(s.get()))
+        Module()..single((s) => ModelA()),
+        Module()..single((s) => ModelB(s.get()))
       ]);
     });
 
     var koinB = koinApplication((app) {
       app.modules([
-        Module()..single((s, p) => ModelC()),
+        Module()..single((s) => ModelC()),
       ]);
     });
 

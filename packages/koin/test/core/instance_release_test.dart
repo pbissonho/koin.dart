@@ -7,7 +7,7 @@ import '../components.dart';
 
 void main() {
   test('can resolve a single', () {
-    var moduleX = module()..single((s, p) => MySingle(p.component1));
+    var moduleX = module()..single1<MySingle, int>((s, id) => MySingle(id));
 
     startKoin((app) {
       app.module(moduleX);
@@ -25,7 +25,8 @@ void main() {
       app.module(moduleX);
     });
 
-    var a3 = KoinContextHandler.get().getWithParams<MySingle>(parameters: parametersOf([24]));
+    var a3 = KoinContextHandler.get()
+        .getWithParams<MySingle>(parameters: parametersOf([24]));
 
     expect(24, a3.id);
 

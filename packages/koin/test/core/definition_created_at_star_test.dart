@@ -9,7 +9,7 @@ void main() {
   test('is declared as created at start', () {
     var app = koinApplication((app) {
       app.module(module()
-        ..single<ComponentA>((s, p) => ComponentA(), createdAtStart: true));
+        ..single<ComponentA>((s) => ComponentA(), createdAtStart: true));
     });
 
     var defA = app.getBeanDefinition(ComponentA);
@@ -22,7 +22,7 @@ void main() {
   test('is created at start', () {
     var app = startKoin((app) {
       app.module((module()
-        ..single<ComponentA>((s, p) => ComponentA(), createdAtStart: true)));
+        ..single<ComponentA>((s) => ComponentA(), createdAtStart: true)));
     });
 
     var defA = app.getBeanDefinition(ComponentA);
@@ -37,7 +37,7 @@ void main() {
   test('factory is not created at start', () {
     var app = koinApplication((app) {
       app.module(module()
-        ..single<ComponentA>((s, p) => ComponentA()));
+        ..single<ComponentA>((s) => ComponentA()));
     });
 
     var defA = app.getBeanDefinition(ComponentA);

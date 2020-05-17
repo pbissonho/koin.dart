@@ -8,8 +8,8 @@ void main() {
   test('run with DI with several modules', () {
     var app = koinApplication((app) {
       app.modules([
-        Module()..single((s, p) => ComponentA()),
-        Module()..single((s, p) => ComponentB(s.get()))
+        Module()..single((s) => ComponentA()),
+        Module()..single((s) => ComponentB(s.get()))
       ]);
     });
 
@@ -19,8 +19,8 @@ void main() {
   test('resolve DI with several modules', () {
     var app = koinApplication((app) {
       app.modules([
-        Module()..single((s, p) => ComponentA()),
-        Module()..single((s, p) => ComponentB(s.get()))
+        Module()..single((s) => ComponentA()),
+        Module()..single((s) => ComponentB(s.get()))
       ]);
     });
 

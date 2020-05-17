@@ -2,11 +2,12 @@ import '../qualifier.dart';
 import 'bean_definition.dart';
 import '../scope/scope_definition.dart';
 import '../definition/options.dart';
+import 'definition.dart';
 
 class Definitions {
   static BeanDefinition<T> saveSingle<T>(
       Qualifier qualifier,
-      Definition<T> definition,
+      DefinitionBase<T> definition,
       ScopeDefinition scopeDefinition,
       Options options) {
     var beanDefinition = createSingle<T>(
@@ -20,7 +21,7 @@ class Definitions {
 
   static BeanDefinition<T> createSingle<T>(
       {Qualifier qualifier,
-      Definition<T> definition,
+      DefinitionBase<T> definition,
       ScopeDefinition scopeDefinition,
       Options options,
       List<Type> secondaryTypes}) {
@@ -35,7 +36,7 @@ class Definitions {
   }
 
   static BeanDefinition createSingleWithType(Type type, Qualifier qualifier,
-      Definition definition, ScopeDefinition scopeDefinition, Options options,
+      DefinitionBase definition, ScopeDefinition scopeDefinition, Options options,
       [List<Type> secondaryTypes]) {
     return BeanDefinition(
         scopeDefinition: scopeDefinition,
@@ -49,7 +50,7 @@ class Definitions {
 
   static BeanDefinition<T> createFactory<T>(
       {Qualifier qualifier,
-      Definition<T> definition,
+      DefinitionBase<T> definition,
       ScopeDefinition scopeDefinition,
       Options options,
       List<Type> secondaryTypes}) {
@@ -65,7 +66,7 @@ class Definitions {
 
   static BeanDefinition<T> saveFactory<T>(
       Qualifier qualifier,
-      Definition<T> definition,
+      DefinitionBase<T> definition,
       ScopeDefinition scopeDefinition,
       Options options) {
     var beanDefinition = createFactory<T>(

@@ -20,21 +20,94 @@ import 'package:koin/src/core/scope/scope_definition.dart';
 import '../core/definition/bean_definition.dart';
 import '../core/definition/definitions.dart';
 import '../core/definition/options.dart';
+import '../core/definition/definition.dart';
 
 class ScopeDSL {
   final ScopeDefinition scopeDefinition;
 
   ScopeDSL(this.scopeDefinition);
 
-  BeanDefinition<T> scoped<T>(Definition<T> definition,
-      {Qualifier qualifier, bool override = false, }) {
-    return Definitions.saveSingle<T>(qualifier, definition, scopeDefinition,
+  BeanDefinition<T> scoped<T>(
+    DefinitionFunction<T> definition, {
+    Qualifier qualifier,
+    bool override = false,
+  }) {
+    return Definitions.saveSingle<T>(qualifier, DefinitionX<T>(definition),
+        scopeDefinition, Options(isCreatedAtStart: false, override: override));
+  }
+
+  BeanDefinition<T> scoped1<T, A>(
+    DefinitionFunction1<T, A> definition, {
+    Qualifier qualifier,
+    bool override = false,
+  }) {
+    return Definitions.saveSingle<T>(qualifier, Definition1<T, A>(definition),
+        scopeDefinition, Options(isCreatedAtStart: false, override: override));
+  }
+
+  BeanDefinition<T> scoped2<T, A, B>(
+    DefinitionFunction2<T, A, B> definition, {
+    Qualifier qualifier,
+    bool override = false,
+  }) {
+    return Definitions.saveSingle<T>(
+        qualifier,
+        Definition2<T, A, B>(definition),
+        scopeDefinition,
         Options(isCreatedAtStart: false, override: override));
   }
 
-  BeanDefinition<T> factory<T>( Definition<T> definition,
-      {Qualifier qualifier, bool override = false,}) {
-    return Definitions.saveFactory<T>(qualifier, definition, scopeDefinition,
+  BeanDefinition<T> scoped3<T, A, B, C>(
+    DefinitionFunction3<T, A, B, C> definition, {
+    Qualifier qualifier,
+    bool override = false,
+  }) {
+    return Definitions.saveSingle<T>(
+        qualifier,
+        Definition3<T, A, B, C>(definition),
+        scopeDefinition,
+        Options(isCreatedAtStart: false, override: override));
+  }
+
+  BeanDefinition<T> factory<T>(
+    DefinitionFunction<T> definition, {
+    Qualifier qualifier,
+    bool override = false,
+  }) {
+    return Definitions.saveFactory<T>(qualifier, DefinitionX<T>(definition),
+        scopeDefinition, Options(isCreatedAtStart: false, override: override));
+  }
+
+  BeanDefinition<T> factory1<T, A>(
+    DefinitionFunction1<T, A> definition, {
+    Qualifier qualifier,
+    bool override = false,
+  }) {
+    return Definitions.saveFactory<T>(qualifier, Definition1<T, A>(definition),
+        scopeDefinition, Options(isCreatedAtStart: false, override: override));
+  }
+
+  BeanDefinition<T> factory2<T, A, B>(
+    DefinitionFunction2<T, A, B> definition, {
+    Qualifier qualifier,
+    bool override = false,
+  }) {
+    return Definitions.saveFactory<T>(
+        qualifier,
+        Definition2<T, A, B>(definition),
+        scopeDefinition,
+        Options(isCreatedAtStart: false, override: override));
+  }
+
+  BeanDefinition<T> factory3<T, A, B, C>(
+    DefinitionFunction3<T, A, B, C> definition, {
+    Qualifier qualifier,
+    bool override = false,
+  }) {
+    return Definitions.saveFactory<T>(
+        qualifier,
+        Definition3<T, A, B, C>(definition),
+        scopeDefinition,
         Options(isCreatedAtStart: false, override: override));
   }
 }

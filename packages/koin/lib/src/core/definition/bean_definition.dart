@@ -17,11 +17,10 @@
 import 'dart:core';
 import 'package:equatable/equatable.dart';
 import 'package:koin/src/core/definition/properties.dart';
-import 'package:koin/src/core/definition_parameters.dart';
-import 'package:koin/src/core/scope/scope.dart';
 import 'package:koin/src/core/scope/scope_definition.dart';
 
 import '../qualifier.dart';
+import 'definition.dart';
 import 'options.dart';
 
 class Callbacks<T> {
@@ -43,11 +42,8 @@ class Callbacks<T> {
 
 //typedef OnCloseCallback<T> = void Function(T value);
 
-typedef Definition<T> = T Function(
-    Scope scope, DefinitionParameters parameters);
-
-typedef Definition1<T, B> = T Function(
-    Scope scope, B param);
+//typedef Definition<T> = T Function(
+ //   Scope scope, DefinitionParameters parameters);
 
 enum Kind {
   Single,
@@ -66,7 +62,7 @@ class BeanDefinition<T> with EquatableMixin {
   final ScopeDefinition scopeDefinition;
   final Type primaryType;
   final Qualifier qualifier;
-  final Definition<T> definition;
+  final DefinitionBase<T> definition;
   final Kind kind;
   List<Type> secondaryTypes;
   final Options options;

@@ -17,7 +17,7 @@ void main() {
   test('not can declare a single on the fly', () {
     var koin = KoinApplication()
         .printLogger()
-        .module(module()..single((s, p) => ComponentA()))
+        .module(module()..single((s) => ComponentA()))
         .koin;
 
     var a = ComponentA();
@@ -28,7 +28,7 @@ void main() {
   test('can declare and override a single on the fly', () {
     var koin = KoinApplication()
         .printLogger()
-        .module(module()..single((s, p) => MySingle(1)))
+        .module(module()..single((s) => MySingle(1)))
         .koin;
 
     var a = MySingle(2);
@@ -42,7 +42,7 @@ void main() {
       () {
     var koin = KoinApplication()
         .printLogger()
-        .module(module()..single((s, p) => MySingle(1)))
+        .module(module()..single((s) => MySingle(1)))
         .koin;
 
     var a = MySingle(2);
@@ -60,7 +60,7 @@ void main() {
   test('can declare a single with qualifier on the fly', () {
     var koin = KoinApplication()
         .printLogger()
-        .module(module()..single<ComponentA>((s, p) => ComponentA()))
+        .module(module()..single<ComponentA>((s) => ComponentA()))
         .koin;
 
     var a = ComponentA();
@@ -77,8 +77,8 @@ void main() {
     var koin = KoinApplication()
         .printLogger()
         .module(module()
-          ..single((s, p) => ComponentA())
-          ..single((s, p) => ComponentA(), qualifier: named('another_a')))
+          ..single((s) => ComponentA())
+          ..single((s) => ComponentA(), qualifier: named('another_a')))
         .koin;
 
     var a = ComponentA();
@@ -92,7 +92,7 @@ void main() {
   test('can declare a single with secondary type on the fly', () {
     var koin = KoinApplication()
         .printLogger()
-        .module(module()..single((s, p) => ComponentA()))
+        .module(module()..single((s) => ComponentA()))
         .koin;
 
     var a = Component1();
@@ -105,7 +105,7 @@ void main() {
   test('can declare and override a single with secondary type on the fly', () {
     var koin = KoinApplication()
         .printLogger()
-        .module(module()..single((s, p) => ComponentA()))
+        .module(module()..single((s) => ComponentA()))
         .koin;
 
     var a = Component1();
@@ -123,7 +123,7 @@ void main() {
         .printLogger()
         .module(module()
           ..scopeWithType(named('Session'), (scope) {
-            scope.scoped((s, p) => ComponentB(s.get()));
+            scope.scoped((s) => ComponentB(s.get()));
           }))
         .koin;
 

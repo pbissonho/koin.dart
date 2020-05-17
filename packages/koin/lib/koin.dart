@@ -20,3 +20,5 @@ export 'src/dsl/scope_dsl.dart';
 export 'src/dsl/module_dsl.dart';
 export 'src/dsl/definition_binding.dart';
 export 'src/dsl/koin_application_dsl.dart';
+
+export 'src/core/definition/definition.dart';

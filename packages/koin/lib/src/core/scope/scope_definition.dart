@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:koin/src/core/definition/definition.dart';
 import 'package:koin/src/core/error/exceptions.dart';
 import 'package:koin/src/core/qualifier.dart';
 import 'package:kt_dart/kt.dart';
@@ -55,10 +56,10 @@ class ScopeDefinition extends Equatable {
     } else {
       secondaryTypes2 = <Type>[];
     }
-
+    //TODO
     var beanDefinition = Definitions.createSingle<T>(
         qualifier: qualifier,
-        definition: (s, p) => instance,
+        definition: DefinitionX((s) => instance),
         scopeDefinition: this,
         options: Options(isCreatedAtStart: false, override: override),
         secondaryTypes: secondaryTypes2);
@@ -82,7 +83,10 @@ class ScopeDefinition extends Equatable {
     return copy;
   }
 
-  static var ROOT_SCOPE_ID = "-Root-";
+  static var ROOT_SCOPE_ID = '-Root-';
   static var ROOT_SCOPE_QUALIFIER = named(ROOT_SCOPE_ID);
-  static rootDefinition() => ScopeDefinition(ROOT_SCOPE_QUALIFIER, true);
+  static ScopeDefinition rootDefinition() => ScopeDefinition(ROOT_SCOPE_QUALIFIER, true);
+}
+
+class Definition {
 }

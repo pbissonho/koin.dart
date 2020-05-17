@@ -5,9 +5,9 @@ import 'package:test/test.dart';
 
 void main() {
   var currentModule = module()
-    ..single((s, p) => List<String>.of(['a string']),
+    ..single((s) => List<String>.of(['a string']),
         qualifier: named('strings'))
-    ..single((s, p) => List<int>.of([42]), qualifier: named('ints'));
+    ..single((s) => List<int>.of([42]), qualifier: named('ints'));
 
   test('declare and retrieve generic definitions', () {
     var koin = createKoin(currentModule);

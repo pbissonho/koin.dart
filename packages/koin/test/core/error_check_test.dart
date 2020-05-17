@@ -16,7 +16,7 @@ void main() {
 
   test('unknown linked dependency', () {
     var app = koinApplication((app) {
-      app.module(module()..single((s, p) => ComponentB(s.get())));
+      app.module(module()..single((s) => ComponentB(s.get())));
     });
 
     expect(() => app.koin.get<ComponentB>(),
@@ -25,7 +25,7 @@ void main() {
 
   test('unknown linked dependency', () {
     var app = koinApplication((app) {
-      app.module(module()..single((s, p) => ComponentB(s.get())));
+      app.module(module()..single((s) => ComponentB(s.get())));
     });
 
     expect(() => app.koin.get<ComponentB>(),
@@ -34,7 +34,7 @@ void main() {
 
   test('error while creating instance', () {
     var app = koinApplication((app) {
-      app.module(module()..single((s, p) => Boom()));
+      app.module(module()..single((s) => Boom()));
     });
 
     expect(() => app.koin.get<Boom>(),
@@ -46,8 +46,8 @@ void main() {
   test('cycle error', () {
     var app = koinApplication((app) {
       app.module(module()
-        ..single((s, p) => CycleA(s.get()))
-        ..single((s, p) => CycleB(s.get())));
+        ..single((s) => CycleA(s.get()))
+        ..single((s) => CycleB(s.get())));
     });
 
     expect(() => app.koin.get<CycleA>(),

@@ -1,3 +1,4 @@
+import 'package:koin/src/core/definition/definition.dart';
 import 'package:koin/src/core/definition/definitions.dart';
 import 'package:koin/src/core/instance/instance_context.dart';
 import 'package:koin/src/core/koin_dart.dart';
@@ -26,11 +27,11 @@ void main() {
 
   test('equals definitions', () {
     var def1 = Definitions.createSingle(
-        definition: (s, p) => ComponentA(),
+        definition: DefinitionX<ComponentA>((s) => ComponentA()),
         scopeDefinition: rootScope.scopeDefinition,
         options: Options());
     var def2 = Definitions.createSingle(
-        definition: (s, p) => ComponentA(),
+        definition: DefinitionX<ComponentA>((s) => ComponentA()),
         scopeDefinition: rootScope.scopeDefinition,
         options: Options());
 
@@ -39,7 +40,7 @@ void main() {
 
   test('scope definition', () {
     var def1 = Definitions.createSingle(
-        definition: (s, p) => ComponentA(),
+        definition: DefinitionX<ComponentA>((s) => ComponentA()),
         scopeDefinition: rootScope.scopeDefinition,
         options: Options());
 
@@ -49,11 +50,11 @@ void main() {
 
   test('equals definitions - but diif kind', () {
     var def1 = Definitions.createSingle(
-        definition: (s, p) => ComponentA(),
+        definition: DefinitionX<ComponentA>((s) => ComponentA()),
         scopeDefinition: rootScope.scopeDefinition,
         options: Options());
     var def2 = Definitions.createSingle(
-        definition: (s, p) => ComponentA(),
+        definition: DefinitionX<ComponentA>((s) => ComponentA()),
         scopeDefinition: rootScope.scopeDefinition,
         options: Options());
 
@@ -63,8 +64,8 @@ void main() {
   test('definition kind', () {
     var app = koinApplication((app) {
       app.module(module()
-        ..single<ComponentA>((s, p) => ComponentA())
-        ..factory<ComponentB>((s, p) => ComponentB(s.get<ComponentA>())));
+        ..single<ComponentA>((s) => ComponentA())
+        ..factory<ComponentB>((s) => ComponentB(s.get<ComponentA>())));
     });
 
     var defA = app.getBeanDefinition(ComponentA);
@@ -79,8 +80,8 @@ void main() {
 
     var app = koinApplication((app) {
       app.module(module()
-        ..single<ComponentA>((s, p) => ComponentA(), qualifier: name)
-        ..factory<ComponentB>((s, p) => ComponentB(s.get<ComponentA>())));
+        ..single<ComponentA>((s) => ComponentA(), qualifier: name)
+        ..factory<ComponentB>((s) => ComponentB(s.get<ComponentA>())));
     });
 
     var defA = app.getBeanDefinition(ComponentA);
@@ -92,7 +93,7 @@ void main() {
 
   test('definition function', () {
     var app = koinApplication((app) {
-      app.module(module()..single<ComponentA>((s, p) => ComponentA()));
+      app.module(module()..single<ComponentA>((s) => ComponentA()));
     });
 
     app.getBeanDefinition(ComponentA);

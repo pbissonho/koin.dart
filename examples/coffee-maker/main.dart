@@ -58,9 +58,9 @@ class CoffeeApp {
 }
 
 var coffeeAppModule = Module()
-  ..single((s, p) => CoffeeMaker(s.get(), s.get()))
-  ..single<Heater>((s, p) => ElectricHeater())
-  ..single<Pump>((s, p) => Thermosiphon(s.get()));
+  ..single((s) => CoffeeMaker(s.get(), s.get()))
+  ..single<Heater>((s) => ElectricHeater())
+  ..single<Pump>((s) => Thermosiphon(s.get()));
 
 void main() {
   var koin = startKoin((app) {

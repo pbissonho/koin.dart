@@ -13,7 +13,7 @@ import 'package:koin/src/core/qualifier.dart';
 
 void main() {
   test('should unload single definition', () {
-    final currentModule = module()..single((s, p) => ComponentA());
+    final currentModule = module()..single((s) => ComponentA());
 
     final app = koinApplication((app) {
       app.printLogger();
@@ -35,7 +35,7 @@ void main() {
 
   test('should unload additional bound definition', () {
     final currentModule = module()
-      ..single((s, p) => Component1()).bind<ComponentInterface1>();
+      ..single((s) => Component1()).bind<ComponentInterface1>();
 
     final app = koinApplication((app) {
       app.printLogger();
@@ -61,8 +61,8 @@ void main() {
   });
 
   test('should unload one module definition', () {
-    final module1 = module()..single((s, p) => ComponentA());
-    final module2 = module()..single((s, p) => ComponentB(s.get()));
+    final module1 = module()..single((s) => ComponentA());
+    final module2 = module()..single((s) => ComponentB(s.get()));
 
     final app = koinApplication((app) {
       app.printLogger();
@@ -84,8 +84,8 @@ void main() {
   });
 
   test('should unload one module definition - factory', () {
-    final module1 = module()..single((s, p) => ComponentA());
-    final module2 = module()..factory((s, p) => ComponentB(s.get()));
+    final module1 = module()..single((s) => ComponentA());
+    final module2 = module()..factory((s) => ComponentB(s.get()));
 
     final app = koinApplication((app) {
       app.printLogger();
@@ -107,8 +107,8 @@ void main() {
   });
 
   test('should unload module override definition', () {
-    final module1 = module()..single((s, p) => MySingle(42));
-    final module2 = module(override: true)..single((s, p) => MySingle(24));
+    final module1 = module()..single((s) => MySingle(42));
+    final module2 = module(override: true)..single((s) => MySingle(24));
 
     final app = koinApplication((app) {
       app.printLogger();
@@ -130,7 +130,8 @@ void main() {
   });
 
   test('should reload module definition', () {
-    final currentModule = module()..single((s, p) => MySingle(p.component1));
+    final currentModule = module()
+      ..single1<MySingle, int>((s, id) => MySingle(id));
 
     final app = koinApplication((app) {
       app.printLogger();
@@ -156,7 +157,8 @@ void main() {
   });
 
   test('should reload module definition - global context', () {
-    final currentModule = module()..single((s, p) => MySingle(p.component1));
+    final currentModule = module()
+      ..single1<MySingle, int>((s, id) => MySingle(id));
 
     startKoin((app) {
       app.module(currentModule);
@@ -185,7 +187,7 @@ void main() {
   test('should unload scoped definition', () {
     final currentModule = module()
       ..scope<ScopeKey>((s) {
-        s.scoped((s, p) => ComponentA());
+        s.scoped((s) => ComponentA());
       });
 
     final app = koinApplication((app) {
@@ -212,7 +214,7 @@ void main() {
   test('should reload scoped definition', () {
     final currentModule = module()
       ..scope<ScopeKey>((s) {
-        s.scoped((s, p) => ComponentA());
+        s.scoped((s) => ComponentA());
       });
 
     final app = koinApplication((app) {
@@ -239,7 +241,7 @@ void main() {
   test('should reload scoped definition - global', () {
     final currentModule = module()
       ..scope<ScopeKey>((s) {
-        s.scoped((s, p) => ComponentA());
+        s.scoped((s) => ComponentA());
       });
 
     startKoin((app) {
@@ -253,7 +255,6 @@ void main() {
     unloadKoinModule(currentModule);
     loadKoinModule(currentModule);
 
-    
     expect(scope.get<ComponentA>(), isNotNull);
     stopKoin();
   });

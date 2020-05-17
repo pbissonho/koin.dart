@@ -6,7 +6,7 @@ import '../components.dart';
 void main() {
   test('can resolve a single', () {
     var koin = koinApplication((app) {
-      app.module(module()..single((s, p) => ComponentA()));
+      app.module(module()..single((s) => ComponentA()));
     }).koin;
 
     var a = koin.get<ComponentA>();
@@ -18,8 +18,8 @@ void main() {
   test('can resolve all ComponentInterface1', () {
     var koin = koinApplication((app) {
       app.module(module()
-        ..single((s, p) => Component1()).bind<ComponentInterface1>()
-        ..single((s, p) => Component2()).bind<ComponentInterface1>());
+        ..single((s) => Component1()).bind<ComponentInterface1>()
+        ..single((s) => Component2()).bind<ComponentInterface1>());
     }).koin;
 
     var a = koin.get<Component1>();
@@ -54,7 +54,7 @@ void main() {
 
   test('can lazy resolve a single', () {
     var koin = koinApplication((app) {
-      app.module(module()..single((s, p) => ComponentA()));
+      app.module(module()..single((s) => ComponentA()));
     }).koin;
 
     var a = koin.inject<ComponentA>(null, null);
@@ -68,8 +68,8 @@ void main() {
 
     var koin = koinApplication((app) {
       app.module(module()
-        ..single((s, p) => component, qualifier: named('A'))
-        ..single((s, p) => component, qualifier: named('B')));
+        ..single((s) => component, qualifier: named('A'))
+        ..single((s) => component, qualifier: named('B')));
     }).koin;
 
     var a = koin.get<ComponentA>(named('A'));
@@ -83,8 +83,8 @@ void main() {
 
     var koin = koinApplication((app) {
       app.module(module()
-        ..factory((s, p) => component, qualifier: named('A'))
-        ..factory((s, p) => component, qualifier: named('B')));
+        ..factory((s) => component, qualifier: named('A'))
+        ..factory((s) => component, qualifier: named('B')));
     }).koin;
 
     var a = koin.get<ComponentA>(named('A'));
@@ -95,7 +95,7 @@ void main() {
 
   test('can resolve a factory', () {
     var koin = koinApplication((app) {
-      app.module(module()..factory((s, p) => ComponentA()));
+      app.module(module()..factory((s) => ComponentA()));
     }).koin;
 
     var a = koin.get<ComponentA>();
@@ -108,10 +108,10 @@ void main() {
   test('should resolve default', () {
     var koin = koinApplication((app) {
       app.module(module()
-        ..single<ComponentInterface1>((s, p) => Component2(),
+        ..single<ComponentInterface1>((s) => Component2(),
             qualifier: named('2'))
         ..single<ComponentInterface1>(
-          (s, p) => Component1(),
+          (s) => Component1(),
         ));
     }).koin;
 

@@ -12,7 +12,7 @@ void main() {
       app.printLogger(level: Level.debug);
       app.module(module()
         ..scope<ScopeType>((s) {
-          s.scoped((s, p) => ComponentA());
+          s.scoped((s) => ComponentA());
         }));
     }).koin;
 
@@ -24,9 +24,9 @@ void main() {
     var koin = koinApplication((app) {
       app.printLogger(level: Level.debug);
       app.module(module()
-        ..single((s, p) => ComponentB(s.get()))
+        ..single((s) => ComponentB(s.get()))
         ..scope<ScopeType>((s) {
-          s.scoped((s, p) => ComponentA());
+          s.scoped((s) => ComponentA());
         }));
     }).koin;
 
@@ -40,9 +40,9 @@ void main() {
     var koin = koinApplication((app) {
       app.printLogger(level: Level.debug);
       app.module(module()
-        ..single((s, p) => ComponentB(s.getScope(scopeId).get()))
+        ..single((s) => ComponentB(s.getScope(scopeId).get()))
         ..scope<ScopeType>((s) {
-          s.scoped((s, p) => ComponentA());
+          s.scoped((s) => ComponentA());
         }));
     }).koin;
 

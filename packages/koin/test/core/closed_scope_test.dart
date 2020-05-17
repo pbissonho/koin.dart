@@ -13,7 +13,7 @@ void main() {
         .printLogger()
         .module(Module()
           ..scope<ScopeType>((scope) {
-            scope.scoped((s, p) => ComponentA());
+            scope.scoped((s) => ComponentA());
           }))
         .koin;
 
@@ -27,7 +27,7 @@ void main() {
     var koin = startKoin((app) {
       app.printLogger().module(Module()
         ..scope<ScopeType>((scope) {
-          scope.scoped((s, p) => ComponentA());
+          scope.scoped((s) => ComponentA());
         }));
     }).koin;
 
@@ -44,8 +44,8 @@ void main() {
         .printLogger()
         .module(Module()
           ..scope<ScopeType>((scope) {
-            scope.scoped((s, p) => ComponentA());
-            scope.scoped((s, p) => ComponentB(s.get()));
+            scope.scoped((s) => ComponentA());
+            scope.scoped((s) => ComponentB(s.get()));
           }))
         .koin;
 
@@ -60,8 +60,8 @@ void main() {
         .printLogger()
         .module(Module()
           ..scope<ScopeType>((scope) {
-            scope.scoped((s, p) => ComponentA());
-            scope.factory((s, p) => ComponentB(s.get()));
+            scope.scoped((s) => ComponentA());
+            scope.factory((s) => ComponentB(s.get()));
           }))
         .koin;
     var scope = koin.createScope('myScope', named<ScopeType>());
@@ -73,15 +73,14 @@ void main() {
   test('get definition from factory scope type', () {
     var koin = koinApplication((app) {
       app.printLogger().module(Module()
-        ..single((s, p) => ComponentA())
+        ..single((s) => ComponentA())
         ..scope<ScopeType>((scope) {
-          scope.factory((s, p) {
+          scope.factory((s) {
             var test = ComponentB(s.get<ComponentA>());
             return test;
           });
         }));
     }).koin;
-
 
     var scope = koin.createScope('myScope', named<ScopeType>());
 
@@ -91,11 +90,9 @@ void main() {
   test('get definition from current scope type - dispatched modules ', () {
     var koin = KoinApplication().printLogger().modules([
       Module()..scope<ScopeType>((scope) => scope),
+      Module()..scope<ScopeType>((scope) => scope.scoped((s) => ComponentA())),
       Module()
-        ..scope<ScopeType>((scope) => scope.scoped((s, p) => ComponentA())),
-      Module()
-        ..scope<ScopeType>(
-            (scope) => scope.scoped((s, p) => ComponentB(s.get())))
+        ..scope<ScopeType>((scope) => scope.scoped((s) => ComponentB(s.get())))
     ]).koin;
 
     var scope = koin.createScope('myScope', named<ScopeType>());
@@ -110,7 +107,7 @@ void main() {
         .printLogger()
         .module(Module()
           ..scopeWithType(named(scopeName), (scope) {
-            scope.scoped((s, p) => ComponentA());
+            scope.scoped((s) => ComponentA());
           }))
         .koin;
     var scope1 = koin.createScope('scope1', named(scopeName));
@@ -119,14 +116,13 @@ void main() {
     expect(scope1.get<ComponentA>(), isNot(equals(scope2.get<ComponentA>())));
   });
 
-  test('get definition from current scope - with named string qualifier',
-      () {
+  test('get definition from current scope - with named string qualifier', () {
     var koin = KoinApplication()
         .printLogger()
         .module(Module()
           ..scopeWithType(named(scopeName), (scope) {
-            scope.scoped((s, p) => ComponentA());
-            scope.scoped((s, p) => ComponentB(s.get()));
+            scope.scoped((s) => ComponentA());
+            scope.scoped((s) => ComponentB(s.get()));
           }))
         .koin;
     var scope = koin.createScope('myScope', named(scopeName));
@@ -138,9 +134,9 @@ void main() {
     var koin = KoinApplication()
         .printLogger()
         .module(Module()
-          ..single((s, p) => ComponentA())
+          ..single((s) => ComponentA())
           ..scopeWithType(named(scopeName), (scope) {
-            scope.scoped((s, p) => ComponentB(s.get()));
+            scope.scoped((s) => ComponentB(s.get()));
           }))
         .koin;
     var scope = koin.createScope('myScope', named(scopeName));
@@ -152,9 +148,9 @@ void main() {
     var koin = KoinApplication()
         .printLogger()
         .module(Module()
-          ..factory((s, p) => ComponentA())
+          ..factory((s) => ComponentA())
           ..scopeWithType(named(scopeName), (scope) {
-            scope.scoped((s, p) => ComponentB(s.get()));
+            scope.scoped((s) => ComponentB(s.get()));
           }))
         .koin;
     var scope = koin.createScope('myScope', named(scopeName));
@@ -168,7 +164,7 @@ void main() {
         .printLogger()
         .module(Module()
           ..scopeWithType(named(scopeName), (scope) {
-            scope.scoped((s, p) => ComponentB(s.get()));
+            scope.scoped((s) => ComponentB(s.get()));
           }))
         .koin;
     var scope = koin.createScope('myScope', named(scopeName));
@@ -186,11 +182,10 @@ void main() {
         .printLogger()
         .module(Module()
           ..scopeWithType(named('SCOPE_1'), (scope) {
-            scope.scoped((s, p) => ComponentA());
+            scope.scoped((s) => ComponentA());
           })
           ..scopeWithType(named('SCOPE_2'), (scope) {
-            scope.scoped((s, p) {
-              var scope = p.getWhere<Scope>();
+            scope.scoped1<ComponentB, Scope>((s, scope) {
               return ComponentB(scope.get());
             });
           }))
@@ -208,7 +203,7 @@ void main() {
         .printLogger()
         .module(Module()
           ..scopeWithType(named('SCOPE_1'), (scope) {
-            scope.scoped((s, p) => MySingle(p.getWhere<int>()));
+            scope.scoped1<MySingle, int>((s, id) => MySingle(id));
           }))
         .koin;
 
