@@ -1,5 +1,4 @@
 
-import 'package:koin/src/core/error/exceptions.dart';
 
 /*
 void error(String msg) => Error.error(msg);
@@ -9,7 +8,7 @@ class Error {
     throw IllegalStateException(msg);
   }
 }
-*/
+
 class Intrinsics {
   static void checkParameterIsNotNull(dynamic value, String name) {
     if (value == null) {
@@ -17,3 +16,4 @@ class Intrinsics {
     }
   }
 }
+*/
