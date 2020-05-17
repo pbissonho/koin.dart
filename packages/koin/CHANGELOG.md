@@ -1,3 +1,9 @@
+## 0.7.0
+
+- Added more tests. Coverage 80%
+- Refactoring and restructuring from koin 2.1.5
+- Update readme
+
 ## 0.3.2+3
 
 - Update readme

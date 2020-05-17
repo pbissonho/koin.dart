@@ -13,11 +13,6 @@ A pragmatic lightweight dependency injection framework. This is a port of [Koin]
 
 
 
-## Warning
-
-This port does not have all the koin features implemented yet, and what it already has is not fully tested. I do not recommend using it yet.
-
-
 ## Get started
 
 ### Add dependency
