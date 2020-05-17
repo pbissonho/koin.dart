@@ -53,9 +53,10 @@ void main() {
     var a2 = app2.koin.get<ComponentA>();
 
     expect(a1, isNot(a2));
+    stopKoin();
   });
 
-  test('can isolate koin apps e standalone', () {
+  test('stopping koin releases resources', () {
     var module = Module()
       ..single<ComponentA>((s, p) => ComponentA())
       ..scope<Simple>((dsl) {
@@ -84,6 +85,8 @@ void main() {
 
     expect(a1, isNot(a2));
     expect(b1, isNot(b2));
+
+    stopKoin();
   });
 
   test('create multiple context without named qualifier', () {
