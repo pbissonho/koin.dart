@@ -17,7 +17,8 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
-  koin: any
+  koin:
+    path: ../../packages/koin/
   
 dev_dependencies:
  

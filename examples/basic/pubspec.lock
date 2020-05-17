@@ -98,9 +98,9 @@ packages:
   koin_flutter:
     dependency: "direct main"
     description:
-      name: koin_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../../packages/koin_flutter"
+      relative: true
+    source: path
     version: "0.3.0"
   kt_dart:
     dependency: transitive
