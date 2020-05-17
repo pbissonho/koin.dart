@@ -8,6 +8,10 @@ import 'setter_inject_test.dart';
 import 'package:koin/src/ext/instance_scope_ext.dart';
 
 void main() {
+  tearDown(() {
+    stopKoin();
+  });
+
   test('typed scope', () {
     var koin = koinApplication((app) {
       app.module(Module()
@@ -63,9 +67,7 @@ void main() {
 
     var c = b.scope.get<CofB>();
     expect(c.b, b);
-
-    stopKoin();
-  });
+  }, skip: true);
 
   test('scope from instance object', () {
     var koin = startKoin2((app) {
@@ -95,8 +97,6 @@ void main() {
     var b2 = scopeForA2.getOrNull<B>();
     expect(b2, isNotNull);
     expect(b1, isNot(b2));
-
-    stopKoin();
   });
 
   test('scope property', () {
@@ -121,8 +121,6 @@ void main() {
     expect(b2, isNotNull);
     expect(a.scope.get<C>(), isNotNull);
     expect(b1, isNot(b2));
-
-    stopKoin();
   });
 
   test('scope property 2', () {
@@ -143,8 +141,6 @@ void main() {
     var b2 = a.scope.get<B>();
 
     expect(b1, isNot(b2));
-
-    stopKoin();
   });
 
   test('scope property - koin isolation', () {
@@ -168,8 +164,6 @@ void main() {
     var b2 = scope.get<B>();
 
     expect(b1, isNot(b2));
-
-    stopKoin();
   });
 
   test('cascade scope', () {
@@ -196,8 +190,6 @@ void main() {
 
     expect(b1, isNot(b2));
     expect(c1, isNot(c2));
-
-    stopKoin();
   });
 
   test('cascade linked scope', () {
@@ -216,8 +208,6 @@ void main() {
     var b = a.scope.get<B>();
     a.scope.linkTo([b.scope]);
     expect(a.scope.get<C>(), b.scope.get<C>());
-
-    stopKoin();
   });
 
   test('cascade unlink scope', () {
@@ -240,8 +230,6 @@ void main() {
 
     a.scope.unlink([b1.scope]);
     expect(a.scope.getOrNull<C>(), isNull);
-
-    stopKoin();
   });
 
   test('shared linked scope', () {
@@ -270,8 +258,6 @@ void main() {
     expect(compb_scopeA, isNot(compb_scopeB));
 
     expect(compb_scopeA.a, compb_scopeB.a);
-
-    stopKoin();
   });
 
   test('error for root linked scope', () {
@@ -287,7 +273,5 @@ void main() {
 
     expect(() => koin.scopeRegistry.rootScope.linkTo([a.scope]),
         throwsA(isA<IllegalStateException>()));
-
-    stopKoin();
   });
 }

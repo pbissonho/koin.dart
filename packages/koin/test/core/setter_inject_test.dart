@@ -32,3 +32,7 @@ class AInj extends KoinComponent {
     c = inject();
   }
 }
+
+void main() {
+  
+}
