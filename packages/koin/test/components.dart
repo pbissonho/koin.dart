@@ -1,3 +1,6 @@
+
+class Simple {}
+
 class ComponentA {}
 
 class ComponentB {
