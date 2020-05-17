@@ -7,7 +7,7 @@ import '../components.dart';
 
 void main() {
   test('can resolve a single', () {
-    var moduleX = module()..single((s, p) => MySingle(p.component1()));
+    var moduleX = module()..single((s, p) => MySingle(p.component1));
 
     startKoin2((app) {
       app.module(moduleX);

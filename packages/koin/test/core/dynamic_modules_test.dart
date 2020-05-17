@@ -130,7 +130,7 @@ void main() {
   });
 
   test('should reload module definition', () {
-    final currentModule = module()..single((s, p) => MySingle(p.component1()));
+    final currentModule = module()..single((s, p) => MySingle(p.component1));
 
     final app = koinApplication((app) {
       app.printLogger();
@@ -156,7 +156,7 @@ void main() {
   });
 
   test('should reload module definition - global context', () {
-    final currentModule = module()..single((s, p) => MySingle(p.component1()));
+    final currentModule = module()..single((s, p) => MySingle(p.component1));
 
     startKoin2((app) {
       app.module(currentModule);

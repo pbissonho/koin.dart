@@ -57,21 +57,23 @@ class DefinitionParameters {
     return value;
   }
 
-  Object component1() => elementAt(0);
-  Object component2() => elementAt(1);
-  Object component3() => elementAt(2);
-  Object component4() => elementAt(3);
-  Object component5() => elementAt(4);
+  Object get component1 => elementAt(0);
+  Object get component2 => elementAt(1);
+  Object get component3 => elementAt(2);
+  Object get component4 => elementAt(3);
+  Object get component5 => elementAt(4);
+
+  Object get param1 => elementAt(0);
+  Object get param2 => elementAt(1);
+  Object get param3 => elementAt(2);
+  Object get param4 => elementAt(3);
+  Object get param5 => elementAt(4);
 
   /// Get element at given index and return as [T]
   ///
   T get<T>(int index) {
     var object = elementAt(index);
     return object as T;
-  }
-
-  void get2<A,B>(void Function(A a, B b) function) {
-    function( component1(),component2());
   }
 
   ///

@@ -129,6 +129,12 @@ class Scope {
     return getWithType(type, qualifier, parameters);
   }
 
+
+  T getParams<T>({Qualifier qualifier, DefinitionParameters parameters}) {
+    var type = T;
+    return getWithType(type, qualifier, parameters);
+  }
+
   ///
   /// Get a Koin instance if available
   /// @param qualifier

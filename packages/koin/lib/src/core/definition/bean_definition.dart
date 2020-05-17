@@ -46,6 +46,9 @@ class Callbacks<T> {
 typedef Definition<T> = T Function(
     Scope scope, DefinitionParameters parameters);
 
+typedef Definition1<T, B> = T Function(
+    Scope scope, B param);
+
 enum Kind {
   Single,
   Factory,
