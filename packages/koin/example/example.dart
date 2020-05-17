@@ -1,7 +1,11 @@
-
 import 'package:koin/koin.dart';
 
-class Post {}
+class Post {
+  final String title;
+  final String body;
+
+  Post(this.title, this.body);
+}
 
 abstract class PostRepository {
   List<Post> getAll();
@@ -10,7 +14,7 @@ abstract class PostRepository {
 class RestPostRepository implements PostRepository {
   @override
   List<Post> getAll() {
-    return [Post(), Post()];
+    return [Post("Title", "BOdy"), Post("Title", "BOdy")];
   }
 }
 
@@ -23,4 +27,6 @@ void main() {
   }).koin;
 
   var postRepository = koin.get<PostRepository>();
+  
+  print(postRepository.getAll());
 }

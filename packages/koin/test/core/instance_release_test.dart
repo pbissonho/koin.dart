@@ -9,7 +9,7 @@ void main() {
   test('can resolve a single', () {
     var moduleX = module()..single((s, p) => MySingle(p.component1));
 
-    startKoin2((app) {
+    startKoin((app) {
       app.module(moduleX);
     });
 
@@ -21,7 +21,7 @@ void main() {
 
     stopKoin();
 
-    startKoin2((app) {
+    startKoin((app) {
       app.module(moduleX);
     });
 

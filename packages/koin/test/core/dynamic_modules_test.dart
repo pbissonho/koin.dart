@@ -158,7 +158,7 @@ void main() {
   test('should reload module definition - global context', () {
     final currentModule = module()..single((s, p) => MySingle(p.component1));
 
-    startKoin2((app) {
+    startKoin((app) {
       app.module(currentModule);
     });
 
@@ -242,7 +242,7 @@ void main() {
         s.scoped((s, p) => ComponentA());
       });
 
-    startKoin2((app) {
+    startKoin((app) {
       app.printLogger();
       app.module(currentModule);
     });

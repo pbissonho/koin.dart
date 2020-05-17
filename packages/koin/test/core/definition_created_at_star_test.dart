@@ -20,7 +20,7 @@ void main() {
   });
 
   test('is created at start', () {
-    var app = startKoin2((app) {
+    var app = startKoin((app) {
       app.module((module()
         ..single<ComponentA>((s, p) => ComponentA(), createdAtStart: true)));
     });

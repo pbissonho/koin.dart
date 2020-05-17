@@ -28,7 +28,7 @@ void main() {
   });
 
   test('typed scope & source', () {
-    var koin = startKoin2((app) {
+    var koin = startKoin((app) {
       app.module(Module()
         ..single((s, p) => A())
         ..scope<A>((s) {
@@ -49,7 +49,7 @@ void main() {
   });
 
   test('typed scope & source with get', () {
-    var koin = startKoin2((app) {
+    var koin = startKoin((app) {
       app.module(Module()
         ..single((s, p) => A())
         ..scope<A>((s) {
@@ -70,7 +70,7 @@ void main() {
   }, skip: true);
 
   test('scope from instance object', () {
-    var koin = startKoin2((app) {
+    var koin = startKoin((app) {
       app.module(Module()
         ..single((s, p) => A())
         ..scope<A>((s) {
@@ -100,7 +100,7 @@ void main() {
   });
 
   test('scope property', () {
-    var koin = startKoin2((app) {
+    var koin = startKoin((app) {
       app.module(Module()
         ..single((s, p) => A())
         ..scope<A>((s) {
@@ -124,7 +124,7 @@ void main() {
   });
 
   test('scope property 2', () {
-    var koin = startKoin2((app) {
+    var koin = startKoin((app) {
       app.module(Module()
         ..single((s, p) => A())
         ..scope<A>((s) {
@@ -144,7 +144,7 @@ void main() {
   });
 
   test('scope property - koin isolation', () {
-    var koin = startKoin2((app) {
+    var koin = startKoin((app) {
       app.module(Module()
         ..single((s, p) => A())
         ..scope<A>((s) {
@@ -167,7 +167,7 @@ void main() {
   });
 
   test('cascade scope', () {
-    var koin = startKoin2((app) {
+    var koin = startKoin((app) {
       app.module(Module()
         ..single((s, p) => A())
         ..scope<A>((s) {
@@ -193,7 +193,7 @@ void main() {
   });
 
   test('cascade linked scope', () {
-    var koin = startKoin2((app) {
+    var koin = startKoin((app) {
       app.module(Module()
         ..single((s, p) => A())
         ..scope<A>((s) {
@@ -211,7 +211,7 @@ void main() {
   });
 
   test('cascade unlink scope', () {
-    var koin = startKoin2((app) {
+    var koin = startKoin((app) {
       app.module(Module()
         ..single((s, p) => A())
         ..scope<A>((s) {
@@ -233,7 +233,7 @@ void main() {
   });
 
   test('shared linked scope', () {
-    var koin = startKoin2((app) {
+    var koin = startKoin((app) {
       app.module(Module()
         ..scope<A>((s) {
           s.scoped((s, p) => ComponentB(s.get()));
@@ -261,7 +261,7 @@ void main() {
   });
 
   test('error for root linked scope', () {
-    var koin = startKoin2((app) {
+    var koin = startKoin((app) {
       app.module(Module()
         ..single((s, p) => A())
         ..scope<A>((s) {

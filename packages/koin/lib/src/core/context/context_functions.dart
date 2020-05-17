@@ -8,16 +8,7 @@ import 'global_context.dart';
 ///
 /// Start a Koin Application as StandAlone
 ///
-KoinApplication startKoin(
-    {KoinApplication koinApplication, KoinContext koinContext}) {
-  koinContext ??= GlobalContext();
-  KoinContextHandler.register(koinContext);
-  KoinContextHandler.start(koinApplication);
-  koinApplication.createEagerInstances();
-  return koinApplication;
-}
-
-KoinApplication startKoin2(Function(KoinApplication app) appDeclaration,
+KoinApplication startKoin(Function(KoinApplication app) appDeclaration,
     {KoinContext koinContext}) {
   koinContext ??= GlobalContext();
   KoinContextHandler.register(koinContext);

@@ -41,7 +41,7 @@ void main() {
   });
 
   test('can isolate koin apps e standalone', () {
-    startKoin2((app) {
+    startKoin((app) {
       app.module(module()..single((s, p) => ComponentA()));
     });
 
@@ -63,7 +63,7 @@ void main() {
         dsl.scoped((s, p) => ComponentB(s.get()));
       });
 
-    startKoin2((app) {
+    startKoin((app) {
       app.module(module);
     });
 
@@ -74,7 +74,7 @@ void main() {
 
     stopKoin();
 
-    startKoin2((app) {
+    startKoin((app) {
       app.module(module);
     });
 

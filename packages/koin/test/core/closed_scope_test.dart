@@ -24,7 +24,7 @@ void main() {
   });
 
   test('stopping Koin closes Scopes', () {
-    var koin = startKoin2((app) {
+    var koin = startKoin((app) {
       app.printLogger().module(Module()
         ..scope<ScopeType>((scope) {
           scope.scoped((s, p) => ComponentA());

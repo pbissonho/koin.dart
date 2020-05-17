@@ -1,5 +1,8 @@
 library koin;
 
+export 'src/core/context/context_functions.dart';
+export 'src/ext/instance_scope_ext.dart';
+export 'src/core/context/global_context.dart';
 export 'src/core/module.dart';
 export 'src/core/koin_application.dart';
 export 'src/core/koin_component.dart';
