@@ -1,3 +1,7 @@
+## 0.7.1
+
+- Fixed an error when drop a factory instance
+
 ## 0.7.0
 
 - Added more tests. Coverage 80%
