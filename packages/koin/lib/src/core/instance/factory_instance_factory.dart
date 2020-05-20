@@ -34,7 +34,7 @@ class FactoryInstanceFactory<T> extends InstanceFactory<T> {
 
   @override
   void drop( ) {
-    beanDefinition.callbacks.onCloseCallback(null);
+    beanDefinition.callbacks.runCallback(null);
   }
 
   @override

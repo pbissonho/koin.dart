@@ -24,26 +24,27 @@ import 'definition.dart';
 import 'options.dart';
 
 class Callbacks<T> {
-  final void Function(T value) onCloseCallback;
+  final void Function(T value) _onCloseCallback;
 
   bool hasCallback() {
-    var check = onCloseCallback != null;
+    var check = _onCloseCallback != null;
     return check;
   }
 
   void runCallback(T value) {
     if (hasCallback()) {
-      onCloseCallback(value);
+      _onCloseCallback(value);
     }
   }
 
-  Callbacks({this.onCloseCallback});
+  Callbacks({Function(T value) onCloseCallback})
+      : _onCloseCallback = onCloseCallback;
 }
 
 //typedef OnCloseCallback<T> = void Function(T value);
 
 //typedef Definition<T> = T Function(
- //   Scope scope, DefinitionParameters parameters);
+//   Scope scope, DefinitionParameters parameters);
 
 enum Kind {
   Single,
