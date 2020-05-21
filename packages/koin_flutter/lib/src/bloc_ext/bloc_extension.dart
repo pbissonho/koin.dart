@@ -1,54 +1,50 @@
 import 'package:koin/koin.dart';
-import '../scope_component.dart';
 
-class Scope {}
 
-extension KoinComponentExtension on ScopeComponentMixin {
+extension KoinComponentExtensionMixin on KoinComponentMixin {
   T bloc<T>([Qualifier qualifier, DefinitionParameters parameters]) {
     return get<T>(qualifier, parameters);
   }
 }
 
-mixin Disposable {
+extension KoinComponentExtension on KoinComponent {
+  T bloc<T>([Qualifier qualifier, DefinitionParameters parameters]) {
+    return get<T>(qualifier, parameters);
+  }
+}
+
+abstract class Disposable {
   void dispose();
 }
 
 extension BlocModuleExtension on Module {
   BeanDefinition<T> bloc<T extends Disposable>(
-    Definition<T> definition, {
+    DefinitionFunction<T> definition, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
-    BeanDefinition<T> beanDefinition =
-        BeanDefinition<T>.createSingle(qualifier, null, definition);
-    declareDefinition(beanDefinition,
-        Options(isCreatedAtStart: createdAtStart, override: override));
+    var beanDefinition = single<T>(definition,
+        qualifier: qualifier,
+        createdAtStart: createdAtStart,
+        override: override);
 
-    beanDefinition.onClose((bloc) {
-      if (logger.isAt(Level.debug)) {
-        logger.debug("{$T BLoC closed}");
-      }
-
-      bloc.dispose();
-    });
+    beanDefinition.onClose((bloc) => bloc.dispose());
     return beanDefinition;
   }
 }
 
-extension ScopeSetBlocExtension on ScopeSet {
+extension ScopeSetBlocExtension on ScopeDSL {
   BeanDefinition<T> scopedBloc<T extends Disposable>(
-      [Definition<T> definition, Qualifier qualifier, bool override]) {
-    var beanDefinition =
-        BeanDefinition<T>.createScoped(qualifier, this.qualifier, definition);
-    declareDefinition(
-        beanDefinition, Options(isCreatedAtStart: false, override: override));
-    if (!definitions.contains(beanDefinition)) {
-      definitions.add(beanDefinition);
-    } else {
-      // throw DefinitionOverrideException(
-      //     "Can't add definition $beanDefinition for scope ${this.qualifier} as it already exists");
-    }
+    DefinitionFunction<T> definition, {
+    Qualifier qualifier,
+    bool createdAtStart = false,
+    bool override = false,
+  }) {
+    var beanDefinition = scoped<T>(definition,
+        qualifier: qualifier,
+        override: override);
+
     beanDefinition.onClose((bloc) => bloc.dispose());
     return beanDefinition;
   }

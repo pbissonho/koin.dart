@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:koin/koin.dart';
-import 'package:koin_flutter/koin_bloc.dart';
 
-class Bloc implements Disposable {
+import '../lib/src/bloc_ext/bloc_extension.dart';
+
+abstract class Teteca {
+  void dispose();
+}
+
+class Bloc extends Teteca with Disposable {
+  bool isDisposed = false;
+
   @override
-  void dispose() {}
+  void dispose() {
+    isDisposed = true;
+  }
 }
 
 class ScopedBloc implements Disposable {
@@ -14,31 +23,32 @@ class ScopedBloc implements Disposable {
 }
 
 var blocModule = Module()
-  ..bloc((s, p) => Bloc())
-  ..scope(named<ScopeWidget>(), (scope) {
-    scope.scopedBloc<ScopedBloc>((s, p) => ScopedBloc());
+  ..bloc((s) => Bloc())
+  ..scope<ScopeWidget>((scope) {
+    scope.scopedBloc<ScopedBloc>((s) => ScopedBloc());
   });
 
 void main() {
-  testWidgets("description", (tester) async {
-    startKoin((app) {
+  testWidgets("Test", (tester) async {
+    var koin = startKoin((app) {
       app.module(blocModule);
-    });
+    }).koin;
 
-    await tester.pumpWidget(MaterialApp(home: ScopeWidget()));
+    var bloc = koin.get<Bloc>();
+    expect(bloc, isNotNull);
 
-    final titleFinder = find.text('T');
+    stopKoin();
 
-    expect(titleFinder, findsOneWidget);
+    expect(bloc.isDisposed, true);
   });
 }
 
 class ScopeWidget extends StatefulWidget {
   @override
-  _KoinTestState createState() => _KoinTestState();
+  KoinTestState createState() => KoinTestState();
 }
 
-class _KoinTestState extends State<ScopeWidget> with ScopeComponentMixin {
+class KoinTestState extends State<ScopeWidget> with KoinComponentMixin {
   Bloc myBloc;
   @override
   void initState() {
@@ -49,7 +59,7 @@ class _KoinTestState extends State<ScopeWidget> with ScopeComponentMixin {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text("T"),
+      child: Text('T'),
     );
   }
 }

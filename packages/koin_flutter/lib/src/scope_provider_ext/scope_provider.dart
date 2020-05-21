@@ -1,8 +1,5 @@
-import 'package:flutter/widgets.dart';
-import 'package:koin/koin.dart';
-import 'package:provider/provider.dart';
 
-import 'scope_builder.dart';
+/*
 
 class ScopeProvider extends ValueDelegateWidget<ScopeBuilderComponent>
     implements SingleChildCloneableWidget {
@@ -94,3 +91,4 @@ class ScopeProvider extends ValueDelegateWidget<ScopeBuilderComponent>
     );
   }
 }
+*/

@@ -13,18 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/*
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:koin/koin.dart';
+import 'package:koin/src/core/context/koin_context_handler.dart';
+
+
 
 ///
 /// Provide an scope for given State from a StatefulWidget
 ///
 /// @author Pedro Bissonho
 ///
-mixin ScopeComponentMixin<St extends StatefulWidget> on State<St>
-    implements KoinComponent {
+mixin ScopeComponentMixin<St extends StatefulWidget> on State<St> {
   Scope _currentScope;
 
   @override
@@ -44,7 +46,7 @@ mixin ScopeComponentMixin<St extends StatefulWidget> on State<St>
   /// Inject lazily given dependency for State
   ///
   Lazy<T> inject<T>([Qualifier qualifier, DefinitionParameters parameters]) {
-    return getKoin().rootScope.inject<T>(parameters, qualifier);
+    return getKoin().inject<T>(qualifier, parameters);
     //return //= lazy { get<T>(qualifier, parameters) };
   }
 
@@ -54,13 +56,6 @@ mixin ScopeComponentMixin<St extends StatefulWidget> on State<St>
   T get<T>([Qualifier qualifier, DefinitionParameters parameters]) {
     var scope = _getOrCreateCurrentScope();
     return scope.get<T>(qualifier, parameters);
-  }
-
-  ///
-  /// get given dependency State, from primary and secondary types
-  ///
-  S bind<S, P>(DefinitionParameters parameters) {
-    return getKoin().bind<S, P>(parameters);
   }
 
   Qualifier _getScopeName() => named(this.widget.runtimeType.toString());
@@ -79,13 +74,6 @@ mixin ScopeComponentMixin<St extends StatefulWidget> on State<St>
   }
 
   ///
-  /// Get Koin context
-  ///
-  Koin getKoin() {
-    return GlobalContext.instance.get().koin;
-  }
-
-  ///
   /// Get current Koin scope, bound to current lifecycle
   ///
   Scope get currentScope => _getOrCreateCurrentScope();
@@ -100,4 +88,9 @@ mixin ScopeComponentMixin<St extends StatefulWidget> on State<St>
       defaultValue: null,
     ));
   }
+
+  Koin getKoin() {
+    return KoinContextHandler.get();
+  }
 }
+*/
