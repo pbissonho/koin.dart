@@ -64,6 +64,7 @@ class GlobalContext implements KoinContext {
   ///
   /// Stop current StandAlone Koin application
   ///
+  @override
   void stop() {
     _koin?.close();
     _koin = null;

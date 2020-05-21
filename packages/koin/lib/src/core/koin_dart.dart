@@ -232,7 +232,8 @@ class Koin {
     var scope = _scopeRegistry.getScopeOrNull(scopeId);
     if (scope == null) {
       return createScopeT(scopeId, qualifier);
-    }
+    } 
+    return scope;
   }
 
   ///
@@ -244,6 +245,7 @@ class Koin {
     if (scope == null) {
       return createScopeT(scopeId, qualifier);
     }
+    return scope;
   }
 
   ///
