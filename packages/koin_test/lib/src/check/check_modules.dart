@@ -16,68 +16,71 @@
 
 import 'package:koin/koin.dart';
 import 'check_module_dsl.dart';
+import 'package:koin/src/core/scope/scope_definition.dart';
+import 'package:koin/src/dsl/koin_application_dsl.dart';
 
-///
-/// Check all definition's dependencies.
-///
-/// Start all modules and check if definitions can run.
-///
-
-void checkModules(List<Module> modules, CheckParameters checkParameters) {
-  KoinApplication app = KoinApplication.create();
-  app.modules(modules);
-  app.createEagerInstances();
-  checkKoinModules(checkParameters, app.koin);
+extension KoinApplicationExt on KoinApplication {
+  void checkModules(CheckParameters checkParameters) {
+    koin.checkModules(checkParameters);
+  }
 }
 
-///
-/// Check all definition's dependencies.
-///
-/// Start the module and check if definitions can run.
-///
-
-void checkModule(Module module, CheckParameters checkParameters) {
-  KoinApplication app = KoinApplication.create();
-  app.module(module);
-  app.createEagerInstances();
-  checkKoinModules(checkParameters, app.koin);
+void checkModules(Level level, CheckParameters checkParameters,
+    Function(KoinApplication app) appDeclaration) {
+  koinApplication(appDeclaration)
+    ..logger(PrintLogger(level))
+    ..checkModules(checkParameters);
 }
 
-///Check all definition's dependencies.
-///
-///Start all modules and check if definitions can run
-///
-void checkKoinModules(CheckParameters parametersDefinition, Koin koin) {
-  checkMainDefinitions(parametersDefinition.creators, koin);
-  checkScopedDefinitions(parametersDefinition.creators, koin);
-  koin.close();
-}
+extension KoinExt on Koin {
+  ///
+  /// Check all definition's dependencies - start all modules and check if definitions can run
+  ///
+  
+  void checkModules(CheckParameters checkParameters) {
+    logger.info('[Check] checking current modules ...');
 
-void checkScopedDefinitions(
-    Map<CheckedComponent, DefinitionParameters> allParameters, Koin koin) {
-  var scopeRegistry = koin.scopeRegistry;
+    var allParameters = makeParameters(checkParameters);
+    checkScopedDefinitions(allParameters);
 
-  scopeRegistry.getScopeSets().forEach((value) {
-    var scope = koin.createScope(value.qualifier.toString(), value.qualifier);
-    value.definitions.forEach((definition) {
-      var parameters = allParameters[
-          CheckedComponent(definition.qualifier, definition.primaryType)];
-      scope.getWithType(
-          definition.primaryType, definition.qualifier, parameters);
+    close();
+
+    logger.info('[Check] modules checked');
+  }
+
+  Map<CheckedComponent, DefinitionParameters> makeParameters(
+      CheckParameters checkParameters) {
+    var bindings = ParametersBinding();
+    bindings.koin = this;
+
+    bindings.creators = checkParameters.creators;
+
+    return bindings.creators;
+  }
+
+  void checkScopedDefinitions(
+      Map<CheckedComponent, DefinitionParameters> allParameters) {
+    scopeRegistry.scopeDefinitions.values.forEach((scopeDefinition) {
+      runScope(scopeDefinition, allParameters);
     });
-  });
+  }
+
+  void runScope(ScopeDefinition scopeDefinition,
+      Map<CheckedComponent, DefinitionParameters> allParameters) {
+    var scope = getOrCreateScope(
+        scopeDefinition.qualifier.value, scopeDefinition.qualifier);
+
+    scope.scopeDefinition.definitions.forEach((it) {
+      runDefinition(allParameters, it, scope);
+    });
+  }
 }
 
-void checkMainDefinitions(
-    Map<CheckedComponent, DefinitionParameters> allParameters, Koin koin) {
-  koin.rootScope.beanRegistry.getAllDefinitions().forEach((definition) {
-    var parameters = allParameters[
-        CheckedComponent(definition.qualifier, definition.primaryType)];
+void runDefinition(Map<CheckedComponent, DefinitionParameters> allParameters,
+    BeanDefinition it, Scope scope) {
+  var parameters =
+      allParameters[CheckedComponent(it.qualifier, it.primaryType)];
+  parameters ??= parametersOf([]);
 
-    if (parameters == null) {
-      parameters = parametersOf([]);
-    }
-
-    koin.getWithType(definition.primaryType, definition.qualifier, parameters);
-  });
+  scope.getWithType(it.primaryType, it.qualifier, parameters);
 }

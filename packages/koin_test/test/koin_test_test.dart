@@ -1,8 +1,7 @@
 import 'package:koin/koin.dart';
 import 'package:koin_test/koin_test.dart';
-import 'package:koin_test/src/check/check_modules.dart';
-import 'package:koin_test/src/mock/declare_mock.dart';
 import 'package:mockito/mockito.dart';
+
 import 'package:test/test.dart';
 
 class Service {
@@ -41,12 +40,29 @@ class ServiceFake extends Fake implements Service {
 }
 
 var customModule = Module()
-  ..single<Service>(((s, p) => Service()))
-  ..factory<ServiceC>(((s, p) => ServiceC(p.component1(), p.component2())));
-var invalidModule = Module()..single<ServiceB>(((s, p) => ServiceB(s.get())));
+  ..single<Service>(((s) => Service()))
+  ..factory2<ServiceC, String, String>(
+      ((s, name, last) => ServiceC(name, last)));
+
+var invalidModule = Module()..single<ServiceB>(((s) => ServiceB(s.get())));
 
 void main() {
   koinTest();
+
+  var appDeclaration = koinApplication((app) {
+    app.module(customModule);
+  });
+
+  var appDeclarationInvalid = koinApplication((app) {
+    app.module(invalidModule);
+  });
+
+  var checkParameters = CheckParameters()
+    ..create<ServiceC>(parametersOf(['Tutuca', 'Butuca']));
+
+  testKoinDeclaration('SimpleTest', (app) {
+    app.module(customModule);
+  }, checkParameters: checkParameters);
 
   testModule('MyModule', customModule,
       checkParameters: checkParametersOf({
@@ -59,26 +75,29 @@ void main() {
       }));
 
   test(('shoud be a valid module '), () {
-    checkModules(
-        [customModule],
-        checkParametersOf({
-          ServiceC: parametersOf(['Name', 'LastName']),
-        }));
+    appDeclaration.checkModules(checkParametersOf({
+      ServiceC: parametersOf(['Name', 'LastName']),
+    }));
   });
 
   test(('shoud be a invalid module '), () {
     expect(() {
-      checkModules([customModule], CheckParameters());
+      appDeclarationInvalid.checkModules(CheckParameters());
     }, throwsException);
   });
 
   test('shoud return mock instance', () {
-    declare(customModule);
+    declareModule((module) {
+      module
+        ..single<Service>(((s) => Service()))
+        ..factory2<ServiceC, String, String>(
+            ((s, name, last) => ServiceC(name, last)));
+    });
 
     var serviceMock = ServiceMock();
     when(serviceMock.getName()).thenReturn('MockName');
 
-    declareMock<Service>(serviceMock);
+    declare<Service>(serviceMock);
 
     var service = get<Service>();
 
@@ -88,11 +107,16 @@ void main() {
   });
 
   test(('shoud return a Fake instance'), () {
-    declare(customModule);
+    declareModule((module) {
+      module
+        ..single<Service>(((s) => Service()))
+        ..factory2<ServiceC, String, String>(
+            ((s, name, last) => ServiceC(name, last)));
+    });
 
     var serviceMock = ServiceFake();
 
-    declareMock<Service>(serviceMock);
+    declare<Service>(serviceMock);
 
     var service = get<Service>();
 

@@ -32,6 +32,6 @@ abstract class BrokenDefinitionException implements Exception {
 
   @override
   String toString() {
-    return "${this.runtimeType}: $msg";
+    return '${runtimeType}: $msg';
   }
 }

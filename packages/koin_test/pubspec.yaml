@@ -9,7 +9,10 @@ environment:
   sdk: '>=2.6.0 <3.0.0'
 
 dependencies:
-  koin: ^0.3.2
+  koin: 
+    git:
+      url: git://github.com/pbissonho/koin.dart
+      path: packages/koin
   test: ^1.6.0
   equatable: ^1.0.0
   meta: ^1.1.6

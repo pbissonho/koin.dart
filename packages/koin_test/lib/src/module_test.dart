@@ -6,9 +6,10 @@ import 'check/check_module_dsl.dart';
 import 'check/check_modules.dart';
 
 @isTest
-void testModule(
+void testKoinDeclaration(
   String description,
-  Module module, {
+  Function(KoinApplication app) appDeclaration, {
+  Level level,
   CheckParameters checkParameters,
   String testOn,
   Timeout timeout,
@@ -18,7 +19,7 @@ void testModule(
   int retry,
 }) {
   test(description, () {
-    checkModules([module], checkParameters);
+    checkModules(level, checkParameters, appDeclaration);
   },
       testOn: testOn,
       tags: tags,
@@ -30,7 +31,8 @@ void testModule(
 
 @isTest
 void testModules(String description,
-    {List<Module> modules,
+    List<Module> modules,{
+    Level level,
     CheckParameters checkParameters,
     String testOn,
     Timeout timeout,
@@ -39,10 +41,35 @@ void testModules(String description,
     Map<String, dynamic> onPlatform,
     int retry}) {
   test(description, () {
-    if (checkParameters == null) {
-      checkParameters = CheckParameters();
-    }
-    checkModules(modules, checkParameters);
+    checkParameters ??= CheckParameters();
+    checkModules(level, checkParameters, (app) {
+      app.modules(modules);
+    });
+  },
+      testOn: testOn,
+      tags: tags,
+      timeout: timeout,
+      skip: skip,
+      retry: retry,
+      onPlatform: onPlatform);
+}
+
+@isTest
+void testModule(String description,
+    Module module,{
+    Level level,
+    CheckParameters checkParameters,
+    String testOn,
+    Timeout timeout,
+    dynamic skip,
+    dynamic tags,
+    Map<String, dynamic> onPlatform,
+    int retry}) {
+  test(description, () {
+    checkParameters ??= CheckParameters();
+    checkModules(level, checkParameters, (app) {
+      app.module(module);
+    });
   },
       testOn: testOn,
       tags: tags,

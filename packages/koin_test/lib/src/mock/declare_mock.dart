@@ -16,6 +16,8 @@
 
 import 'package:koin/koin.dart';
 
+/*
+
 /// Declare a Mock instance in Koin container for given type
 ///
 /// @author Pedro Bissonho
@@ -89,3 +91,4 @@ BeanDefinition<T> createMockedDefinition<T>(
   copy.createInstanceHolder();
   return copy;
 }
+*/

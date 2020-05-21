@@ -20,10 +20,11 @@ export 'src/check/check_modules.dart';
 export 'src/check/check_module_dsl.dart';
 export 'src/module_test.dart';
 export 'src/mock/declare_mock.dart';
-export 'src/extension/module_extension.dart';
 
 import 'package:koin/koin.dart';
 import 'package:test/test.dart';
+
+import 'package:koin/src/core/context/koin_context_handler.dart';
 
 /// Koin Test tools
 /// @author Pedro Bissonho
@@ -65,20 +66,31 @@ void koinTearDown() {
 ///
 /// Declare a module to be loaded in the global context of koin
 ///
-void declare(Module module) {
-  GlobalContext.instance.get().module(module);
+void declareModule(Function(Module module) moduleDeclaration) {
+  var module = Module(false, true);
+  moduleDeclaration(module);
+  KoinContextHandler.get().loadModule(module);
+}
+
+///
+/// Declare a instance to be loaded in the global context of koin
+///
+T declare<T>(T instance, [Qualifier qualifier]) {
+  var koin = KoinContextHandler.get();
+  koin.declare(instance, qualifier: qualifier, override: true);
+  return get(qualifier);
 }
 
 ///
 /// Lazy inject an instance from Koin in the test environment.
 ///
 Lazy<T> inject<T>([Qualifier qualifier, DefinitionParameters parameters]) {
-  return GlobalContext.instance.get().koin.inject<T>(qualifier, parameters);
+  return KoinContextHandler.get().inject<T>(qualifier, parameters);
 }
 
 ///
 /// Get an instance from Koin in the test environment.
 ///
 T get<T>([Qualifier qualifier, DefinitionParameters parameters]) {
-  return GlobalContext.instance.get().koin.get<T>(qualifier, parameters);
+  return KoinContextHandler.get().get<T>(qualifier, parameters);
 }
