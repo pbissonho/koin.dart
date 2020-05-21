@@ -1,3 +1,7 @@
+## 0.10.0
+
+- Restructuring to support koin v0.7.2
+
 ## 0.7.0
 
 - Added extension functions to module test

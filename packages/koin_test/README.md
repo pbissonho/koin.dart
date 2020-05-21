@@ -5,8 +5,5 @@
 
 A testing library for [koin.dart](https://github.com/pbissonho/koin.dart).
 
-## Warning
-
-Koin.dart port does not have all the koin features implemented yet, and what it already has is not fully tested. I do not recommend using it yet.
 
 
