@@ -1,3 +1,7 @@
+## 0.7.2
+
+- Fixed an error on Scope create
+
 ## 0.7.1
 
 - Fixed an error when drop a factory instance
