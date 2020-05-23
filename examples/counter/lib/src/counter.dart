@@ -17,3 +17,9 @@ abstract class CounterBase with Store {
     value++;
   }
 }
+
+class Service {
+  String getData() {
+    return 'Value';
+  }
+}

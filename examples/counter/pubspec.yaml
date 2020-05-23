@@ -28,6 +28,9 @@ dependencies:
   build_runner: ^1.10.0
   koin:
     path: ../../packages/koin/
+  koin_flutter:
+    path: ../../packages/koin_flutter/
+
     
 dev_dependencies:
   flutter_test:

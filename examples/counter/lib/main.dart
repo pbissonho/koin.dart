@@ -6,7 +6,8 @@ import 'src/home_page.dart';
 
 void main() {
   startKoin((app) {
-    app.module(homeModule);
+    app.printLogger(level: Level.debug);
+    app.modules([homeModule]);
   });
 
   runApp(MyApp());

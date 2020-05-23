@@ -2,6 +2,7 @@ import 'package:counter/src/counter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:koin/koin.dart';
+import 'package:koin/instace_scope.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -11,12 +12,20 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> with KoinComponentMixin {
   Counter counter;
   Counter counter2;
+  Counter counterSingle;
 
   @override
   void initState() {
-    counter = get<Counter>();
-    counter2 = get<Counter>(named("Fac"), parametersOf([50]));
+    counter = widget.scope.get();
+    counterSingle = get();
+    counter2 = widget.scope.get(named("Fac"), parametersOf([50]));
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    widget.scope.close();
+    super.dispose();
   }
 
   @override
@@ -32,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> with KoinComponentMixin {
                 return MyHomePage();
               }), (smk) => false);
             },
-          )
+          ),
         ],
         title: Text('Home Page'),
       ),
@@ -41,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> with KoinComponentMixin {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Single Counter',
+              'ScopedSingle Counter',
             ),
             Observer(
               builder: (_) {
@@ -62,6 +71,17 @@ class _MyHomePageState extends State<MyHomePage> with KoinComponentMixin {
                 );
               },
             ),
+            Text(
+              'Single',
+            ),
+            Observer(
+              builder: (_) {
+                return Text(
+                  '${counterSingle.value}',
+                  style: Theme.of(context).textTheme.display1,
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -69,6 +89,7 @@ class _MyHomePageState extends State<MyHomePage> with KoinComponentMixin {
         onPressed: () {
           counter.increment();
           counter2.increment();
+          counterSingle.increment();
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
