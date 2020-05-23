@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:koin/koin.dart';
 
+import 'package:koin/instace_scope.dart';
 import '../lib/src/bloc_ext/bloc_extension.dart';
 
-abstract class Teteca {
+abstract class BlocBase {
   void dispose();
 }
 
-class Bloc extends Teteca with Disposable {
+class Bloc extends BlocBase with Disposable {
   bool isDisposed = false;
 
   @override
@@ -48,11 +49,12 @@ class ScopeWidget extends StatefulWidget {
   KoinTestState createState() => KoinTestState();
 }
 
-class KoinTestState extends State<ScopeWidget> with KoinComponentMixin {
+class KoinTestState extends State<ScopeWidget> {
   Bloc myBloc;
+  
   @override
   void initState() {
-    myBloc = bloc<Bloc>();
+    myBloc = widget.scope.get<Bloc>();
     super.initState();
   }
 

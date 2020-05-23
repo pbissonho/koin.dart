@@ -84,9 +84,9 @@ packages:
   koin:
     dependency: "direct main"
     description:
-      name: koin
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../koin"
+      relative: true
+    source: path
     version: "0.7.2"
   kt_dart:
     dependency: transitive
