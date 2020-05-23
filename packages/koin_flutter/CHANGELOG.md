@@ -1,3 +1,9 @@
+## 0.6.0
+
+- Added BlocExtension as extension
+- Testructuring to Koin 0.8.0
+- Removed ScopeComponentMixin, Scopeprovider and ScopeBuilder
+
 ## 0.3.0
 
 - Added BlocExtension

@@ -63,7 +63,7 @@ packages:
       name: equatable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.1.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -84,17 +84,17 @@ packages:
   koin:
     dependency: "direct main"
     description:
-      path: "../koin"
-      relative: true
-    source: path
-    version: "0.7.2"
+      name: koin
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.8.0"
   kt_dart:
     dependency: transitive
     description:
       name: kt_dart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.2"
+    version: "0.7.0+1"
   matcher:
     dependency: transitive
     description:
@@ -130,13 +130,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
-  provider:
-    dependency: "direct main"
-    description:
-      name: provider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.2.0"
   quiver:
     dependency: transitive
     description:
