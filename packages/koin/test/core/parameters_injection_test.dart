@@ -3,6 +3,21 @@ import 'package:test/test.dart';
 
 import '../components.dart';
 
+class MySingle2 {
+  final int id;
+  final String name;
+
+  MySingle2(this.id, this.name);
+}
+
+class MySingle3 {
+  final int id;
+  final String name;
+  final String lastName;
+
+  MySingle3(this.id, this.name, this.lastName);
+}
+
 void main() {
   test('can create a single with parameters', () {
     var app = koinApplication((app) {
@@ -12,6 +27,93 @@ void main() {
     var a = app.koin.getWithParams<MySingle>(parameters: parametersOf([42]));
 
     expect(a.id, 42);
+  });
+
+  test('can create a scoped with parameters', () {
+    var scopeKey = named('ScopeKey');
+
+    var app = koinApplication((app) {
+      app.module(Module()
+        ..scopeWithType(scopeKey, (s) {
+          s.scoped1<MySingle, int>((s, id) => MySingle(id));
+        }));
+    });
+
+    var scope = app.koin.createScope('scopeId', scopeKey);
+
+    var a = scope.getParams<MySingle>(parameters: parametersOf([42]));
+
+    expect(a.id, 42);
+  });
+
+  test('can create a scoped with 2 parameters', () {
+    var scopeKey = named('ScopeKey');
+
+    var app = koinApplication((app) {
+      app.module(Module()
+        ..scopeWithType(scopeKey, (s) {
+          s.scoped2<MySingle2, int, String>(
+              (s, id, name) => MySingle2(id, name));
+        }));
+    });
+
+    var scope = app.koin.createScope('scopeId', scopeKey);
+
+    var a =
+        scope.getParams<MySingle2>(parameters: parametersOf([42, 'myString']));
+
+    expect(a.id, 42);
+    expect(a.name, 'myString');
+  });
+
+  test('can create a scoped with 3 parameters', () {
+    var scopeKey = named('ScopeKey');
+
+    var app = koinApplication((app) {
+      app.module(Module()
+        ..scopeWithType(scopeKey, (s) {
+          s.scoped3<MySingle3, int, String, String>(
+              (s, id, name, last) => MySingle3(id, name, last));
+        }));
+    });
+
+    var scope = app.koin.createScope('scopeId', scopeKey);
+
+    var a = scope.getParams<MySingle3>(
+        parameters: parametersOf([42, 'myString', 'myString2']));
+
+    expect(a.id, 42);
+    expect(a.name, 'myString');
+    expect(a.lastName, 'myString2');
+  });
+
+  test('can create a single2 with parameters', () {
+    var app = koinApplication((app) {
+      app.module(Module()
+        ..single2<MySingle2, int, String>(
+            (s, id, name) => MySingle2(id, name)));
+    });
+
+    var a = app.koin
+        .getWithParams<MySingle2>(parameters: parametersOf([42, 'myString']));
+
+    expect(a.id, 42);
+    expect(a.name, 'myString');
+  });
+
+  test('can create a single3 with parameters', () {
+    var app = koinApplication((app) {
+      app.module(Module()
+        ..single3<MySingle3, int, String, String>(
+            (s, id, name, lastName) => MySingle3(id, name, lastName)));
+    });
+
+    var a = app.koin.getWithParams<MySingle3>(
+        parameters: parametersOf([42, 'myString', 'lastName']));
+
+    expect(a.id, 42);
+    expect(a.name, 'myString');
+    expect(a.lastName, 'lastName');
   });
 
   test('can get a single created with parameters - no need of give it again',
@@ -40,6 +142,47 @@ void main() {
 
     expect(a.id, 42);
     expect(b.id, 43);
+  });
+
+  test('an create a factories with 2 parameters', () {
+    var app = koinApplication((app) {
+      app.module(Module()
+        ..factory2<MySingle2, int, String>(
+            (s, id, name) => MySingle2(id, name)));
+    });
+
+    var a = app.koin
+        .getWithParams<MySingle2>(parameters: parametersOf([42, 'myString']));
+
+    var b = app.koin
+        .getWithParams<MySingle2>(parameters: parametersOf([43, 'myString2']));
+
+    expect(a.id, 42);
+    expect(a.name, 'myString');
+
+    expect(b.id, 43);
+    expect(b.name, 'myString2');
+  });
+
+  test('an create a factories with 2 parameters', () {
+    var app = koinApplication((app) {
+      app.module(Module()
+        ..factory3<MySingle3, int, String, String>(
+            (s, id, name, lastName) => MySingle3(id, name, lastName)));
+    });
+
+    var a = app.koin.getWithParams<MySingle3>(
+        parameters: parametersOf([42, 'myString', 'lastName']));
+
+    var b = app.koin.getWithParams<MySingle3>(
+        parameters: parametersOf([45, 'myString2', 'lastName2']));
+
+    expect(a.id, 42);
+    expect(a.name, 'myString');
+    expect(a.lastName, 'lastName');
+    expect(b.id, 45);
+    expect(b.name, 'myString2');
+    expect(b.lastName, 'lastName2');
   });
 
   test('chained factory injection', () {
