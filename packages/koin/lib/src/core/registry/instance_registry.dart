@@ -1,5 +1,4 @@
 import 'package:koin/src/core/definition_parameters.dart';
-import 'package:koin/src/core/error/error.dart';
 import 'package:koin/src/core/error/exceptions.dart';
 import 'package:koin/src/core/scope/scope.dart';
 import 'package:kt_dart/kt.dart';

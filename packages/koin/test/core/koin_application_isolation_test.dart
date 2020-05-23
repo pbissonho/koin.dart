@@ -7,6 +7,8 @@ import 'package:test/test.dart';
 import '../components.dart';
 import '../extensions/koin_application_ext.dart';
 
+import 'package:kt_dart/collection.dart';
+
 void main() {
   test('can isolate several koin apps', () {
     var app1 = koinApplication((app) {

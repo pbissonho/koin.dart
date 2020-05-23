@@ -2,6 +2,9 @@ import 'package:koin/koin.dart';
 import 'package:koin/src/core/instance/instance_factory.dart';
 import 'package:test/test.dart';
 
+import 'package:kt_dart/collection.dart';
+
+
 extension KoinApplicationEx<T> on KoinApplication {
   void expectDefinitionsCount(int count) {
     expect(koin.scopeRegistry.size(), count);
