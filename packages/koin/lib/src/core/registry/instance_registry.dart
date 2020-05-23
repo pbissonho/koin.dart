@@ -69,7 +69,8 @@ class InstanceRegistry {
 
   void saveInstance(String key, InstanceFactory factory, bool override) {
     if (instances.containsKey(key) && !override) {
-      throw IllegalStateException("InstanceRegistry already contains index '$key'");
+      throw IllegalStateException(
+          "InstanceRegistry already contains index '$key'");
     } else {
       instances[key] = factory;
     }
@@ -82,8 +83,8 @@ class InstanceRegistry {
   }
 
   T resolveInstance<T>(String indexKey, DefinitionParameters parameters) {
-
-    var instance = instances[indexKey]?.get(defaultInstanceContext(parameters)) as T;
+    var instance =
+        instances[indexKey]?.get(defaultInstanceContext(parameters)) as T;
     return instance;
   }
 

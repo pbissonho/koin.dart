@@ -33,7 +33,7 @@ class FactoryInstanceFactory<T> extends InstanceFactory<T> {
   bool isCreated() => false;
 
   @override
-  void drop( ) {
+  void drop() {
     beanDefinition.callbacks.runCallback(null);
   }
 

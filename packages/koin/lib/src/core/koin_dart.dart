@@ -26,6 +26,7 @@ import 'registry/proterty_registry.dart';
 import 'registry/scope_registry.dart';
 import 'scope/scope.dart';
 import '../ext/instance_scope_ext.dart';
+
 /// Koin
 ///
 /// Gather main features to use on Koin context
@@ -39,7 +40,7 @@ class Koin {
   ScopeRegistry _scopeRegistry;
   PropertyRegistry _propertyRegistry;
   Logger _logger;
-  KtHashSet<Module> _modules = KtHashSet<Module>.empty();
+  final KtHashSet<Module> _modules = KtHashSet<Module>.empty();
 
   Logger get logger => _logger;
   set logger(logger) => _logger = logger;
@@ -86,7 +87,6 @@ class Koin {
       parameters,
     );
   }
-
 
   ///
   /// Get a Koin instance if available with return instance of type T or null.
@@ -201,7 +201,7 @@ class Koin {
 
   Scope createScopeT2<T>() {
     var type = T;
-    var scopeId = type.scopeId;  
+    var scopeId = type.scopeId;
     var qualifier = TypeQualifier(T);
     if (logger.isAt(Level.debug)) {
       logger.debug('!- create scope - id:$scopeId q:$qualifier');
@@ -232,7 +232,7 @@ class Koin {
     var scope = _scopeRegistry.getScopeOrNull(scopeId);
     if (scope == null) {
       return createScopeT(scopeId, qualifier);
-    } 
+    }
     return scope;
   }
 

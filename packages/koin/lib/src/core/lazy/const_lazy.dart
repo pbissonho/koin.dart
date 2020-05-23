@@ -9,7 +9,7 @@ class ConstLazy<T> {
   const ConstLazy(this.initializer);
 
   ///
-  /// Get the lazily initialized value.
+  /// Get the lazilyinitialized value.
   ///
   T get value => _resolve();
 
@@ -29,4 +29,3 @@ class ConstLazy<T> {
   T call() => _resolve();
 }
 */
-

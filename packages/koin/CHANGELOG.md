@@ -1,3 +1,9 @@
+## 0.8.0
+
+- Code improvements with pub.dev health suggestions
+- Moved Scope extensions to 'instance_scope_ext.dart'
+- Update dependencies
+
 ## 0.7.2
 
 - Fixed an error on Scope create

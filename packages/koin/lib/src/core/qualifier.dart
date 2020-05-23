@@ -48,8 +48,6 @@ Qualifier qualifier<T>([String name]) {
   return StringQualifier(name);
 }
 
-
-
 class StringQualifier extends Qualifier with EquatableMixin {
   StringQualifier(String value) : super(value);
 

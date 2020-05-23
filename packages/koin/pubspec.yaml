@@ -8,7 +8,7 @@ environment:
 
 dependencies:
   path: ^1.6.0
-  equatable: ^1.0.0
+  equatable: ^1.1.1
   kt_dart: ^0.7.0+1
 
 dev_dependencies:

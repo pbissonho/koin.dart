@@ -35,8 +35,12 @@ class Definitions {
         secondaryTypes: secondaryTypes);
   }
 
-  static BeanDefinition createSingleWithType(Type type, Qualifier qualifier,
-      DefinitionBase definition, ScopeDefinition scopeDefinition, Options options,
+  static BeanDefinition createSingleWithType(
+      Type type,
+      Qualifier qualifier,
+      DefinitionBase definition,
+      ScopeDefinition scopeDefinition,
+      Options options,
       [List<Type> secondaryTypes]) {
     return BeanDefinition(
         scopeDefinition: scopeDefinition,

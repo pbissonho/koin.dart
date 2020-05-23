@@ -183,8 +183,6 @@ class Module {
         Definition3<T, A, B, C>(definition), rootScope, makeOptions(override));
   }
 
-  // TODO
-
   /*
 
    ///

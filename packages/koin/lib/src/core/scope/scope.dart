@@ -312,7 +312,7 @@ class Scope {
   ///
   S bindWithType<S>(
       Type primaryType, Type secondaryType, DefinitionParameters parameters) {
-    S definition =
+    var definition =
         _instanceRegistry.bind(primaryType, secondaryType, parameters);
 
     if (definition == null) {

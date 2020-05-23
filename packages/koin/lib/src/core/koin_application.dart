@@ -134,7 +134,6 @@ class KoinApplication {
     return this;
   }
 
-  
   void close() {
     koin.close();
   }
@@ -147,7 +146,6 @@ class KoinApplication {
     koin.scopeRegistry.unloadModule(modules);
   }
 
- 
   static KoinApplication init() {
     var app = KoinApplication();
     app.initInter();

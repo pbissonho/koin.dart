@@ -55,7 +55,6 @@ mixin KoinComponentMixin {
   }
 }
 
-
 ///
 /// KoinComponent interface marker to bring Koin extensions features
 ///

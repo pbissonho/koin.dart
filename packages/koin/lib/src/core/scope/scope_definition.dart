@@ -11,9 +11,9 @@ import '../definition/options.dart';
 class ScopeDefinition extends Equatable {
   final Qualifier qualifier;
   final bool isRoot;
-  KtHashSet<BeanDefinition> definitions = KtHashSet.empty();
+  final KtHashSet<BeanDefinition> definitions = KtHashSet.empty();
 
-  ScopeDefinition(this.qualifier, this.isRoot) {}
+  ScopeDefinition(this.qualifier, this.isRoot);
 
   void save(BeanDefinition beanDefinition, [bool forceOverride = false]) {
     if (definitions.contains(beanDefinition)) {
@@ -85,8 +85,8 @@ class ScopeDefinition extends Equatable {
 
   static var ROOT_SCOPE_ID = '-Root-';
   static var ROOT_SCOPE_QUALIFIER = named(ROOT_SCOPE_ID);
-  static ScopeDefinition rootDefinition() => ScopeDefinition(ROOT_SCOPE_QUALIFIER, true);
+  static ScopeDefinition rootDefinition() =>
+      ScopeDefinition(ROOT_SCOPE_QUALIFIER, true);
 }
 
-class Definition {
-}
+class Definition {}
