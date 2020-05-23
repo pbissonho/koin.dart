@@ -1,6 +1,6 @@
 name: koin_test
 description: A testing library for koin.
-version: 0.10.0
+version: 0.11.0
 homepage: https://github.com/pbissonho/koin.dart
 author: Pedro Bissonho <pedro.bissonho@gmail.com>
 
@@ -9,7 +9,7 @@ environment:
   sdk: '>=2.6.0 <3.0.0'
 
 dependencies:
-  koin: ^0.7.2 
+  koin: ^0.8.0 
   test: ^1.6.0
   equatable: ^1.0.0
   meta: ^1.1.6

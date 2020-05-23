@@ -19,6 +19,8 @@ import 'check_module_dsl.dart';
 import 'package:koin/src/core/scope/scope_definition.dart';
 import 'package:koin/src/dsl/koin_application_dsl.dart';
 
+import 'package:kt_dart/collection.dart';
+
 extension KoinApplicationExt on KoinApplication {
   void checkModules(CheckParameters checkParameters) {
     koin.checkModules(checkParameters);

@@ -1,3 +1,7 @@
+## 0.11.0
+
+- Added support koin v0.8.0
+
 ## 0.10.0
 
 - Restructuring to support koin v0.7.2
