@@ -1,6 +1,5 @@
 import 'package:koin/koin.dart';
 import 'package:flutter/material.dart';
-import 'package:koin_flutter/koin_flutter.dart';
 
 class Counter {
   int _counter = 0;
@@ -25,7 +24,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> with ScopeComponentMixin {
+class _MyHomePageState extends State<MyHomePage> with KoinComponentMixin {
   Counter counterController;
   Counter namedCounter;
 

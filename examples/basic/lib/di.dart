@@ -5,5 +5,5 @@ import 'home.dart';
 var namedCounterQ = named("CounterX");
 
 var appModule = Module()
-  ..single((s, p) => Counter())
-  ..single((s, p) => Counter(), qualifier: namedCounterQ);
+  ..single((s) => Counter())
+  ..single((s) => Counter(), qualifier: namedCounterQ);
