@@ -1,3 +1,7 @@
+## 0.11.1
+- Change koin version.
+- Added tests
+
 ## 0.11.0
 
 - Added support koin v0.8.0

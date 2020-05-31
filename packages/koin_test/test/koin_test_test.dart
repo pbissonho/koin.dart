@@ -44,6 +44,13 @@ var customModule = Module()
   ..factory2<ServiceC, String, String>(
       ((s, name, last) => ServiceC(name, last)));
 
+var moduleWithScope = Module()
+  ..scope((s) {
+    s.scoped<Service>(((s) => Service()));
+    s.factory2<ServiceC, String, String>(
+        ((s, name, last) => ServiceC(name, last)));
+  });
+
 var invalidModule = Module()..single<ServiceB>(((s) => ServiceB(s.get())));
 
 void main() {
@@ -70,6 +77,11 @@ void main() {
       }));
 
   testModule('valid module', customModule,
+      checkParameters: checkParametersOf({
+        ServiceC: parametersOf(['Name', 'LastName']),
+      }));
+
+  testModule('valid module with scope', moduleWithScope,
       checkParameters: checkParametersOf({
         ServiceC: parametersOf(['Name', 'LastName']),
       }));
