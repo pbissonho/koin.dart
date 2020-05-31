@@ -1,3 +1,8 @@
+## 0.6.1
+
+- Added Widgets extensions
+    - Now it is no longer necessary to use 'KoinComponentMixin',just import 'koin_flutter.dart' "and use the 'get', 'bind' and 'inject' methods in the Flutter Widgets; 
+
 ## 0.6.0
 
 - Added BlocExtension as extension
