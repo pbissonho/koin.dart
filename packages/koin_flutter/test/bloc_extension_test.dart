@@ -30,7 +30,7 @@ var blocModule = Module()
   });
 
 void main() {
-  testWidgets("Test", (tester) async {
+  testWidgets("The block instance is disposed when the stop koin", (tester) async {
     var koin = startKoin((app) {
       app.module(blocModule);
     }).koin;
