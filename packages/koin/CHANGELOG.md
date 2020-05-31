@@ -1,3 +1,8 @@
+## 0.9.0
+
+- Fixed the error when closing a definition that the value was not instantiated.
+- Export 'KoinContextHandler'
+
 ## 0.8.0
 
 - Code improvements with pub.dev health suggestions
