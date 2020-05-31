@@ -36,23 +36,23 @@ class SingleInstanceFactory<T> extends InstanceFactory<T> {
 
   @override
   void drop() {
-    beanDefinition.callbacks.runCallback(_value);
+    if (isCreated()) {
+      beanDefinition.callbacks.runCallback(_value);
+    }
 
     _value = null;
   }
 
   @override
   T create(InstanceContext context) {
-    if (_value == null) {
-      var created = super.create(context);
-      if (created == null) {
-        throw IllegalStateException(
-            "Single instance created couldn't return value");
-      }
-      return created;
-    } else {
-      return _value;
+    if (_value != null) return _value;
+
+    var created = super.create(context);
+    if (created == null) {
+      throw IllegalStateException(
+          "Single instance created couldn't return value");
     }
+    return created;
   }
 
   @override

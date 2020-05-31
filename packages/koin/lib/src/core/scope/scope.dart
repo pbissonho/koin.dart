@@ -201,31 +201,26 @@ class Scope {
     var instance =
         _instanceRegistry.resolveInstance<T>(indexKeyCurrent, parameters);
 
-    if (instance == null) {
-      var inOtherScope = findInOtherScope<T>(type, qualifier, parameters);
+    if (instance != null) return instance;
+    var inOtherScope = findInOtherScope<T>(type, qualifier, parameters);
+    if (inOtherScope != null) return inOtherScope;
 
-      if (inOtherScope == null) {
-        var fromSource = getFromSource(type);
+    var fromSource = getFromSource(type);
 
-        if (fromSource == null) {
-          var qualifierString =
-              qualifier != null ? " & qualifier:'$qualifier'" : '';
-          throw NoBeanDefFoundException(
-              "No definition found for class:'${type}'$qualifierString. Check your definitions!");
-        }
-      } else {
-        return inOtherScope;
-      }
-    } else {
-      return instance;
+    if (fromSource == null) {
+      var qualifierString =
+          qualifier != null ? " & qualifier:'$qualifier'" : '';
+      throw NoBeanDefFoundException(
+          "No definition found for class:'${type}'$qualifierString. Check your definitions!");
     }
+    return fromSource;
   }
 
   T getFromSource<T>(Type type) {
     if (type == source.runtimeType) {
       return source as T;
     } else {
-      null;
+      return null;
     }
   }
 

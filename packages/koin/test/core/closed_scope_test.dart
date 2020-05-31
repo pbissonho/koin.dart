@@ -6,6 +6,19 @@ import '../components.dart';
 
 class ScopeType {}
 
+class CustomSingle {
+  int _id;
+  int get id => _id;
+
+  CustomSingle(int id){
+    _id = id;
+  }
+
+  void setId(int id){
+    _id = id;
+  }
+}
+
 void main() {
   var scopeName = 'MY_SCOPE';
   test('get definition from current scopes type', () {
@@ -21,6 +34,45 @@ void main() {
     var scope2 = koin.createScope('scope2', named<ScopeType>());
 
     expect(scope1.get<ComponentA>(), isNot(equals(scope2.get<ComponentA>())));
+  });
+
+  test('close definitions not initiated', () {
+    startKoin((app) {
+      app.printLogger().module(Module()
+        ..scope<ScopeType>((scope) {
+          scope.scoped((s) => MySingle(10))
+            ..onClose((a) {
+              print(a.id);
+            });
+        }));
+    }).koin;
+
+    // var scope1 = koin.createScope('scope1', named<ScopeType>());
+    // var scope2 = koin.createScope('scope2', named<ScopeType>());
+    stopKoin();
+
+    // expect(scope1.closed, true);
+    // expect(scope2.closed, true);
+  });
+
+  test('close definitions', () {
+    var koin = startKoin((app) {
+      app.printLogger().module(Module()
+        ..scope<ScopeType>((scope) {
+          scope.scoped((s) => CustomSingle(10))
+            ..onClose((a) {
+              a.setId(50);
+            });
+        }));
+    }).koin;
+
+     var scope1 = koin.createScope('scope1', named<ScopeType>());
+     var mySingle = scope1.get<CustomSingle>();
+     
+     stopKoin();
+     expect(scope1.closed, true);
+     expect(mySingle.id, 50);
+     
   });
 
   test('stopping Koin closes Scopes', () {
