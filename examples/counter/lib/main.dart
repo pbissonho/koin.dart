@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:koin/koin.dart';
-
 import 'di.dart';
 import 'src/home_page.dart';
 
 void main() {
   startKoin((app) {
     app.printLogger(level: Level.debug);
-    app.modules([homeModule]);
+    app.module(homeModule);
   });
-
   runApp(MyApp());
 }
 
