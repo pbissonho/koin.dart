@@ -119,10 +119,12 @@ class InstanceRegistry {
   S bind<S>(
       Type primaryType, Type secondaryType, DefinitionParameters parameters) {
     var instance = instances.values.firstOrNull((instance) {
-      return instance.beanDefinition.canBind(primaryType, secondaryType);
+
+      final canBind = instance.beanDefinition.canBind(primaryType, secondaryType);
+      return canBind;
     });
 
-    return instance.get(defaultInstanceContext(parameters)) as S;
+    return instance?.get(defaultInstanceContext(parameters)) as S;
   }
 
   void dropDefinition(BeanDefinition definition) {

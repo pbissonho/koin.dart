@@ -293,10 +293,8 @@ class Scope {
   ///
   ///@return instance of type S
   ///
-  S bind<S, P>(DefinitionParameters parameters) {
-    var secondaryType = S.runtimeType;
-    var primaryType = P.runtimeType;
-    return bindWithType(primaryType, secondaryType, parameters);
+  S bind<S, P>([DefinitionParameters parameters]) {
+    return bindWithType(P, S, parameters);
   }
 
   ///

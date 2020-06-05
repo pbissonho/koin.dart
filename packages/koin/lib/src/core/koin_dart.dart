@@ -148,7 +148,7 @@ class Koin {
   ///
   /// @return instance of type [S]
   ///
-  S bind<S, P>(DefinitionParameters parameters) {
+  S bind<S, P>([DefinitionParameters parameters]) {
     return _scopeRegistry.rootScope.bind<S, P>(parameters);
   }
 
