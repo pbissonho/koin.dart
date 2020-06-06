@@ -1,7 +1,8 @@
-import 'package:koin/src/core/definition_parameters.dart';
-import 'package:koin/src/core/error/exceptions.dart';
-import 'package:koin/src/core/scope/scope.dart';
 import 'package:kt_dart/kt.dart';
+
+import '../definition_parameters.dart';
+import '../error/exceptions.dart';
+import '../scope/scope.dart';
 
 import '../koin_dart.dart';
 import '../definition/bean_definition.dart';
@@ -15,7 +16,7 @@ class InstanceRegistry {
   Koin koin;
   Scope scope;
 
-  var instances = KtHashMap<String, InstanceFactory>.empty();
+  KtHashMap instances = KtHashMap<String, InstanceFactory>.empty();
 
   InstanceRegistry(this.koin, this.scope);
 
@@ -56,10 +57,10 @@ class InstanceRegistry {
     InstanceFactory instance;
 
     switch (definition.kind) {
-      case Kind.Single:
+      case Kind.single:
         instance = SingleInstanceFactory(koin, definition);
         break;
-      case Kind.Factory:
+      case Kind.factory:
         instance = FactoryInstanceFactory(koin, definition);
         break;
     }
@@ -119,8 +120,8 @@ class InstanceRegistry {
   S bind<S>(
       Type primaryType, Type secondaryType, DefinitionParameters parameters) {
     var instance = instances.values.firstOrNull((instance) {
-
-      final canBind = instance.beanDefinition.canBind(primaryType, secondaryType);
+      final canBind =
+          instance.beanDefinition.canBind(primaryType, secondaryType);
       return canBind;
     });
 
@@ -134,7 +135,7 @@ class InstanceRegistry {
     ids.forEach((id) => instances.remove(id));
   }
 
-  void createDefinition(definition) {
+  void createDefinition(BeanDefinition definition) {
     saveDefinition(definition, override: false);
   }
 }

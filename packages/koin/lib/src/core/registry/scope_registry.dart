@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import 'package:koin/src/core/error/exceptions.dart';
 import 'package:kt_dart/kt.dart';
+
+import '../error/exceptions.dart';
 
 import '../koin_dart.dart';
 import '../module.dart';
 import '../qualifier.dart';
-import '../scope/scope_definition.dart';
 import '../scope/scope.dart';
+import '../scope/scope_definition.dart';
 
 ///
 /// Scope Registry
@@ -31,10 +31,11 @@ import '../scope/scope.dart';
 ///
 class ScopeRegistry {
   final Koin koin;
-  final scopeDefinitions = KtHashMap<String, ScopeDefinition>.empty();
-  final scopes = KtHashMap<String, Scope>.empty();
+  KtHashMap<String, ScopeDefinition> scopeDefinitions =
+      KtHashMap<String, ScopeDefinition>.empty();
+  KtHashMap<String, Scope> scopes = KtHashMap<String, Scope>.empty();
 
-  ScopeDefinition _rootScopeDefinition;
+//  ScopeDefinition _rootScopeDefinition;
   Scope _rootScope;
   Scope get rootScope => _rootScope;
 
@@ -49,14 +50,14 @@ class ScopeRegistry {
   ScopeRegistry(this.koin);
 
   void loadModules(Iterable<Module> modules) {
-    modules.forEach((module) {
+    for (var module in modules) {
       if (!module.isLoaded) {
         loadModule(module);
         module.isLoaded = true;
       } else {
         koin.logger.error("module '$module' already loaded!");
       }
-    });
+    }
   }
 
   void loadModule(Module module) {
@@ -65,9 +66,7 @@ class ScopeRegistry {
   }
 
   void declareScopes(List<ScopeDefinition> list) {
-    list.forEach((scopeDefinition) {
-      declareScope(scopeDefinition);
-    });
+    list.forEach(declareScope);
   }
 
   void declareScope(ScopeDefinition scopeDefinition) {
@@ -106,7 +105,7 @@ class ScopeRegistry {
     var scopeDefinition = ScopeDefinition.rootDefinition();
     scopeDefinitions[ScopeDefinition.ROOT_SCOPE_QUALIFIER.value] =
         scopeDefinition;
-    _rootScopeDefinition = scopeDefinition;
+    // _rootScopeDefinition = scopeDefinition;
   }
 
   void createRootScope() {
@@ -155,7 +154,6 @@ class ScopeRegistry {
     return scope;
   }
 
-  //TODO Lock
   void deleteScopeByID(String scopeId) {
     scopes.remove(scopeId);
   }
@@ -168,7 +166,7 @@ class ScopeRegistry {
     clearScopes();
     scopes.clear();
     scopeDefinitions.clear();
-    _rootScopeDefinition = null;
+    //  _rootScopeDefinition = null;
     _rootScope = null;
   }
 
@@ -179,16 +177,13 @@ class ScopeRegistry {
   }
 
   void unloadModules(Iterable<Module> modules) {
-    modules.forEach((it) {
-      unloadModule(it);
-    });
+    modules.forEach(unloadModule);
   }
 
   void unloadModule(Module module) {
-    var scopeDefinitions = List.from(module.otherScopes)..add(module.rootScope);
-    scopeDefinitions.forEach((it) {
-      unloadDefinitions(it);
-    });
+    var scopeDefinitions = List<ScopeDefinition>.from(module.otherScopes)
+      ..add(module.rootScope);
+    scopeDefinitions.forEach(unloadDefinitions);
     module.isLoaded = false;
   }
 
