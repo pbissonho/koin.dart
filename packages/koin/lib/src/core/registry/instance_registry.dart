@@ -36,13 +36,14 @@ class InstanceRegistry {
   void saveDefinition(BeanDefinition definition, {bool override}) {
     var defOverride = definition.options.override || override;
     var instanceFactory = createInstanceFactory(koin, definition);
-    saveInstance(indexKey(definition.primaryType, definition.qualifier),
-        instanceFactory, defOverride);
+    saveInstance(
+        indexKey(definition.primaryType, definition.qualifier), instanceFactory,
+        override: defOverride);
 
     definition.secondaryTypes.forEach((secondary) {
       if (defOverride) {
         saveInstance(indexKey(secondary, definition.qualifier), instanceFactory,
-            defOverride);
+            override: defOverride);
       } else {
         saveInstanceIfPossible(
             indexKey(secondary, definition.qualifier), instanceFactory);
@@ -68,7 +69,7 @@ class InstanceRegistry {
     return instance;
   }
 
-  void saveInstance(String key, InstanceFactory factory, bool override) {
+  void saveInstance(String key, InstanceFactory factory, {bool override}) {
     if (instances.containsKey(key) && !override) {
       throw IllegalStateException(
           "InstanceRegistry already contains index '$key'");

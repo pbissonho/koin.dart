@@ -103,14 +103,14 @@ class ScopeRegistry {
 
   void createRootScopeDefinition() {
     var scopeDefinition = ScopeDefinition.rootDefinition();
-    scopeDefinitions[ScopeDefinition.ROOT_SCOPE_QUALIFIER.value] =
+    scopeDefinitions[ScopeDefinition.rootScopeQualifier.value] =
         scopeDefinition;
     // _rootScopeDefinition = scopeDefinition;
   }
 
   void createRootScope() {
-    _rootScope = createScope(ScopeDefinition.ROOT_SCOPE_ID,
-        ScopeDefinition.ROOT_SCOPE_QUALIFIER, null);
+    _rootScope = createScope(
+        ScopeDefinition.rootScopeId, ScopeDefinition.rootScopeQualifier, null);
   }
 
   Scope getScopeOrNull(String scopeId) {
