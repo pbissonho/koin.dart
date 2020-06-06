@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-import 'package:koin/src/core/error/exceptions.dart';
-
+import '../error/exceptions.dart';
+import '../koin_application.dart';
 import '../koin_dart.dart';
 import 'koin_context.dart';
 
-//
-// Global context - current Koin Application available globally
-//
-// Support to help inject automatically instances once KoinApp has been started
+//Ported to Dart from Kotlin by:
+//@author - Pedro Bissonho
 
-// Ported to Dart from Kotlin by:
-// @author - Pedro Bissonho
-//
+///Global context - current Koin Application available globally
+///
+///Support to help inject automatically instances once KoinApp has been started
+///
 class GlobalContext implements KoinContext {
   Koin _koin;
 
@@ -51,7 +50,7 @@ class GlobalContext implements KoinContext {
   /// Start a Koin Application as StandAlone
   ///
   @override
-  void setup(koinApplication) {
+  void setup(KoinApplication koinApplication) {
     if (_koin != null) {
       throw KoinAppAlreadyStartedException(
           'A Koin Application has already been started');

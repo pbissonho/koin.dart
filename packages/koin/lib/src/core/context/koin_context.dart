@@ -21,8 +21,23 @@ import '../koin_dart.dart';
 /// Component thath hold the Koin instance
 ///
 abstract class KoinContext {
+  ////
+  ///Retrieve current KoinContext
+  ///
   Koin get();
+
+  ///
+  /// Retrieve current KoinContext or null
+  ///
   Koin getOrNull();
+
+  ///
+  /// sets up a Koin Application
+  ///
   void setup(KoinApplication koinApplication);
+
+  ///
+  ///Stop current KoinContext
+  ///
   void stop();
 }

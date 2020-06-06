@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import 'package:koin/src/core/error/exceptions.dart';
-
+import '../error/exceptions.dart';
 import '../koin_application.dart';
 import '../koin_dart.dart';
 import 'koin_context.dart';
@@ -26,10 +25,13 @@ import 'koin_context.dart';
 class KoinContextHandler {
   static KoinContext _context;
 
+  ////
+  ///Retrieve current KoinContext
+  ///
   static KoinContext getContext() {
     if (_context == null) {
-      throw IllegalStateException(
-          'No Koin Context configured. Please use startKoin or koinApplication DSL. ');
+      throw IllegalStateException("""
+No Koin Context configured. Please use startKoin or koinApplication DSL. """);
     }
     return _context;
   }
