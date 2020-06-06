@@ -28,7 +28,7 @@ abstract class KoinException implements Exception {
 
   @override
   String toString() {
-    return '${runtimeType}: $msg';
+    return '$runtimeType: $msg';
   }
 }
 
@@ -54,7 +54,7 @@ class InstanceCreationException extends KoinException {
   InstanceCreationException(String msg, this.exceptionMessage) : super(msg);
 
   @override
-  String get msg => '${super.msg}  ${exceptionMessage}';
+  String get msg => '${super.msg}  $exceptionMessage';
 }
 
 class KoinAppAlreadyStartedException extends KoinException {
