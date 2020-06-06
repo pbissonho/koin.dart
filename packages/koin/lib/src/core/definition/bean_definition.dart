@@ -15,13 +15,14 @@
  */
 
 import 'dart:core';
+
 import 'package:equatable/equatable.dart';
-import 'package:koin/src/core/definition/properties.dart';
-import 'package:koin/src/core/scope/scope_definition.dart';
 
 import '../qualifier.dart';
+import '../scope/scope_definition.dart';
 import 'definition.dart';
 import 'options.dart';
+//import 'properties.dart';
 
 class Callbacks<T> {
   final void Function(T value) _onCloseCallback;
@@ -41,14 +42,9 @@ class Callbacks<T> {
       : _onCloseCallback = onCloseCallback;
 }
 
-//typedef OnCloseCallback<T> = void Function(T value);
-
-//typedef Definition<T> = T Function(
-//   Scope scope, DefinitionParameters parameters);
-
 enum Kind {
-  Single,
-  Factory,
+  single,
+  factory,
 }
 
 ///
@@ -67,7 +63,7 @@ class BeanDefinition<T> with EquatableMixin {
   final Kind kind;
   List<Type> secondaryTypes;
   final Options options;
- // final Properties _properties = Properties();
+  // final Properties _properties = Properties();
   Callbacks<T> callbacks;
 
   BeanDefinition(
@@ -171,6 +167,9 @@ class BeanDefinition<T> with EquatableMixin {
     return copyT;
   }
 
+  ///
+  /// Definition Bindings
+  ///
   BeanDefinition binds(List<Type> types) {
     types.addAll(secondaryTypes);
 
@@ -180,6 +179,9 @@ class BeanDefinition<T> with EquatableMixin {
     return copyT;
   }
 
+  ///
+  /// onCloseCallback is called when definition is closed.
+  ///
   BeanDefinition<T> onClose(void Function(T value) onCloseCallback) {
     var copyT = copy(callbacks: Callbacks(onCloseCallback: onCloseCallback));
     scopeDefinition.remove(this);
@@ -188,6 +190,9 @@ class BeanDefinition<T> with EquatableMixin {
   }
 }
 
+///
+/// Converte the 'type' and 'qualifier'
+///
 String indexKey(Type type, Qualifier qualifier) {
   if (qualifier?.value != null) {
     return '${type.toString()}::${qualifier.value}';

@@ -30,7 +30,7 @@ class Definitions {
         primaryType: T,
         qualifier: qualifier,
         definition: definition,
-        kind: Kind.Single,
+        kind: Kind.single,
         options: options,
         secondaryTypes: secondaryTypes);
   }
@@ -47,7 +47,7 @@ class Definitions {
         primaryType: type,
         qualifier: qualifier,
         definition: definition,
-        kind: Kind.Single,
+        kind: Kind.single,
         options: options,
         secondaryTypes: secondaryTypes);
   }
@@ -63,7 +63,7 @@ class Definitions {
         primaryType: T,
         qualifier: qualifier,
         definition: definition,
-        kind: Kind.Factory,
+        kind: Kind.factory,
         options: options,
         secondaryTypes: secondaryTypes);
   }

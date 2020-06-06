@@ -1,6 +1,5 @@
-import 'package:koin/src/core/scope/scope.dart';
-
 import '../definition_parameters.dart';
+import '../scope/scope.dart';
 
 typedef DefinitionFunction<T> = T Function(Scope scope);
 
