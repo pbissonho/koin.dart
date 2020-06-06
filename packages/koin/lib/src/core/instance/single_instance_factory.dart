@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import 'package:koin/src/core/definition/bean_definition.dart';
-
+import '../definition/bean_definition.dart';
 import '../error/exceptions.dart';
 import '../koin_dart.dart';
 import 'instance_context.dart';
@@ -37,7 +36,7 @@ class SingleInstanceFactory<T> extends InstanceFactory<T> {
   @override
   void drop() {
     if (isCreated()) {
-      beanDefinition.callbacks.runCallback(_value);
+      beanDefinition?.callbacks?.runCallback(_value);
     }
 
     _value = null;

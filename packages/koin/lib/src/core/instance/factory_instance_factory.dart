@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import 'package:koin/src/core/definition/bean_definition.dart';
+import '../definition/bean_definition.dart';
 
 import '../koin_dart.dart';
 import 'instance_context.dart';

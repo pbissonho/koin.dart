@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-import 'package:koin/src/core/definition/bean_definition.dart';
-import 'package:koin/src/core/error/exceptions.dart';
-
+import '../definition/bean_definition.dart';
+import '../error/exceptions.dart';
 import '../koin_dart.dart';
 import '../logger.dart';
 import 'instance_context.dart';
@@ -51,11 +50,11 @@ abstract class InstanceFactory<T> {
     try {
       var parameters = context.parameters;
       return beanDefinition.definition.create(parameters, context.scope);
-    } catch (e) {
-      logger.error(
-          'Instance creation error : could not create instance for $beanDefinition: ${e.toString()}');
+    } catch (erro) {
+      logger.error("""
+Instance creation error : could not create instance for $beanDefinition: ${erro.toString()}""");
       throw InstanceCreationException(
-          'Could not create instance for $beanDefinition', e.toString());
+          'Could not create instance for $beanDefinition', erro.toString());
     }
   }
 
