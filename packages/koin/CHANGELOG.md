@@ -1,12 +1,18 @@
+## 0.9.1
+
+- Fixed um error when use `bind()`
+- Update readme
+- Added more tests
+
 ## 0.9.0
 
 - Fixed the error when closing a definition that the value was not instantiated.
-- Export 'KoinContextHandler'
+- Export `KoinContextHandler`
 
 ## 0.8.0
 
 - Code improvements with pub.dev health suggestions
-- Moved Scope extensions to 'instance_scope_ext.dart'
+- Moved Scope extensions to `instance_scope_ext.dart`
 - Update dependencies
 
 ## 0.7.2
