@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:koin/src/core/definition/definition.dart';
-import 'package:koin/src/core/error/exceptions.dart';
-import 'package:koin/src/core/qualifier.dart';
+import '../definition/definition.dart';
+import '../error/exceptions.dart';
+import '../qualifier.dart';
 import 'package:kt_dart/kt.dart';
 
 import '../definition/bean_definition.dart';
@@ -13,16 +13,17 @@ class ScopeDefinition extends Equatable {
   final bool isRoot;
   final KtHashSet<BeanDefinition> definitions = KtHashSet.empty();
 
-  ScopeDefinition(this.qualifier, this.isRoot);
+  ScopeDefinition(this.qualifier, {this.isRoot});
 
-  void save(BeanDefinition beanDefinition, [bool forceOverride = false]) {
+  void save(BeanDefinition beanDefinition, {bool forceOverride = false}) {
     if (definitions.contains(beanDefinition)) {
       if (beanDefinition.options.override || forceOverride) {
         definitions.remove(beanDefinition);
       } else {
         var current = definitions.firstOrNull((it) => it == beanDefinition);
-        throw DefinitionOverrideException(
-            "Definition '$beanDefinition' try to override existing definition. Please use override option or check for definition '$current'");
+        throw DefinitionOverrideException("""
+      Definition '$beanDefinition' try to override existing definition. 
+      Please use override option or check for definition '$current'""");
       }
     }
     definitions.add(beanDefinition);
@@ -34,8 +35,9 @@ class ScopeDefinition extends Equatable {
 
   int size() => definitions.size;
 
-  BeanDefinition<T> saveNewDefinition<T>(T instance, Qualifier qualifier,
-      List<Type> secondaryTypes, bool override) {
+  BeanDefinition<T> saveNewDefinition<T>(
+      T instance, Qualifier qualifier, List<Type> secondaryTypes,
+      {bool override}) {
     var type = T;
 
     var found =
@@ -45,8 +47,9 @@ class ScopeDefinition extends Equatable {
       if (override) {
         remove(found);
       } else {
-        throw DefinitionOverrideException(
-            "Trying to override existing definition '$found' with new definition typed '$type'");
+        throw DefinitionOverrideException("""
+Trying to override existing definition '$found' 
+with new definition typed '$type'""");
       }
     }
 
@@ -64,29 +67,25 @@ class ScopeDefinition extends Equatable {
         options: Options(isCreatedAtStart: false, override: override),
         secondaryTypes: secondaryTypes2);
 
-    save(beanDefinition, override);
+    save(beanDefinition, forceOverride: override);
     return beanDefinition;
   }
 
   void unloadDefinitions(ScopeDefinition scopeDefinitionn) {
-    scopeDefinitionn.definitions.forEach((definition) {
-      definitions.remove(definition);
-    });
+    scopeDefinitionn.definitions.forEach(definitions.remove);
   }
 
   @override
   List<Object> get props => [qualifier, isRoot];
 
   ScopeDefinition copy() {
-    var copy = ScopeDefinition(qualifier, isRoot);
+    var copy = ScopeDefinition(qualifier, isRoot: isRoot);
     copy.definitions.addAll(definitions);
     return copy;
   }
 
-  static var ROOT_SCOPE_ID = '-Root-';
-  static var ROOT_SCOPE_QUALIFIER = named(ROOT_SCOPE_ID);
+  static String rootScopeId = '-Root-';
+  static Qualifier rootScopeQualifier = named(rootScopeId);
   static ScopeDefinition rootDefinition() =>
-      ScopeDefinition(ROOT_SCOPE_QUALIFIER, true);
+      ScopeDefinition(rootScopeQualifier, isRoot: true);
 }
-
-class Definition {}

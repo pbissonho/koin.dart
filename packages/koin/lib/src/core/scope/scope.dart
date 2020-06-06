@@ -14,9 +14,9 @@
 /// limitations under the License.
 ////
 
-import 'package:koin/src/core/error/exceptions.dart';
-import 'package:koin/src/core/measure.dart';
-import 'package:koin/src/core/registry/instance_registry.dart';
+import '../error/exceptions.dart';
+import '../measure.dart';
+import '../registry/instance_registry.dart';
 import 'package:kt_dart/kt.dart';
 
 import '../definition/bean_definition.dart';
@@ -57,7 +57,7 @@ class Scope {
       return source as T;
     } else {
       throw IllegalStateException(
-          "Can't use Scope source for ${T} - source is:$source");
+          "Can't use Scope source for $T - source is:$source");
     }
   }
 
@@ -160,7 +160,7 @@ class Scope {
     try {
       return getWithType(type, qualifier, parameters);
     } catch (e) {
-      koin.logger.error("Can't get instance for ${type}");
+      koin.logger.error("Can't get instance for $type");
       return null;
     }
   }
@@ -210,8 +210,8 @@ class Scope {
     if (fromSource == null) {
       var qualifierString =
           qualifier != null ? " & qualifier:'$qualifier'" : '';
-      throw NoBeanDefFoundException(
-          "No definition found for class:'${type}'$qualifierString. Check your definitions!");
+      throw NoBeanDefFoundException("""
+No definition found for class:'$type'$qualifierString. Check your definitions!""");
     }
     return fromSource;
   }
@@ -245,12 +245,14 @@ class Scope {
   /// [instance] The instance you're declaring.
   /// [qualifier] Qualifier for this declaration
   /// [secondaryTypes] List of secondary bound types
-  /// [override] Allows to override a previous declaration of the same type (default to false).
+  /// [override] Allows to override a previous declaration of the same type
+  /// (default to false).
   ///
   void declare<T>(T instance,
       {Qualifier qualifier, List<Type> secondaryTypes, bool override = false}) {
     var definition = scopeDefinition.saveNewDefinition(
-        instance, qualifier, secondaryTypes, override);
+        instance, qualifier, secondaryTypes,
+        override: override);
     _instanceRegistry.saveDefinition(definition, override: true);
   }
 
@@ -309,8 +311,9 @@ class Scope {
         _instanceRegistry.bind(primaryType, secondaryType, parameters);
 
     if (definition == null) {
-      throw NoBeanDefFoundException(
-          "No definition found to bind class:'${primaryType.toString()}' & secondary type:'${secondaryType.toString()}'. Check your definitions!");
+      throw NoBeanDefFoundException("""
+      No definition found to bind class:'${primaryType.toString()}' & secondary 
+      type:'${secondaryType.toString()}'. Check your definitions!""");
     } else {
       return definition;
     }
@@ -330,7 +333,6 @@ class Scope {
   /// Retrieve a property
   /// @param key
   ///
-  // TODO
   T getPropertyOrNull<T>(String key) {
     return koin.getPropertyOrNull(key);
   }
@@ -339,7 +341,6 @@ class Scope {
   /// Retrieve a property
   /// @param key
   ///
-  // TODO
   T getPropertyWithException<T>(String key) {
     var property = koin.getPropertyOrNull(key);
 
