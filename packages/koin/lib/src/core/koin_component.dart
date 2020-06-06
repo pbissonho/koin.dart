@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import 'package:koin/koin.dart';
-import 'package:koin/src/core/context/koin_context_handler.dart';
-import 'package:koin/src/core/qualifier.dart';
+import '../../koin.dart';
+import 'context/koin_context_handler.dart';
+import 'qualifier.dart';
 import 'definition_parameters.dart';
 import 'koin_dart.dart';
 import 'lazy/lazy.dart';

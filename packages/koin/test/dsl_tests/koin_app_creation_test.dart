@@ -5,9 +5,7 @@ import 'package:test/test.dart';
 import '../extensions/expect.dart';
 
 void main() {
-  tearDown(() {
-    stopKoin();
-  });
+  tearDown(stopKoin);
 
   test('make a Koin application', () {
     koinApplication((app) {});

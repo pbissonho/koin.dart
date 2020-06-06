@@ -33,6 +33,9 @@ class DefinitionParameters {
   /// Maximum number of parameters that [DefinitionParameters] can support.
   static final int maxParams = 5;
 
+  /// DefinitionParameters - Parameter holder
+  ///
+  /// Usable with exploded declaration
   DefinitionParameters(this._values) {
     if (_values.length > maxParams) {
       throw DefinitionParameterException(
@@ -40,6 +43,7 @@ class DefinitionParameters {
     }
   }
 
+  /// Get element at index 'i'.
   Object elementAt(int i) {
     Object value;
     if (_values.length > i) {
@@ -50,24 +54,35 @@ class DefinitionParameters {
     }
 
     if (value == null) {
-      throw DefinitionParameterException(
-          "Can't get parameter value at position $i from $this. The Parameter is null.");
+      throw DefinitionParameterException("""
+Can't get parameter value at position $i from $this. The Parameter is null.""");
     }
 
     return value;
   }
 
+  /// Get element at 0 index.
   Object get component1 => elementAt(0);
+  /// Get element at 1 index.
   Object get component2 => elementAt(1);
+  /// Get element at 2 index.
   Object get component3 => elementAt(2);
+  /// Get element at 3 index.
   Object get component4 => elementAt(3);
+  /// Get element at 4 index.
   Object get component5 => elementAt(4);
 
+  /// Get element at 0 index.
   Object get param1 => elementAt(0);
+  /// Get element at 1 index.
   Object get param2 => elementAt(1);
+  /// Get element at 2 index.
   Object get param3 => elementAt(2);
+  /// Get element at 3 index.
   Object get param4 => elementAt(3);
+  /// Get element at 4 index.
   Object get param5 => elementAt(4);
+ 
 
   /// Get element at given index and return as [T]
   ///

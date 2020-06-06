@@ -1,10 +1,10 @@
-import 'package:koin/src/core/context/koin_context_handler.dart';
-import 'package:koin/src/core/koin_dart.dart';
-import 'package:koin/src/core/qualifier.dart';
-import 'package:koin/src/core/scope/scope.dart';
+import '../core/context/koin_context_handler.dart';
+import '../core/koin_dart.dart';
+import '../core/qualifier.dart';
+import '../core/scope/scope.dart';
 
 extension ScopeExt<T> on T {
-  String get scopeId => '${toString()}@ ${hashCode}';
+  String get scopeId => '${toString()}@ $hashCode';
 
   Qualifier get scopeName => TypeQualifier(T);
 

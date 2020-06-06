@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import 'package:koin/src/core/qualifier.dart';
-import 'package:koin/src/core/scope/scope_definition.dart';
+import '../core/qualifier.dart';
+import '../core/scope/scope_definition.dart';
 
 import '../core/definition/bean_definition.dart';
 import '../core/definition/definitions.dart';

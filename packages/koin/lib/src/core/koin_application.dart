@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import 'package:koin/src/core/measure.dart';
+import 'measure.dart';
 import 'koin_dart.dart';
 import 'logger.dart';
 import 'module.dart';

@@ -8,9 +8,7 @@ import 'setter_inject_test.dart';
 import 'package:koin/src/ext/instance_scope_ext.dart';
 
 void main() {
-  tearDown(() {
-    stopKoin();
-  });
+  tearDown(stopKoin);
 
   test('typed scope', () {
     var koin = koinApplication((app) {
@@ -252,12 +250,12 @@ void main() {
     scopeA.linkTo([scopeC]);
     scopeB.linkTo([scopeC]);
 
-    var compb_scopeA = scopeA.get<ComponentB>();
-    var compb_scopeB = scopeB.get<ComponentB>();
+    var compbScopeA = scopeA.get<ComponentB>();
+    var compbScopeB = scopeB.get<ComponentB>();
 
-    expect(compb_scopeA, isNot(compb_scopeB));
+    expect(compbScopeA, isNot(compbScopeB));
 
-    expect(compb_scopeA.a, compb_scopeB.a);
+    expect(compbScopeA.a, compbScopeB.a);
   });
 
   test('error for root linked scope', () {

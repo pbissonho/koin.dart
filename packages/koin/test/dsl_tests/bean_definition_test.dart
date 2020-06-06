@@ -45,7 +45,7 @@ void main() {
         options: Options());
 
     expect(def1.scopeDefinition, rootScope.scopeDefinition);
-    expect(def1.kind, Kind.Single);
+    expect(def1.kind, Kind.single);
   });
 
   test('equals definitions - but diif kind', () {
@@ -69,10 +69,10 @@ void main() {
     });
 
     var defA = app.getBeanDefinition(ComponentA);
-    expect(Kind.Single, defA.kind);
+    expect(Kind.single, defA.kind);
 
     var defB = app.getBeanDefinition(ComponentB);
-    expect(Kind.Factory, defB.kind);
+    expect(Kind.factory, defB.kind);
   });
 
   test('definition name', () {

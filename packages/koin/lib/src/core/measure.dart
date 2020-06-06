@@ -22,6 +22,8 @@
 // Ported to Dart from Kotlin by:
 // @author - Pedro Bissonho
 //
+
+/// Measure functions
 class Measure {
   ///
   /// Measure code execution
@@ -44,6 +46,9 @@ class Measure {
   }
 }
 
+///
+/// 
+///
 class Pair<T> {
   final double duration;
   final T result;
@@ -51,5 +56,5 @@ class Pair<T> {
   Pair(this.duration, this.result);
 
   @override
-  String toString() => 'Duration: ${duration}ms - Result: ${result}';
+  String toString() => 'Duration: ${duration}ms - Result: $result';
 }

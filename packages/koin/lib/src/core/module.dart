@@ -15,14 +15,16 @@
  */
 
 import 'dart:core';
-import 'package:koin/src/core/definition/definitions.dart';
-import 'package:koin/src/core/scope/scope_definition.dart';
+import 'definition/definitions.dart';
+import 'scope/scope_definition.dart';
 import 'definition/bean_definition.dart';
 import 'definition/definition.dart';
 import 'definition/options.dart';
 import 'qualifier.dart';
 
 import '../dsl/scope_dsl.dart';
+
+// ignore_for_file: avoid_positional_boolean_parameters
 
 ///
 ///
@@ -38,7 +40,7 @@ class Module {
   final bool override;
   ScopeDefinition rootScope = ScopeDefinition.rootDefinition();
   bool isLoaded = false;
-  var otherScopes = <ScopeDefinition>[];
+  List<ScopeDefinition> otherScopes = <ScopeDefinition>[];
 
   Module([this.createAtStart = false, this.override = false]);
 
@@ -47,7 +49,7 @@ class Module {
   /// @param qualifier
   ///
   void scopeWithType(Qualifier qualifier, Function(ScopeDSL dsl) scopeCreate) {
-    var scopeDefinition = ScopeDefinition(qualifier, false);
+    var scopeDefinition = ScopeDefinition(qualifier, isRoot: false);
     var scopeCreated = ScopeDSL(scopeDefinition);
     scopeCreate(scopeCreated);
 
@@ -59,7 +61,7 @@ class Module {
   ///Class Typed Scope
   ///
   void scope<T>(Function(ScopeDSL dsl) makeScope) {
-    var scopeDefinition = ScopeDefinition(TypeQualifier(T), false);
+    var scopeDefinition = ScopeDefinition(TypeQualifier(T), isRoot: false);
     var scopeCreated = ScopeDSL(scopeDefinition);
     makeScope(scopeCreated);
 
@@ -76,8 +78,11 @@ class Module {
     bool createdAtStart = false,
     bool override = false,
   }) {
-    return Definitions.saveSingle<T>(qualifier, DefinitionX(definition),
-        rootScope, makeOptions(override, createdAtStart));
+    return Definitions.saveSingle<T>(
+        qualifier,
+        DefinitionX(definition),
+        rootScope,
+        makeOptions(override: override, createdAtStart: createdAtStart));
   }
 
   ///
@@ -89,8 +94,11 @@ class Module {
     bool createdAtStart = false,
     bool override = false,
   }) {
-    return Definitions.saveSingle<T>(qualifier, Definition1<T, A>(definition),
-        rootScope, makeOptions(override, createdAtStart));
+    return Definitions.saveSingle<T>(
+        qualifier,
+        Definition1<T, A>(definition),
+        rootScope,
+        makeOptions(override: override, createdAtStart: createdAtStart));
   }
 
   ///
@@ -106,7 +114,7 @@ class Module {
         qualifier,
         Definition2<T, A, B>(definition),
         rootScope,
-        makeOptions(override, createdAtStart));
+        makeOptions(override: override, createdAtStart: createdAtStart));
   }
 
   ///
@@ -122,10 +130,10 @@ class Module {
         qualifier,
         Definition3<T, A, B, C>(definition),
         rootScope,
-        makeOptions(override, createdAtStart));
+        makeOptions(override: override, createdAtStart: createdAtStart));
   }
 
-  Options makeOptions(bool override, [bool createdAtStart = false]) {
+  Options makeOptions({bool override, bool createdAtStart = false}) {
     return Options(
         isCreatedAtStart: createAtStart || createdAtStart,
         override: this.override || override);
@@ -141,7 +149,7 @@ class Module {
     bool override = false,
   }) {
     return Definitions.saveFactory<T>(qualifier, DefinitionX<T>(definition),
-        rootScope, makeOptions(override));
+        rootScope, makeOptions(override: override));
   }
 
   ///
@@ -154,7 +162,7 @@ class Module {
     bool override = false,
   }) {
     return Definitions.saveFactory<T>(qualifier, Definition1<T, A>(definition),
-        rootScope, makeOptions(override));
+        rootScope, makeOptions(override: override));
   }
 
   ///
@@ -166,8 +174,11 @@ class Module {
     bool createdAtStart = false,
     bool override = false,
   }) {
-    return Definitions.saveFactory<T>(qualifier,
-        Definition2<T, A, B>(definition), rootScope, makeOptions(override));
+    return Definitions.saveFactory<T>(
+        qualifier,
+        Definition2<T, A, B>(definition),
+        rootScope,
+        makeOptions(override: override));
   }
 
   ///
@@ -179,8 +190,11 @@ class Module {
     bool createdAtStart = false,
     bool override = false,
   }) {
-    return Definitions.saveFactory<T>(qualifier,
-        Definition3<T, A, B, C>(definition), rootScope, makeOptions(override));
+    return Definitions.saveFactory<T>(
+        qualifier,
+        Definition3<T, A, B, C>(definition),
+        rootScope,
+        makeOptions(override: override));
   }
 
   /*

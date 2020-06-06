@@ -7,16 +7,9 @@ import '../components.dart';
 class ScopeType {}
 
 class CustomSingle {
-  int _id;
-  int get id => _id;
+  int id;
 
-  CustomSingle(int id){
-    _id = id;
-  }
-
-  void setId(int id){
-    _id = id;
-  }
+  CustomSingle(this.id);
 }
 
 void main() {
@@ -61,18 +54,17 @@ void main() {
         ..scope<ScopeType>((scope) {
           scope.scoped((s) => CustomSingle(10))
             ..onClose((a) {
-              a.setId(50);
+              a.id = 50;
             });
         }));
     }).koin;
 
-     var scope1 = koin.createScope('scope1', named<ScopeType>());
-     var mySingle = scope1.get<CustomSingle>();
-     
-     stopKoin();
-     expect(scope1.closed, true);
-     expect(mySingle.id, 50);
-     
+    var scope1 = koin.createScope('scope1', named<ScopeType>());
+    var mySingle = scope1.get<CustomSingle>();
+
+    stopKoin();
+    expect(scope1.closed, true);
+    expect(mySingle.id, 50);
   });
 
   test('stopping Koin closes Scopes', () {

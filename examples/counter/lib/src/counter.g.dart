@@ -40,7 +40,7 @@ mixin _$Counter on CounterBase, Store {
   @override
   String toString() {
     return '''
-value: ${value}
+value: $value
     ''';
   }
 }

@@ -6,7 +6,7 @@ import '../components.dart';
 
 void main() {
   test('can declare a single on the fly', () {
-    var koin = koinApplication((app){
+    var koin = koinApplication((app) {
       app.printLogger();
     }).koin;
 
@@ -37,8 +37,8 @@ void main() {
     expect(2, koin.get<MySingle>().id);
   });
 
-  test(
-      'not can declare and override a single on the fly when override is set to false',
+  test("""
+Not can declare and override a single on the fly when override is set to false""",
       () {
     var koin = KoinApplication()
         .printLogger()
@@ -67,7 +67,8 @@ void main() {
     koin.declare(a, qualifier: named('another_a'));
 
     // TODO
-    // When get named data without pass a Type, the type is passed ay dynamic and the Definition is configured as dynamic
+    // When get named data without pass a Type, the type i
+    // s passed ay dynamic and the Definition is configured as dynamic
     var getA = koin.get<ComponentA>(named('another_a'));
     expect(a, getA);
     expect(a, isNot(equals(koin.get<ComponentA>())));

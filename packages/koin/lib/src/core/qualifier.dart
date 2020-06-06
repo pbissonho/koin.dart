@@ -27,9 +27,13 @@ import 'package:equatable/equatable.dart';
 
 /// Help qualify a component
 abstract class Qualifier {
-  final String value;
+  final String _value;
 
-  Qualifier(this.value);
+  /// Get the qualifier value.
+  String get value => _value;
+
+  /// Help qualify a component
+  Qualifier(this._value);
 }
 
 /// Give a String qualifier
@@ -40,7 +44,7 @@ Qualifier named<T>([String name]) {
   return StringQualifier(name);
 }
 
-// Give a String qualifier
+/// Give a String qualifier
 Qualifier qualifier<T>([String name]) {
   if (name == null) {
     return TypeQualifier(T);
@@ -48,27 +52,36 @@ Qualifier qualifier<T>([String name]) {
   return StringQualifier(name);
 }
 
+/// String Qualifier
 class StringQualifier extends Qualifier with EquatableMixin {
+  /// String Qualifier
   StringQualifier(String value) : super(value);
 
   @override
   String toString() {
-    return value;
+    return _value;
   }
 
   @override
-  List<Object> get props => [value];
+  List<Object> get props => [_value];
 }
 
+/// Type Qualifier
 class TypeQualifier<T> extends Qualifier with EquatableMixin {
-  final T type;
-  TypeQualifier(this.type) : super('q:$type');
+  final T _type;
+
+  /// Type Qualifier
+  TypeQualifier(this._type) : super('q:$_type');
 
   @override
   String toString() {
-    return type.toString();
+    return _type.toString();
   }
 
   @override
-  List<Object> get props => [type];
+  List<Object> get props => [_type];
 }
+
+
+
+// improvements to following Effective Dart rules.

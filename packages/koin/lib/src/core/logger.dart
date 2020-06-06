@@ -27,7 +27,7 @@ const koinTage = '[Koin]';
 
 enum Level { info, error, debug, none }
 
-var logger = Logger.logger;
+Logger logger = Logger.logger;
 
 abstract class Logger {
   final Level level;
@@ -35,10 +35,6 @@ abstract class Logger {
   const Logger([this.level = Level.info]);
 
   static Logger logger = PrintLogger(Level.debug);
-
-  static void setLogger(Logger logger) {
-    Logger.logger = logger;
-  }
 
   void log(Level level, String msg);
 
@@ -82,7 +78,7 @@ class PrintLogger extends Logger {
     print('[${parse(level)}] $koinTage $msg');
   }
 
-  String parse(enumItem) {
+  String parse(Object enumItem) {
     if (enumItem == null) return 'LogLevel';
     return enumItem.toString().split('.')[1];
   }

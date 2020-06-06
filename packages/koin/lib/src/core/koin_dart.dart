@@ -14,8 +14,8 @@
 /// limitations under the License.
 ///
 
-import 'package:koin/src/core/logger.dart';
-import 'package:koin/src/core/module.dart';
+import 'logger.dart';
+import 'module.dart';
 import 'package:kt_dart/kt.dart';
 
 import 'definition_parameters.dart';
@@ -40,18 +40,16 @@ class Koin {
   ScopeRegistry _scopeRegistry;
   // TODO
   // PropertyRegistry _propertyRegistry;
-  Logger _logger;
+  Logger logger;
   final KtHashSet<Module> _modules = KtHashSet<Module>.empty();
 
-  Logger get logger => _logger;
-  set logger(logger) => _logger = logger;
   ScopeRegistry get scopeRegistry => _scopeRegistry;
 
   Koin() {
     _scopeRegistry = ScopeRegistry(this);
     // TODO
     //  _propertyRegistry = PropertyRegistry(this);
-    _logger = EmptyLogger(Level.debug);
+    logger = EmptyLogger(Level.debug);
   }
 
   ///
@@ -119,7 +117,8 @@ class Koin {
 
   ///
   /// Declare a component definition from the given instance
-  /// This result of declaring a single definition of type T, returning the given instance
+  /// This result of declaring a single definition of type T, returning
+  /// the given instance
   ///
   void declare<T>(T instance,
       {Qualifier qualifier,
@@ -155,7 +154,8 @@ class Koin {
   }
 
   ///
-  /// Get instance of primary type [primaryType] and return as secondary type [S]
+  /// Get instance of primary type [primaryType] and return as secondary
+  /// type [S]
   /// (not for scoped instances)
   ///
   /// @return instance of type [S]
