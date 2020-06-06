@@ -4,7 +4,8 @@ typedef Initializer<T> = T Function();
 
 /// A class that provides lazy object initialization.
 ///
-/// The [value] is initialized by the initializer function only when being called for the first time.
+/// The [value] is initialized by the initializer function only when being
+/// called for the first time.
 ///
 /// Example of use:
 ///```
@@ -22,6 +23,7 @@ typedef Initializer<T> = T Function();
 ///
 ///print(example.value.id);
 ///  ```
+///
 class Lazy<T> with EquatableMixin {
   T _value;
 
@@ -55,8 +57,3 @@ class Lazy<T> with EquatableMixin {
 /// Creates a new instance of the [Lazy].
 ///
 Lazy<T> lazy<T>(Initializer<T> initializer) => Lazy<T>(initializer);
-
-///
-/// Creates a new instance of the [ConstLazy].
-///
-///ConstLazy<T> constlazy<T>(Initializer<T> initializer) => Lazy<T>.constant(initializer);
