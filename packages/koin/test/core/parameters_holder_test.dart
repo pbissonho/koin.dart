@@ -43,7 +43,7 @@ void main() {
     objects.add(definitionParameters.get(2));
     objects.add(definitionParameters.get(3));
     objects.add(definitionParameters.get(4));
-    
+
     var components = <Object>[];
 
     components.add(definitionParameters.component1);
@@ -54,11 +54,11 @@ void main() {
 
     var params = <Object>[];
 
-    params.add(definitionParameters.component1);
-    params.add(definitionParameters.component2);
-    params.add(definitionParameters.component3);
-    params.add(definitionParameters.component4);
-    params.add(definitionParameters.component5);
+    params.add(definitionParameters.param1);
+    params.add(definitionParameters.param2);
+    params.add(definitionParameters.param3);
+    params.add(definitionParameters.param4);
+    params.add(definitionParameters.param5);
 
     expect(objects, parameters);
     expect(components, parameters);
@@ -102,10 +102,19 @@ void main() {
     expect(myString, s);
     expect(myInt, i);
   });
+
+  test('shoud get a emptyParametersHolder from a parametersOf', () {
+    var parameterHolder = parametersOf(null);
+    expect(parameterHolder.size(), 0);
+  });
+
   test("can't create parameters more than max params", () {
-    try {
-      parametersOf([1, 2, 3, 4, 5, 6]);
-      fail("Can't build more than ${DefinitionParameters.maxParams}");
-    } catch (e) {}
+    expect(() => parametersOf([1, 2, 3, 4, 5, 6]),
+        throwsA(isA<DefinitionParameterException>()));
+  });
+
+  test("can't get parameters out of index", () {
+    expect(() => parametersOf([1, 2, 3, 4, null]).elementAt(4),
+        throwsA(isA<DefinitionParameterException>()));
   });
 }

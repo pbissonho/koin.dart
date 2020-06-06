@@ -67,7 +67,7 @@ class BeanDefinition<T> with EquatableMixin {
   final Kind kind;
   List<Type> secondaryTypes;
   final Options options;
-  final Properties _properties = Properties();
+ // final Properties _properties = Properties();
   Callbacks<T> callbacks;
 
   BeanDefinition(

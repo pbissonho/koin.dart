@@ -62,7 +62,7 @@ class StringQualifier extends Qualifier with EquatableMixin {
 
 class TypeQualifier<T> extends Qualifier with EquatableMixin {
   final T type;
-  TypeQualifier(this.type) : super('$type');
+  TypeQualifier(this.type) : super('q:$type');
 
   @override
   String toString() {

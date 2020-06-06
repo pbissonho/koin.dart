@@ -22,7 +22,7 @@ import 'definition_parameters.dart';
 import 'error/exceptions.dart';
 import 'lazy/lazy.dart';
 import 'qualifier.dart';
-import 'registry/proterty_registry.dart';
+// import 'registry/proterty_registry.dart';
 import 'registry/scope_registry.dart';
 import 'scope/scope.dart';
 import '../ext/instance_scope_ext.dart';
@@ -38,7 +38,8 @@ import '../ext/instance_scope_ext.dart';
 
 class Koin {
   ScopeRegistry _scopeRegistry;
-  PropertyRegistry _propertyRegistry;
+  // TODO
+  // PropertyRegistry _propertyRegistry;
   Logger _logger;
   final KtHashSet<Module> _modules = KtHashSet<Module>.empty();
 
@@ -48,7 +49,8 @@ class Koin {
 
   Koin() {
     _scopeRegistry = ScopeRegistry(this);
-    _propertyRegistry = PropertyRegistry(this);
+    // TODO
+    //  _propertyRegistry = PropertyRegistry(this);
     _logger = EmptyLogger(Level.debug);
   }
 
@@ -348,7 +350,9 @@ class Koin {
     _scopeRegistry.createRootScope();
   }
 
+  /* TODO
   getProperty(String key, defaultValue) {}
 
   getPropertyOrNull(String key) {}
+  */
 }

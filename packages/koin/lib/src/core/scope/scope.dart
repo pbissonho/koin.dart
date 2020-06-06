@@ -316,6 +316,7 @@ class Scope {
     }
   }
 
+  /*
   ///
   /// Retrieve a property
   /// @param key
@@ -347,7 +348,7 @@ class Scope {
     } else {
       return property;
     }
-  }
+  }*/
 
   ///
   /// Close all instances from this scope

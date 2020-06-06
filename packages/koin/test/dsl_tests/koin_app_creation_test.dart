@@ -10,7 +10,7 @@ void main() {
   });
 
   test('make a Koin application', () {
-    var app = koinApplication((app) {});
+    koinApplication((app) {});
 
     stopKoin();
 

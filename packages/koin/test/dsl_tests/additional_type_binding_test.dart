@@ -1,4 +1,5 @@
 import 'package:koin/koin.dart';
+import 'package:koin/src/core/error/exceptions.dart';
 import 'package:test/test.dart';
 
 import '../components.dart';
@@ -36,6 +37,21 @@ void main() {
     var c = koin.bind<ComponentInterface1, Component1>();
 
     expect(c1, equals(c));
+  });
+
+  test('can not resolve an additional type - bind() - shoud trow a exception',
+      () {
+    var app = koinApplication((app) {
+      app.printLogger();
+      app.module(module()..single((s) => Component1()));
+    });
+
+    app.expectDefinitionsCount(1);
+
+    var koin = app.koin;
+
+    expect(() => koin.bind<ComponentInterface1, Component1>(),
+        throwsA(isA<NoBeanDefFoundException>()));
   });
 
   test('can resolve an additional type', () {
@@ -96,7 +112,7 @@ void main() {
         ..single((s) => Component2()).bind<ComponentInterface1>()
         ..single<ComponentInterface1>((s) => Component1()));
     });
-  });
+  }, skip: true);
 
   test('should not conflict name & default type', () {
     var app = koinApplication((app) {

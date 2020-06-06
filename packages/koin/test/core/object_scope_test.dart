@@ -79,7 +79,7 @@ void main() {
         }));
     }).koin;
 
-    var a = koin.get<A>();
+    koin.get<A>();
     var scopeForA = koin.createScopeT2<A>();
 
     var b1 = scopeForA.get<B>();
