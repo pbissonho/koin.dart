@@ -30,42 +30,56 @@ class MyAppMixin with KoinComponentMixin {
 }
 
 void main() {
-  Koin koin;
-
-  tearDown(() {
-    stopKoin();
-  });
-
-  setUp(() {
-    koin = startKoin((appX) {
+  test('can run KoinComponentMixin app', () {
+    var koin = startKoin((appX) {
       appX.printLogger();
       appX.module(Module()
         ..single((s) => TaskView()).bind<TaskViewInterface>()
         ..single((s) => TaskPresenter(s.get())));
     }).koin;
-  });
 
-  test('can run KoinComponentMixin app', () {
     var myApp = MyAppMixin();
-
     expect(myApp.taskPresenter.view, myApp.tasksView);
     expect(myApp.taskPresenter, koin.get<TaskPresenter>());
+    stopKoin();
   });
 
   test('can inject with KoinComponentMixin', () {
-    var myApp = MyAppMixin();
+    var koin = startKoin((appX) {
+      appX.printLogger();
+      appX.module(Module()
+        ..single((s) => TaskView()).bind<TaskViewInterface>()
+        ..single((s) => TaskPresenter(s.get())));
+    }).koin;
 
+    var myApp = MyAppMixin();
     expect(myApp.testInject().value, koin.get<TaskView>());
+    stopKoin();
   });
 
   test('can bind with KoinComponentMixin', () {
+    var koin = startKoin((appX) {
+      appX.printLogger();
+      appX.module(Module()
+        ..single((s) => TaskView()).bind<TaskViewInterface>()
+        ..single((s) => TaskPresenter(s.get())));
+    }).koin;
+
     var myApp = MyAppMixin();
-
     expect(myApp.testBind(), koin.bind<TaskViewInterface, TaskView>());
+    stopKoin();
   });
 
   test('can bind with KoinComponentMixin', () {
+    var koin = startKoin((appX) {
+      appX.printLogger();
+      appX.module(Module()
+        ..single((s) => TaskView()).bind<TaskViewInterface>()
+        ..single((s) => TaskPresenter(s.get())));
+    }).koin;
+
     var myApp = MyAppMixin();
     expect(myApp.getKoin(), koin);
+    stopKoin();
   });
 }
