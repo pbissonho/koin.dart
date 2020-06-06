@@ -185,6 +185,79 @@ void main() {
     expect(b.lastName, 'lastName2');
   });
 
+  test('can create a factories scoped with parameters', () {
+    var scopeKey = named('ScopeKey');
+
+    var app = koinApplication((app) {
+      app.module(Module()
+        ..scopeWithType(scopeKey, (s) {
+          s.factory1<MySingle, int>((s, id) => MySingle(id));
+        }));
+    });
+
+    var scope = app.koin.createScope('myScope', scopeKey);
+
+    var a = scope.getParams<MySingle>(parameters: parametersOf([42]));
+    var b = scope.getParams<MySingle>(parameters: parametersOf([43]));
+
+    expect(a.id, 42);
+    expect(b.id, 43);
+  });
+
+  test('can create a factories scoped with 2 parameters', () {
+    var scopeKey = named('ScopeKey');
+
+    var app = koinApplication((app) {
+      app.module(Module()
+        ..scopeWithType(scopeKey, (s) {
+          s.factory2<MySingle2, int, String>(
+              (s, id, name) => MySingle2(id, name));
+        }));
+    });
+
+    var scope = app.koin.createScope('myScope', scopeKey);
+
+    var a =
+        scope.getParams<MySingle2>(parameters: parametersOf([42, 'myString']));
+
+    var b =
+        scope.getParams<MySingle2>(parameters: parametersOf([43, 'myString2']));
+
+    expect(a.id, 42);
+    expect(a.name, 'myString');
+
+    expect(b.id, 43);
+    expect(b.name, 'myString2');
+  });
+
+  test('can create a factories scoped with 3 parameters', () {
+    var scopeKey = named('ScopeKey');
+
+    var app = koinApplication((app) {
+      app.module(Module()
+        ..scopeWithType(scopeKey, (s) {
+          s
+            ..factory3<MySingle3, int, String, String>(
+                (s, id, name, lastName) => MySingle3(id, name, lastName));
+        }));
+    });
+
+    var scope = app.koin.createScope('myScope', scopeKey);
+
+    var a = scope.getParams<MySingle3>(
+        parameters: parametersOf([42, 'myString', 'lastName']));
+
+    var b = scope.getParams<MySingle3>(
+        parameters: parametersOf([45, 'myString2', 'lastName2']));
+
+    expect(a.id, 42);
+    expect(a.name, 'myString');
+    expect(a.lastName, 'lastName');
+    expect(b.id, 45);
+    expect(b.name, 'myString2');
+    expect(b.lastName, 'lastName2');
+  });
+
   test('chained factory injection', () {
     var koin = koinApplication((app) {
       app.module(Module()

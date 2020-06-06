@@ -23,6 +23,22 @@ class ScopedBloc implements Disposable {
   void dispose() {}
 }
 
+class BlocComponentTest extends KoinComponent {
+  Bloc blocX;
+
+  BlocComponentTest() {
+    blocX = bloc();
+  }
+}
+
+class BlocComponentMixinTest with KoinComponentMixin {
+  Bloc blocX;
+
+  BlocComponentMixinTest() {
+    blocX = bloc();
+  }
+}
+
 var blocModule = Module()
   ..bloc((s) => Bloc())
   ..scope<ScopeWidget>((scope) {
@@ -30,7 +46,8 @@ var blocModule = Module()
   });
 
 void main() {
-  testWidgets("The block instance is disposed when the stop koin", (tester) async {
+  testWidgets("The block instance is disposed when the stop koin",
+      (tester) async {
     var koin = startKoin((app) {
       app.module(blocModule);
     }).koin;
@@ -42,6 +59,32 @@ void main() {
 
     expect(bloc.isDisposed, true);
   });
+
+  test("can get with bloc extension component mixin", () {
+    var koin = startKoin((app) {
+      app.module(blocModule);
+    }).koin;
+
+    var bloc = koin.get<Bloc>();
+    var component = BlocComponentMixinTest();
+
+    expect(bloc, component.blocX);
+
+    stopKoin();
+  });
+
+  test("can get with bloc extension component", () {
+    var koin = startKoin((app) {
+      app.module(blocModule);
+    }).koin;
+
+    var bloc = koin.get<Bloc>();
+    var component = BlocComponentTest();
+
+    expect(bloc, component.blocX);
+
+    stopKoin();
+  });
 }
 
 class ScopeWidget extends StatefulWidget {
@@ -51,7 +94,7 @@ class ScopeWidget extends StatefulWidget {
 
 class KoinTestState extends State<ScopeWidget> {
   Bloc myBloc;
-  
+
   @override
   void initState() {
     myBloc = widget.scope.get<Bloc>();

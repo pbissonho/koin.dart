@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  koin: ^0.9.0
+  koin: ^0.9.1
    
   
 dev_dependencies:

@@ -1,6 +1,5 @@
 import 'package:koin/koin.dart';
 
-
 extension KoinComponentExtensionMixin on KoinComponentMixin {
   T bloc<T>([Qualifier qualifier, DefinitionParameters parameters]) {
     return get<T>(qualifier, parameters);
@@ -41,9 +40,8 @@ extension ScopeSetBlocExtension on ScopeDSL {
     bool createdAtStart = false,
     bool override = false,
   }) {
-    var beanDefinition = scoped<T>(definition,
-        qualifier: qualifier,
-        override: override);
+    var beanDefinition =
+        scoped<T>(definition, qualifier: qualifier, override: override);
 
     beanDefinition.onClose((bloc) => bloc.dispose());
     return beanDefinition;
