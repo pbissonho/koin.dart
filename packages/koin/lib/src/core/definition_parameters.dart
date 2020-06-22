@@ -43,7 +43,7 @@ class DefinitionParameters {
     }
   }
 
-  /// Get element at index 'i'.
+  /// Returns the parameter in the index [i].
   Object elementAt(int i) {
     Object value;
     if (_values.length > i) {
@@ -61,28 +61,26 @@ Can't get parameter value at position $i from $this. The Parameter is null.""");
     return value;
   }
 
-  /// Get element at 0 index.
+  /// Returns the first parameter.
   Object get component1 => elementAt(0);
-  /// Get element at 1 index.
+
+  /// Returns the second parameter.
   Object get component2 => elementAt(1);
-  /// Get element at 2 index.
+
+  /// Returns the third parameter.
   Object get component3 => elementAt(2);
-  /// Get element at 3 index.
+
+  /// Returns the fourth parameter.
   Object get component4 => elementAt(3);
-  /// Get element at 4 index.
+
+  /// Returns the fifth parameter.
   Object get component5 => elementAt(4);
 
-  /// Get element at 0 index.
   Object get param1 => elementAt(0);
-  /// Get element at 1 index.
   Object get param2 => elementAt(1);
-  /// Get element at 2 index.
   Object get param3 => elementAt(2);
-  /// Get element at 3 index.
   Object get param4 => elementAt(3);
-  /// Get element at 4 index.
   Object get param5 => elementAt(4);
- 
 
   /// Get element at given index and return as [T]
   ///

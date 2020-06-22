@@ -121,7 +121,7 @@ void main() {
 
     expect(24, app.koin.get<MySingle>().id);
 
-    app.unloadModule(module2);
+    app.unloadModules([module2]);
 
     expect(app.getBeanDefinition(MySingle), isNull);
 
