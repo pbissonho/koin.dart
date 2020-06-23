@@ -5,12 +5,8 @@ import 'package:test/test.dart';
 import '../extensions/expect.dart';
 
 void main() {
-  tearDown(stopKoin);
-
   test('make a Koin application', () {
     koinApplication((app) {});
-
-    stopKoin();
 
     expectHasNoStandaloneInstance();
   });
@@ -33,6 +29,8 @@ void main() {
     expect(() {
       startKoin((app) {});
     }, throwsA(isA<IllegalStateException>()));
+
+    stopKoin();
   });
 
   test('allow declare a logger', () {
@@ -44,6 +42,8 @@ void main() {
     KoinContextHandler.get().logger.debug('debug');
     KoinContextHandler.get().logger.info('info');
     KoinContextHandler.get().logger.error('error');
+
+    stopKoin();
   });
 
   test('allow declare a print logger level', () {
@@ -55,5 +55,7 @@ void main() {
     KoinContextHandler.get().logger.debug('debug');
     KoinContextHandler.get().logger.info('info');
     KoinContextHandler.get().logger.error('error');
+
+    stopKoin();
   });
 }

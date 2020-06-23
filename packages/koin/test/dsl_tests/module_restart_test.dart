@@ -10,18 +10,19 @@ class MyComponent extends KoinComponent {
 }
 
 void main() {
-  setUp(() {
+  test('1st test', () {
     startKoin((app) {
       app.module(module()..single((s) => ComponentA()));
     });
-  });
-
-  tearDown(stopKoin);
-  test('1st test', () {
     MyComponent();
+    stopKoin();
   });
 
   test('1st test', () {
+    startKoin((app) {
+      app.module(module()..single((s) => ComponentA()));
+    });
     MyComponent();
+    stopKoin();
   });
 }
