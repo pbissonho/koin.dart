@@ -38,7 +38,7 @@ extension KoinExt on Koin {
   ///
   /// Check all definition's dependencies - start all modules and check if definitions can run
   ///
-  
+
   void checkModules(CheckParameters checkParameters) {
     logger.info('[Check] checking current modules ...');
 
@@ -69,7 +69,7 @@ extension KoinExt on Koin {
 
   void runScope(ScopeDefinition scopeDefinition,
       Map<CheckedComponent, DefinitionParameters> allParameters) {
-    var scope = getOrCreateScope(
+    var scope = getOrCreateScopeQualifier(
         scopeDefinition.qualifier.value, scopeDefinition.qualifier);
 
     scope.scopeDefinition.definitions.forEach((it) {
