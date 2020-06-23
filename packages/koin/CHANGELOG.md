@@ -1,6 +1,31 @@
+## 0.10.0
+
+- Breaking changes
+
+    The `getOrCreateScopeT()` function renamed to `getOrCreateScope()`
+    The `getOrCreateScope()` function renamed to `getOrCreateScopeQualifier()`   
+    
+    How to use now:
+    ```dart
+    var scope2 = koin.getOrCreateScopeQualifier('myScope', named<ScopeType>());
+    var scope3 = koin.getOrCreateScope<ScopeType>('myScope');
+    ```   
+
+- The parameters of `getWithType ()`, `getOrNullWithType ()` are now optional.
+- Operator '+' of class Module was rewritten.
+    It is now possible to return a list from the sum of two modules.
+    ```dart
+    var mods = modA + modB;
+    expect(mods, [modA, modB]);
+    ```
+- Fixed an error in creating the root scope
+- Fixed an error in creating the root scope
+- Update readme
+- Added more tests
+
 ## 0.9.1
 
-- Fixed um error when use `bind()`
+- Fixed a error when use `bind()`
 - Update readme
 - Added more tests
 
