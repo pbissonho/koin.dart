@@ -1,3 +1,8 @@
+## 0.6.3
+- Change to Koin 0.10.0
+- Added Scope Widgets extensions
+   - Now it is no longer necessary to import 'instance_scope_ext.dart', just import 'koin_flutter.dart' in order to use the scope functions.
+
 ## 0.6.1
 
 - Added Widgets extensions

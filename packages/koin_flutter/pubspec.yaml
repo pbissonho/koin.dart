@@ -1,6 +1,6 @@
 name: koin_flutter
 description: A package to make it easier to use Koin.dart on the Flutter.
-version: 0.6.1
+version: 0.6.3
 homepage: https://github.com/pbissonho/koin.dart
 
 environment:
@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  koin: ^0.9.1
+  koin: ^0.10.0
    
   
 dev_dependencies:

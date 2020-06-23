@@ -87,7 +87,7 @@ packages:
       name: koin
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.1"
+    version: "0.10.0"
   kt_dart:
     dependency: transitive
     description:
