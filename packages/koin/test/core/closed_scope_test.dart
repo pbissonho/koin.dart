@@ -94,7 +94,11 @@ void main() {
         .koin;
 
     var scope = koin.createScope('myScope', named<ScopeType>());
+    var scope2 = koin.getOrCreateScopeQualifier('myScope', named<ScopeType>());
+    var scope3 = koin.getOrCreateScope<ScopeType>('myScope');
 
+    expect(scope, scope2);
+    expect(scope, scope3);
     expect(scope.get<ComponentB>(), scope.get<ComponentB>());
     expect(scope.get<ComponentA>(), scope.get<ComponentB>().a);
   });

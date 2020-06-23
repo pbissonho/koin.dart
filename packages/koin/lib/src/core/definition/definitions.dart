@@ -35,23 +35,6 @@ class Definitions {
         secondaryTypes: secondaryTypes);
   }
 
-  static BeanDefinition createSingleWithType(
-      Type type,
-      Qualifier qualifier,
-      DefinitionBase definition,
-      ScopeDefinition scopeDefinition,
-      Options options,
-      [List<Type> secondaryTypes]) {
-    return BeanDefinition(
-        scopeDefinition: scopeDefinition,
-        primaryType: type,
-        qualifier: qualifier,
-        definition: definition,
-        kind: Kind.single,
-        options: options,
-        secondaryTypes: secondaryTypes);
-  }
-
   static BeanDefinition<T> createFactory<T>(
       {Qualifier qualifier,
       DefinitionBase<T> definition,

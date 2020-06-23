@@ -103,14 +103,14 @@ class Koin {
   /// @return instance of type T
   ///
   T getWithType<T>(
-      Type type, Qualifier qualifier, DefinitionParameters parameters) {
+      [Type type, Qualifier qualifier, DefinitionParameters parameters]) {
     return _scopeRegistry.rootScope.getWithType<T>(type, qualifier, parameters);
   }
 
   ///
   /// Get a Koin instance if available
   T getOrNullWithType<T>(
-      Type type, Qualifier qualifier, DefinitionParameters parameters) {
+      [Type type, Qualifier qualifier, DefinitionParameters parameters]) {
     return _scopeRegistry.rootScope
         .getWithTypeOrNull(type, qualifier, parameters);
   }
@@ -160,11 +160,8 @@ class Koin {
   ///
   /// @return instance of type [S]
   ///
-  S bindWithType<S>(
-    Type primaryType,
-    Type secondaryType,
-    DefinitionParameters parameters,
-  ) {
+  S bindWithType<S>(Type secondaryType, Type primaryType,
+      [DefinitionParameters parameters]) {
     return _scopeRegistry.rootScope
         .bindWithType(primaryType, secondaryType, parameters);
   }
@@ -230,10 +227,10 @@ class Koin {
   ///
   /// Get or Create a Scope instance
   ///
-  Scope getOrCreateScope(String scopeId, Qualifier qualifier) {
+  Scope getOrCreateScope<T>(String scopeId) {
     var scope = _scopeRegistry.getScopeOrNull(scopeId);
     if (scope == null) {
-      return createScopeT(scopeId, qualifier);
+      return createScope(scopeId, named<T>());
     }
     return scope;
   }
@@ -241,11 +238,10 @@ class Koin {
   ///
   /// Get or Create a Scope instance
   ///
-  Scope getOrCreateScopeT<T>(String scopeId) {
-    var qualifier = TypeQualifier(T);
+  Scope getOrCreateScopeQualifier(String scopeId, Qualifier qualifier) {
     var scope = _scopeRegistry.getScopeOrNull(scopeId);
     if (scope == null) {
-      return createScopeT(scopeId, qualifier);
+      return createScope(scopeId, qualifier);
     }
     return scope;
   }

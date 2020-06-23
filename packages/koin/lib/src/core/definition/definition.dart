@@ -12,8 +12,6 @@ typedef DefinitionFunction3<T, A, B, C> = T Function(
     Scope scope, A paramA, B paramB, C paramC);
 
 abstract class DefinitionBase<T> {
-  DefinitionBase();
-
   T create(DefinitionParameters parameters, Scope scope);
 }
 

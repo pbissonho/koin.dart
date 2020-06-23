@@ -23,6 +23,8 @@ void main() {
     expect(c1, equals(c));
   });
 
+
+
   test('can resolve an additional type - bind()', () {
     var app = koinApplication((app) {
       app.printLogger();
@@ -35,6 +37,22 @@ void main() {
     var koin = app.koin;
     var c1 = koin.get<Component1>();
     var c = koin.bind<ComponentInterface1, Component1>();
+
+    expect(c1, equals(c));
+  });
+
+  test('can resolve an additional type - bindWithType()', () {
+    var app = koinApplication((app) {
+      app.printLogger();
+      app.module(
+          module()..single((s) => Component1()).bind<ComponentInterface1>());
+    });
+
+    app.expectDefinitionsCount(1);
+
+    var koin = app.koin;
+    var c1 = koin.get<Component1>();
+    var c = koin.bindWithType(ComponentInterface1, Component1);
 
     expect(c1, equals(c));
   });
