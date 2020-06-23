@@ -75,6 +75,8 @@ class KoinApplication {
     koin.loadModules(modules);
   }
 
+  // TODO
+  /*
   ///
   /// Load properties from Map
   /// @param values
@@ -99,7 +101,7 @@ class KoinApplication {
   KoinApplication environmentProperties() {
     //  koin.propertyRegistry.loadEnvironmentProperties()
     return this;
-  }
+  }*/
 
   ///
   /// Set Koin Logger

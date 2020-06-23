@@ -214,6 +214,34 @@ void main() {
     stopKoin();
   });
 
+  test('should reload modules definition - global context', () {
+    final currentModule = module()
+      ..single1<MySingle, int>((s, id) => MySingle(id));
+
+    startKoin((app) {
+      app.module(currentModule);
+    });
+
+    expect(
+      42,
+      KoinContextHandler.get()
+          .getWithParams<MySingle>(parameters: parametersOf([42]))
+          .id,
+    );
+
+    unloadKoinModules([currentModule]);
+    loadKoinModules([currentModule]);
+
+    expect(
+      24,
+      KoinContextHandler.get()
+          .getWithParams<MySingle>(parameters: parametersOf([24]))
+          .id,
+    );
+
+    stopKoin();
+  });
+
   test('should unload scoped definition', () {
     final currentModule = module()
       ..scope<ScopeKey>((s) {

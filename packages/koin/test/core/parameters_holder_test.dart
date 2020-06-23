@@ -113,8 +113,17 @@ void main() {
         throwsA(isA<DefinitionParameterException>()));
   });
 
-  test("can't get parameters out of index", () {
+  test("can't get parameters out of index - null", () {
     expect(() => parametersOf([1, 2, 3, 4, null]).elementAt(4),
         throwsA(isA<DefinitionParameterException>()));
+  });
+
+  test("can't get parameters out of index - does not exist", () {
+    expect(() => parametersOf([1, 2, 3, 4, 5]).elementAt(6),
+        throwsA(isA<NoParameterFoundException>()));
+
+    parametersOf([1, 2, 3, 4]).elementAt(3);
+    expect(() => parametersOf([1, 2, 3, 4]).elementAt(4),
+        throwsA(isA<NoParameterFoundException>()));
   });
 }
