@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:koin/koin.dart';
 
-extension KoinStateExtension<St extends StatefulWidget> on State<St> {
+extension KoinStatefulExtension<T> on Diagnosticable {
   ///
   /// Get the associated Koin instance
   ///
@@ -29,59 +29,31 @@ extension KoinStateExtension<St extends StatefulWidget> on State<St> {
   }
 }
 
+extension ScopeWidgetExtensiont<T extends Diagnosticable> on T {
+  String get scopeId => '${toString()}@ $hashCode';
 
-extension KoinStatefulExtension<T> on StatefulWidget {
-  ///
-  /// Get the associated Koin instance
-  ///
-  Koin getKoin() => KoinContextHandler.get();
+  Qualifier get scopeName => TypeQualifier(T);
 
-  T get<T>([Qualifier qualifier, DefinitionParameters parameters]) {
-    return getKoin().get<T>(qualifier, parameters);
+  Scope get scope => getOrCreateScope();
+
+  Scope getOrCreateScope([Koin koin]) {
+    koin ??= KoinContextHandler.get();
+    var currentScope = getScopeOrNull(koin);
+
+    if (currentScope == null) {
+      return createScope(koin);
+    }
+
+    return currentScope;
   }
 
-  ///
-  /// Lazy inject instance from Koin
-  /// @param qualifier
-  /// @param parameters
-  ///
-  Lazy<T> inject<T>([Qualifier qualifier, DefinitionParameters parameters]) {
-    return getKoin().inject<T>(qualifier, parameters);
+  Scope getScopeOrNull([Koin koin]) {
+    koin ??= KoinContextHandler.get();
+    return koin.getScopeOrNull((scopeId));
   }
 
-  ///
-  /// Get instance instance from Koin by Primary Type P, as secondary type S
-  /// @param parameters
-  ///
-  S bind<S, P>([Qualifier qualifier, DefinitionParameters parameters]) {
-    return getKoin().bind<S, P>(parameters);
-  }
-}
-
-extension KoinStatelessExtension<T> on StatelessWidget {
-  ///
-  /// Get the associated Koin instance
-  ///
-  Koin getKoin() => KoinContextHandler.get();
-
-  T get<T>([Qualifier qualifier, DefinitionParameters parameters]) {
-    return getKoin().get<T>(qualifier, parameters);
-  }
-
-  ///
-  /// Lazy inject instance from Koin
-  /// @param qualifier
-  /// @param parameters
-  ///
-  Lazy<T> inject<T>([Qualifier qualifier, DefinitionParameters parameters]) {
-    return getKoin().inject<T>(qualifier, parameters);
-  }
-
-  ///
-  /// Get instance instance from Koin by Primary Type P, as secondary type S
-  /// @param parameters
-  ///
-  S bind<S, P>([Qualifier qualifier, DefinitionParameters parameters]) {
-    return getKoin().bind<S, P>(parameters);
+  Scope createScope([Koin koin]) {
+    koin ??= KoinContextHandler.get();
+    return koin.createScope(scopeId, scopeName, this);
   }
 }

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:koin/koin.dart';
-
-import 'package:koin/instace_scope.dart';
-
 import 'package:koin_flutter/koin_flutter.dart';
 
 abstract class ComponentInterface {
