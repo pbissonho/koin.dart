@@ -33,6 +33,36 @@ void main() {
         throwsA((value) => value is NoBeanDefFoundException));
   });
 
+  test('should unload modules with single definition', () {
+    final currentModule = module()..single((s) => ComponentA());
+    final currentModuleB = module()..single((s) => ComponentB(s.get()));
+
+    final app = koinApplication((app) {
+      app.printLogger();
+      app.modules([currentModule, currentModuleB]);
+    });
+
+    var defA = app.getBeanDefinition(ComponentA);
+    var defB = app.getBeanDefinition(ComponentB);
+
+    expect(Kind.single, defA.kind);
+    expect(app.koin.get<ComponentA>(), isNotNull);
+
+    expect(Kind.single, defB.kind);
+    expect(app.koin.get<ComponentB>(), isNotNull);
+
+    app.unloadModules([currentModule, currentModuleB]);
+
+    expect(app.getBeanDefinition(ComponentA), isNull);
+    expect(app.getBeanDefinition(ComponentB), isNull);
+
+    expect(() => app.koin.get<ComponentA>(),
+        throwsA((value) => value is NoBeanDefFoundException));
+
+    expect(() => app.koin.get<ComponentB>(),
+        throwsA((value) => value is NoBeanDefFoundException));
+  });
+
   test('should unload additional bound definition', () {
     final currentModule = module()
       ..single((s) => Component1()).bind<ComponentInterface1>();

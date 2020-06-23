@@ -197,17 +197,9 @@ class Module {
         makeOptions(override: override));
   }
 
-  /*
-
-   ///
-    /// Help write list of Modules
-     ///
-    operator fun plusModule(module: Module) = listOf(this, module)
-
-    ///
-     /// Help write list of Modules
-     ///
-    operator fun plusModules(modules: List<Module>) = listOf(this) + modules
-    */
-
+  List<Module> operator +(Module other) {
+    return List.from([this, other]);
+  }
 }
+
+

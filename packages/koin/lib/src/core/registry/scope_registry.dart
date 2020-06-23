@@ -109,8 +109,10 @@ class ScopeRegistry {
   }
 
   void createRootScope() {
-    _rootScope = createScope(
-        ScopeDefinition.rootScopeId, ScopeDefinition.rootScopeQualifier, null);
+    if (_rootScope == null) {
+      _rootScope = createScope(ScopeDefinition.rootScopeId,
+          ScopeDefinition.rootScopeQualifier, null);
+    }
   }
 
   Scope getScopeOrNull(String scopeId) {
