@@ -5,26 +5,21 @@ By using Koin, you describe definitions in modules. In this section we will see 
 
 A Koin module is the *space to declare all your components*. Use the `module` function to declare a Koin module:
 
-```kotlin
-val myModule = module {
-   // your dependencies here
-}
+```dart
+var myModule = module();// your dependencies here
+// Or
+var myModule2 = Module();// your dependencies here
 ```
 
 In this module, you can declare components as described below.
 
 ## Defining a singleton
 
-Declaring a singleton component means that Koin container will keep a *unique instance* of your declared component. Use the `single` function in a module to declare a singleton:
+Declaring a singleton component means that Koin container will keep a *unique instance* of yBy using Koin, you describe definitions in modules. In this section we will see how to declare, organize & link your modules.
 
-```kotlin
-class MyService()
-
-val myModule = module {
-
-    // declare single instance for MyService class
-    single { MyService() }
-}
+```dart
+// declare single instance for MyService class
+var myModule = module()..single((s) => MyService());
 ```
 
 ## Defining your component within a lambda
@@ -40,15 +35,13 @@ The result type of your lambda is the main type of your component
 
 A factory component declaration is a definition that will gives you a *new instance each time* you ask for this definition (this instance is not retrained by Koin container, as it won't inject this instance in other definitions later). Use the `factory` function with a lambda expression to build a component.
 
-```kotlin
-class Controller()
+```dart
+class Controller {}
 
-val myModule = module {
-
-    // declare factory instance for Controller class
-    factory { Controller() }
-}
+// declare factory instance for Controller class
+var myModule = module()..factory((s) => Controller());
 ```
+
 
 ?> Koin container doesn't retain factory instances as it will give a new instance each time the definition is asked.
 
@@ -62,18 +55,23 @@ function to the requested needed component instance. This `get()` function is us
 
 Let's take an example with several classes:
 
-```kotlin
-// Presenter <- Service
-class Service()
-class Controller(val view : View)
+```dart
+class Service {}
 
-val myModule = module {
+class Controller {
+  final View controller;
 
-    // declare Service as single instance
-    single { Service() }
-    // declare Controller as single instance, resolving View instance with get()
-    single { Controller(get()) }
+  Controller(this.controller);
 }
+
+class View {}
+
+// declare factory instance for Controller class
+var myModule = module()
+  // declare Service as single instance
+  ..single((s) => Service())
+  // declare Controller as single instance, resolving View instance with get()
+  ..single((s) => Controller(s.get()));
 ```
 
 ## Definition: binding an interface
@@ -83,46 +81,34 @@ The matched type of the definition is the only matched type from this expression
 
 Let's take an example with a class and implemented interface:
 
-```kotlin
+```dart
 // Service interface
-interface Service{
-
-    fun doSomething()
+abstract class Service {
+  void doSomething();
 }
-
 // Service Implementation
-class ServiceImp() : Service {
+class ServiceImp implements Service {
+  void doSomething(){}
+}```
 
-    fun doSomething() { ... }
-}
-```
+In a Koin module we can use the `as` cast Dart operator as follow:
 
-In a Koin module we can use the `as` cast Kotlin operator as follow:
-
-```kotlin
-val myModule = module {
-
-    // Will match type ServiceImp only
-    single { ServiceImp() }
-
-    // Will match type Service only
-    single { ServiceImp() as Service }
-
-}
+```dart
+var myModule = module()
+  // Will match type ServiceImp only
+  ..single((s) => ServiceImp())
+  // Will match type Service only
+  ..single((s) => ServiceImp() as Service);
 ```
 
 You can also use the inferred type expression:
 
-```kotlin
-val myModule = module {
-
-    // Will match type ServiceImp only
-    single { ServiceImp() }
-
-    // Will match type Service only
-    single<Service> { ServiceImp() }
-
-}
+```dart
+var myModule = module()
+  // Will match type ServiceImp only
+  ..single((s) => ServiceImp())
+  // Will match type Service only
+  ..single<Service>((s) => ServiceImp());
 ```
 
 ?> This 2nd way of style declaration is preferred and will be used for the rest of the documentation.
@@ -133,28 +119,23 @@ In some cases, we want to match several types from just one definition.
 
 Let's take an example with a class and interface:
 
-```kotlin
+```dart
 // Service interface
-interface Service{
-
-    fun doSomething()
+abstract class Service {
+  void doSomething();
 }
-
 // Service Implementation
-class ServiceImp() : Service{
+class ServiceImp implements Service {
+  void doSomething(){}
+}```
 
-    fun doSomething() { ... }
-}
-```
 
-To make a definition bind additional types, we use the `bind` operator with a class:
+To make a definition bind additional types, we use the `bind` operator with a Type:
 
-```kotlin
-val myModule = module {
-
-    // Will match types ServiceImp & Service
-    single { ServiceImp() } bind Service::class
-}
+```dart
+var myModule = module()
+  // Will match types ServiceImp & Service
+  ..single((s) => ServiceImp()).bind<Service>();
 ```
 
 Note here, that we would resolve the `Service` type directly with `get()`. But if we have multiple definitions binding `Service`, we have to use the `bind<>()` function.
@@ -165,30 +146,28 @@ You can specify a name to your definition, to help you distinguish two definitio
 
 Just request your definition with its name:
 
-```kotlin
-val myModule = module {
-    single<Service>(named("default")) { ServiceImpl() }
-    single<Service>(named("test")) { ServiceImpl() }
-}
+```dart
+var myModule = module()
+  ..single<Service>((s) => ServiceImp(), qualifier: named("default"))
+  ..single<Service>((s) => ServiceImp(), qualifier: named("test"));
 
-val service : Service by inject(name = named("default"))
+var service = get(named("default"));
 ```
 
-`get()` and `by inject()` functions let you specify a definition name if needed. This name is a `qualifier` produced by the `named()` function.
+`get()` let you specify a definition name if needed. This name is a `qualifier` produced by the `named()` function.
 
 By default Koin will bind a definition by its type or by its name, if the type is already bound to a definition.
 
-```kotlin
-val myModule = module {
-    single<Service> { ServiceImpl1() }
-    single<Service>(named("test")) { ServiceImpl2() }
-}
+```dart
+var myModule = module()
+  ..single<Service>((s) => ServiceImpl1())
+  ..single<Service>((s) => ServiceImpl2(), qualifier: named("test"));
 ```
 
 Then:
 
-- `val service : Service by inject()` will trigger the `ServiceImpl1` definition
-- `val service : Service by inject(named("test"))` will trigger the `ServiceImpl2` definition
+- `var service = get()` will trigger the `ServiceImpl1` definition
+- `var service = get(named("test"))()` will trigger the `ServiceImpl2` definition
 
 
 ## Declaring injection parameters
@@ -196,19 +175,22 @@ Then:
 In any `single`, `factory` or `scoped` definition, you can use injection parameters: parameters that will be injected and used by your definition:
 
 ```kotlin
-class Presenter(val view : View)
+class MySingle {
+  final int value;
 
-val myModule = module {
-    single{ (view : View) -> Presenter(view) }
+  MySingle(this.value);
 }
+
+var myModule = module()
+  ..single1<MySingle,int>((s, value) => MySingle(value));
 ```
 
 In contrary to resolved dependencies (resolved with `get()`), injection parameters are *parameters passed through the resolution API*.
 This means that those parameters are values passed with `get()` and `by inject()`, with the `parametersOf` function:
 
 
-```kotlin
-val presenter : Presenter by inject { parametersOf(view) }
+```dart
+var mySingle = getP<MySingle>(parameters: parametersOf([10]));
 ```
 
 Further reading in the <<injection-parameters.adoc#_injection_parameters,injection parameters section>>.
@@ -226,40 +208,30 @@ or on your definition.
 
 CreateAtStart flag on a definition
 
-```kotlin
-val myModuleA = module {
-
-    single<Service> { ServiceImp() }
-}
-
-val myModuleB = module {
-
+```dart
+var moduleA = module()
+  ..single<Service>((s) => ServiceImp());
+var moduleB = module()
     // eager creation for this definition
-    single<Service>(createAtStart=true) { TestServiceImp() }
-}
+  ..single<Service>((s) => TestServiceImp(), createdAtStart: true);
 ```
 
 CreateAtStart flag on a module
 
 ```kotlin
-val myModuleA = module {
-
-    single<Service> { ServiceImp() }
-}
-
-val myModuleB = module(createAtStart=true) {
-
-    single<Service>{ TestServiceImp() }
-}
+var moduleA = module()
+  ..single<Service>((s) => ServiceImp());
+var moduleB = module(createdAtStart: true)
+  ..single<Service>((s) => TestServiceImp());
 ```
 
 The `startKoin` function will automatically create definitions instances flagged with `createAtStart`.
 
-```kotlin
+```dart
 // Start Koin modules
-startKoin {
-    modules(myModuleA,myModuleB)
-}
+startKoin((app){
+    app.modules([moduleA, moduleB]);
+});
 ```
 
 ?> if you need to load some definition at a special time (in a background thread instead of UI for example), just get/inject the desired components.

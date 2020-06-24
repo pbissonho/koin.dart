@@ -1,8 +1,8 @@
-# Koin
+# Koin.dart
 
-> Pragmatic lightweight dependency injection framework for Kotlin
+> Pragmatic lightweight dependency injection framework for Dart
 
-- Pure Kotlin
+- Pure Dart
 - Simple DSL & Pragmatic API
 - Easy to use
 - No code generation, just run it

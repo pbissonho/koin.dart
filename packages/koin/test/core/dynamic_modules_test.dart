@@ -1,3 +1,4 @@
+import 'package:koin/koin.dart';
 import 'package:koin/src/core/context/context_functions.dart';
 import 'package:koin/src/core/context/koin_context_handler.dart';
 import 'package:koin/src/core/error/exceptions.dart';
@@ -10,6 +11,133 @@ import 'package:koin/src/core/definition/bean_definition.dart';
 import '../extensions/koin_application_ext.dart';
 import 'package:koin/src/core/definition_parameters.dart';
 import 'package:koin/src/core/qualifier.dart';
+
+abstract class Service {
+  void doSomething();
+}
+
+class ServiceImp implements Service {
+  void doSomething() {}
+}
+
+class TestServiceImp implements Service {
+  void doSomething() {}
+}
+
+class MySingle {
+  final int value;
+
+  MySingle(this.value);
+}
+
+var moduleA = module()..single<Service>((s) => ServiceImp());
+var moduleB = module(createdAtStart: true)
+  ..single<Service>((s) => TestServiceImp())
+  ..scope((scope) {});
+
+/*
+```kotlin
+class Presenter(val view : View)
+
+val myModule = module {
+    single{ (view : View) -> Presenter(view) }
+}
+```*/
+
+class View {}
+
+class Presenter {
+  final View view;
+  final int id;
+
+  Presenter(this.view, this.id);
+}
+
+
+class MyService{}
+
+class MyComponent extends View with KoinComponentMixin {
+  MyService myService;
+  Lazy<MyService> myServiceLazy;
+  
+  MyComponent() {
+    myService = get<MyService>();
+    myServiceLazy = inject<MyService>();
+  }
+}
+
+/*
+```dart
+dar module = module {
+    single(named("A")) { ComponentA() }
+    single(named("B")) { ComponentB(get()) } 
+class ComponentA
+class ComponentB(val componentA: ComponentA)
+}*/
+
+class ComponentA {}
+
+class ComponentB {
+  final ComponentA componentA;
+
+  ComponentB(this.componentA);
+}
+
+var myModule = module()
+  ..single((s) => ComponentA(), qualifier: named("A"))
+  ..single((s) => ComponentB(s.get()), qualifier: named("B"));
+
+
+void main() {
+  startKoin((app){
+    app.printLogger(level: Level.info);
+  });
+}
+
+/*
+var service = get(named("default"));
+
+
+
+```dart
+val myModule = module {
+    single<Service>(named("default")) { ServiceImpl() }
+    single<Service>(named("test")) { ServiceImpl() }
+}
+
+val service : Service by inject(name = named("default"))
+```
+
+In a Koin module we can use the `as` cast Dart operator as follow:
+
+
+```kotlin
+// Service interface
+interface Service{
+
+    fun doSomething()
+}
+
+// Service Implementation
+class ServiceImp() : Service {
+
+    fun doSomething() { ... }
+}
+```
+
+
+// Presenter <- Service
+class Service()
+class Controller(val view : View)
+
+val myModule = module {
+
+    // declare Service as single instance
+    single { Service() }
+    // declare Controller as single instance, resolving View instance with get()
+    single { Controller(get()) }
+}
+```
 
 void main() {
   test('should unload single definition', () {
@@ -319,3 +447,4 @@ void main() {
 }
 
 class ScopeKey {}
+*/

@@ -5,12 +5,17 @@ In any definition, you can use injection parameters: parameters that will be inj
 
 Below is an example of injection parameters. We established that we need a `view` parameter to build of `Presenter` class:
 
-```kotlin
-class Presenter(val view : View)
+```dart
+class View {}
 
-val myModule = module {
-    single{ (view : View) -> Presenter(view) }
+class Presenter {
+  final View view;
+
+  Presenter(this.view);
 }
+
+var myModule = module(createdAtStart: true)
+  ..single1<Presenter, View>((s, view) => Presenter(view));
 ```
 
 
@@ -19,11 +24,12 @@ val myModule = module {
 In contrary to resolved dependencies (resolved with with `get()`), injection parameters are *parameters passed through the resolution API*.
 This means that those parameters are values passed with `get()` and `by inject()`, with the `parametersOf()` function:
 
-```kotlin
-class MyComponent : View, KoinComponent {
-
-    // inject this as View value
-    val presenter : Presenter by inject { parametersOf(this) }
+```dart
+class MyComponent extends View with KoinComponentMixin {
+  Presenter presenter;
+  MyComponent() {
+    presenter = getP<Presenter>(parameters: parametersOf([this]));
+  }
 }
 ```
 
@@ -32,22 +38,25 @@ class MyComponent : View, KoinComponent {
 If we want to have multiple parameters in our definition, we can use the *destructured declaration* to list our parameters:
 
 ```kotlin
-class Presenter(val view : View, id : String)
+class Presenter {
+  final View view;
+  final int id;
 
-val myModule = module {
-    single{ (view : View, id : String) -> Presenter(view,id) }
+  Presenter(this.view, this.id);
 }
+
+var myModule = module()
+  ..single2<Presenter, View, int>((s, view, id) => Presenter(view, id));
 ```
 
 In a `KoinComponent`, just use the `parametersOf` function with your arguments like below:
 
-```kotlin
-class MyComponent : View, KoinComponent {
-
-    val id : String ...
-
-    // inject with view & id
-    val presenter : Presenter by inject { parametersOf(this,id) }
+```dart
+class MyComponent extends View with KoinComponentMixin {
+  Presenter presenter;
+  MyComponent() {
+    presenter = getP<Presenter>(parameters: parametersOf([this, 10]));
+  }
 }
 ```
 

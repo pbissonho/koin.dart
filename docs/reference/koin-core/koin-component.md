@@ -8,28 +8,25 @@ an API to retrieve our instances outside of the container. That's the goal of Ko
 To give a class the capacity to use Koin features, we need to *tag it* with `KoinComponent` interface. Let's take an example.
 
 A module to define MyService instance
-```kotlin
-class MyService
-
-val myModule = module {
-    // Define a singleton for MyService
-    single { MyService() }
-}
+```dart
+class MyService {}
+// Define a singleton for MyService
+var myModule = module()..single((s) => MyService());
 ```
 
 we start Koin before using definition.
 
 Start Koin with myModule
 
-```kotlin
-fun main(vararg args : String){
+```dart
+void main(vararg args : String){
     // Start Koin
-    startKoin {
-        modules(myModule)
-    }
+    startKoin((app){
+        app.module(myModule);
+    });
 
     // Create MyComponent instance and inject from Koin container
-    MyComponent()
+    MyComponent();
 }
 ```
 
@@ -37,15 +34,18 @@ Here is how we can write our `MyComponent` to retrieve instances from Koin conta
 
 Use get() & by inject() to inject MyService instance
 
-```kotlin
-class MyComponent : KoinComponent {
-
+```dart
+class MyComponent extends View with KoinComponentMixin {
+  MyService myService;
+  Lazy<MyService> myServiceLazy;
+  
+  MyComponent() {
     // lazy inject Koin instance
-    val myService : MyService by inject()
-
+    myServiceLazy = inject<MyService>();
     // or
     // eager inject Koin instance
-    val myService : MyService = get()
+    myService = get<MyService>();
+  }
 }
 ```
 
@@ -53,7 +53,7 @@ class MyComponent : KoinComponent {
 
 Once you have tagged your class as `KoinComponent`, you gain access to:
 
-* `by inject()` - lazy evaluated instance from Koin container
+* `inject()` - lazy evaluated instance from Koin container
 * `get()` - eager fetch instance from Koin container
 * `getProperty()`/`setProperty()` - get/set property
 
@@ -62,15 +62,15 @@ Once you have tagged your class as `KoinComponent`, you gain access to:
 
 Koin offers two ways of retrieving instances from the Koin container:
 
-* `val t : T by inject()` - lazy evaluated delegated instance
-* `val t : T = get()` - eager access for instance
+* `Lazy<T> t = inject<T>()` - lazy evaluated delegated instance
+* `T t = get<T>()` - eager access for instance
 
-```kotlin
+```dart
 // is lazy evaluated
-val myService : MyService by inject()
+Lazy<MyService> myService = inject();
 
 // retrieve directly the instance
-val myService : MyService get()
+MyService myService = get();
 ```
 
 ?> The lazy inject form is better to define property that need lazy evaluation.
@@ -83,21 +83,25 @@ If you need you can specify the following parameter with `get()` or `by inject()
 
 Example of module using definitions names:
 
-```kotlin
-val module = module {
-    single(named("A")) { ComponentA() }
-    single(named("B")) { ComponentB(get()) }
+```dart
+class ComponentA {}
+
+class ComponentB {
+  final ComponentA componentA;
+
+  ComponentB(this.componentA);
 }
 
-class ComponentA
-class ComponentB(val componentA: ComponentA)
+var myModule = module()
+  ..single((s) => ComponentA(), qualifier: named("A"))
+  ..single((s) => ComponentB(s.get()), qualifier: named("B"));
 ```
 
 We can make the following resolutions:
 
 ```kotlin
 // retrieve from given module
-val a = get<ComponentA>(named("A"))
+var a = get<ComponentA>(named("A"))
 ```
 
 

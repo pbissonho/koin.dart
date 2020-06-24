@@ -14,8 +14,8 @@ A `KoinApplication` instance is a Koin container instance configuration. This wi
 
 To build a new `KoinApplication`, use the following functions:
 
-* `koinApplication { }` - create a `KoinApplication` container configuration 
-* `startKoin { }` - create a `KoinApplication` container configuration and register it in the `GlobalContext` to allow the use of GlobalContext API
+* `koinApplication()` - create a `KoinApplication` container configuration 
+* `startKoin()` - create a `KoinApplication` container configuration and register it in the `GlobalContext` to allow the use of GlobalContext API
 
 To configure your `KoinApplication` instance, you can use any of the following functions :
 
@@ -42,15 +42,15 @@ Starting Koin means run a `KoinApplication` instance into the `GlobalContext`.
 
 To start Koin container with modules, we can just use the `startKoin` function like that:
 
-```kotlin
+
+```dart
 // start a KoinApplication in Global context
-startKoin {
+startKoin((app){
     // declare used logger
-    logger()
+    app.logger(EmptyLogger(Level.debug));
     // declare used modules
-    modules(coffeeAppModule)
-}
-```
+    app.modules([moduleA, moduleB]);
+});
 
 ## Module DSL
 
@@ -60,13 +60,13 @@ A Koin module gather definitions that you will inject/combine for your applicati
 
 To describe your content in a module, you can use the following functions:
 
-* `factory { //definition }` - provide a factory bean definition
-* `single { //definition  }` - provide a singleton bean definition (also aliased as `bean`)
+* `factory((s) => //Definition())` - provide a factory bean definition
+* `single((s) => //Definition()) - provide a singleton bean definition (also aliased as `bean`)
 * `get()` - resolve a component dependency (also can use name, scope or parameters)
 * `bind()` - add type to bind for given bean definition
 * `binds()` - add types array for given bean definition
-* `scope { // scope group }` - define a logical group for `scoped` definition 
-* `scoped { //definition }`- provide a bean definition that will exists only in a scope
+* `scope((scope){// scope group})` - define a logical group for `scoped` definition 
+* `scoped((s) => //Definition())`- provide a bean definition that will exists only in a scope
 
 Note: the `named()` function allow you to give a qualifier either by a string, an enum or a type. It is used to name your definitions.
 
@@ -74,10 +74,8 @@ Note: the `named()` function allow you to give a qualifier either by a string, a
 
 A Koin module is the *space to declare all your components*. Use the `module` function to declare a Koin module:
 
-```kotlin
-val myModule = module {
-   // your dependencies here
-}
+```dart
+var myModule = module()// your dependencies here;
 ```
 
 In this module, you can declare components as decribed below.

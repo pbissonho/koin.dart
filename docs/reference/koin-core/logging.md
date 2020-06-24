@@ -3,22 +3,39 @@ Koin has a simple logging API to log any Koin activity (allocation, lookup ...).
 
 Koin Logger
 
-```kotlin
-abstract class Logger(var level: Level = Level.INFO) {
+```dart
+abstract class Logger {
+  final Level level;
 
-    abstract fun log(level: Level, msg: MESSAGE)
+  const Logger([this.level = Level.info]);
 
-    fun debug(msg: MESSAGE) {
-        log(Level.DEBUG, msg)
+  static Logger logger = PrintLogger(Level.debug);
+
+  void log(Level level, String msg);
+
+  bool canLog(Level level) {
+    return this.level == level;
+  }
+
+  void doLog(Level level, String msg) {
+    if (canLog(level)) {
+      log(level, msg);
     }
+  }
 
-    fun info(msg: MESSAGE) {
-        log(Level.INFO, msg)
-    }
+  void debug(String msg) {
+    log(Level.debug, msg);
+  }
 
-    fun error(msg: MESSAGE) {
-        log(Level.ERROR, msg)
-    }
+  void info(String msg) {
+    log(Level.info, msg);
+  }
+
+  void error(String msg) {
+    log(Level.error, msg);
+  }
+
+  bool isAt(Level level) => this.level == level;
 }
 ```
 
@@ -26,17 +43,15 @@ Koin proposes some implementation of logging, in function of the target platform
 
 * `PrintLogger` - directly log into console (included in `koin-core`)
 * `EmptyLogger` - log nothing (included in `koin-core`)
-* `SLF4JLogger` - Log with SLF4J. Used by ktor and spark (`koin-logger-slf4j` project)
-* `AndroidLogger` - log into Android Logger (included in `koin-android`)
 
 ## Set logging at start
 
 By default, By default Koin use the `EmptyLogger`. You can use directly the `PrintLogger` as following:
 
-```kotlin
-startKoin{
-    logger(LEVEL.INFO)
-}
+```dart
+startKoin((app){
+    app.printLogger(level: Level.info);
+  });
 ```
 
 

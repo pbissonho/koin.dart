@@ -37,6 +37,10 @@ mixin KoinComponentMixin {
     return getKoin().get<T>(qualifier, parameters);
   }
 
+  T getP<T>({Qualifier qualifier, DefinitionParameters parameters}) {
+    return getKoin().get<T>(qualifier, parameters);
+  }
+
   ///
   /// Lazy inject instance from Koin
   /// @param qualifier
