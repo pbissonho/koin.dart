@@ -5,10 +5,8 @@ By using Koin, you describe definitions in modules. In this section we will see 
 
 A Koin module is a "space" to gather Koin definition. It's declared with the `module` function.
 
-```kotlin
-val myModule = module {
-    // Your definitions ...
-}
+```dart
+var myModule = module()  // Your definitions ...
 ```
 
 ## Using several modules
@@ -18,31 +16,34 @@ module. Definitions are lazy, and then are resolved only when a a component is r
 
 Let's take an example, with linked components in separate modules:
 
-```kotlin
+```dart
 // ComponentB <- ComponentA
-class ComponentA()
-class ComponentB(val componentA : ComponentA)
+class ComponentA {}
 
-val moduleA = module {
-    // Singleton ComponentA
-    single { ComponentA() }
+class ComponentB {
+  final ComponentA componentA;
+
+  ComponentB(this.componentA);
 }
 
-val moduleB = module {
-    // Singleton ComponentB with linked instance ComponentA
-    single { ComponentB(get()) }
-}
+var myModuleA = module()
+   // Singleton ComponentA
+  ..single((s) => ComponentA());
+
+var myModuleB = module()
+  // Singleton ComponentB with linked instance ComponentA
+  ..single((s) => ComponentB(s.get()));
 ```
 
 ?> Koin does't have any import concept. Koin definitions are lazy: a Koin definition is started with Koin container but is not instantiated. An instance is created only a request for its type has been done.
 
 We just have to declare list of used modules when we start our Koin container:
 
-```kotlin
+```dart
 // Start Koin with moduleA & moduleB
-startKoin{
-    modules(moduleA,moduleB)
-}
+startKoin((app){
+    app.modules([myModuleA,myModuleB]);
+});
 ```
 
 Koin will then resolve dependencies from all given modules.
@@ -53,90 +54,81 @@ Koin will then resolve dependencies from all given modules.
 
 Let's take an example, of a Repository and Datasource. A repository need a Datasource, and a Datasource can be implemented in 2 ways: Local or Remote.
 
-```kotlin
-class Repository(val datasource : Datasource)
-interface Datasource
-class LocalDatasource() : Datasource
-class RemoteDatasource() : Datasource
+```dart
+class Repository {
+  final Datasource datasource;
+
+  Repository(this.datasource);
+}
+
+abstract class Datasource {}
+
+class LocalDatasource implements Datasource {}
+
+class RemoteDatasource implements Datasource {}
 ```
 
 We can declare those components in 3 modules: Repository and one per Datasource implementation:
 
-```kotlin
-val repositoryModule = module {
-    single { Repository(get()) }
-}
+```dart
+var repositoryModule = module()
+  ..single((s) => Repository(s.get()));
 
-val localDatasourceModule = module {
-    single<Datasource> { LocalDatasource() }
-}
+var localDatasourceModule = module()
+  ..single<Datasource>((s) => LocalDatasource());
 
-val remoteDatasourceModule = module {
-    single<Datasource> { RemoteDatasource() }
-}
+var remoteDatasourceModule = module()
+  ..single<Datasource>((s) => LocalDatasource());
 ```
 
 Then we just need to launch Koin with the right combination of modules:
 
-```kotlin
+```dart
 // Load Repository + Local Datasource definitions
-startKoin {
-    modules(repositoryModule,localDatasourceModule)
-}
-
+startKoin((app) {
+    app.modules([repositoryModule, localDatasourceModule]);
+});
 // Load Repository + Remote Datasource definitions
-startKoin {
-    modules(repositoryModule,remoteDatasourceModule)
-}
+startKoin((app) {
+    app.modules([repositoryModule, remoteDatasourceModule]);
+});
 ```
 
 ## Overriding definition or module
 
 Koin won't allow you to redefinition an already existing definition (type,name,path ...). You will an an error if you try this:
 
-```kotlin
-val myModuleA = module {
+```dart
+var myModuleA = module()
+  ..single<Service>((s) => ServiceImp());
 
-    single<Service> { ServiceImp() }
-}
-
-val myModuleB = module {
-
-    single<Service> { TestServiceImp() }
-}
+var myModuleB = module()
+  ..single<Service>((s) => TestServiceImp());
 
 // Will throw an BeanOverrideException
-startKoin {
-    modules(myModuleA,myModuleB)
-}
+startKoin((app) {
+    app.modules([myModuleA, myModuleB]);
+});
 ```
 
 To allow definition overriding, you have to use the `override` parameter:
 
-```kotlin
-val myModuleA = module {
+```dart
+var myModuleA = module()
+  ..single<Service>((s) => ServiceImp());
 
-    single<Service> { ServiceImp() }
-}
-
-val myModuleB = module {
-
-    // override for this definition
-    single<Service>(override#true) { TestServiceImp() }
-}
+var myModuleB = module()
+   // override for this definition
+  ..single<Service>((s) => TestServiceImp(), override: true);
 ```
 
-```kotlin
-val myModuleA = module {
-
-    single<Service> { ServiceImp() }
-}
+```dart
+var myModuleA = module()
+  ..single<Service>((s) => ServiceImp());
 
 // Allow override for all definitions from module
-val myModuleB = module(override#true) {
-
-    single<Service> { TestServiceImp() }
-}
+var myModuleB = module(override: true)
+  ..single<Service>((s) => TestServiceImp());
 ```
 
 !> Order matters when listing modules and overriding definitions. You must have your overriding definitions in last of your module list.

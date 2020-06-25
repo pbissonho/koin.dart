@@ -6,9 +6,9 @@ group: developer-guides
 toc: true
 ---
 
-## Android & Koin Best practices
+## Flutter & Koin Best practices
 
-Here you will find some receipes and guide to build your Android application.
+Here you will find some receipes and guide to build your Flutter application.
 
 ### How to build MVP
 

@@ -37,7 +37,7 @@ class MyComponent extends View with KoinComponentMixin {
 
 If we want to have multiple parameters in our definition, we can use the *destructured declaration* to list our parameters:
 
-```kotlin
+```dart
 class Presenter {
   final View view;
   final int id;

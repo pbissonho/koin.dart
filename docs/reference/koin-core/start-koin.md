@@ -1,6 +1,6 @@
-## What is Koin?
+## What is Koin.dart?
 
-Koin is pragmatic lightweight dependency injection framework for Kotlin developers. Written in pure Kotlin, using functional resolution as key concept. Koin is a DSL, a lightweight container and a pragmatic API.
+Koin is pragmatic lightweight dependency injection framework for Dart developers. Written in pure Dart, using functional resolution as key concept. Koin is a lightweight container and a pragmatic API. Koin.dart is a port of the original version written in Kotlin.
 
 ## Start the container
 
@@ -12,12 +12,13 @@ The `startKoin` function is the main entry point to launch Koin container. It ne
 Modules are loaded and definitions are ready to be resolved by the Koin container.
 
 .Starting Koin
-```kotlin
+
+```dart
 // start a KoinApplication in Global context
-startKoin {
+startKoin((app){
     // declare used modules
-    modules(coffeeAppModule)
-}
+    app.module(coffeeAppModule);
+});
 ```
 
 Once `startKoin` has been called, Koin will read all your modules & definitions. Koin is then ready for any `get()` or `by inject()` call to retrieve the needed instance.
@@ -49,16 +50,16 @@ You can't call the `startKoin` function more than once. But you can use directly
 
 This function is interesting for SDK makers who want to use Koin, because they don't need to use the `starKoin()` function and just use the `loadKoinModules` at the start of their library.
 
-```kotlin
-loadKoinModules(module1,module2 ...)
+```dart
+loadKoinModules([module1,module2]);
 ```
 
 ### Unloading modules
 
 it's possible also to unload a bunch of definition, and then release theirs instance with the given function:
 
-```kotlin
-unloadKoinModules(module1,module2 ...)
+```dart
+unloadKoinModules([module1,module2])
 ```
 
 
@@ -68,52 +69,51 @@ For SDK Makers, you can also work with Koin in a non global way: use Koin for th
 
 In a standard way, we can start Koin like that:
 
-```kotlin
-// start a KoinApplication and register it in Global context
-startKoin {
+```dart
+// start a KoinApplication in Global context
+startKoin((app){
     // declare used modules
-    modules(coffeeAppModule)
-}
+    app.module(coffeeAppModule);
+});
 ```
 
 From this, we can use the `KoinComponent` as it: it will use the `GlobalContext` Koin instance.
 
 But if we want to use an isolated Koin instance, you can just declare it like follow:
 
-```kotlin
+```dart
 // create a KoinApplication
-val myApp = koinApplication {
-    // declare used modules
-    modules(coffeeAppModule)
-}
+var myKoinApplication = koinApplication((app){
+    app.module(coffeeAppModule);
+});
 ```
 
 You will have to keep your `myApp` instance avilable in your library and pass it to your custom KoinComponent implementation:
 
-```kotlin
+```dart
 // Get a Context for your Koin instance
-object MyKoinContext {
-    var koinApp : KoinApplication? = null
+class MyKoinContext {
+    static KoinApplication koinApp;
 }
-
-// Register the Koin context
-MyKoinContext.koinApp = KoinApp
+// Register the Koin context with the KoinApplication
+MyKoinContext.koinApp = myKoinApplication
 ```
 
-```kotlin
-abstract class CustomKoinComponent : KoinComponent {
-    // Override default Koin instance, intially target on GlobalContext to yours
-    override fun getKoin(): Koin = MyKoinContext?.koinApp.koin
+```dart
+abstract class CustomKoinComponent extends KoinComponent {
+     // Override default Koin instance, intially target on GlobalContext to yours
+     @override
+     Koin getKoin() =>  MyKoinContext.koinApp.koin;
 }
 ```
 
 And now, you register your context and run your own isolated Koin components:
 
-```kotlin
+```dart
 // Register the Koin context
-MyKoinContext.koinApp = myApp
+MyKoinContext.koinApp = myKoinApplication
 
-class ACustomKoinComponent : CustomKoinComponent(){
+class ACustomKoinComponent extends CustomKoinComponent{
     // inject & get will target MyKoinContext
 }
 ```

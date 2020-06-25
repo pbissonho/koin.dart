@@ -27,7 +27,7 @@ var myModule = module()..single((s) => MyService());
 `single`, `factory` & `scoped` keywords help you declare your components through a lambda expression. this lambda describe
 the way that you build your component. Usually we instantiate components via their constructors, but you can also use any expression.
 
-`single { Class constructor // Kotlin expression }`
+`single { Class constructor // Dart expression }`
 
 The result type of your lambda is the main type of your component
 
@@ -174,7 +174,7 @@ Then:
 
 In any `single`, `factory` or `scoped` definition, you can use injection parameters: parameters that will be injected and used by your definition:
 
-```kotlin
+```dart
 class MySingle {
   final int value;
 
@@ -218,7 +218,7 @@ var moduleB = module()
 
 CreateAtStart flag on a module
 
-```kotlin
+```dart
 var moduleA = module()
   ..single<Service>((s) => ServiceImp());
 var moduleB = module(createdAtStart: true)
@@ -242,7 +242,7 @@ startKoin((app){
 
 Koin definitions doesn't take in accounts generics type argument. For example, the module below tries to define 2 definitions of List:
 
-```kotlin
+```dart
 module {
     single { ArrayList<Int>() }
     single { ArrayList<String>() }
@@ -253,7 +253,7 @@ Koin won't start with such definitions, understanding that you want to override 
 
 To allow you, use the 2 definitions you will have to differentiate them via their name, or location (module). For example:
 
-```kotlin
+```dart
 module {
     single(named("Ints")) { ArrayList<Int>() }
     single(named("Strings")) { ArrayList<String>() }

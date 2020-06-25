@@ -99,7 +99,7 @@ var myModule = module()
 
 We can make the following resolutions:
 
-```kotlin
+```dart
 // retrieve from given module
 var a = get<ComponentA>(named("A"))
 ```

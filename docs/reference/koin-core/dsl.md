@@ -1,5 +1,5 @@
 
-Thanks to the power of Kotlin language, Koin provides a DSL to help your describe your app instead of annotate it or generate code for it. With its Kotlin DSL, Koin offers a smart functional API to achieve to prepare your dependency injection.
+Thanks to the power of Dart language, Koin provides a DSL to help your describe your app instead of annotate it or generate code for it. With its Dart DSL, Koin offers a smart functional API to achieve to prepare your dependency injection.
 
 ## Application & Module DSL
 
@@ -21,7 +21,7 @@ To configure your `KoinApplication` instance, you can use any of the following f
 
 * `logger( )` - describe what level and Logger implementation to use (by default use the EmptyLogger)
 * `modules( )` - set a list of Koin modules to load in the container (list or vararg list)
-* `properties()` - load HashMap properties into Koin container
+* `properties( )` - load HashMap properties into Koin container
 * `fileProperties( )` - load properties from given file into Koin container
 * `environmentProperties( )` - load properties from OS environment into Koin container
 
