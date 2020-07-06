@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
     componentBind = bind<ComponentInterface, Component>();
     lazyComponent = inject<Component>();
     component = get<Component>();
-    componentScoped = widget.scope.get<Component>();
+    componentScoped = currentScope.get<Component>();
     componentFactory = get<Component>(named("Fac"), parametersOf([60]));
     super.initState();
   }

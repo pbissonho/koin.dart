@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:koin/koin.dart';
 
 extension KoinStatefulExtension<T> on Diagnosticable {
@@ -30,9 +31,9 @@ extension KoinStatefulExtension<T> on Diagnosticable {
 }
 
 extension ScopeWidgetExtensiont<T extends Diagnosticable> on T {
-  String get scopeId => '${toString()}@ $hashCode';
+  String get scopeId => '$runtimeType@$hashCode';
 
-  Qualifier get scopeName => TypeQualifier(T);
+  Qualifier get scopeName => TypeQualifier(runtimeType);
 
   Scope get scope => getOrCreateScope();
 
@@ -55,5 +56,11 @@ extension ScopeWidgetExtensiont<T extends Diagnosticable> on T {
   Scope createScope([Koin koin]) {
     koin ??= KoinContextHandler.get();
     return koin.createScope(scopeId, scopeName, this);
+  }
+}
+
+extension ScopeWidgetExtensionX<T extends StatefulWidget> on State<T> {
+  Scope get currentScope {
+    return widget.scope;
   }
 }
