@@ -2,30 +2,24 @@ import 'package:counter/src/counter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:koin/koin.dart';
-import 'package:koin/instace_scope.dart';
+import 'package:koin_flutter/koin_flutter.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> with KoinComponentMixin {
+class _MyHomePageState extends State<MyHomePage> {
   Counter counter;
   Counter counter2;
   Counter counterSingle;
 
   @override
   void initState() {
-    counter = widget.scope.get();
     counterSingle = get();
-    counter2 = widget.scope.get(named("Fac"), parametersOf([50]));
+    counter2 = currentScope.get<Counter>(named("Fac"), parametersOf([50]));
+    counter = currentScope.get();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    widget.scope.close();
-    super.dispose();
   }
 
   @override
