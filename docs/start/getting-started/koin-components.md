@@ -5,42 +5,62 @@ Sometimes you can't declare only components via Koin. Dependening on your runtim
 
 Tag your class with the `KoinComponent` interface to unlock Koin injection features:
 
-* `by inject()` - lazy inject an instance
+* `inject()` - lazy inject an instance
 * `get()` - retrieve an instance
 * `getProperty()` - get a Koin property
 
 We can inject the module above into class properties:
 
-```kotlin
+```dart
 // Tag class with KoinComponent
-class HelloApp : KoinComponent {
+class HelloApp extends KoinComponent{
+  // lazy inject dependency
+  Lazy<HelloServiceImpl> helloService;
+  
+  HelloApp() {
+    helloService = inject<HelloServiceImpl>();
+  }
 
-    // lazy inject dependency
-    val helloService: HelloServiceImpl by inject()
-    
-    fun sayHello(){
-        helloService.sayHello()
-    }
+  void sayHello() {
+    helloService.value.sayHello();
+  }
+}
+```
+
+If the class already inherits another one you can use KoinComponentMixin instead of 
+inheriting KoinComponent.
+
+```dart 
+// Tag class with KoinComponentMixin
+class HelloApp extends App with KoinComponentMixin { 
+  // lazy inject dependency
+  Lazy<HelloServiceImpl> helloService;
+
+  HelloApp() {
+    helloService = inject<HelloServiceImpl>();
+  }
+
+  void sayHello() {
+    helloService.value.sayHello();
+  }
 }
 ```
 
 And we just need to start Koin and run our class:
 
-```kotlin
+```dart
 // a module with our declared Koin dependencies 
-val helloModule = module {
-    single { HelloServiceImpl() }
-}
+var helloModule = module()..single((s) => HelloServiceImpl());
 
-fun main(vararg args: String) {
+void main() {
 
     // Start Koin
-    startKoin {
-        modules(helloModule)
-    }
+    startKoin((app){
+      app.module(helloModule);
+    });
     
     // Run our Koin component
-    HelloApp().sayHello()
+    HelloApp().sayHello();
 }
 ```
 
@@ -53,13 +73,13 @@ fun main(vararg args: String) {
 
 The `KoinComponent` interface brings the following:
 
-```kotlin
-interface KoinComponent {
+```dart
+abstract class KoinComponent {
 
     /**
      * Get the associated Koin instance
      */
-    fun getKoin(): Koin = KoinContextHandler.get().koin
+    Koin getKoin() => KoinContextHandler.get();
 }
 ```
 

@@ -5,9 +5,9 @@ Writing definitions in Koin is done via Kotlin functions, that describe ishow is
 
 Given some classes that we need to inject:
 
-```kotlin
-class DataRepository()
-interface Presenter
+```dart
+class DataRepository {}
+abstract class Presenter
 class MyPresenter(val repository : Repository) : Presenter
 class HttpClient(val url : String)
 ```
@@ -169,7 +169,7 @@ A quick recap of the Koin DSL keywords:
 * `single { }` - provide a bean definition
 * `get()` - resolve a component dependency
 * `named()` - define a qualifier with type, enum or string
-* `bind` - additional Kotlin type binding for given bean definition
-* `binds` - list of additional Kotlin types binding for given bean definition
+* `bind` - additional Dart type binding for given bean definition
+* `binds` - list of additional Dart types binding for given bean definition
 * `getProperty()` - resolve a Koin property
 

@@ -1,37 +1,44 @@
 
+# PORT WIP
+
 ## Making your test a KoinComponent with KoinTest
 
-By tagging your class `KoinTest`, your class become a `KoinComponent` and bring you:
+By import  `koin_test.dart`, you will be able to use all available test methods:
 
-* `by inject()` & `get()` - function to retrieve yoru instances from Koin
-* `checkModules` - help you check your configuration
-* `declareMock` & `declare` - to declare a mock or a new definition in the current context
+* `inject()` & `get()` - function to retrieve yoru instances from Koin
+* `testModules()`,`testModule()` & `testKoinDeclaration()`  - help you check your configuration. These are functions marked as isTest, that is, they are equivalent to test();
+* `declareModule()` - to declare a  module to be loaded in the global context of koin
+* `declare()` - to a instance to be loaded in the global context of ko
 
-```kotlin
-class ComponentA
-class ComponentB(val a: ComponentA)
+* `koinTearDown()` - Register a tearDown function that close Koin afters tests, will be called after each test is run.
+* `koinSetUp()` - Register a setUp function that starts koin before tests, will be called after each test is run.
+* `koinTest()` - Configures the testing environment to automatically start and close Koin for each test.
 
-class MyTest : KoinTest {
+
+```dart
+class ComponentA {}
+class ComponentB {
+    final ComponentA a;
+    ComponentB(this.a);
+}
+
+void main() {
+   test('should inject my components', () {
+    startKoin((app) {
+      app.module(module()
+        ..single((s) => ComponentA())
+        ..single((s) => ComponentB(s.get())));
+    });
 
     // Lazy inject property
-    val componentB : ComponentB by inject()
+    var componentA = inject<ComponentA>();
+    // directly request an instance
+    var componentB = get<ComponentB>();
 
-    @Test
-    fun `should inject my components`() {
-        startKoin{
-            modules(
-                module {
-                    single { ComponentA() }
-                    single { ComponentB(get()) }
-                })
-        }
-
-        // directly request an instance
-        val componentA = get<ComponentA>()
-
-        assertNotNull(a)
-        assertEquals(componentA, componentB.a)
-    }
+    expect(componentA, isNotNull);
+    expect(componentB.a, componentA);
+  });
+}
 ```
 
 ?> Don't hesitate to overload Koin modules configuration to help you partly build your app.
@@ -52,7 +59,7 @@ val koinTestRule = KoinTestRule.create {
 
 ### Specify your Mock Provider
 
-To let you use the `declareMock` API, you need to specify a rule to let Koin know how you build your Mock instance. This let you choose the right
+To let you use the `declare` API, you need to specify a rule to let Koin know how you build your Mock instance. This let you choose the right
 mocking framework for your need. Below is a Mockito example: 
 
 ```kotlin

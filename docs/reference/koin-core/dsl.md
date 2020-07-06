@@ -51,7 +51,7 @@ startKoin((app){
     // declare used modules
     app.modules([moduleA, moduleB]);
 });
-
+```
 ## Module DSL
 
 A Koin module gather definitions that you will inject/combine for your application. To create a new module, just use the following function:
