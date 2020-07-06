@@ -12,6 +12,10 @@ extension KoinStatefulExtension<T> on Diagnosticable {
     return getKoin().get<T>(qualifier, parameters);
   }
 
+  T getWithParams<T>({Qualifier qualifier, DefinitionParameters parameters}) {
+    return getKoin().get<T>(qualifier, parameters);
+  }
+
   ///
   /// Lazy inject instance from Koin
   /// @param qualifier
@@ -22,10 +26,21 @@ extension KoinStatefulExtension<T> on Diagnosticable {
   }
 
   ///
-  /// Get instance instance from Koin by Primary Type P, as secondary type S
-  /// @param parameters
+  /// Lazy inject instance from Koin
+  Lazy<T> injectWithParams<T>({Qualifier qualifier, DefinitionParameters parameters}) {
+    return getKoin().inject<T>(qualifier, parameters);
+  }
+
   ///
+  /// Get instance instance from Koin by Primary Type P, as secondary type S
+  /// 
   S bind<S, P>([Qualifier qualifier, DefinitionParameters parameters]) {
+    return getKoin().bind<S, P>(parameters);
+  }
+
+  ///
+  /// Get instance instance from Koin by Primary Type P, as secondary type S
+  S bindWithParams<S, P>({Qualifier qualifier, DefinitionParameters parameters}) {
     return getKoin().bind<S, P>(parameters);
   }
 }

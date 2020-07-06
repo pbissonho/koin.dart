@@ -60,6 +60,14 @@ class Koin {
   }
 
   ///
+  /// Lazy inject a Koin instance
+  ///
+  Lazy<T> injectWithParams<T>(
+      {Qualifier qualifier, DefinitionParameters parameters}) {
+    return _scopeRegistry.rootScope.inject(parameters, qualifier);
+  }
+
+  ///
   /// Lazy inject a Koin instance if available.
   /// Return Lazy instance of type T or null.
   ////

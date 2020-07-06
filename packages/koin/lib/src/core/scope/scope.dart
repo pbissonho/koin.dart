@@ -103,6 +103,22 @@ class Scope {
   }
 
   ///
+  ///Lazy inject a Koin instance
+  /// @param qualifier
+  /// @param scope
+  /// @param parameters
+  ///
+  /// @return Lazy instance of type T
+  ///
+  Lazy<T> injectWithParams<T>({
+    DefinitionParameters parameters,
+    Qualifier qualifier,
+  }) {
+    parameters ??= emptyParametersHolder();
+    return lazy<T>(() => get<T>(qualifier, parameters));
+  }
+
+  ///
   /// Lazy inject a Koin instance if available
   ///@param qualifier
   /// @param scope
@@ -129,7 +145,7 @@ class Scope {
     return getWithType(type, qualifier, parameters);
   }
 
-  T getParams<T>({Qualifier qualifier, DefinitionParameters parameters}) {
+  T getWithParams<T>({Qualifier qualifier, DefinitionParameters parameters}) {
     var type = T;
     return getWithType(type, qualifier, parameters);
   }

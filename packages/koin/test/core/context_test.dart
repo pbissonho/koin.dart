@@ -7,9 +7,8 @@ import 'package:test/test.dart';
 
 void main() {
   test('shoud not get the context', () {
-    expect(() {
-      var koin = KoinContextHandler.get();
-    }, throwsA((error) => error is IllegalStateException));
+    expect(KoinContextHandler.get,
+        throwsA((error) => error is IllegalStateException));
   });
 
   test('shoud be null', () {

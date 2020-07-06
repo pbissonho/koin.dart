@@ -29,6 +29,16 @@ void main() {
     expect(a.id, 42);
   });
 
+  test('can create a single with parameters - inject', () {
+    var app = koinApplication((app) {
+      app.module(Module()..single1<MySingle, int>((s, id) => MySingle(id)));
+    });
+
+    var a = app.koin.injectWithParams<MySingle>(parameters: parametersOf([42]));
+
+    expect(a.value.id, 42);
+  });
+
   test('can create a scoped with parameters', () {
     var scopeKey = named('ScopeKey');
 
@@ -41,9 +51,12 @@ void main() {
 
     var scope = app.koin.createScope('scopeId', scopeKey);
 
-    var a = scope.getParams<MySingle>(parameters: parametersOf([42]));
+    var a = scope.getWithParams<MySingle>(parameters: parametersOf([42]));
+    var lazyA =
+        scope.injectWithParams<MySingle>(parameters: parametersOf([42]));
 
     expect(a.id, 42);
+    expect(lazyA.value.id, 42);
   });
 
   test('can create a scoped with 2 parameters', () {
@@ -59,8 +72,8 @@ void main() {
 
     var scope = app.koin.createScope('scopeId', scopeKey);
 
-    var a =
-        scope.getParams<MySingle2>(parameters: parametersOf([42, 'myString']));
+    var a = scope.getWithParams<MySingle2>(
+        parameters: parametersOf([42, 'myString']));
 
     expect(a.id, 42);
     expect(a.name, 'myString');
@@ -79,7 +92,7 @@ void main() {
 
     var scope = app.koin.createScope('scopeId', scopeKey);
 
-    var a = scope.getParams<MySingle3>(
+    var a = scope.getWithParams<MySingle3>(
         parameters: parametersOf([42, 'myString', 'myString2']));
 
     expect(a.id, 42);
@@ -139,9 +152,12 @@ void main() {
 
     var a = app.koin.getWithParams<MySingle>(parameters: parametersOf([42]));
     var b = app.koin.getWithParams<MySingle>(parameters: parametersOf([43]));
+    var lazyB =
+        app.koin.injectWithParams<MySingle>(parameters: parametersOf([43]));
 
     expect(a.id, 42);
     expect(b.id, 43);
+    expect(lazyB().id, 43);
   });
 
   test('an create a factories with 2 parameters', () {
@@ -156,12 +172,17 @@ void main() {
 
     var b = app.koin
         .getWithParams<MySingle2>(parameters: parametersOf([43, 'myString2']));
+    var lazyB = app.koin.injectWithParams<MySingle2>(
+        parameters: parametersOf([43, 'myString2']));
 
     expect(a.id, 42);
     expect(a.name, 'myString');
 
     expect(b.id, 43);
     expect(b.name, 'myString2');
+
+    expect(lazyB().id, 43);
+    expect(lazyB().name, 'myString2');
   });
 
   test('an create a factories with 2 parameters', () {
@@ -197,8 +218,8 @@ void main() {
 
     var scope = app.koin.createScope('myScope', scopeKey);
 
-    var a = scope.getParams<MySingle>(parameters: parametersOf([42]));
-    var b = scope.getParams<MySingle>(parameters: parametersOf([43]));
+    var a = scope.getWithParams<MySingle>(parameters: parametersOf([42]));
+    var b = scope.getWithParams<MySingle>(parameters: parametersOf([43]));
 
     expect(a.id, 42);
     expect(b.id, 43);
@@ -217,11 +238,11 @@ void main() {
 
     var scope = app.koin.createScope('myScope', scopeKey);
 
-    var a =
-        scope.getParams<MySingle2>(parameters: parametersOf([42, 'myString']));
+    var a = scope.getWithParams<MySingle2>(
+        parameters: parametersOf([42, 'myString']));
 
-    var b =
-        scope.getParams<MySingle2>(parameters: parametersOf([43, 'myString2']));
+    var b = scope.getWithParams<MySingle2>(
+        parameters: parametersOf([43, 'myString2']));
 
     expect(a.id, 42);
     expect(a.name, 'myString');
@@ -244,10 +265,10 @@ void main() {
 
     var scope = app.koin.createScope('myScope', scopeKey);
 
-    var a = scope.getParams<MySingle3>(
+    var a = scope.getWithParams<MySingle3>(
         parameters: parametersOf([42, 'myString', 'lastName']));
 
-    var b = scope.getParams<MySingle3>(
+    var b = scope.getWithParams<MySingle3>(
         parameters: parametersOf([45, 'myString2', 'lastName2']));
 
     expect(a.id, 42);
@@ -264,8 +285,8 @@ void main() {
         ..factory1<MyIntFactory, int>((s, id) => MyIntFactory(id))
         ..factory1<MyStringFactory, String>((s, id) => MyStringFactory(id))
         ..factory2<AllFactory, int, String>((s, idInt, idString) => AllFactory(
-            s.getParams(parameters: parametersOf([idInt])),
-            s.getParams(parameters: parametersOf([idString])))));
+            s.getWithParams(parameters: parametersOf([idInt])),
+            s.getWithParams(parameters: parametersOf([idString])))));
     }).koin;
 
     var f =

@@ -145,7 +145,7 @@ void main() {
     expect(a3, isNull);
   });
 
-   test('can resolve a single with type or null', () {
+  test('can resolve a single with type or null', () {
     var koin = koinApplication((app) {
       app.module(module()..single((s) => ComponentA()));
     }).koin;

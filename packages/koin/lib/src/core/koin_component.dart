@@ -37,7 +37,7 @@ mixin KoinComponentMixin {
     return getKoin().get<T>(qualifier, parameters);
   }
 
-  T getP<T>({Qualifier qualifier, DefinitionParameters parameters}) {
+  T getWithParams<T>({Qualifier qualifier, DefinitionParameters parameters}) {
     return getKoin().get<T>(qualifier, parameters);
   }
 
@@ -51,10 +51,27 @@ mixin KoinComponentMixin {
   }
 
   ///
+  /// Lazy inject instance from Koin
+  ///
+  Lazy<T> injectWithParams<T>(
+      {Qualifier qualifier, DefinitionParameters parameters}) {
+    return getKoin().inject<T>(qualifier, parameters);
+  }
+
+  ///
   /// Get instance instance from Koin by Primary Type P, as secondary type S
   /// @param parameters
   ///
   S bind<S, P>([Qualifier qualifier, DefinitionParameters parameters]) {
+    return getKoin().bind<S, P>(parameters);
+  }
+
+  ///
+  /// Get instance instance from Koin by Primary Type P, as secondary type S
+  /// @param parameters
+  ///
+  S bindWithParams<S, P>(
+      {Qualifier qualifier, DefinitionParameters parameters}) {
     return getKoin().bind<S, P>(parameters);
   }
 }

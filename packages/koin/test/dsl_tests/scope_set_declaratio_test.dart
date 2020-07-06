@@ -63,10 +63,12 @@ void main() {
                     }
             )
         }.koin
-        val defA = koin._scopeRegistry.scopeDefinitions.values.first { def -> def.qualifier == _q("A") }
+        val defA = koin._scopeRegistry.scopeDefinitions.values.first { d
+        ef -> def.qualifier == _q("A") }
         assertTrue(defA.qualifier == StringQualifier("A"))
 
-        val defB = koin._scopeRegistry.scopeDefinitions.values.first { def -> def.qualifier == _q("B") }
+        val defB = koin._scopeRegistry.scopeDefinitions.values.first 
+        { def -> def.qualifier == _q("B") }
         assertTrue(defB.qualifier == StringQualifier("B"))
 
         val scopeA = koin.createScope("A", named("A")).get<Simple.ComponentA>()
@@ -84,7 +86,8 @@ void main() {
                     }
             )
         }.koin
-        val def = koin._scopeRegistry.scopeDefinitions.values.first { def -> def.qualifier == scopeKey }
+        val def = koin._scopeRegistry.scopeDefinitions.values.first 
+        { def -> def.qualifier == scopeKey }
         assertTrue(def.qualifier == scopeKey)
     }
 
