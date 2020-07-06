@@ -4,9 +4,9 @@ import '../core/qualifier.dart';
 import '../core/scope/scope.dart';
 
 extension ScopeExt<T> on T {
-  String get scopeId => '${toString()}@ $hashCode';
+  String get scopeId => '$runtimeType@$hashCode';
 
-  Qualifier get scopeName => TypeQualifier(T);
+  Qualifier get scopeName => TypeQualifier(runtimeType);
 
   Scope get scope => getOrCreateScope();
 
