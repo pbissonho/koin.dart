@@ -58,9 +58,6 @@ Instance creation error : could not create instance for $beanDefinition: ${erro.
     }
   }
 
-  /// Is instance created
-  bool isCreated();
-
   ///
   /// Release the held instance (if hold)
   ///

@@ -31,7 +31,7 @@ void main() {
 
   test('close definitions not initiated', () {
     startKoin((app) {
-      app.printLogger().module(Module()
+      app.printLogger(level: Level.debug).module(Module()
         ..scope<ScopeType>((scope) {
           scope.scoped((s) => MySingle(10))
             ..onClose((a) {

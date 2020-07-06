@@ -30,7 +30,6 @@ class SingleInstanceFactory<T> extends InstanceFactory<T> {
 
   T _value;
 
-  @override
   bool isCreated() => _value != null;
 
   @override
@@ -59,12 +58,6 @@ class SingleInstanceFactory<T> extends InstanceFactory<T> {
     if (!isCreated()) {
       _value = create(context);
     }
-
-    if (_value == null) {
-      throw IllegalStateException(
-          "Single instance created couldn't return value");
-    }
-
     return _value;
   }
 }

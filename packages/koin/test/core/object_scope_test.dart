@@ -132,7 +132,7 @@ void main() {
 
     var a = koin.get<A>();
 
-    var b1 = a.scope.get<B>();
+    var b1 = a.scope.getWithParams<B>();
 
     a.scope.close();
 

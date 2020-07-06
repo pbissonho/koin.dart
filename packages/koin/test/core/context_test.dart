@@ -6,11 +6,20 @@ import 'package:koin/src/core/error/exceptions.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('shoud not get the context', () {
-    expect(KoinContextHandler.get,
-        throwsA((error) => error is IllegalStateException));
-  });
+  group("with context", () {
+    test('shoud not get the context', () {
+      expect(KoinContextHandler.get,
+          throwsA((error) => error is IllegalStateException));
+    });
 
+    test('shoud not get the koin from context', () {
+      KoinContextHandler.register(GlobalContext());
+      expect(KoinContextHandler.get,
+          throwsA((error) => error is IllegalStateException));
+
+      KoinContextHandler.stop();
+    });
+  });
   test('shoud be null', () {
     var koin = KoinContextHandler.getOrNull();
     expect(koin, isNull);

@@ -1,4 +1,5 @@
 import 'package:koin/koin.dart';
+import 'package:koin/src/core/error/exceptions.dart';
 import 'package:test/test.dart';
 
 import '../components.dart';
@@ -13,6 +14,14 @@ void main() {
     var a2 = koin.get<ComponentA>();
 
     expect(a, a2);
+  });
+
+  test('not can resolve a single with null definition instance', () {
+    var koin = koinApplication((app) {
+      app.module(module()..single<ComponentA>((s) => null));
+    }).koin;
+
+    expect(() => koin.get<ComponentA>(), throwsA(isA<IllegalStateException>()));
   });
 
   test('can resolve all ComponentInterface1', () {

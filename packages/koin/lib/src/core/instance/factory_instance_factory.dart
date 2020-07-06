@@ -28,10 +28,6 @@ import 'instance_factory.dart';
 class FactoryInstanceFactory<T> extends InstanceFactory<T> {
   FactoryInstanceFactory(Koin koin, BeanDefinition<T> beanDefinition)
       : super(koin: koin, beanDefinition: beanDefinition);
-
-  @override
-  bool isCreated() => false;
-
   @override
   void drop() {
     beanDefinition.callbacks.runCallback(null);
