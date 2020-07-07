@@ -1,4 +1,7 @@
-## Starting Koin for Android
+---
+title: Koin for Flutter
+---
+## Starting Koin for Flutter
 
 In any Flutter Widget:
 
@@ -29,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     // Lazy Inject MyPresenter
-    lazyBloc = scope.inject();
+    lazyBloc = currentScope.inject();
 
     // or directly retrieve instance
     bloc = get();

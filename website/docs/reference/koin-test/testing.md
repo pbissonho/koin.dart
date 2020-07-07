@@ -1,5 +1,6 @@
-
-# PORT WIP
+---
+title: Testing
+---
 
 ## Making your test a KoinComponent with KoinTest
 
@@ -41,7 +42,9 @@ void main() {
 }
 ```
 
-?> Don't hesitate to overload Koin modules configuration to help you partly build your app.
+:::tip TIP
+Don't hesitate to overload Koin modules configuration to help you partly build your app.
+:::
 
 ## JUnit Rules
 

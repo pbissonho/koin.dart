@@ -1,3 +1,7 @@
+---
+title: Definitions
+---
+
 
 By using Koin, you describe definitions in modules. In this section we will see how to declare, organize & link your modules.
 
@@ -41,17 +45,18 @@ class Controller {}
 // declare factory instance for Controller class
 var myModule = module()..factory((s) => Controller());
 ```
-
-
-?> Koin container doesn't retain factory instances as it will give a new instance each time the definition is asked.
+:::info
+Koin container doesn't retain factory instances as it will give a new instance each time the definition is asked
+:::
 
 ## Resolving & injecting dependencies
 
 Now that we can declare components definitions, we want to link instances with dependency injection. To *resolve an instance* in a Koin module, just use the `get()`
 function to the requested needed component instance. This `get()` function is usually used into constructor, to inject constructor values.
 
-!> To make dependency injection with Koin container, we have to write it in *constructor injection* style: resolve dependencies in class constructors. This way, your instance will be created with injected instances from Koin.
-
+:::info
+To make dependency injection with Koin container, we have to write it in *constructor injection* style: resolve dependencies in class constructors. This way, your instance will be created with injected instances from Koin.
+:::
 
 Let's take an example with several classes:
 
@@ -110,9 +115,9 @@ var myModule = module()
   // Will match type Service only
   ..single<Service>((s) => ServiceImp());
 ```
-
-?> This 2nd way of style declaration is preferred and will be used for the rest of the documentation.
-
+:::info
+This 2nd way of style declaration is preferred and will be used for the rest of the documentation.
+:::
 ## Additional type binding
 
 In some cases, we want to match several types from just one definition.
@@ -233,9 +238,9 @@ startKoin((app){
     app.modules([moduleA, moduleB]);
 });
 ```
-
-?> if you need to load some definition at a special time (in a background thread instead of UI for example), just get/inject the desired components.
-
+:::info
+If you need to load some definition at a special time (in a background thread instead of UI for example), just get/inject the desired components.
+:::
 
 
 ### Dealing with generics

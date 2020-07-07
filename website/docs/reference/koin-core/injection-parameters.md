@@ -1,3 +1,6 @@
+---
+title: Injection parameters
+---
 
 In any definition, you can use injection parameters: parameters that will be injected and used by your definition:
 

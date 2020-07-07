@@ -1,3 +1,6 @@
+---
+title: Setters
+---
 
 Instead of using `by inject()` lazy delegate expression to retrieve desired dependency, you can inject the property directly
 

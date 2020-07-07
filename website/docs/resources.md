@@ -1,19 +1,20 @@
 ---
-layout: simple
-title: What's new with Koin?
-redirect_from: "/updates/"
+id: resources
+title: Resources
 ---
 
-## Last updates
+## Dart
 
-## Talks & Podcasts - Kotlin
+## Kotlin
+
+### Talks & Podcasts
 
 * [Dependency injection from zero to hero with Koin -AndroidMakers (France)](https://www.youtube.com/watch?v=chCsNkjotfc)
 * [Simplify your Android development with Koin - Mobilization (Poland)](https://www.youtube.com/watch?v=KzQbJFVjr9w&t=1s)
 * [Talking Kotlin - Dependency injection with Koin](http://talkingkotlin.com/dependency-injection-with-koin/)
 * [L'injection de poireaux avec Koin - AndroidLeaks ep42 (French)](https://androidleakspodcast.com/2018/08/05/episode-42-linjection-de-poireaux-avec-koin/)
 
-## They talk about Koin - Kotlin
+### They talk about Koin
 
 * [Migration from Dagger2 to Koin](https://proandroiddev.com/migrating-from-dagger2-to-koin-3b2b3f5285e9)
 * [From Dagger to Koin, a step by step migration guide](https://medium.com/@giuliani.arnaud/the-thermosiphon-app-from-dagger-to-koin-step-by-step-a09af7f5b5b1)

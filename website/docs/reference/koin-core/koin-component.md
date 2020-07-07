@@ -1,3 +1,7 @@
+---
+title: Koin Components
+---
+
 ## Koin Components
 
 Koin is a DSL to help describe your modules & definitions, a container to make definition resolution. What we need now is

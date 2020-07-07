@@ -1,3 +1,6 @@
+---
+title: Scopes
+---
 
 Koin brings a simple API to let you define instances that are tied to a limit lifetime.
 

@@ -5,35 +5,34 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import styles from './styles.module.css';
-
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 const features = [
   {
     title: <>Easy to Use</>,
     imageUrl: 'img/undraw_docusaurus_mountain.svg',
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Koin is a lightweight container and a pragmatic API. Using functional resolution only: no proxy, no code generation, no reflection, not depend on the Flutter context!
       </>
     ),
   },
   {
-    title: <>Focus on What Matters</>,
+    title: <>Robust</>,
     imageUrl: 'img/undraw_docusaurus_tree.svg',
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+       The code has a high level of test coverage and the Kotlin version has been used in thousands of applications.
       </>
     ),
   },
   {
-    title: <>Powered by React</>,
+    title: <>Powerful features</>,
     imageUrl: 'img/undraw_docusaurus_react.svg',
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Koin have modules, scopes, dingleton definition,factory definition,
+        Scoped definition, multiple bindings,named definitions, lazy inject end injection parameters
       </>
     ),
   },

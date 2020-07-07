@@ -1,0 +1,46 @@
+---
+title: Setup
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## Setup Koin for your project
+
+### Current Version
+
+Here are the current versions of Koin:
+
+<!-- tabs:start -->
+
+<Tabs
+  defaultValue="dart"
+  values={[
+    { label: 'Dart', value: 'dart', },
+    { label: 'Flutter', value: 'flutter', },
+  ]}
+>
+  <TabItem value="dart">
+
+  ```yaml
+  dependencies:
+    koin: ^[version]
+  # Koin for Unit tests
+  dev_depencies:
+    koin_test: ^[version]
+  ```
+  </TabItem>
+  <TabItem value="flutter">
+
+  ```yaml
+  dependencies:
+    koin: ^[version]
+    koin_flutter: ^[version]
+
+  # Koin for Unit tests
+  dev_dependencies:
+    koin_test: ^[version]
+  ```
+  </TabItem>
+</Tabs>
+

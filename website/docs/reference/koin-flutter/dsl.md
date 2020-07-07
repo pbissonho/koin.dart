@@ -1,3 +1,6 @@
+---
+title: DSL
+---
 
 Below, the added keywords for Koin DSL.
 

@@ -1,3 +1,6 @@
+---
+title: Koin Components
+---
 
 Sometimes you can't declare only components via Koin. Dependening on your runtime technology, you might need to retrieve instances from Koin in a class that was not created with Koin (e.g. Android)
 
