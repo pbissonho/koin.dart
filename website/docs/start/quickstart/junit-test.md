@@ -5,7 +5,7 @@
 
 ## Get the code
 
-> Checkout the project directly on Github or download the zip file <br>
+> Checkout the project directly on Github or download the zip file
 > 🚀 Go to [Github](https://github.com/InsertKoinIO/getting-started-koin-core) or [download Zip](https://github.com/InsertKoinIO/getting-started-koin-core/archive/master.zip)
 
 ## Gradle Setup

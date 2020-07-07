@@ -14,7 +14,8 @@ toc: true
 <p class="lead">Choose your way to start:<p>
 <br/>
 <div class="masthead-followup row m-0 border border-white text-center">
-<div class="col-12 col-md-4 p-4 p-md-5">
+  
+  <div class="col-12 col-md-4 p-4 p-md-5">
     <div class="card">
         <a href="{{ site.baseurl }}/docs/{{ site.docs_version }}/getting-started/android/">
           <img src="{{ site.baseurl }}/assets/images/android.png" width="156" style="margin:50px 0px">
