@@ -1,33 +1,43 @@
 
-The `koin-android-scope` project is dedicated to bring Android scope features to the existing Scope API.
+The `koin_flutter` package is dedicated to bring Flutter scope features to the existing Scope API.
 
 
-## Taming the Android lifecycle
+## Taming the Widgets lifecycle
 
-Android components are mainly managed by their lifecycle: we can't directly instantiate an Activity nor a Fragment. The system
-make all creation and management for us, and make callbacks on methods: onCreate, onStart...
+Flutter Widgets are mainly managed by ther widget tree, that use the lifecycle functions of the Widgets, such as
+`initState()` and `dispose()`.
 
-That's why we can't describe our Activity/Fragment/Service in a Koin module. We need then to inject dependencies into properties and also
-respect the lifecycle: Components related to the UI parts must be released on soon as we don't need them anymore.
+That's why we can't describe our StatefulWidget/StatelessWidget/ in a Koin module. We need then to inject dependencies into properties and also
+respect the lifecycle: Components related to parts of the user interface should no longer be references after they are removed from the widget tree.
 
 Then we have:
 
 * long live components (Services, Data Repository ...) - used by several screens, never dropped
 * medium live components (user sessions ...) - used by several screens, must be dropped after an amount of time
-* short live components (views) - used by only one screen & must be dropped at the end of the screen
+* short live components (Widgets) - used by only one screen & must be dropped at the end of the screen
 
 Long live components can be easily described as `single` definitions. For medium and short live components we can have several approaches.
 
-In the case of MVP architecture style, the `Presenter` is a short live component to help/support the UI. The presenter must be created each time the screen is showing,
-and dropped once the screen is gone.
+In the case of BLoC pattern, the `Bloc` can be used as a short or medium live component to help/support the UI. The `Bloc` instance must be created each time the widget is showing and dropped once widget is removed from the widget tree.
 
-A new Presenter is created each time
+Some blocs can be used as a long live components,for example, to control authentication.
+but in most cases they are used as short live.
 
-```kotlin
-class DetailActivity : AppCompatActivity() {
 
-    // injected Presenter
-    override val presenter : Presenter by inject()
+A new Bloc is created each time
+
+```dart
+class LoginBloc extends Bloc {
+
+    // Streams
+    ...
+    ...
+    ...
+
+    // Close the Streams
+    void close(){
+
+    }
 ```
 
 We can describe it in a module:
@@ -35,114 +45,56 @@ We can describe it in a module:
 
 * as `factory` - to produce a new instance each time the `by inject()` or `get()` is called
 
-```kotlin
-val androidModule = module {
+Using the as factory you will have to manually close the bloc.
 
-    // Factory instance of Presenter
-    factory { Presenter() }
-}
-```
+```dart
+ // Factory instance of LoginBloc
+var flutterModule = Module()..factory((s) => LoginBloc());
+
 
 * as `scope` - to produce an instance tied to a scope
 
-```kotlin
-val androidModule = module {
+```dart
+module()..scopeWithType(named('scope_id'),(scope){
+  scope.scoped((s) => LoginBloc());
+});
+```
 
-    scope(named("scope_id")) {
-        scoped { Presenter() }
-    }
+## LifecycleScopeMixin
+
+Koin gives the `LifecycleScope` mixin already bound to your Flutter `StatefulWidget` lifecycle. On `dispose()` is calld, it will close automatically. LifecycleScopeMixin overrides the `dispose` method to call the `close` method of the current scope.
+
+To benefit from the `lifecycleScope`, you have to use the `LifecycleScopeMixin` in `StatefulWidget` related to a scope.
+
+
+```dart
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+/// When LoginPage is removed from the tree the scope will be automatically closed.
+class _LoginPageState extends State<LoginPage> with LifecycleScopeMixin {
+  LoginBloc loginBlock;
+
+  @override
+  void initState() {
+    // or directly retrieve instance
+    loginBlock = currentScope.get();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }
 ```
 
-!> Most of Android memory leaks comes from referencing a UI/Android component from a non Android component. The system keeps a reference
-on it and can't totally drop it via garbage collection.
-
-## LifecycleScope - a scope tied to your lifecycle
-
-Koin gives the `lifecycleScope` property already bound to your Android component lifecycle. On lifecycle's end, it will close automatically.
-
-To benefit from the `lifecycleScope`, you have to declare a scope for your activity (tied our Activity type):
-
-```kotlin
-val androidModule = module {
-
-    scope<MyActivity> {
-        scoped { Presenter() }
-    }
-}
+```dart
+var loginModule = Module()
+  // Declare a scope to LoginPage
+  ..scope<LoginPage>((s) {
+    s.scoped((s) => LoginBloc());
+  });
 ```
-
-```kotlin
-class MyActivity : AppCompatActivity() {
-
-    // inject Presenter instance from current scope
-    val presenter : Presenter by lifecycleScope.inject()
-
-```
-
-
-!> Be careful to not use `scope` but `lifecycleScope`. This is a scope tied to the Android lifecycle. Else your scoped instances won't follow your lifecycle.
-
-> If you have any conflict with any API that has also a `lifecycleScope` extension, please name your extension - https://github.com/InsertKoinIO/koin/issues/679
-
-## Sharing instances between components with scopes
-
-In a more extended usage, you can use a `Scope` instance across components. For example, if we need to share a `UserSession` instance.
-
-First declare a scope definition:
-
-```kotlin
-module {
-    // Shared user session data
-    scope(named("session")) {
-        scoped { UserSession() }
-    }
-}
-```
-
-When needed to begin use a `UserSession` instance, create a scope for it:
-
-```kotlin
-val ourSession = getKoin().createScope("ourSession",named("session"))
-```
-
-Then use it anywhere you need it:
-
-```kotlin
-class MyActivity1 : AppCompatActivity() {
-
-    val userSession : UserSession by ourSession.inject()
-}
-class MyActivity2 : AppCompatActivity() {
-
-    val userSession : UserSession by ourSession.inject()
-}
-```
-
-or you can also inject it with Koin DSL. If a presenter need it:
-
-```kotlin
-class Presenter(val userSession : UserSession)
-```
-
-Just inject it into constructor, with the right scope id:
-
-```kotlin
-module {
-    // Shared user session data
-    scope(named("session")) {
-        scoped { UserSession() }
-    }
-
-    // Inject UserSession instance from "session" Scope
-    factory { (scopeId : ScopeID) -> Presenter(getScope(scopeId).get())}
-}
-```
-
-When you have to finish with your scope, just close it:
-
-```kotlin
-val ourSession = getKoin().getScope("ourSession")
-ourSession.close()
-```
-

@@ -57,9 +57,12 @@ If you need to inject dependencies from another class and can't declare it in a 
 
 > for Fluter 
 
-Scope API is more close to the Flutter platform. Both `StatefulWidget` & `StatelessWidget` have extensions for Scope API: `currentScope` get the current associated Koin scope. This scope is created & bound to the component's lifecycle.
+Scope API is more close to the Flutter platform. Both `StatefulWidget` & `StatelessWidget` have extensions for Scope API: `currentScope` get the current associated Koin scope. 
 
 You can use directly the associated Koin scope to retrieve components:
+
+Easy to declare your Flutter Widgets's scope:
+
 
 ```dart
 class LoginPage extends StatefulWidget {
@@ -84,18 +87,14 @@ class _LoginPageState extends State<LoginPage> {
 }
 ```
 
-
-
-Easy to declare your Flutter Widgets's scope:
-
 ```dart
 var loginModule = Module()
   // Declare a scope to LoginPage
   ..scope<LoginPage>((s) {
     s.scoped((s) => LoginBloc());
   });
-
 ```
+
 
 Any Widget can use directly the scope API: `createScope()`, `getScope()` and `deleteScope()`.
 

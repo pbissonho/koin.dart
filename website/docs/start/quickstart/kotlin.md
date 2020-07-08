@@ -1,7 +1,7 @@
 
-# Getting Started with Kotlin app {docsify-ignore-all}
+# Getting Started with Dart app
 
-> This tutorial lets you write a Kotlin application and use Koin inject and retrieve your components.
+> This tutorial lets you write a Dart application and use Koin inject and retrieve your components.
 
 ## Get the code
 
