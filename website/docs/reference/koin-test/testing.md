@@ -9,7 +9,7 @@ By import  `koin_test.dart`, you will be able to use all available test methods:
 * `inject()` & `get()` - function to retrieve yoru instances from Koin
 * `testModules()`,`testModule()` & `testKoinDeclaration()`  - help you check your configuration. These are functions marked as isTest, that is, they are equivalent to test();
 * `declareModule()` - to declare a  module to be loaded in the global context of koin
-* `declare()` - to a instance to be loaded in the global context of ko
+* `declare()` - to a instance to be loaded in the global context of koin
 
 * `koinTearDown()` - Register a tearDown function that close Koin afters tests, will be called after each test is run.
 * `koinSetUp()` - Register a setUp function that starts koin before tests, will be called after each test is run.
@@ -46,104 +46,76 @@ void main() {
 Don't hesitate to overload Koin modules configuration to help you partly build your app.
 :::
 
-## JUnit Rules
+## Test SetUp
 
 ### Create a Koin context for your test
 
-You can easily create and hold a Koin context for each of your test with the following rule:
+You can easily create and hold a Koin context for each of your test with the following setup:
 
-```kotlin
-@get:Rule
-val koinTestRule = KoinTestRule.create {
-    // Your KoinApplication instance here
-    modules(myModule)
-}
+```dart
+setUp((){
+    startKoin((app) {
+      app.module(myModule);
+  });
 ```
 
-### Specify your Mock Provider
-
-To let you use the `declare` API, you need to specify a rule to let Koin know how you build your Mock instance. This let you choose the right
-mocking framework for your need. Below is a Mockito example: 
-
-```kotlin
-@get:Rule
-val mockProvider = MockProviderRule.create { clazz ->
-    // Your way to build a Mock here
-    Mockito.mock(clazz.java)
-}
-```
-
-!> koin-test project is not tied anymroe to mockito
+!> koin-test project is not tied to mockito
 
 ## Mocking out of the box
 
-Instead of making a new module each time you need a mock, you can declare a mock on the fly with `declareMock`:
+Instead of making a new module each time you need a mock, you can declare a mock on the fly with `declare`:
 
-```kotlin
-class ComponentA
-class ComponentB(val a: ComponentA)
+```dart
+class ComponentA {}
+class ComponentB {
+    final ComponentA a;
+    ComponentB(this.a);
+}
 
-class MyTest : KoinTest {
+class ComponentAMock implements ComponentA {}
 
-    @get:Rule
-    val koinTestRule = KoinTestRule.create {
-        modules(
-            module {
-                single { ComponentA() }
-                single { ComponentB(get()) }
-            })
-    }
+void main() {
+  setUp(() {
+    startKoin((app) {
+      app.module(Module()
+        ..single((s) => ComponentA())
+        ..single((s) => ComponentB(s.get())));
+    });
+  });
 
-    @get:Rule
-    val mockProvider = MockProviderRule.create { clazz ->
-        Mockito.mock(clazz.java)
-    }
-    
-    @Test
-    fun `should inject my components`() {
-    
-    }
-        // Replace current definition by a Mock
-        val mock = declareMock<ComponentA>()
+  tearDown((){
+    stopKoin();
+  });
 
-        // retrieve mock, same as variable above 
-        assertNotNull(get<ComponentA>())
 
-        // is built with mocked ComponentA
-        assertNotNull(get<ComponentB>())
-    }
-```
+  test('should inject my components', () {
 
-?> declareMock can specify if you want a single or factory, and if you wan to have it in a module path.
+    var componentAMock = ComponentAMock();  
+    // declare a mock instance to ComponentA.
+    declare<ComponentA>(componentAMock);
 
-## Declaring a component on the fly
+    // retrieve mock, same as variable above
+    expect(get<ComponentA>(), isNotNull);
 
-When a mock is not enough and don't want to create a module just for this, you can use `declare`:
+    // retrieve mock, same as variable above
+    expect(get<ComponentA>(), isA<ComponentAMock>());
 
-```kotlin
-    @Test
-    fun `successful declare an expression mock`() {
-        startKoin { }
+    // is built with mocked ComponentA
+    expect(get<ComponentB>(), isNotNull);
 
-        declare {
-            factory { ComponentA("Test Params") }
-        }
-
-        Assert.assertNotEquals(get<ComponentA>(), get<ComponentA>())
-    }
-```
+    // shoud get the same instance declared above
+    expect(get<ComponentA>(), componentAMock);
+  });
+}
 
 ## Checking your Koin modules
 
-Koin offers a way to test if you Koin modules are good: `checkModules` - walk through your definition tree and check if each definition is bound
+Koin offers a way to test if you Koin modules are good: `testModules` - walk through your definition tree and check if each definition is bound
 
-```kotlin
-    @Test
-    fun `check MVP hierarchy`() {
-        checkModules {
-            modules(myModule1, myModule2 ...)
-        } 
-    }
+```dart
+void main(){
+    testModules('moduleChecktest - shoud be a valid module',[myModule1,myModule2]);  
+}
 ```
 
 ## Starting & stopping Koin for your tests

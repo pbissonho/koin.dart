@@ -10,128 +10,87 @@ The `koin-test` project brings you small but powerful tools to test your Koin ap
 
 Just tag your test class with `KoinTest`, and you will be able to unlock `KoinComponent` & testing features:
 
-* `by inject()` - lazy inject an instance
+* `inject()` - lazy inject an instance
 * `get()` - retrieve an instance
 
 Given the definitions below:
 
-```kotlin
-val appModule = module {
-    single { ComponentA() }
-    //...
-}
+```dart
+val appModule = module()..single((s) => ComponentA());
 ```
 
 We can write the test below:
 
-```kotlin
-class MyTest : KoinTest {
+```dart
+void main() {
+   test('MyTest', () {
+    startKoin((app) {
+      app.module(appModule);
+    });
 
     // Lazy inject property
-    val componentA : ComponentA by inject()
+    var componentA = inject<ComponentA>();
 
-    // use it in your tests :)
-    @Test
-    fun `make a test with Koin`() {
-        startKoin { modules(appModule) }
-
-        // use componentA here!
-    }
+    expect(componentA, isNotNull);
+  });
 }
 ```
 
-you can use the `KoinTestRule` JUnit rule to statr/stop  your Koin context:
 
-```kotlin
-class MyTest : KoinTest {
+you can use the `setUp` `tearDown` to statr/stop  your Koin context:
 
-    @get:Rule
-    val koinTestRule = KoinTestRule.create {
-        modules(appModule)
-    }
-
-    // Lazy inject property
-    val componentA : ComponentA by inject()
-
-    // use it in your tests :)
-    @Test
-    fun `make a test with Koin`() {
-        // use componentA here!
-    }
-}
+```dart
+setUp((){
+    startKoin((app) {
+      app.module(myModule);
+  });
 ```
 
 ## Checking your modules
 
-We can use the Koin gradle plugin to let us run our module checks:
-
-```gradle
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath "org.koin:koin-gradle-plugin:$koin_version"
-    }
-}
-
-apply plugin: 'koin'
-```
+You can easily test module definitions.
 
 Let's write our check test as follow:
-- using a JUnit `CheckModuleTest` category
-- test modules with `checkModules { }` API
+- test modules with `testModules()` API
 
-```kotlin
-@Category(CheckModuleTest::class)
-class ModuleCheckTest : AutoCloseKoinTest() {
+Let's check our modules.
 
-    @Test
-    fun checkModules() = checkModules {
-        modules(appModule)
-    }
+```dart
+void main(){
+    testModules('moduleChecktest - shoud be a valid module',[myModule1,myModule2]);  
 }
-```
-
-Let's check our modules via Gradle command:
-
-```
-./gradlew checkModules
-```
-
-or 
-
-```
-./gradlew checkModules --continuous
 ```
 
 ## Mocking on the fly
 
-Once you have tagged your class with `KoinTest` interface, you can use the `declareMock` function to declare mocks & behavior on the fly:
+Once you have import `koin_test`, you can use the `declare` function to declare mocks & behavior on the fly:
 
-```kotlin
-class MyTest : KoinTest {
-    
-    @get:Rule
-    val koinTestRule = KoinTestRule.create {
-        modules(appModule)
-    }
-    
-    // required to make your Mock via Koin
-    @get:Rule
-    val mockProvider = MockProviderRule.create { clazz ->
-        Mockito.mock(clazz.java)
-    }
+```dart
 
-    val componentA : ComponentA by inject()
+class ComponentA {
+  String sayHello() => 'Hello';
+}
 
-    @Test
-    fun `declareMock with KoinTest`() {
-        declareMock<ComponentA> {
-            // do your given behavior here
-            given(this.sayHello()).willReturn("Hello mock")
-        }
-    }
+class ComponentMock extends Mock implements ComponentA {}
+
+void main() {
+  setUp(() {
+    startKoin((app) {
+      app.module(module()
+        ..single((s) => ComponentA()));
+    });
+  });
+  koinTearDown();
+
+  test('declareMock with KoinTest', () {
+    var componentAMock = ComponentMock();  
+    when(componentAMock.sayHello()).thenReturn('Hello Mock');
+    // declare a mock instance to ComponentA.
+    declare<ComponentA>(componentAMock);
+
+    // retrieve mock, same as variable above
+    expect(get<ComponentA>().sayHello(), 'Hello Mock');
+  });
 }
 ```
 

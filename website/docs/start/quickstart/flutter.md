@@ -2,15 +2,11 @@
 
 > This tutorial lets you write an Flutter/Dart application and use Koin inject and retrieve your components.
 
-## Get the code
-
-Checkout the project directly on Github or download the zip file
-
-> 🚀 Go to [Github](https://github.com/InsertKoinIO/getting-started-koin-Flutter) or [download Zip](https://github.com/InsertKoinIO/getting-started-koin-Flutter/archive/master.zip)
-
-## Gradle Setup
+## Setup
 
 Add the Koin Flutter dependency like below:
+
+https://pub.dev/packages/koin
 
 dependencies:
   koin: ^[laste_version]
@@ -48,11 +44,11 @@ var myModule = Module()
     ..factory((s) => MyBloc(s.get()));
 ```
 
-?> we declare our MySimplePresenter class as `factory` to have a create a new instance each time our Widget will need one.
+?> we declare our MyBloc class as `factory` to have a create a new instance each time our Widget will need one.
 
 ## Start Koin
 
-Now that we have a module, let's start it with Koin. Open your application class, or make one (don't forget to declare it in your manifest.xml). Just call the `startKoin()` function:
+Now that we have a module, let's start it with Koin. Open your application class. Just call the `startKoin()` function:
 
 ```dart
 class MyApp extends StatefulWidget {
