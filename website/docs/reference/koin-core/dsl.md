@@ -24,9 +24,6 @@ To configure your `KoinApplication` instance, you can use any of the following f
 
 * `logger( )` - describe what level and Logger implementation to use (by default use the EmptyLogger)
 * `modules( )` - set a list of Koin modules to load in the container (list or vararg list)
-* `properties( )` - load HashMap properties into Koin container
-* `fileProperties( )` - load properties from given file into Koin container
-* `environmentProperties( )` - load properties from OS environment into Koin container
 
 ## KoinApplication instance: Global vs Local
 
@@ -78,7 +75,7 @@ Note: the `named()` function allow you to give a qualifier either by a string, a
 A Koin module is the *space to declare all your components*. Use the `module` function to declare a Koin module:
 
 ```dart
-var myModule = module()// your dependencies here;
+final myModule = module()// your dependencies here;
 ```
 
 In this module, you can declare components as decribed below.

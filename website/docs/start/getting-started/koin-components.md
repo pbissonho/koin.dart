@@ -53,7 +53,7 @@ And we just need to start Koin and run our class:
 
 ```dart
 // a module with our declared Koin dependencies 
-var helloModule = module()..single((s) => HelloServiceImpl());
+final helloModule = module()..single((s) => HelloServiceImpl());
 
 void main() {
 

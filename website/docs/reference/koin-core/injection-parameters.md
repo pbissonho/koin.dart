@@ -17,7 +17,7 @@ class Presenter {
   Presenter(this.view);
 }
 
-var myModule = module(createdAtStart: true)
+final myModule = module(createdAtStart: true)
   ..single1<Presenter, View>((s, view) => Presenter(view));
 ```
 
@@ -48,7 +48,7 @@ class Presenter {
   Presenter(this.view, this.id);
 }
 
-var myModule = module()
+final myModule = module()
   ..single2<Presenter, View, int>((s, view, id) => Presenter(view, id));
 ```
 

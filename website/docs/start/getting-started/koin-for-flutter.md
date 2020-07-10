@@ -88,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
 ```
 
 ```dart
-var loginModule = Module()
+final loginModule = Module()
   // Declare a scope to LoginPage
   ..scope<LoginPage>((s) {
     s.scoped((s) => LoginBloc());

@@ -4,11 +4,11 @@ title: Start Koin
 
 ## What is Koin.dart?
 
-Koin is pragmatic lightweight dependency injection framework for Dart developers. Written in pure Dart, using functional resolution as key concept. Koin is a lightweight container and a pragmatic API. Koin.dart is a port of the original version written in Kotlin.
+Koin is pragmatic lightweight dependency injection framework for Dart developers. Written in pure Dart, using functional resolution as key concept. Koin.dart is a port of the original version written in Kotlin.
 
 ## Start the container
 
-Koin is a DSL, a lightweight container and a pragmatic API. Once you have declared your definitions within Koin modules, your are ready to start the Koin container.
+Once you have declared your definitions within Koin modules, your are ready to start the Koin container.
 
 ### The startKoin function
 
@@ -32,8 +32,9 @@ Your Koin container can have several options:
 * `logger` - to enable logging - see <<logging.adoc#_logging,logging>> section
 * `properties()`, `fileProperties( )` or `environmentProperties( )` to load properties from environment, koin.properties file, extra properties ... - see <<properties.adoc#_lproperties,properties>> section
 
-
-!> The `startKoin` can't be called more than once. If you need several point to load modules, use the `loadKoinModules` function.
+:::important
+The `startKoin` can't be called more than once. If you need several point to load modules, use the `loadKoinModules` function.
+:::
 
 
 ### Behind the start - Koin instance under the hood

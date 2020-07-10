@@ -9,7 +9,7 @@ By using Koin, you describe definitions in modules. In this section we will see 
 A Koin module is a "space" to gather Koin definition. It's declared with the `module` function.
 
 ```dart
-var myModule = module()  // Your definitions ...
+final myModule = module()  // Your definitions ...
 ```
 
 ## Using several modules
@@ -29,17 +29,17 @@ class ComponentB {
   ComponentB(this.componentA);
 }
 
-var myModuleA = module()
+final myModuleA = module()
    // Singleton ComponentA
   ..single((s) => ComponentA());
 
-var myModuleB = module()
+final myModuleB = module()
   // Singleton ComponentB with linked instance ComponentA
   ..single((s) => ComponentB(s.get()));
 ```
-
-?> Koin does't have any import concept. Koin definitions are lazy: a Koin definition is started with Koin container but is not instantiated. An instance is created only a request for its type has been done.
-
+:::important
+Koin definitions are lazy: a Koin definition is started with Koin container but is not instantiated. An instance is created only a request for its type has been done.
+:::
 We just have to declare list of used modules when we start our Koin container:
 
 ```dart
@@ -74,13 +74,13 @@ class RemoteDatasource implements Datasource {}
 We can declare those components in 3 modules: Repository and one per Datasource implementation:
 
 ```dart
-var repositoryModule = module()
+final repositoryModule = module()
   ..single((s) => Repository(s.get()));
 
-var localDatasourceModule = module()
+final localDatasourceModule = module()
   ..single<Datasource>((s) => LocalDatasource());
 
-var remoteDatasourceModule = module()
+final remoteDatasourceModule = module()
   ..single<Datasource>((s) => LocalDatasource());
 ```
 
@@ -102,10 +102,10 @@ startKoin((app) {
 Koin won't allow you to redefinition an already existing definition (type,name,path ...). You will an an error if you try this:
 
 ```dart
-var myModuleA = module()
+final myModuleA = module()
   ..single<Service>((s) => ServiceImp());
 
-var myModuleB = module()
+final myModuleB = module()
   ..single<Service>((s) => TestServiceImp());
 
 // Will throw an BeanOverrideException
@@ -117,22 +117,22 @@ startKoin((app) {
 To allow definition overriding, you have to use the `override` parameter:
 
 ```dart
-var myModuleA = module()
+final myModuleA = module()
   ..single<Service>((s) => ServiceImp());
 
-var myModuleB = module()
+final myModuleB = module()
    // override for this definition
   ..single<Service>((s) => TestServiceImp(), override: true);
 ```
 
 ```dart
-var myModuleA = module()
+final myModuleA = module()
   ..single<Service>((s) => ServiceImp());
 
 // Allow override for all definitions from module
-var myModuleB = module(override: true)
+final myModuleB = module(override: true)
   ..single<Service>((s) => TestServiceImp());
 ```
-
-!> Order matters when listing modules and overriding definitions. You must have your overriding definitions in last of your module list.
-
+:::important
+Order matters when listing modules and overriding definitions. You must have your overriding definitions in last of your module list.
+:::info

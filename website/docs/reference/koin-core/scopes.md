@@ -25,8 +25,9 @@ module()..scopeWithType(named('A Scope Name'),(scope){
   scope.scoped((s) => ComponentA());
 });
 ```
-
-> A scope require a _qualifier_ to help name it. It can be either a String Qualifier, either a TypeQualifier
+:::note
+A scope require a _qualifier_ to help name it. It can be either a String Qualifier, either a TypeQualifier
+:::
 
 Declaring a scope for a given type, can be done:
 
@@ -84,8 +85,9 @@ var c = scopeForA.get<C>();
 ```
 
 We use the `getOrCreateScope` function, that will create a scope define by the type.
-
-> Note here that `scopeForA` is tied to `a` instance object
+:::note
+Note here that `scopeForA` is tied to `a` instance object
+:::note
 
 ### Using the `scope` property
 
@@ -97,8 +99,6 @@ var a = koin.get<A>()
 var b = a.scope.get<B>()
 var c = a.scope.get<C>()
 ```
-
-!> Be careful to not use `scope` if you want to use a Scope for a special component, like Android `lifecycleScope` a scope tied to the Android lifecycle
 
 ### Destroy scope and linked instances
 
@@ -127,7 +127,10 @@ From your `Koin` instance you can access:
 - `getScope(id : ScopeID)` - retrieve a previously created scope with given id
 - `getOrCreateScope(id : ScopeID, scopeName : Qualifier)` - create or retrieve if already created, the closed scope instance with given id and scopeName
 
-!> Make the difference between a scope instance id, which is the id to find your scope over all your scopes, and the scope name, which is the reference to the tied scope group name.
+:::important
+Make the difference between a scope instance id, which is the id to find your scope over all your scopes, and the scope name, which is the reference to the tied scope group name.
+:::
+
 
 ### Resolving dependencies within a scope
 
@@ -163,8 +166,9 @@ var myScope1 = koin.createScope("myScope1",named("A_SCOPE_NAME"));
 var componentA = myScope1.get<ComponentA>();
 var componentB = myScope1.get<ComponentB>();
 ```
-
-!> By default, all scope fallback to resolve in main scope if no definition is found in the current scope
+:::important
+By default, all scope fallback to resolve in main scope if no definition is found in the current scope
+:::
 
 ### Closing a scope
 
@@ -179,9 +183,9 @@ var session = getKoin().createScope("session");
 // close it
 session.close();
 ```
-
-!> Beware that you can't inject instances anymore from a closed scope.
-
+:::important
+Beware that you can't inject instances anymore from a closed scope.
+:::
 
 ### Getting scope's source value [2.1.4]
 
@@ -212,9 +216,10 @@ var a = koin.get<A>()
 var b = a.scope.get<BofA>()
 expect(b.a, a);
 ```
-
+:::note
 > Difference between `getSource()` and `get()`: getSource will directly get the source value. Get will try to resolve any definition, and fallback to source
 value if possible. `getSource()` is then more efficient in terms of performances.
+:::
 
 
 ### Scope Linking

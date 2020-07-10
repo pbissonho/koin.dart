@@ -58,9 +58,9 @@ setUp((){
       app.module(myModule);
   });
 ```
-
-!> koin-test project is not tied to mockito
-
+:::note 
+koin-test project is not tied to mockito
+:::
 ## Mocking out of the box
 
 Instead of making a new module each time you need a mock, you can declare a mock on the fly with `declare`:

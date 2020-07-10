@@ -31,7 +31,7 @@ Here how we could define some components:
 
 
 ```dart
-var myModule = Module()
+final myModule = Module()
   // Define a singleton for type HttpClient
   ..single<HttpClient>(((s) => HttpClient('server_url')))
   // Define a singleton for type  DataRepository
@@ -47,7 +47,7 @@ var myModule = Module()
 You can give a qualifier to a component. This qualifier can be a string or a type, and is setup with the `named()` function:
 
 ```dart
-var myModule = Module()
+final myModule = Module()
     // Define a single Bloc named 'single'
   ..single<Bloc>(((s) => Bloc(s.get())), qualifier: named('single'))
    // Define a factory for type Bloc
@@ -81,7 +81,7 @@ class Component1Interface {}
 
 class Component1 implements Component1Interface {}
 
-var myModule = Module()
+final myModule = Module()
   ..single<Component1>(((s) => Component1())).bind<Component1Interface>();
 ```
 
@@ -90,7 +90,7 @@ Then you can request your instance with `get<Component1>()` or `get<ComponentInt
 You can bind multiple definitions with the same type:
 
 ```dart
-var myModule = Module()
+final myModule = Module()
   ..single<Component1>(((s) => Component1())).bind<Component1Interface>()
   ..single<Component2>(((s) => Component2())).bind<Component1Interface>();
 ```

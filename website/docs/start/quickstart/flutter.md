@@ -1,3 +1,7 @@
+---
+title: Flutter
+---
+
 # Getting Started with Flutter application
 
 > This tutorial lets you write an Flutter/Dart application and use Koin inject and retrieve your components.
@@ -6,12 +10,17 @@
 
 Add the Koin Flutter dependency like below:
 
-https://pub.dev/packages/koin
+| Package                                                                            | Pub                                                                                                    |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| [koin](https://github.com/pbissonho/koin.dart/tree/master/packages/koin)                 | [![pub package](https://img.shields.io/pub/v/koin.svg)](https://pub.dev/packages/koin)                 |
+| [koin_flutter](https://github.com/pbissonho/koin.dart/tree/master/packages/koin_flutter) | [![pub package](https://img.shields.io/pub/v/koin_flutter.svg)](https://pub.dev/packages/koin_flutte) |
 
+
+```yaml
 dependencies:
   koin: ^[laste_version]
   koin_fluter: ^[laste_version]
-
+```
 ## Our components
 
 Let's create a HelloRepository to provide some data:
@@ -39,7 +48,7 @@ Use the `module` function to declare a module. Let's declare our first component
 
 ```dart
 // just declare it
-var myModule = Module()
+final myModule = Module()
     ..single((s) => HelloRepository())
     ..factory((s) => MyBloc(s.get()));
 ```
@@ -96,7 +105,7 @@ class MyHomePage extends StatelessWidget {
 }
 ```
 
-?> The `by inject()` function allows us to retrieve lazy Koin instances
+> The `by inject()` function allows us to retrieve lazy Koin instances
 
-?> The `get()` function is here to retrieve directly an instance (non lazy)
+> The `get()` function is here to retrieve directly an instance (non lazy)
 

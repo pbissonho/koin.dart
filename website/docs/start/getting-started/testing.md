@@ -2,8 +2,6 @@
 title: Testing
 ---
 
-# PORT WIP
-
 The `koin-test` project brings you small but powerful tools to test your Koin application.
 
 ## Getting your components
@@ -16,7 +14,7 @@ Just tag your test class with `KoinTest`, and you will be able to unlock `KoinCo
 Given the definitions below:
 
 ```dart
-val appModule = module()..single((s) => ComponentA());
+final appModule = module()..single((s) => ComponentA());
 ```
 
 We can write the test below:

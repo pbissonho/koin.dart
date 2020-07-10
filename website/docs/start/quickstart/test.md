@@ -1,3 +1,6 @@
+---
+title: Test
+---
 
 # Getting Started with Test
 
@@ -6,6 +9,12 @@
 ## Setup
 
 First, add the Koin dependency like below:
+
+| Package                                                                            | Pub                                                                                                    |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| [koin](https://github.com/pbissonho/koin.dart/tree/master/packages/koin)                 | [![pub package](https://img.shields.io/pub/v/koin.svg)](https://pub.dev/packages/koin)                 |
+| [koin_test](https://github.com/pbissonho/koin.dart/tree/master/packages/koin_test)       | [![pub package](https://img.shields.io/pub/v/koin_test.svg)](https://pub.dev/packages/koin_test)
+
 
 ```yaml
 dependencies:
@@ -20,7 +29,7 @@ dev_dependencies:
 We reuse the `koin-core` getting-started project, to use the koin module:
 
 ```dart
-var helloModule = Module()
+final helloModule = Module()
     ..single((s) => HelloMessageData())
     ..single<HelloService>((s) => HelloServiceImpl(s.get()))
 ```

@@ -4,7 +4,17 @@ module.exports = {
     {
       type: 'category',
       label: 'Koin.dart',
-      items: ['home', 'setup', 'resources', 'examples', 'support'],
+      items: ['home', 'setup', 'resources','support'],
+    },
+    {
+      type: 'category',
+      label: 'Koin in 5 minutes',
+      collapsed: false,
+      items: [
+        'start/quickstart/dart',
+        'start/quickstart/flutter',
+        'start/quickstart/test',
+      ],
     },
     {
       type: 'category',
@@ -22,7 +32,6 @@ module.exports = {
       Reference: [
         {
           Core: [
-            'reference/koin-core/dsl',
             'reference/koin-core/definitions',
             'reference/koin-core/modules',
             'reference/koin-core/start-koin',
@@ -34,7 +43,9 @@ module.exports = {
             'reference/koin-core/setters',
           ],
           Flutter: [
-            'reference/koin-flutter/dsl',
+            'reference/koin-flutter/start',
+            'reference/koin-flutter/scope',
+            'reference/koin-flutter/get-instances',
           ],
 
           Test: [
@@ -42,6 +53,11 @@ module.exports = {
           ],
         },
       ],
+    },
+    {
+      type: 'category',
+      label: 'Examples',
+      items: ['examples'],
     },
   ],
 };

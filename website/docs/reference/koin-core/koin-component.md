@@ -59,7 +59,6 @@ Once you have tagged your class as `KoinComponent`, you gain access to:
 
 * `inject()` - lazy evaluated instance from Koin container
 * `get()` - eager fetch instance from Koin container
-* `getProperty()`/`setProperty()` - get/set property
 
 
 ## Retrieving definitions with get & inject
@@ -76,8 +75,10 @@ Lazy<MyService> myService = inject();
 // retrieve directly the instance
 MyService myService = get();
 ```
+:::note
+The lazy inject form is better to define property that need lazy evaluation.
+:::
 
-?> The lazy inject form is better to define property that need lazy evaluation.
 
 ## Resolving instance from its name
 
@@ -96,7 +97,7 @@ class ComponentB {
   ComponentB(this.componentA);
 }
 
-var myModule = module()
+final myModule = module()
   ..single((s) => ComponentA(), qualifier: named("A"))
   ..single((s) => ComponentB(s.get()), qualifier: named("B"));
 ```

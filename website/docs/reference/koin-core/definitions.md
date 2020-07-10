@@ -10,9 +10,9 @@ By using Koin, you describe definitions in modules. In this section we will see 
 A Koin module is the *space to declare all your components*. Use the `module` function to declare a Koin module:
 
 ```dart
-var myModule = module();// your dependencies here
+final myModule = module();// your dependencies here
 // Or
-var myModule2 = Module();// your dependencies here
+final myModule2 = Module();// your dependencies here
 ```
 
 In this module, you can declare components as described below.
@@ -23,15 +23,15 @@ Declaring a singleton component means that Koin container will keep a *unique in
 
 ```dart
 // declare single instance for MyService class
-var myModule = module()..single((s) => MyService());
+final myModule = module()..single((s) => MyService());
 ```
 
 ## Defining your component within a lambda
 
 `single`, `factory` & `scoped` keywords help you declare your components through a lambda expression. this lambda describe
-the way that you build your component. Usually we instantiate components via their constructors, but you can also use any expression.
+the way that you build your component. 
 
-`single { Class constructor // Dart expression }`
+`..single((s) => MyClass())`
 
 The result type of your lambda is the main type of your component
 
@@ -43,7 +43,7 @@ A factory component declaration is a definition that will gives you a *new insta
 class Controller {}
 
 // declare factory instance for Controller class
-var myModule = module()..factory((s) => Controller());
+final myModule = module()..factory((s) => Controller());
 ```
 :::info
 Koin container doesn't retain factory instances as it will give a new instance each time the definition is asked
@@ -72,7 +72,7 @@ class Controller {
 class View {}
 
 // declare factory instance for Controller class
-var myModule = module()
+final myModule = module()
   // declare Service as single instance
   ..single((s) => Service())
   // declare Controller as single instance, resolving View instance with get()
@@ -99,7 +99,7 @@ class ServiceImp implements Service {
 In a Koin module we can use the `as` cast Dart operator as follow:
 
 ```dart
-var myModule = module()
+final myModule = module()
   // Will match type ServiceImp only
   ..single((s) => ServiceImp())
   // Will match type Service only
@@ -109,7 +109,7 @@ var myModule = module()
 You can also use the inferred type expression:
 
 ```dart
-var myModule = module()
+final myModule = module()
   // Will match type ServiceImp only
   ..single((s) => ServiceImp())
   // Will match type Service only
@@ -195,10 +195,8 @@ This means that those parameters are values passed with `get()` and `by inject()
 
 
 ```dart
-var mySingle = getP<MySingle>(parameters: parametersOf([10]));
+var mySingle = getWithParams<MySingle>(parameters: parametersOf([10]));
 ```
-
-Further reading in the <<injection-parameters.adoc#_injection_parameters,injection parameters section>>.
 
 
 ## Using definition flags
@@ -207,16 +205,16 @@ Koin DSL also proposes some flags.
 
 ### Create instances at start
 
-A definition or a module can be flagged as `createOnStart`, to be created at start (or when you want). First set the `createOnStart` flag on your module
+A definition or a module can be flagged as `createdAtStart`, to be created at start (or when you want). First set the `createdAtStart` flag on your module
 or on your definition.
 
 
 CreateAtStart flag on a definition
 
 ```dart
-var moduleA = module()
+final moduleA = module()
   ..single<Service>((s) => ServiceImp());
-var moduleB = module()
+final moduleB = module()
     // eager creation for this definition
   ..single<Service>((s) => TestServiceImp(), createdAtStart: true);
 ```
@@ -224,9 +222,9 @@ var moduleB = module()
 CreateAtStart flag on a module
 
 ```dart
-var moduleA = module()
+final moduleA = module()
   ..single<Service>((s) => ServiceImp());
-var moduleB = module(createdAtStart: true)
+final moduleB = module(createdAtStart: true)
   ..single<Service>((s) => TestServiceImp());
 ```
 
@@ -242,26 +240,4 @@ startKoin((app){
 If you need to load some definition at a special time (in a background thread instead of UI for example), just get/inject the desired components.
 :::
 
-
-### Dealing with generics
-
-Koin definitions doesn't take in accounts generics type argument. For example, the module below tries to define 2 definitions of List:
-
-```dart
-module {
-    single { ArrayList<Int>() }
-    single { ArrayList<String>() }
-}
-```
-
-Koin won't start with such definitions, understanding that you want to override one definition for the other.
-
-To allow you, use the 2 definitions you will have to differentiate them via their name, or location (module). For example:
-
-```dart
-module {
-    single(named("Ints")) { ArrayList<Int>() }
-    single(named("Strings")) { ArrayList<String>() }
-}
-```
 

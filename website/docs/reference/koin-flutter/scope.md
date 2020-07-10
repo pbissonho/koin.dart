@@ -1,3 +1,7 @@
+---
+title: Scope
+---
+
 
 The `koin_flutter` package is dedicated to bring Flutter scope features to the existing Scope API.
 
@@ -7,21 +11,19 @@ The `koin_flutter` package is dedicated to bring Flutter scope features to the e
 Flutter Widgets are mainly managed by ther widget tree, that use the lifecycle functions of the Widgets, such as
 `initState()` and `dispose()`.
 
-That's why we can't describe our StatefulWidget/StatelessWidget/ in a Koin module. We need then to inject dependencies into properties and also
-respect the lifecycle: Components related to parts of the user interface should no longer be references after they are removed from the widget tree.
-
+That's why we can't describe our StatefulWidget/StatelessWidget/ in a Koin module. We need then to inject dependencies into properties and also respect the lifecycle.
 Then we have:
 
 * long live components (Services, Data Repository ...) - used by several screens, never dropped
-* medium live components (user sessions ...) - used by several screens, must be dropped after an amount of time
-* short live components (Widgets) - used by only one screen & must be dropped at the end of the screen
+* medium live components (BLoC) - used by several screens, must be dropped after an amount of time
+* short live components (BLoC) - used by only one screen & must be dropped at the end of the screen
 
 Long live components can be easily described as `single` definitions. For medium and short live components we can have several approaches.
 
-In the case of BLoC pattern, the `Bloc` can be used as a short or medium live component to help/support the UI. The `Bloc` instance must be created each time the widget is showing and dropped once widget is removed from the widget tree.
+In the case of BLoC pattern, the BLoC class can be used as a short or medium live component to help/support the UI. The BLoC instance must be created each time the widget is showing and dropped once widget is removed from the widget tree.
 
-Some blocs can be used as a long live components,for example, to control authentication.
-but in most cases they are used as short live.
+Some Blocs can be used as a long live components,for example, to control authentication,
+but in most cases they are used as short or medium live.
 
 
 A new Bloc is created each time
@@ -49,7 +51,7 @@ Using the as factory you will have to manually close the bloc.
 
 ```dart
  // Factory instance of LoginBloc
-var flutterModule = Module()..factory((s) => LoginBloc());
+final flutterModule = Module()..factory((s) => LoginBloc());
 
 
 * as `scope` - to produce an instance tied to a scope

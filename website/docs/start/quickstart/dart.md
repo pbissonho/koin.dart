@@ -1,5 +1,8 @@
+---
+title: Dart
+---
 
-# Getting Started with Dart app
+## Getting Started with Dart
 
 > This tutorial lets you write a Dart application and use Koin inject and retrieve your components.
 
@@ -7,10 +10,16 @@
 
 First, check that the `koin-core` dependency is added like below:
 
+| Package                                                                            | Pub                                                                                                    |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| [koin](https://github.com/pbissonho/koin.dart/tree/master/packages/koin)                 | [![pub package](https://img.shields.io/pub/v/koin.svg)](https://pub.dev/packages/koin)
+
+
 ```yaml
 dependencies:
   koin: ^[laste_version]
 ```
+
 
 ## The application
 
@@ -25,9 +34,9 @@ In our small app we need to have 2 components:
 Let's create a `HelloMessageData` data class to hold our data:
 
 ```dart
-/**
- * A class to hold our message data
- */
+//
+// A class to hold our message data
+//
 class HelloMessageData {
     final message = "Hello Koin!";
 }
@@ -45,10 +54,8 @@ abstract class HelloService {
     String hello();
 }
 
-/**
- * Hello Service Impl
- * Will use HelloMessageData data
- */
+// Hello Service Impl
+// Will use HelloMessageData data
 class HelloServiceImpl implements HelloService {
     final HelloMessageData helloMessageData;
 
@@ -64,13 +71,12 @@ class HelloServiceImpl implements HelloService {
 
 ## The application class
 
-To run our `HelloService` component, we need to create a runtime component. Let's write a `HelloApplication` class and tag it with `KoinComponent` interface. This will later allows us to use the `by inject()` functions to retrieve our component:
+To run our `HelloService` component, we need to create a runtime component. Let's write a `HelloApplication` class and tag it with `KoinComponent` interface. This will later allows us to use the `get()` functions to retrieve our component:
 
 ```dart
-/**
- * HelloApplication - Application Class
- * use HelloService
- */
+
+// HelloApplication - Application Class
+// use HelloService
 class HelloApplication extends KoinComponent {
 
     // Inject HelloService
@@ -88,7 +94,7 @@ class HelloApplication extends KoinComponent {
 Now, let's assemble `HelloMessageData` with `HelloService`, with a Koin module:
 
 ```dart
-var helloModule = Module()
+final helloModule = Module()
     ..single((s) => HelloMessageData())
     ..single<HelloService>((s) => HelloServiceImpl(s.get()))
 

@@ -1,3 +1,6 @@
+---
+title: Start
+---
 
 The `koin_flutter` package is dedicated to provide Koin powers to Flutter world.
 
@@ -32,38 +35,3 @@ class _MyAppState extends State<MyApp> {
   }
 }
 ```
-
-## Properties
-
-You can use Koin properties in the `assets/koin.properties` file, to store keys/values:
-
-```dart
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-    startKoin((app) {
-      // use print Logger  
-      app.printLogger(level: Level.debug);
-      // use modules
-      app.modules(myAppModules)
-      // use properties from assets/koin.properties
-      app.flutterFileProperties()
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: MyHomePage());
-  }
-}
