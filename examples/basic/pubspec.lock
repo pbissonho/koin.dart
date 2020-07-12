@@ -70,7 +70,7 @@ packages:
       name: equatable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.2.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -91,24 +91,24 @@ packages:
   koin:
     dependency: transitive
     description:
-      name: koin
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.7.2"
+      path: "../../packages/koin"
+      relative: true
+    source: path
+    version: "0.10.0"
   koin_flutter:
     dependency: "direct main"
     description:
       path: "../../packages/koin_flutter"
       relative: true
     source: path
-    version: "0.3.0"
+    version: "0.6.3"
   kt_dart:
     dependency: transitive
     description:
       name: kt_dart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.2"
+    version: "0.7.0+1"
   matcher:
     dependency: transitive
     description:
@@ -144,13 +144,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
-  provider:
-    dependency: transitive
-    description:
-      name: provider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.2.0"
   quiver:
     dependency: transitive
     description:

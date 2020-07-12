@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:koin/koin.dart';
-import 'di.dart';
 import 'src/home_page.dart';
 
 void main() {
