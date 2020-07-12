@@ -1,3 +1,7 @@
+## 0.11.3
+
+- Updated to koin version 0.11.0.
+
 ## 0.11.2
 
 - Updated to koin version 0.10.0.
