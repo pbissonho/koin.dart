@@ -1,3 +1,18 @@
+## 0.9.0
+
+- Added `currentScope` method as extension for State class.
+   * It is now possible to use `currentScope.get ()` instead of `widget.scope.get ()`
+- Fixed an error in scope object extension.
+- Added `ScopeStateMixin`. A mixin to be used in widgets states for close the koin scope automatically.
+
+- Breaking changes
+ 
+ * Removed the use of scopes methods in all Widgets.
+   * Now it is only possible to use the scope methods in 'StatefulWidget' widgets.
+ * Removed the `bloc()` to obtain a bloc instance. Just use `get()` or `currentScope.get()` for that.
+ * Removed `getScopeOrNull()`, `createScope()`, `getOrCreateScope ()` and `scopeName` methods from public flutter scope extension.
+   
+
 ## 0.6.3
 - Change to Koin 0.10.0
 - Added Scope Widgets extensions
