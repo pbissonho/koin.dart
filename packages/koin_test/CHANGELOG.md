@@ -1,3 +1,7 @@
+## 0.11.4
+
+- Change the meta package version.
+
 ## 0.11.3
 
 - Updated to koin version 0.11.0.
