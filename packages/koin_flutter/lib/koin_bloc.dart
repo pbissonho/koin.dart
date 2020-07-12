@@ -1,1 +1,1 @@
-export 'src/bloc_ext/bloc_extension.dart';
+export 'src/bloc_extension.dart';

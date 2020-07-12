@@ -70,7 +70,8 @@ class HomePageWithParams extends StatefulWidget {
   _HomePageWithParamsState createState() => _HomePageWithParamsState();
 }
 
-class _HomePageWithParamsState extends State<HomePageWithParams> {
+class _HomePageWithParamsState extends State<HomePageWithParams>
+    with ScopeStateMixin {
   Component componentSingle;
   ComponentB componentBSingle;
   Lazy<Component> lazyComponent;
@@ -82,15 +83,14 @@ class _HomePageWithParamsState extends State<HomePageWithParams> {
     // 1
     componentSingle = getWithParams<Component>(parameters: parametersOf([1]));
     lazyComponent = injectWithParams<Component>();
-    
+
     // 10
     componentBSingle = bindWithParams<ComponentBInterface, ComponentB>(
         parameters: parametersOf([10]));
 
-    
     // 30
-    componentScoped = currentScope.getWithParams<Component>(parameters: parametersOf([30]));
-    
+    componentScoped =
+        currentScope.getWithParams<Component>(parameters: parametersOf([30]));
 
     print("FFF");
     // 60
@@ -115,7 +115,7 @@ class _HomePageWithParamsState extends State<HomePageWithParams> {
   }
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with ScopeStateMixin {
   Component component;
   ComponentInterface componentBind;
   Lazy<Component> lazyComponent;
@@ -197,7 +197,6 @@ class HomePageStateless extends StatelessWidget {
           Text("${bind<ComponentInterface, Component>().testId().toString()}"),
           Text("${inject<Component>().value.id.toString()}"),
           Text("${get<Component>().id.toString()}"),
-          Text("${scope.get<Component>().id.toString()}"),
           Text("${get<Component>(named('Fac'), parametersOf([
                 60
               ])).id.toString()}"),
@@ -252,14 +251,11 @@ void main() {
     // Create the Finders.
     final componentIdFinder = find.text('20');
     // Create the Finders.
-    final componentScopedIdFinder = find.text('50');
-    // Create the Finders.
     final componentIdFactoryFinder = find.text('60');
 
     // Use the `findsOneWidget` matcher provided by flutter_test to
     // verify that the Text widgets appear exactly once in the widget tree.
     expect(componentIdFinder, findsNWidgets(3));
-    expect(componentScopedIdFinder, findsOneWidget);
     expect(componentIdFactoryFinder, findsOneWidget);
   });
 
@@ -307,7 +303,7 @@ void main() {
     final componentBSingleFinder = find.text('10');
     // Create the Finders.
     final componentIdFactoryFinder = find.text('60');
-    
+
     // Create the Finders.
     final componentScopedFinder = find.text('30');
 
