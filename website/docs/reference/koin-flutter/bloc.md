@@ -12,7 +12,7 @@ The `koin_bloc.dart` makes it easy to use koin with any state management package
 
 The `koin_bloc.dart` introduces DSL keywords that comes in complement of single and scoped, to help declare a Bloc component.
 
-- `bloc` definition, create an `single `and close the object at the end of the global koin context lifetime.
+- `bloc` definition, create an `single `and `dispose` the object at the end of the global koin context lifetime.
 - `scopedBloc` definition, create an object `scoped` and `dispose` when the associated scope is closed(Lifetime end).
 
 ### Single Bloc
