@@ -1,3 +1,7 @@
+## 0.11.5
+
+- Change the meta package version.
+
 ## 0.11.4
 
 - Change the meta package version.
