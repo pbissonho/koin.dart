@@ -1,4 +1,5 @@
-# Koin.dart
+
+<p align="center"><img src="https://raw.githubusercontent.com/pbissonho/koin.dart/master/logo.svg" height="100" alt="Koin.dart"></p>
 
 <p align="center">
 <a href="https://travis-ci.org/pbissonho/koin.dart"><img src="https://travis-ci.org/pbissonho/koin.dart.svg?branch=master" alt="build"></a>
