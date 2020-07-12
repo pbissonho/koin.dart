@@ -1,16 +1,48 @@
 # Koin.dart
 
-[![Build Status](https://travis-ci.org/pbissonho/koin.dart.svg?branch=master)](https://travis-ci.org/pbissonho/koin.dart)
-[![codecov](https://codecov.io/gh/pbissonho/koin.dart/branch/master/graph/badge.svg)](https://codecov.io/gh/pbissonho/koin.dart)
+<p align="center">
+<a href="https://travis-ci.org/pbissonho/koin.dart"><img src="https://travis-ci.org/pbissonho/koin.dart.svg?branch=master" alt="build"></a>
+<a href="https://codecov.io/gh/pbissonho/koin.dart"><img src="https://codecov.io/gh/pbissonho/koin.dart/branch/master/graph/badge.svg" alt="codecov"></a>
+<a href="https://github.com/pbissonho/koin.dart"><img src="https://img.shields.io/github/stars/pbissonho/koin.dart.svg?style=flat&logo=github&colorB=deeppink&label=stars" alt="Star on Github"></a>
+<a href="https://github.com/tenhobi/effective_dart"><img src="https://img.shields.io/badge/style-effective_dart-40c4ff.svg" alt="style: effective dart"></a>
 
+---
 
 A pragmatic lightweight dependency injection framework. This is a port of [Koin](https://github.com/InsertKoinIO/koin) for Dart projects.
+
+Written in pure Dart, using functional resolution only: no proxy, no code generation, no reflection, no Flutter context.
+
+`Koin is a DSL, a light container and a pragmatic API`
 
 | Package                                                                            | Pub                                                                                                    |
 | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | [koin](https://github.com/pbissonho/koin.dart/tree/master/packages/koin)                 | [![pub package](https://img.shields.io/pub/v/koin.svg)](https://pub.dev/packages/koin)                 |
 | [koin_test](https://github.com/pbissonho/koin.dart/tree/master/packages/koin_test)       | [![pub package](https://img.shields.io/pub/v/koin_test.svg)](https://pub.dev/packages/koin_test)       |
 | [koin_flutter](https://github.com/pbissonho/koin.dart/tree/master/packages/koin_flutter) | [![pub package](https://img.shields.io/pub/v/koin_flutter.svg)](https://pub.dev/packages/koin_flutte) |
+
+
+## Documentation 🚒
+
+Dart documentation port will be available in the coming days.
+
+* [Koin in 5 minutes]() - WIP
+* [Getting Started]()- WIP
+* [Documentation References]() - WIP
+
+## Ask a Question? 🚑
+
+- Post your question on [Stackoverflow - #koindart tag](https://stackoverflow.com/questions/tagged/koin)
+
+## Reporting issues 💥
+
+Found a bug on a specific feature? Open an issue on [Github issues](https://github.com/pbissonho/koin.dart/issues)
+
+## Contribute 🛠
+
+Want to help or share a proposal about Koin? problem on a specific feature? 
+
+- Open an issue to explain the issue you want to solve [Open an issue](https://github.com/pbissonho/koin.dart/issues)
+- After discussion to validate your ideas, you can open a PR or even a draft PR if the contribution is a big one [Current PRs](https://github.com/pbissonho/koin.dart/pulls)
 
 
 # Setup
@@ -107,7 +139,15 @@ class MyHomePage extends StatelessWidget {
 - Support to injection parameters
 
 
+## Maintainers
 
+- [Pedro Bissonho](https://github.com/pbissonho)
 
+## Credits
 
+- [Arnaud Giuliani](https://github.com/arnaudgiuliani) and all contributors to the [original Koin](https://github.com/InsertKoinIO/koin) version written in Kotlin.
 
+## Dependencies
+
+- [Kt.dart](https://pub.dev/packages/kt_dart) port by [Pascal Welsch](https://github.com/passsy)
+- [Equatable](https://pub.dev/packages/equatable) created by [Felix Angelov](https://github.com/felangel)
