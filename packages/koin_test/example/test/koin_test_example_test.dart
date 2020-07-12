@@ -35,39 +35,44 @@ class ServiceFake extends Fake implements ServiceA {
 }
 
 var customModule = Module()
-  ..single<ServiceA>(((s, p) => ServiceA()))
-  ..factory<ServiceC>(((s, p) => ServiceC(p.component1(), p.component2())));
+  ..single<ServiceA>(((s) => ServiceA()))
+  ..factory2<ServiceC, String, String>(
+      ((s, fisrt, second) => ServiceC(fisrt, second)));
 
 // Since ServiceC has not been defined, koin will throw an exception when trying
 // to instantiate ServicoB.
-var invalidModule = Module()..single<ServiceB>(((s, p) => ServiceB(s.get())));
+var invalidModule = Module()..single<ServiceB>(((s) => ServiceB(s.get())));
 
 void main() {
   // Configures the testing environment to automatically start and close Koin for each test.
   koinTest();
 
-  test(('shoud be a valid module '), () {
-    checkModules(
-        [customModule],
-        checkParametersOf({
-          ServiceC: parametersOf(['Name', 'LastName']),
-        }));
-  });
+  testModule('shoud be a valid module', customModule,
+      checkParameters: checkParametersOf({
+        ServiceC: parametersOf(['Name', 'LastName']),
+      }));
 
-  test(('shoud be a invalid module '), () {
+  test('shoud be a invalid module', () {
     expect(() {
-      checkModules([customModule], CheckParameters());
+      checkModules(Level.error, CheckParameters(), (app) {
+        app.module(invalidModule);
+      });
     }, throwsException);
   });
 
   test('shoud return mock instance', () {
-    declare(customModule);
+    declareModule((module) {
+      module
+        ..single<ServiceA>(((s) => ServiceA()))
+        ..factory2<ServiceC, String, String>(
+            ((s, fisrt, second) => ServiceC(fisrt, second)));
+    });
 
     var serviceMock = ServiceAMock();
     when(serviceMock.getName()).thenReturn('MockName');
 
     // Declare a MockInstance for te ServiceA
-    declareMock<ServiceA>(serviceMock);
+    declare<ServiceA>(serviceMock);
 
     var service = get<ServiceA>();
 
@@ -77,11 +82,16 @@ void main() {
   });
 
   test(('shoud return a Fake instance'), () {
-    declare(customModule);
+    declareModule((module) {
+      module
+        ..single<ServiceA>(((s) => ServiceA()))
+        ..factory2<ServiceC, String, String>(
+            ((s, fisrt, second) => ServiceC(fisrt, second)));
+    });
 
     var serviceMock = ServiceFake();
 
-    declareMock<ServiceA>(serviceMock);
+    declare<ServiceA>(serviceMock);
 
     var service = get<ServiceA>();
 
