@@ -10,7 +10,6 @@ Tag your class with the `KoinComponent` interface to unlock Koin injection featu
 
 * `inject()` - lazy inject an instance
 * `get()` - retrieve an instance
-* `getProperty()` - get a Koin property
 
 We can inject the module above into class properties:
 

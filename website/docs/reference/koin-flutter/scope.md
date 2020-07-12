@@ -52,7 +52,7 @@ Using the as factory you will have to manually close the bloc.
 ```dart
  // Factory instance of LoginBloc
 final flutterModule = Module()..factory((s) => LoginBloc());
-
+```
 
 * as `scope` - to produce an instance tied to a scope
 
@@ -62,11 +62,11 @@ module()..scopeWithType(named('scope_id'),(scope){
 });
 ```
 
-## LifecycleScopeMixin
+## ScopeStateMixin
 
-Koin gives the `LifecycleScope` mixin already bound to your Flutter `StatefulWidget` lifecycle. On `dispose()` is calld, it will close automatically. LifecycleScopeMixin overrides the `dispose` method to call the `close` method of the current scope.
+Koin gives the `ScopeStateMixin` mixin already bound to your Flutter `StatefulWidget` lifecycle. On `dispose()` is calld, it will close automatically. ScopeStateMixin overrides the `dispose` method to call the `close` method of the current scope.
 
-To benefit from the `lifecycleScope`, you have to use the `LifecycleScopeMixin` in `StatefulWidget` related to a scope.
+To benefit from the `lifecycleScope`, you have to use the `ScopeStateMixin` in `StatefulWidget` related to a scope.
 
 
 ```dart
@@ -76,7 +76,7 @@ class LoginPage extends StatefulWidget {
 }
 
 /// When LoginPage is removed from the tree the scope will be automatically closed.
-class _LoginPageState extends State<LoginPage> with LifecycleScopeMixin {
+class _LoginPageState extends State<LoginPage> with ScopeStateMixin {
   LoginBloc loginBlock;
 
   @override

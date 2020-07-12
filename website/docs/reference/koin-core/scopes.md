@@ -187,7 +187,7 @@ session.close();
 Beware that you can't inject instances anymore from a closed scope.
 :::
 
-### Getting scope's source value [2.1.4]
+### Getting scope's source value
 
 Koin Scope API in 2.1.4 allow you to pass the original source of a scope, in a definition. Let's take an example below.
 Let's have a singleton instance `A`:

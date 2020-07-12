@@ -9,7 +9,7 @@ module.exports = {
     {
       type: 'category',
       label: 'Koin in 5 minutes',
-      collapsed: false,
+      collapsed: true,
       items: [
         'start/quickstart/dart',
         'start/quickstart/flutter',
@@ -19,7 +19,7 @@ module.exports = {
     {
       type: 'category',
       label: 'Getting Started',
-      collapsed: false,
+      collapsed: true,
       items: [
         'start/getting-started/starting-koin',
         'start/getting-started/koin-components',
@@ -39,13 +39,12 @@ module.exports = {
             'reference/koin-core/injection-parameters',
             'reference/koin-core/scopes',
             'reference/koin-core/logging',
-            'reference/koin-core/properties',
-            'reference/koin-core/setters',
           ],
           Flutter: [
             'reference/koin-flutter/start',
             'reference/koin-flutter/scope',
             'reference/koin-flutter/get-instances',
+            'reference/koin-flutter/bloc',
           ],
 
           Test: [
@@ -57,7 +56,7 @@ module.exports = {
     {
       type: 'category',
       label: 'Examples',
-      items: ['examples'],
+      items: ['flutter_examples'],
     },
   ],
 };

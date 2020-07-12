@@ -65,11 +65,12 @@ void main() {
 
 ## Mocking
 
-You can even make Mocks directly into MyPresenter, or test MyRepository. Those components doesn't have any link with Koin API.
-
+You can use the `declare` function to declare mocks:
 
 ```dart
+
 HelloMessageDataMock implements HelloMessageData {}
+
 void main() {
   setUp(() {
     startKoin((app) {
