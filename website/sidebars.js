@@ -22,10 +22,10 @@ module.exports = {
       collapsed: true,
       items: [
         'start/getting-started/starting-koin',
-        'start/getting-started/koin-components',
-        'start/getting-started/koin-for-flutter',
         'start/getting-started/modules-definitions',
+        'start/getting-started/koin-components',
         'start/getting-started/testing',
+        'start/getting-started/koin-for-flutter',
       ],
     },
     {

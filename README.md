@@ -25,11 +25,10 @@ Written in pure Dart, using functional resolution only: no proxy, no code genera
 
 ## Documentation 🚒
 
-Dart documentation port will be available in the coming days.
-
-* [Koin in 5 minutes]() - WIP
-* [Getting Started]()- WIP
-* [Documentation References]() - WIP
+* [Setup](http://koindart.dev/docs/setup)
+* [Koin in 5 minutes](http://koindart.dev/docs/start/quickstart/dart)
+* [Getting Started](http://koindart.dev/docs/start/getting-started/starting-koin)
+* [Documentation References](http://koindart.dev/docs/reference/koin-core/definitions)
 
 ## Ask a Question? 🚑
 

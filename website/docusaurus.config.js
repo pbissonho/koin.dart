@@ -1,11 +1,11 @@
 module.exports = {
   title: 'Koin.dart',
   tagline: 'A pragmatic lightweight dependency injection framework for Dart developers.',
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'http://koindart.dev/',
   baseUrl: '/',
   favicon: 'img/favicon.ico',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'Pedro Bissonho', // Usually your GitHub org/user name.
+  projectName: 'Koin.dart', // Usually your repo name.
   themeConfig: {
     prism: {
       additionalLanguages: ["dart", "yaml"],
