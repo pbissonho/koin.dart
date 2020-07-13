@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 const features = [
   {
     title: <>Easy to Use</>,
-    imageUrl: 'img/undraw_docusaurus_mountain.svg',
+    imageUrl: 'img/undraw_dev_productivity_umsq.svg',
     description: (
       <>
         Koin is a lightweight container and a pragmatic API. Using functional resolution only: no proxy, no code generation, no reflection, not depend on the Flutter context!
@@ -19,7 +19,7 @@ const features = [
   },
   {
     title: <>Robust</>,
-    imageUrl: 'img/undraw_docusaurus_tree.svg',
+    imageUrl: 'img/undraw_code_review_l1q9.svg',
     description: (
       <>
        The code has a high level of test coverage and the Kotlin version has been used in thousands of applications.
@@ -28,11 +28,11 @@ const features = [
   },
   {
     title: <>Powerful features</>,
-    imageUrl: 'img/undraw_docusaurus_react.svg',
+    imageUrl: 'img/undraw_circuit_sdmr.svg',
     description: (
       <>
-        Koin have modules, scopes, dingleton definition,factory definition,
-        Scoped definition, multiple bindings,named definitions, lazy inject end injection parameters
+        Koin has a powerful set of features, such as multiple bindings,
+        multiple bindings, named definitions, lazy inject end injection parameters.
       </>
     ),
   },
