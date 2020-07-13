@@ -1,3 +1,7 @@
+## 0.11.0+1
+
+- Update readme
+
 ## 0.11.0
 
 - Added `getWithParams`, `injectWithParams` and `bindWithParams` methods in `scope` and `KoinComponent`.
