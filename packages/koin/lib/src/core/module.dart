@@ -69,6 +69,41 @@ class Module {
     otherScopes.add(scopeDefinition);
   }
 
+  /// Declare in a simplified way a scope that has
+  /// only one [definition].
+
+  /// Declare a definition [T] for scope [TScope].
+  /// Declare and define a scoped with just one line.
+
+  ///
+  ///Standard: Used when it is necessary to declare several
+  ///definitions for a scope.
+  ///```
+  ///  ..scope<Login>((s) {
+  ///  s.scopedBloc((s) => LoginBloc(s.get()));
+  ///})
+  ///```
+  /// Declare a scope and define a scoped with just one line:
+  ///```
+  /// Module()..scopeOne<MyBloc, MyScope>((s) => MyBloc());
+  ///```
+  BeanDefinition<T> scopeOne<T, TScope>(
+    DefinitionFunction<T> definition, {
+    Qualifier qualifier,
+    bool createdAtStart = false,
+    bool override = false,
+  }) {
+    var scopeDefinition = ScopeDefinition(TypeQualifier(TScope), isRoot: false);
+    otherScopes.add(scopeDefinition);
+
+    var beanDefinition = Definitions.saveSingle<T>(
+        qualifier,
+        DefinitionX<T>(definition),
+        scopeDefinition,
+        Options(isCreatedAtStart: createdAtStart, override: override));
+    return beanDefinition;
+  }
+
   ///
   /// Declare a Single definition
   ///
@@ -201,5 +236,3 @@ class Module {
     return List.from([this, other]);
   }
 }
-
-

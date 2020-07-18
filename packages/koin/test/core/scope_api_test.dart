@@ -38,7 +38,7 @@ void main() {
     expect(scope1, scope2);
   });
 
-  test('shoud dele a scope instance', () {
+  test('shoud delete a scope instance', () {
     var scopeId = 'myScope';
     var scope1 = koin.createScope<ScopeClass>(scopeId);
     koin.deleteScope(scopeId);
@@ -92,6 +92,14 @@ void main() {
 
   test("shoud create the scope", () {
     koin.getOrCreateScope<ScopeClass>('myScope');
+
+    var scope = koin.getScope('myScope');
+
+    expect(scope, isNotNull);
+  });
+
+  test("shoud create the scope - with qualifier", () {
+    koin.getOrCreateScopeQualifier('myScope', scopeKey);
 
     var scope = koin.getScope('myScope');
 

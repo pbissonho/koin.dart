@@ -190,9 +190,7 @@ class Koin {
   ///
   Scope createScope<T>(String scopeId, [dynamic source]) {
     var qualifier = TypeQualifier(T);
-    if (logger.isAt(Level.debug)) {
-      logger.debug('!- create scope - id:$scopeId q:$qualifier');
-    }
+    logger.isAtdebug('!- create scope - id:$scopeId q:$qualifier', Level.debug);
     return _scopeRegistry.createScope(scopeId, qualifier, source);
   }
 
@@ -201,9 +199,7 @@ class Koin {
   ///
   Scope createScopeWithQualifier(String scopeId, Qualifier qualifier,
       [dynamic source]) {
-    if (logger.isAt(Level.debug)) {
-      logger.debug('!- create scope - id:$scopeId q:$qualifier');
-    }
+    logger.isAtdebug('!- create scope - id:$scopeId q:$qualifier', Level.debug);
     return _scopeRegistry.createScope(scopeId, qualifier, source);
   }
 

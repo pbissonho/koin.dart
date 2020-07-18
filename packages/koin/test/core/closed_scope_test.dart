@@ -29,6 +29,19 @@ void main() {
     expect(scope1.get<ComponentA>(), isNot(equals(scope2.get<ComponentA>())));
   });
 
+  test('get definition from current scope with have ony one definition ', () {
+    var koin = KoinApplication()
+        .printLogger(level: Level.debug)
+        .module(
+            Module()..scopeOne<ComponentA, ScopeType>((scope) => ComponentA()))
+        .koin;
+
+    var scope1 = koin.createScope<ScopeType>('scope1');
+    var scope2 = koin.createScope<ScopeType>('scope2');
+
+    expect(scope1.get<ComponentA>(), isNot(equals(scope2.get<ComponentA>())));
+  });
+
   test('close definitions not initiated', () {
     startKoin((app) {
       app.printLogger(level: Level.debug).module(Module()
@@ -77,6 +90,20 @@ void main() {
 
     var scope1 = koin.createScopeWithQualifier('scope1', named<ScopeType>());
     var scope2 = koin.createScopeWithQualifier('scope2', named<ScopeType>());
+    stopKoin();
+
+    expect(scope1.closed, true);
+    expect(scope2.closed, true);
+  });
+
+  test('stopping Koin closes Scopes -scopeOne', () {
+    var koin = startKoin((app) {
+      app.printLogger().module(
+          Module()..scopeOne<ComponentA, ScopeType>((scope) => ComponentA()));
+    }).koin;
+
+    var scope1 = koin.createScope<ScopeType>('scope1');
+    var scope2 = koin.createScope<ScopeType>('scope2');
     stopKoin();
 
     expect(scope1.closed, true);
