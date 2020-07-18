@@ -80,20 +80,15 @@ class _HomePageWithParamsState extends State<HomePageWithParams>
 
   @override
   void initState() {
-    // 1
     componentSingle = getWithParams<Component>(parameters: parametersOf([1]));
     lazyComponent = injectWithParams<Component>();
 
-    // 10
     componentBSingle = bindWithParams<ComponentBInterface, ComponentB>(
         parameters: parametersOf([10]));
 
-    // 30
     componentScoped =
         currentScope.getWithParams<Component>(parameters: parametersOf([30]));
 
-    print("FFF");
-    // 60
     componentFactory = getWithParams<Component>(
         qualifier: named("Fac"), parameters: parametersOf([60]));
     super.initState();
@@ -333,7 +328,6 @@ void main() {
     final componentBSingleFinder = find.text('10');
     // Create the Finders.
     final componentIdFactoryFinder = find.text('60');
-
     // Create the Finders.
     final componentScopedFinder = find.text('30');
 

@@ -172,8 +172,7 @@ class UseScopeExtensionWidget extends StatefulWidget {
   UseScopeExtensionWidgetState createState() => UseScopeExtensionWidgetState();
 }
 
-class UseScopeExtensionWidgetState extends State<UseScopeExtensionWidget>
-    with ScopeStateMixin {
+class UseScopeExtensionWidgetState extends State<UseScopeExtensionWidget> {
   Bloc myBloc;
 
   @override
@@ -182,6 +181,7 @@ class UseScopeExtensionWidgetState extends State<UseScopeExtensionWidget>
     myBloc = currentScope.get();
   }
 
+ // Close the scope manually.
   @override
   void dispose() {
     currentScope.close();
@@ -311,7 +311,6 @@ void main() {
         ));
 
         expect(fisrtPageFinder, findsOneWidget);
-        expect(gestureFinder, findsOneWidget);
 
         var scope = KoinContextHandler.get().getScope(scopeWidget.scopeId);
 
@@ -339,7 +338,6 @@ void main() {
         ));
 
         expect(fisrtPageFinder, findsOneWidget);
-        expect(gestureFinder, findsOneWidget);
 
         var scope = KoinContextHandler.get().getScope(scopeWidget.scopeId);
 
@@ -368,7 +366,6 @@ void main() {
       ));
 
       expect(fisrtPageFinder, findsOneWidget);
-      expect(gestureFinder, findsOneWidget);
 
       var scope = KoinContextHandler.get().getScope(scopeWidget.scopeId);
 
