@@ -5,7 +5,7 @@ import '../components.dart';
 
 void main() {
   test('can resolve naming from root', () {
-    var scopeName = named("MY_SCOPE");
+    var scopeName = named('MY_SCOPE');
 
     var koin = koinApplication((app) {
       app.module(module()
@@ -15,8 +15,8 @@ void main() {
         }));
     }).koin;
 
-    var scope = koin.createScopeWithQualifier("myScope", scopeName);
-    expect(24, scope.get<MySingle>(named("24")).id);
+    var scope = koin.createScopeWithQualifier('myScope', scopeName);
+    expect(24, scope.get<MySingle>(named('24')).id);
     expect(42, scope.get<MySingle>().id);
   });
 }

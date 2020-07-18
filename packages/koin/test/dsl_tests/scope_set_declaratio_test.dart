@@ -4,7 +4,7 @@ import 'package:kt_dart/kt.dart';
 import '../components.dart';
 
 void main() {
-  var scopeKey = named("KEY");
+  var scopeKey = named('KEY');
 
   test('can declare a scoped definition', () {
     var koin = koinApplication((app) {
@@ -18,33 +18,33 @@ void main() {
         .first((def) => def.qualifier == scopeKey);
     expect(def.qualifier, scopeKey);
 
-    var scope = koin.createScopeWithQualifier("id", scopeKey);
+    var scope = koin.createScopeWithQualifier('id', scopeKey);
     expect(scope.scopeDefinition, def);
   });
 
   test('can declare 2 scoped definitions from same type without naming', () {
     var koin = koinApplication((app) {
       app.module(module()
-        ..scopeWithType(named("A"), (s) {
+        ..scopeWithType(named('A'), (s) {
           s.scoped((s) => ComponentA());
         })
-        ..scopeWithType(named("B"), (s) {
+        ..scopeWithType(named('B'), (s) {
           s.scoped((s) => ComponentA());
         }));
     }).koin;
 
     var defA = koin.scopeRegistry.scopeDefinitions.values
-        .first((def) => def.qualifier == named("A"));
-    expect(defA.qualifier, StringQualifier("A"));
+        .first((def) => def.qualifier == named('A'));
+    expect(defA.qualifier, StringQualifier('A'));
 
     var defB = koin.scopeRegistry.scopeDefinitions.values
-        .first((def) => def.qualifier == named("B"));
-    expect(defB.qualifier, StringQualifier("B"));
+        .first((def) => def.qualifier == named('B'));
+    expect(defB.qualifier, StringQualifier('B'));
 
     var scopeA =
-        koin.createScopeWithQualifier("A", named("A")).get<ComponentA>();
+        koin.createScopeWithQualifier('A', named('A')).get<ComponentA>();
     var scopeB =
-        koin.createScopeWithQualifier("B", named("B")).get<ComponentA>();
+        koin.createScopeWithQualifier('B', named('B')).get<ComponentA>();
     expect(true, scopeA != scopeB);
   });
 }

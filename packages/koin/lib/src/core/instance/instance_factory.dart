@@ -49,8 +49,8 @@ abstract class InstanceFactory<T> {
       var parameters = context.parameters;
       return beanDefinition.definition.create(parameters, context.scope);
     } catch (erro) {
-      logger.error("""
-Instance creation error : could not create instance for $beanDefinition: ${erro.toString()}""");
+      logger.error('''
+Instance creation error : could not create instance for $beanDefinition: ${erro.toString()}''');
       throw InstanceCreationException(
           'Could not create instance for $beanDefinition', erro.toString());
     }

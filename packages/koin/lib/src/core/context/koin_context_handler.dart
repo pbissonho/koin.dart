@@ -30,8 +30,8 @@ class KoinContextHandler {
   ///
   static KoinContext getContext() {
     if (_context == null) {
-      throw IllegalStateException("""
-No Koin Context configured. Please use startKoin or koinApplication DSL. """);
+      throw IllegalStateException('''
+No Koin Context configured. Please use startKoin or koinApplication DSL. ''');
     }
     return _context;
   }

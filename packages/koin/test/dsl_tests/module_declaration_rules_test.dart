@@ -15,7 +15,7 @@ void main() {
     }, throwsA((value) => value is DefinitionOverrideException));
   });
 
-  test("allow redeclaration - different names", () {
+  test('allow redeclaration - different names', () {
     var app = koinApplication((app) {
       app.modules([
         module()
@@ -27,7 +27,7 @@ void main() {
     app.expectDefinitionsCount(2);
   });
 
-  test("allow qualifier redeclaration - same name", () {
+  test('allow qualifier redeclaration - same name', () {
     var koin = koinApplication((app) {
       app.modules([
         module()
@@ -37,8 +37,8 @@ void main() {
       ]);
     }).koin;
 
-    var a = koin.get<ComponentA>(named("default"));
-    var b = koin.get<ComponentB>(named("default"));
+    var a = koin.get<ComponentA>(named('default'));
+    var b = koin.get<ComponentB>(named('default'));
     expect(a, b.a);
   });
 

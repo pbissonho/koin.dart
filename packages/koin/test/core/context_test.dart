@@ -6,7 +6,7 @@ import 'package:koin/src/core/error/exceptions.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group("with context", () {
+  group('with context', () {
     test('shoud not get the context', () {
       expect(KoinContextHandler.get,
           throwsA((error) => error is IllegalStateException));

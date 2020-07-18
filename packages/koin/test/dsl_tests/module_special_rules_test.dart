@@ -16,15 +16,15 @@ void main() {
     var koin = koinApplication((app) {
       app.modules([
         module()
-          ..single((s) => <String>[], qualifier: named("strings"))
-          ..single((s) => <int>[], qualifier: named("ints"))
+          ..single((s) => <String>[], qualifier: named('strings'))
+          ..single((s) => <int>[], qualifier: named('ints'))
       ]);
     }).koin;
 
-    var strings = koin.get<List<String>>(named("strings"));
-    strings.add("test");
-    expect(1, koin.get<List<String>>(named("strings")).length);
-    expect(0, koin.get<List<int>>(named("ints")).length);
+    var strings = koin.get<List<String>>(named('strings'));
+    strings.add('test');
+    expect(1, koin.get<List<String>>(named('strings')).length);
+    expect(0, koin.get<List<int>>(named('ints')).length);
   });
 }
 /*

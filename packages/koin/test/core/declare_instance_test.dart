@@ -37,8 +37,8 @@ void main() {
     expect(2, koin.get<MySingle>().id);
   });
 
-  test("""
-Not can declare and override a single on the fly when override is set to false""",
+  test('''
+Not can declare and override a single on the fly when override is set to false''',
       () {
     var koin = KoinApplication()
         .printLogger()

@@ -390,7 +390,7 @@ No definition found for class:'$type'$qualifierString. Check your definitions!""
 
   @override
   String toString() {
-    return "[$id]";
+    return '[$id]';
   }
 
   void dropInstances(ScopeDefinition scopeDefinition) {

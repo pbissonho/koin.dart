@@ -25,10 +25,10 @@ Written in pure Dart, using functional resolution only: no proxy, no code genera
 
 ## Documentation 🚒
 
-* [Setup](http://koindart.dev/docs/setup)
-* [Koin in 5 minutes](http://koindart.dev/docs/start/quickstart/dart)
-* [Getting Started](http://koindart.dev/docs/start/getting-started/starting-koin)
-* [Documentation References](http://koindart.dev/docs/reference/koin-core/definitions)
+* [Setup](https://koindart.dev/docs/setup)
+* [Koin in 5 minutes](https://koindart.dev/docs/start/quickstart/dart)
+* [Getting Started](https://koindart.dev/docs/start/getting-started/starting-koin)
+* [Documentation References](https://koindart.dev/docs/reference/koin-core/definitions)
 
 ## Ask a Question? 🚑
 

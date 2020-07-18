@@ -90,7 +90,7 @@ void main() {
         throwsA(isA<ScopeNotCreatedException>()));
   });
 
-  test("shoud create the scope", () {
+  test('shoud create the scope', () {
     koin.getOrCreateScope<ScopeClass>('myScope');
 
     var scope = koin.getScope('myScope');
@@ -98,7 +98,7 @@ void main() {
     expect(scope, isNotNull);
   });
 
-  test("shoud create the scope - with qualifier", () {
+  test('shoud create the scope - with qualifier', () {
     koin.getOrCreateScopeQualifier('myScope', scopeKey);
 
     var scope = koin.getScope('myScope');
@@ -106,7 +106,7 @@ void main() {
     expect(scope, isNotNull);
   });
 
-  test("shoud create the scope", () {
+  test('shoud create the scope', () {
     koin.createScopeWithQualifier('myScope', scopeKey);
 
     var scope = koin.getScope('myScope');

@@ -16,6 +16,7 @@ abstract class CounterInterface {
 }
 
 class Counter implements CounterInterface {
+  @override
   final int value;
 
   Counter(this.value);
@@ -57,7 +58,7 @@ class CounterAppMixinWithParams with KoinComponentMixin {
 }
 
 void main() {
-  group(("without parameters"), () {
+  group(('without parameters'), () {
     test('can run KoinComponentMixin app', () {
       var koin = startKoin((appX) {
         appX.printLogger();
@@ -112,7 +113,7 @@ void main() {
     });
   });
 
-  group("withParams", () {
+  group('withParams', () {
     test('can run KoinComponentMixin app - withParams', () {
       var koin = startKoin((appX) {
         appX.printLogger();
