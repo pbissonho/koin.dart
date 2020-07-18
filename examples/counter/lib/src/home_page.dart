@@ -5,10 +5,10 @@ import 'package:koin/koin.dart';
 import 'package:koin_flutter/koin_flutter.dart';
 
 /// Define a koin module with a scope for `SimpleCounterPage`.
+/// Define a scope and definition with just one line.
+/// Here, the `SimpleCounterPage` scope is being defined, which contains a definition for `Counter`.
 var simpleModule = Module()
-  ..scope<SimpleCounterPage>((s) {
-    s.scoped((s) => Counter(0));
-  });
+  ..scopeOne<Counter, SimpleCounterPage>((scope) => Counter(0));
 
 class SimpleCounterPage extends StatefulWidget {
   @override
@@ -22,7 +22,6 @@ class _SimpleCounterPageState extends State<SimpleCounterPage>
   Widget build(BuildContext context) {
     // Get the Counter of the scope instantiated for the SimpleCounterPage.
     var counter = currentScope.get<Counter>();
-
     return Scaffold(
       body: Center(
         child: Column(
@@ -34,7 +33,7 @@ class _SimpleCounterPageState extends State<SimpleCounterPage>
               builder: (_) {
                 return Text(
                   '${counter.value}',
-                  style: Theme.of(context).textTheme.display1,
+                  style: Theme.of(context).textTheme.headline1,
                 );
               },
             ),
@@ -47,6 +46,9 @@ class _SimpleCounterPageState extends State<SimpleCounterPage>
 
 var homeModule = Module()
   ..single<Counter>((s) => Counter(0))
+
+  /// Using `scopeOne` that only allows you to declare a definition.
+  /// Using `scope` it is possible to declare several definitions for the scope.
   ..scope<MyHomePage>((s) {
     s.scoped((s) => Counter(0));
     s.factory1<Counter, int>((s, value) => Counter(value),
@@ -105,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
               builder: (_) {
                 return Text(
                   '${counter.value}',
-                  style: Theme.of(context).textTheme.display1,
+                  style: Theme.of(context).textTheme.headline1,
                 );
               },
             ),
@@ -116,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
               builder: (_) {
                 return Text(
                   '${counter2.value}',
-                  style: Theme.of(context).textTheme.display1,
+                  style: Theme.of(context).textTheme.headline1,
                 );
               },
             ),
@@ -127,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
               builder: (_) {
                 return Text(
                   '${counterSingle.value}',
-                  style: Theme.of(context).textTheme.display1,
+                  style: Theme.of(context).textTheme.headline1,
                 );
               },
             ),
