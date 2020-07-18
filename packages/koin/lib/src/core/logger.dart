@@ -38,18 +38,22 @@ abstract class Logger {
 
   void log(Level level, String msg);
 
-  bool canLog(Level level) {
-    return this.level == level;
-  }
-
-  void doLog(Level level, String msg) {
-    if (canLog(level)) {
+  void isAtLog(Level level, String msg, Level isAtLevel) {
+    if (isAt(isAtLevel)) {
       log(level, msg);
     }
   }
 
-  void debug(String msg) {
+  void debug(String msg, {Level level}) {
     log(Level.debug, msg);
+  }
+
+  void isAtdebug(String msg, Level isAtLevel) {
+    isAtLog(Level.debug, msg, isAtLevel);
+  }
+
+  void isAtInfo(String msg, Level isAtLevel) {
+    isAtLog(Level.info, msg, isAtLevel);
   }
 
   void info(String msg) {
@@ -65,6 +69,9 @@ abstract class Logger {
 
 class EmptyLogger extends Logger {
   const EmptyLogger(Level loglevel);
+
+  @override
+  bool isAtLog(Level level, String msg, Level isAtLevel) => false;
 
   @override
   void log(Level level, String message) {}

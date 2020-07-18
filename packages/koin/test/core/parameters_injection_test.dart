@@ -295,4 +295,12 @@ void main() {
     expect(42, f.myIntFactory.id);
     expect('42', f.myStringFactory.s);
   });
+
+  test('shoud trow a exception when not pass parameters', () {
+    var app = koinApplication((app) {
+      app.module(Module()..single1<MySingle, int>((s, id) => MySingle(id)));
+    });
+
+    expect(() => app.koin.getWithParams<MySingle>(), throwsException);
+  });
 }

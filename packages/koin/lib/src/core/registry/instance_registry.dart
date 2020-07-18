@@ -22,12 +22,10 @@ class InstanceRegistry {
 
   void create(KtHashSet<BeanDefinition> definitions) {
     definitions.forEach((definition) {
-      if (koin.logger.isAt(Level.debug)) {
-        if (scope.scopeDefinition.isRoot) {
-          koin.logger.debug('- $definition');
-        } else {
-          koin.logger.debug('scope -> $definition');
-        }
+      if (scope.scopeDefinition.isRoot) {
+        koin.logger.isAtdebug('- $definition', Level.debug);
+      } else {
+        koin.logger.isAtdebug('scope -> $definition', Level.debug);
       }
       saveDefinition(definition, override: false);
     });

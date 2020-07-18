@@ -43,9 +43,7 @@ abstract class InstanceFactory<T> {
   /// @return T
   ///
   T create(InstanceContext context) {
-    if (koin.logger.isAt(Level.debug)) {
-      logger.debug('| create instance for $beanDefinition');
-    }
+    logger.isAtdebug('| create instance for $beanDefinition', Level.debug);
 
     try {
       var parameters = context.parameters;

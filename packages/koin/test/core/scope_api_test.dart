@@ -94,6 +94,13 @@ void main() {
     scope1.close();
     expect(closed, true);
   });
+
+  test('scope to string', () {
+    var scopeId = 'myScope';
+    var scope1 = koin.createScope(scopeId, scopeKey);
+
+    expect(scope1.toString(),'[${scope1.id}]');
+  });
 }
 
 class ScopeCallbackTest implements ScopeCallback {

@@ -377,9 +377,8 @@ No definition found for class:'$type'$qualifierString. Check your definitions!""
 
   void clear() {
     _closed = true;
-    if (koin.logger.isAt(Level.debug)) {
-      koin.logger.info("closing scope:'$id'");
-    }
+    koin.logger.isAtInfo("closing scope:'$id'", Level.debug);
+
     // call on close from callbacks
     callbacks.forEach((callback) {
       callback.onScopeClose(this);
@@ -391,7 +390,7 @@ No definition found for class:'$type'$qualifierString. Check your definitions!""
 
   @override
   String toString() {
-    return "['$id']";
+    return "[$id]";
   }
 
   void dropInstances(ScopeDefinition scopeDefinition) {
