@@ -254,7 +254,7 @@ void main() {
       app.module(currentModule);
     });
 
-    var scope = app.koin.createScope('id', named<ScopeKey>());
+    var scope = app.koin.createScopeWithQualifier('id', named<ScopeKey>());
     var defA = scope.getBeanDefinition(ComponentA);
 
     expect(Kind.single, defA.kind);
@@ -283,7 +283,7 @@ void main() {
 
     var koin = app.koin;
 
-    var scope = app.koin.createScope('id', named<ScopeKey>());
+    var scope = app.koin.createScopeWithQualifier('id', named<ScopeKey>());
     var defA = scope.getBeanDefinition(ComponentA);
 
     expect(Kind.single, defA.kind);
@@ -308,7 +308,8 @@ void main() {
       app.module(currentModule);
     });
 
-    var scope = KoinContextHandler.get().createScope('id', named<ScopeKey>());
+    var scope = KoinContextHandler.get()
+        .createScopeWithQualifier('id', named<ScopeKey>());
     expect(scope.getBeanDefinition(ComponentA), isNotNull);
 
     unloadKoinModule(currentModule);

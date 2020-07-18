@@ -25,7 +25,7 @@ void main() {
         }));
     });
 
-    final scope = app.koin.createScopeT<ComponentA>('_ID_', null);
+    final scope = app.koin.createScopeWithSource<ComponentA>('_ID_', null);
     
     expect(true, scope.get<ComponentInterface1>() is Component1);
   });

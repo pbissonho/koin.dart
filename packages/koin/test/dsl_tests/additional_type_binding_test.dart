@@ -24,7 +24,6 @@ void main() {
   });
 
 
-
   test('can resolve an additional type - bind()', () {
     var app = koinApplication((app) {
       app.printLogger();

@@ -18,7 +18,7 @@ void main() {
         .first((def) => def.qualifier == scopeKey);
     expect(def.qualifier, scopeKey);
 
-    var scope = koin.createScope("id", scopeKey);
+    var scope = koin.createScopeWithQualifier("id", scopeKey);
     expect(scope.scopeDefinition, def);
   });
 
@@ -41,8 +41,10 @@ void main() {
         .first((def) => def.qualifier == named("B"));
     expect(defB.qualifier, StringQualifier("B"));
 
-    var scopeA = koin.createScope("A", named("A")).get<ComponentA>();
-    var scopeB = koin.createScope("B", named("B")).get<ComponentA>();
+    var scopeA =
+        koin.createScopeWithQualifier("A", named("A")).get<ComponentA>();
+    var scopeB =
+        koin.createScopeWithQualifier("B", named("B")).get<ComponentA>();
     expect(true, scopeA != scopeB);
   });
 }

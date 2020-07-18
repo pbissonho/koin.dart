@@ -188,7 +188,8 @@ class Koin {
   ///
   /// Create a Scope instance
   ///
-  Scope createScope(String scopeId, Qualifier qualifier, [dynamic source]) {
+  Scope createScope<T>(String scopeId, [dynamic source]) {
+    var qualifier = TypeQualifier(T);
     if (logger.isAt(Level.debug)) {
       logger.debug('!- create scope - id:$scopeId q:$qualifier');
     }
@@ -198,11 +199,20 @@ class Koin {
   ///
   /// Create a Scope instance
   ///
-  Scope createScopeT<T>(String scopeId, dynamic source) {
-    var qualifier = TypeQualifier(T);
+  Scope createScopeWithQualifier(String scopeId, Qualifier qualifier,
+      [dynamic source]) {
     if (logger.isAt(Level.debug)) {
       logger.debug('!- create scope - id:$scopeId q:$qualifier');
     }
+    return _scopeRegistry.createScope(scopeId, qualifier, source);
+  }
+
+  ///
+  /// Create a Scope instance
+  ///
+  Scope createScopeWithSource<T>(String scopeId, dynamic source) {
+    var qualifier = TypeQualifier(T);
+    logger.isAtdebug('!- create scope - id:$scopeId q:$qualifier', Level.debug);
     return _scopeRegistry.createScope(scopeId, qualifier, source);
   }
 
@@ -210,9 +220,9 @@ class Koin {
     var type = T;
     var scopeId = type.scopeId;
     var qualifier = TypeQualifier(T);
-    if (logger.isAt(Level.debug)) {
-      logger.debug('!- create scope - id:$scopeId q:$qualifier');
-    }
+
+    logger.isAtdebug('!- create scope - id:$scopeId q:$qualifier', Level.debug);
+
     return _scopeRegistry.createScope(scopeId, qualifier, null);
   }
 
@@ -238,7 +248,7 @@ class Koin {
   Scope getOrCreateScope<T>(String scopeId) {
     var scope = _scopeRegistry.getScopeOrNull(scopeId);
     if (scope == null) {
-      return createScope(scopeId, named<T>());
+      return createScopeWithQualifier(scopeId, named<T>());
     }
     return scope;
   }
@@ -249,7 +259,7 @@ class Koin {
   Scope getOrCreateScopeQualifier(String scopeId, Qualifier qualifier) {
     var scope = _scopeRegistry.getScopeOrNull(scopeId);
     if (scope == null) {
-      return createScope(scopeId, qualifier);
+      return createScopeWithQualifier(scopeId, qualifier);
     }
     return scope;
   }

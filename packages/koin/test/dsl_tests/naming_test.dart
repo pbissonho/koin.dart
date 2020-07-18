@@ -15,7 +15,7 @@ void main() {
         }));
     }).koin;
 
-    var scope = koin.createScope("myScope", scopeName);
+    var scope = koin.createScopeWithQualifier("myScope", scopeName);
     expect(24, scope.get<MySingle>(named("24")).id);
     expect(42, scope.get<MySingle>().id);
   });

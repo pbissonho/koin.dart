@@ -28,6 +28,6 @@ extension ScopeExt<T> on T {
 
   Scope createScope([Koin koin]) {
     koin ??= KoinContextHandler.get();
-    return koin.createScope(scopeId, scopeName, this);
+    return koin.createScopeWithQualifier(scopeId, scopeName, this);
   }
 }

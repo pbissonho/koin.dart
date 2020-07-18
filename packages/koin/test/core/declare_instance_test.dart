@@ -130,7 +130,7 @@ Not can declare and override a single on the fly when override is set to false""
 
     var a = ComponentA();
 
-    var session1 = koin.createScope('session1', named('Session'));
+    var session1 = koin.createScopeWithQualifier('session1', named('Session'));
     session1.declare(a);
 
     expect(a, session1.get<ComponentA>());
@@ -145,7 +145,7 @@ Not can declare and override a single on the fly when override is set to false""
 
     var a = ComponentA();
 
-    var session1 = koin.createScope('session1', named('Session'));
+    var session1 = koin.createScopeWithQualifier('session1', named('Session'));
     session1.declare(a);
 
     expect(
@@ -160,8 +160,8 @@ Not can declare and override a single on the fly when override is set to false""
 
     var a = ComponentA();
 
-    var session1 = koin.createScope('session1', named('Session'));
-    var session2 = koin.createScope('session2', named('Session'));
+    var session1 = koin.createScopeWithQualifier('session1', named('Session'));
+    var session2 = koin.createScopeWithQualifier('session2', named('Session'));
 
     session1.declare(a);
 

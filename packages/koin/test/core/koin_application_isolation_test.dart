@@ -70,8 +70,8 @@ void main() {
     });
 
     var a1 = KoinContextHandler.get().get<ComponentA>();
-    var scope1 =
-        KoinContextHandler.get().createScope('simple', named<Simple>());
+    var scope1 = KoinContextHandler.get()
+        .createScopeWithQualifier('simple', named<Simple>());
     var b1 = scope1.get<ComponentB>();
 
     stopKoin();
@@ -81,8 +81,8 @@ void main() {
     });
 
     var a2 = KoinContextHandler.get().get<ComponentA>();
-    var scope2 =
-        KoinContextHandler.get().createScope('simple', named<Simple>());
+    var scope2 = KoinContextHandler.get()
+        .createScopeWithQualifier('simple', named<Simple>());
     var b2 = scope2.get<ComponentB>();
 
     expect(a1, isNot(a2));

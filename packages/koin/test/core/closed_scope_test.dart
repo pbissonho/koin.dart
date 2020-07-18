@@ -23,8 +23,8 @@ void main() {
           }))
         .koin;
 
-    var scope1 = koin.createScope('scope1', named<ScopeType>());
-    var scope2 = koin.createScope('scope2', named<ScopeType>());
+    var scope1 = koin.createScopeWithQualifier('scope1', named<ScopeType>());
+    var scope2 = koin.createScopeWithQualifier('scope2', named<ScopeType>());
 
     expect(scope1.get<ComponentA>(), isNot(equals(scope2.get<ComponentA>())));
   });
@@ -59,7 +59,7 @@ void main() {
         }));
     }).koin;
 
-    var scope1 = koin.createScope('scope1', named<ScopeType>());
+    var scope1 = koin.createScopeWithQualifier('scope1', named<ScopeType>());
     var mySingle = scope1.get<CustomSingle>();
 
     stopKoin();
@@ -75,8 +75,8 @@ void main() {
         }));
     }).koin;
 
-    var scope1 = koin.createScope('scope1', named<ScopeType>());
-    var scope2 = koin.createScope('scope2', named<ScopeType>());
+    var scope1 = koin.createScopeWithQualifier('scope1', named<ScopeType>());
+    var scope2 = koin.createScopeWithQualifier('scope2', named<ScopeType>());
     stopKoin();
 
     expect(scope1.closed, true);
@@ -93,7 +93,7 @@ void main() {
           }))
         .koin;
 
-    var scope = koin.createScope('myScope', named<ScopeType>());
+    var scope = koin.createScopeWithQualifier('myScope', named<ScopeType>());
     var scope2 = koin.getOrCreateScopeQualifier('myScope', named<ScopeType>());
     var scope3 = koin.getOrCreateScope<ScopeType>('myScope');
 
@@ -112,7 +112,7 @@ void main() {
             scope.factory((s) => ComponentB(s.get()));
           }))
         .koin;
-    var scope = koin.createScope('myScope', named<ScopeType>());
+    var scope = koin.createScopeWithQualifier('myScope', named<ScopeType>());
 
     expect(scope.get<ComponentB>(), isNot(equals(scope.get<ComponentB>())));
     expect(scope.get<ComponentA>(), scope.get<ComponentB>().a);
@@ -130,7 +130,7 @@ void main() {
         }));
     }).koin;
 
-    var scope = koin.createScope('myScope', named<ScopeType>());
+    var scope = koin.createScopeWithQualifier('myScope', named<ScopeType>());
 
     expect(scope.get<ComponentB>(), isNot(equals(scope.get<ComponentB>())));
     expect(scope.get<ComponentA>(), scope.get<ComponentB>().a);
@@ -143,7 +143,7 @@ void main() {
         ..scope<ScopeType>((scope) => scope.scoped((s) => ComponentB(s.get())))
     ]).koin;
 
-    var scope = koin.createScope('myScope', named<ScopeType>());
+    var scope = koin.createScopeWithQualifier('myScope', named<ScopeType>());
 
     expect(scope.get<ComponentB>(), scope.get<ComponentB>());
     expect(scope.get<ComponentA>(), scope.get<ComponentB>().a);
@@ -158,8 +158,8 @@ void main() {
             scope.scoped((s) => ComponentA());
           }))
         .koin;
-    var scope1 = koin.createScope('scope1', named(scopeName));
-    var scope2 = koin.createScope('scope2', named(scopeName));
+    var scope1 = koin.createScopeWithQualifier('scope1', named(scopeName));
+    var scope2 = koin.createScopeWithQualifier('scope2', named(scopeName));
 
     expect(scope1.get<ComponentA>(), isNot(equals(scope2.get<ComponentA>())));
   });
@@ -173,7 +173,7 @@ void main() {
             scope.scoped((s) => ComponentB(s.get()));
           }))
         .koin;
-    var scope = koin.createScope('myScope', named(scopeName));
+    var scope = koin.createScopeWithQualifier('myScope', named(scopeName));
 
     expect(scope.get<ComponentB>(), scope.get<ComponentB>());
     expect(scope.get<ComponentA>(), scope.get<ComponentB>().a);
@@ -187,7 +187,7 @@ void main() {
             scope.scoped((s) => ComponentB(s.get()));
           }))
         .koin;
-    var scope = koin.createScope('myScope', named(scopeName));
+    var scope = koin.createScopeWithQualifier('myScope', named(scopeName));
 
     expect(scope.get<ComponentB>(), scope.get<ComponentB>());
     expect(scope.get<ComponentA>(), scope.get<ComponentB>().a);
@@ -201,7 +201,7 @@ void main() {
             scope.scoped((s) => ComponentB(s.get()));
           }))
         .koin;
-    var scope = koin.createScope('myScope', named(scopeName));
+    var scope = koin.createScopeWithQualifier('myScope', named(scopeName));
 
     expect(scope.get<ComponentB>(), scope.get<ComponentB>());
     expect(scope.get<ComponentA>(), isNot(equals(scope.get<ComponentB>().a)));
@@ -215,7 +215,7 @@ void main() {
             scope.scoped((s) => ComponentB(s.get()));
           }))
         .koin;
-    var scope = koin.createScope('myScope', named(scopeName));
+    var scope = koin.createScopeWithQualifier('myScope', named(scopeName));
 
     try {
       scope.get<ComponentA>();
@@ -238,8 +238,8 @@ void main() {
             });
           }))
         .koin;
-    var scope1 = koin.createScope('myScope1', named('SCOPE_1'));
-    var scope2 = koin.createScope('myScope2', named('SCOPE_2'));
+    var scope1 = koin.createScopeWithQualifier('myScope1', named('SCOPE_1'));
+    var scope2 = koin.createScopeWithQualifier('myScope2', named('SCOPE_2'));
     var b = scope2.get<ComponentB>(null, parametersOf([scope1]));
     var a = scope1.get<ComponentA>();
 
@@ -255,7 +255,7 @@ void main() {
           }))
         .koin;
 
-    var scope1 = koin.createScope('myScope1', named('SCOPE_1'));
+    var scope1 = koin.createScopeWithQualifier('myScope1', named('SCOPE_1'));
     var parameters = 42;
     var a = scope1.get<MySingle>(null, parametersOf([42]));
     expect(parameters, a.id);

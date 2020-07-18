@@ -49,7 +49,7 @@ void main() {
         }));
     });
 
-    var scope = app.koin.createScope('scopeId', scopeKey);
+    var scope = app.koin.createScopeWithQualifier('scopeId', scopeKey);
 
     var a = scope.getWithParams<MySingle>(parameters: parametersOf([42]));
     var lazyA =
@@ -70,7 +70,7 @@ void main() {
         }));
     });
 
-    var scope = app.koin.createScope('scopeId', scopeKey);
+    var scope = app.koin.createScopeWithQualifier('scopeId', scopeKey);
 
     var a = scope.getWithParams<MySingle2>(
         parameters: parametersOf([42, 'myString']));
@@ -90,7 +90,7 @@ void main() {
         }));
     });
 
-    var scope = app.koin.createScope('scopeId', scopeKey);
+    var scope = app.koin.createScopeWithQualifier('scopeId', scopeKey);
 
     var a = scope.getWithParams<MySingle3>(
         parameters: parametersOf([42, 'myString', 'myString2']));
@@ -216,7 +216,7 @@ void main() {
         }));
     });
 
-    var scope = app.koin.createScope('myScope', scopeKey);
+    var scope = app.koin.createScopeWithQualifier('myScope', scopeKey);
 
     var a = scope.getWithParams<MySingle>(parameters: parametersOf([42]));
     var b = scope.getWithParams<MySingle>(parameters: parametersOf([43]));
@@ -236,7 +236,7 @@ void main() {
         }));
     });
 
-    var scope = app.koin.createScope('myScope', scopeKey);
+    var scope = app.koin.createScopeWithQualifier('myScope', scopeKey);
 
     var a = scope.getWithParams<MySingle2>(
         parameters: parametersOf([42, 'myString']));
@@ -263,7 +263,7 @@ void main() {
         }));
     });
 
-    var scope = app.koin.createScope('myScope', scopeKey);
+    var scope = app.koin.createScopeWithQualifier('myScope', scopeKey);
 
     var a = scope.getWithParams<MySingle3>(
         parameters: parametersOf([42, 'myString', 'lastName']));
