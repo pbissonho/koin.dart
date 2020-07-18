@@ -9,28 +9,28 @@ abstract class Disposable {
 }
 
 extension BlocModuleExtension on Module {
- /// Defines a BLoC as single definition that will be automatically closed.
- /// The `dispose` method of the instance created by the [definition] will be called when the global context of the koin is finalized.
- /// 
- /// Implement `Disposable` interface when the business classes use streams
- /// or it is necessary to finalize some internal component.
- /// 
- /// Implement the Disposable interface: 
- ///```
- ///class Bloc implements Disposable {
- ///
- /// @override
- /// void dispose() {
- ///   // close streams
- ///   // ...
- ///   }
- ///}
- ///```
- ///Define the bloc:
- ///```
- ///var blocModule = Module()..bloc((s) => Bloc());
- ///```
- ///
+  /// Defines a BLoC as single definition that will be automatically closed.
+  /// The `dispose` method of the instance created by the [definition] will be called when the global context of the koin is finalized.
+  ///
+  /// Implement `Disposable` interface when the business classes use streams
+  /// or it is necessary to finalize some internal component.
+  ///
+  /// Implement the Disposable interface:
+  ///```
+  ///class Bloc implements Disposable {
+  ///
+  /// @override
+  /// void dispose() {
+  ///   // close streams
+  ///   // ...
+  ///   }
+  ///}
+  ///```
+  ///Define the bloc:
+  ///```
+  ///var blocModule = Module()..bloc((s) => Bloc());
+  ///```
+  ///
   BeanDefinition<T> bloc<T extends Disposable>(
     DefinitionFunction<T> definition, {
     Qualifier qualifier,
@@ -48,32 +48,31 @@ extension BlocModuleExtension on Module {
 }
 
 extension ScopeSetBlocExtension on ScopeDSL {
- 
- /// Defines a BLoC as scoped definition that will be automatically closed when the scope is closed.
- /// The `dispose` method of the instance created by the [definition] will be called when the scope is closed.
- /// 
- /// Implement `Disposable` interface when the business classes use streams
- /// or it is necessary to finalize some internal component.
- /// 
- /// Implement the Disposable interface: 
- ///```
- ///class Bloc implements Disposable {
- ///
- /// @override
- /// void dispose() {
- ///   // close streams
- ///   // ...
- ///   }
- ///}
- ///```
- ///Defines the bloc for a scope:
- ///```
- ///var blocModule = Module()
- /// ..scope<ScopeWidget>((scope) {
- ///   scope.scopedBloc<ScopedBloc>((s) => ScopedBloc());
- /// });
- ///```
- /// 
+  /// Defines a BLoC as scoped definition that will be automatically closed when the scope is closed.
+  /// The `dispose` method of the instance created by the [definition] will be called when the scope is closed.
+  ///
+  /// Implement `Disposable` interface when the business classes use streams
+  /// or it is necessary to finalize some internal component.
+  ///
+  /// Implement the Disposable interface:
+  ///```
+  ///class Bloc implements Disposable {
+  ///
+  /// @override
+  /// void dispose() {
+  ///   // close streams
+  ///   // ...
+  ///   }
+  ///}
+  ///```
+  ///Defines the bloc for a scope:
+  ///```
+  ///var blocModule = Module()
+  /// ..scope<ScopeWidget>((scope) {
+  ///   scope.scopedBloc<ScopedBloc>((s) => ScopedBloc());
+  /// });
+  ///```
+  ///
   BeanDefinition<T> scopedBloc<T extends Disposable>(
     DefinitionFunction<T> definition, {
     Qualifier qualifier,

@@ -29,28 +29,28 @@ class ComponentB implements ComponentBInterface {
   int testId() => id;
 }
 
-var myModule = Module()
+var module = Module()
   ..single((s) => Component(20)).bind<ComponentInterface>()
   ..factory1<Component, int>((s, id) => Component(id), qualifier: named("Fac"))
   ..scope<HomePage>((s) {
     s.scoped((s) => Component(50));
   });
 
-var myModule2 = Module()
+var module2 = Module()
   ..single((s) => Component(20)).bind<ComponentInterface>()
   ..factory1<Component, int>((s, id) => Component(id), qualifier: named("Fac"))
   ..scope<HomePageStateless>((s) {
     s.scoped((s) => Component(50));
   });
 
-var myModule3 = Module()
+var module3 = Module()
   ..single((s) => Component(20)).bind<ComponentInterface>()
   ..factory1<Component, int>((s, id) => Component(id), qualifier: named("Fac"))
   ..scope<HomePage3>((s) {
     s.scoped((s) => Component(50));
   });
 
-var myModuleWithParams = Module()
+var moduleWithParams = Module()
   ..single1<Component, int>((s, value) => Component(value))
       .bind<ComponentInterface>()
   ..single1<ComponentB, int>((s, value) => ComponentB(value))
@@ -213,7 +213,7 @@ void main() {
 
   testWidgets('can get with State extension', (WidgetTester tester) async {
     startKoin((app) {
-      app.module(myModule);
+      app.module(module);
     });
 
     // Create the widget by telling the tester to build it.
@@ -239,7 +239,7 @@ void main() {
   testWidgets('can get with StatelessWidget extension',
       (WidgetTester tester) async {
     startKoin((app) {
-      app.module(myModule2);
+      app.module(module2);
     });
 
     // Create the widget by telling the tester to build it.
@@ -262,7 +262,7 @@ void main() {
   testWidgets('can get with StatefulWidget extension',
       (WidgetTester tester) async {
     startKoin((app) {
-      app.module(myModule3);
+      app.module(module3);
     });
 
     // Create the widget by telling the tester to build it.
@@ -288,7 +288,37 @@ void main() {
   testWidgets('can get with StatefulWidget extension - withParams',
       (WidgetTester tester) async {
     startKoin((app) {
-      app.module(myModuleWithParams);
+      app.module(moduleWithParams);
+    });
+
+    // Create the widget by telling the tester to build it.
+    await tester.pumpWidget(MaterialApp(
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: HomePageWithParams(),
+    ));
+
+    // Create the Finders.
+    final componentSingleIdFinder = find.text('1');
+    // Create the Finders.
+    final componentBSingleFinder = find.text('10');
+    // Create the Finders.
+    final componentIdFactoryFinder = find.text('60');
+
+    // Create the Finders.
+    final componentScopedFinder = find.text('30');
+
+    // Use the `findsOneWidget` matcher provided by flutter_test to
+    // verify that the Text widgets appear exactly once in the widget tree.
+    expect(componentSingleIdFinder, findsNWidgets(2));
+    expect(componentBSingleFinder, findsOneWidget);
+    expect(componentIdFactoryFinder, findsOneWidget);
+    expect(componentScopedFinder, findsOneWidget);
+  });
+
+  testWidgets('can get with StatefulWidget extension - withParams',
+      (WidgetTester tester) async {
+    startKoin((app) {
+      app.module(moduleWithParams);
     });
 
     // Create the widget by telling the tester to build it.

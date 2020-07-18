@@ -44,8 +44,8 @@ extension StatefulWidgetScopeExtensiont<T extends StatefulWidget> on T {
 
   Scope get scope => _getOrCreateScope();
 
-  Scope _getOrCreateScope([Koin koin]) {
-    koin ??= KoinContextHandler.get();
+  Scope _getOrCreateScope() {
+    var koin = KoinContextHandler.get();
     var scopeOrNull = _getScopeOrNull(koin);
 
     if (scopeOrNull == null) {
@@ -55,13 +55,11 @@ extension StatefulWidgetScopeExtensiont<T extends StatefulWidget> on T {
     return scopeOrNull;
   }
 
-  Scope _getScopeOrNull([Koin koin]) {
-    koin ??= KoinContextHandler.get();
+  Scope _getScopeOrNull(Koin koin) {
     return koin.getScopeOrNull((scopeId));
   }
 
-  Scope _createScope([Koin koin]) {
-    koin ??= KoinContextHandler.get();
+  Scope _createScope(Koin koin) {
     return koin.createScope(scopeId, _scopeName, this);
   }
 }
@@ -87,9 +85,8 @@ mixin ScopeStateMixin<T extends StatefulWidget> on State<T> {
     return _scope;
   }
 
-  Scope _getScopeOrNull([Koin koin]) {
-    koin ??= KoinContextHandler.get();
-    return koin.getScopeOrNull((widget.scopeId));
+  Scope _getScopeOrNull() {
+    return KoinContextHandler.get().getScopeOrNull((widget.scopeId));
   }
 
   @override

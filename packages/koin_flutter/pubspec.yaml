@@ -12,6 +12,7 @@ dependencies:
   koin: ^0.11.0
   
 dev_dependencies:
+  koin_test: ^0.11.5
   flutter_test:
     sdk: flutter
 
