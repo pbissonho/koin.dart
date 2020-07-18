@@ -98,7 +98,6 @@ class Scope {
     DefinitionParameters parameters,
     Qualifier qualifier,
   ]) {
-    parameters ??= emptyParametersHolder();
     return lazy<T>(() => get<T>(qualifier, parameters));
   }
 
@@ -114,7 +113,6 @@ class Scope {
     DefinitionParameters parameters,
     Qualifier qualifier,
   }) {
-    parameters ??= emptyParametersHolder();
     return lazy<T>(() => get<T>(qualifier, parameters));
   }
 
@@ -130,7 +128,6 @@ class Scope {
     DefinitionParameters parameters,
     Qualifier qualifier,
   ]) {
-    parameters ??= emptyParametersHolder();
     return lazy<T>(() => getOrNull<T>(qualifier, parameters));
   }
 
@@ -212,6 +209,8 @@ class Scope {
       throw ClosedScopeException('Scope $id is closed');
     }
 
+    parameters ??= emptyParametersHolder();
+
     var indexKeyCurrent = indexKey(type, qualifier);
 
     var instance =
@@ -221,7 +220,7 @@ class Scope {
     var inOtherScope = findInOtherScope<T>(type, qualifier, parameters);
     if (inOtherScope != null) return inOtherScope;
 
-    var fromSource = getFromSource(type);
+    var fromSource = getFromSource<T>(type);
 
     if (fromSource == null) {
       var qualifierString =

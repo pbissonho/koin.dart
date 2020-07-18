@@ -1,4 +1,5 @@
 import 'package:koin/koin.dart';
+import 'package:koin/src/core/error/exceptions.dart';
 import 'package:test/test.dart';
 
 import '../components.dart';
@@ -296,11 +297,22 @@ void main() {
     expect('42', f.myStringFactory.s);
   });
 
-  test('shoud trow a exception when not pass parameters', () {
+  test('shoud trow a exception when not pass parameters - getWithParams', () {
     var app = koinApplication((app) {
       app.module(Module()..single1<MySingle, int>((s, id) => MySingle(id)));
     });
 
-    expect(() => app.koin.getWithParams<MySingle>(), throwsException);
+    expect(() => app.koin.getWithParams<MySingle>(),
+        throwsA(isA<InstanceCreationException>()));
+  });
+
+  test('shoud trow a exception when not pass parameters - injectWithParams',
+      () {
+    var app = koinApplication((app) {
+      app.module(Module()..single1<MySingle, int>((s, id) => MySingle(id)));
+    });
+
+    expect(() => app.koin.injectWithParams<MySingle>(),
+        throwsA(isA<InstanceCreationException>()));
   });
 }

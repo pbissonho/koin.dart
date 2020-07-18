@@ -6,6 +6,8 @@ class C {}
 
 class D {}
 
+class G {}
+
 class A extends KoinComponent {
   B b;
   C c;
@@ -22,6 +24,14 @@ class CofB {
 
   CofB(this.b);
 }
+
+class CofW {
+  final G g;
+
+  CofW(this.g);
+}
+
+
 
 class AInj extends KoinComponent {
   Lazy<B> b;

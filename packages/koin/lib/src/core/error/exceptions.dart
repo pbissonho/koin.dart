@@ -32,10 +32,6 @@ abstract class KoinException implements Exception {
   }
 }
 
-class BadScopeInstanceException extends KoinException {
-  BadScopeInstanceException(String msg) : super(msg);
-}
-
 class ClosedScopeException extends KoinException {
   ClosedScopeException(String msg) : super(msg);
 }
@@ -51,10 +47,8 @@ class DefinitionParameterException extends KoinException {
 class InstanceCreationException extends KoinException {
   String exceptionMessage;
 
-  InstanceCreationException(String msg, this.exceptionMessage) : super(msg);
-
-  @override
-  String get msg => '${super.msg}  $exceptionMessage';
+  InstanceCreationException(String msg, this.exceptionMessage)
+      : super('$msg : $exceptionMessage');
 }
 
 class KoinAppAlreadyStartedException extends KoinException {

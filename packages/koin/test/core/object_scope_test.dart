@@ -46,6 +46,39 @@ void main() {
     expect(c.b, b);
   });
 
+  test('shoud get from source', () {
+    var koin = startKoin((app) {
+      app.module(Module()
+        ..single((s) => A())
+        ..scope<A>((s) {
+          s.scoped((s) => BofA(s.getSource()));
+        })
+        ..scope<BofA>((s) {
+          s.scoped((s) => CofB(s.getSource()));
+        }));
+    }).koin;
+
+    var a = koin.get<A>();
+    var a2 = a.scope.getFromSource<A>(A);
+
+    expect(a, a2);
+  });
+
+  test('shoud trow a exception when getSource with a diferent type', () {
+    var koin = startKoin((app) {
+      app.module(Module()
+        ..single((s) => A())
+        ..scope<A>((s) {
+          s.scoped((s) => CofW(s.getSource()));
+        }));
+    }).koin;
+
+    expect(() {
+      var a = koin.get<A>();
+      a.scope.get<CofW>();
+    }, throwsA(isA<InstanceCreationException>()));
+  });
+
   test('typed scope & source with get', () {
     var koin = startKoin((app) {
       app.module(Module()
@@ -270,6 +303,21 @@ void main() {
     var a = koin.get<A>();
 
     expect(() => koin.scopeRegistry.rootScope.linkTo([a.scope]),
+        throwsA(isA<IllegalStateException>()));
+  });
+
+  test('error for root unlink scope', () {
+    var koin = startKoin((app) {
+      app.module(Module()
+        ..single((s) => A())
+        ..scope<A>((s) {
+          s.scoped((s) => B());
+        }));
+    }).koin;
+
+    var a = koin.get<A>();
+
+    expect(() => koin.scopeRegistry.rootScope.unlink([a.scope]),
         throwsA(isA<IllegalStateException>()));
   });
 }

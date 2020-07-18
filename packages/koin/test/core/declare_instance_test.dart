@@ -14,6 +14,7 @@ void main() {
 
     koin.declare(a);
   });
+
   test('not can declare a single on the fly', () {
     var koin = KoinApplication()
         .printLogger()
