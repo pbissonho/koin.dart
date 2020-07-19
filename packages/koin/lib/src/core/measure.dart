@@ -47,7 +47,7 @@ class Measure {
 }
 
 ///
-/// 
+///
 ///
 class Pair<T> {
   final double duration;

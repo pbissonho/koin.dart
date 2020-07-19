@@ -22,4 +22,3 @@ export 'src/core/koin_application.dart';
 export 'src/core/koin_component.dart';
 export 'src/core/koin_dart.dart';
 export 'src/dsl/koin_application_dsl.dart';
-
