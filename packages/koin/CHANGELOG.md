@@ -1,3 +1,27 @@
+## 0.12.0
+
+- Update readme
+- Improvements in error handling.
+- Loggger improvements.
+- Added `createScopeWithQualifier` and `createScopeWithSource` to the scope API.
+- Added the `scopeOne` declaration method.
+ * Allows you to declare a 'scoped' definition and a scope with just one line.
+ * Used for scopes that have only one definition.
+
+- Breaking changes
+ * Remove the createScopeT metohod from scope API.
+ * Remove the `qualifier` parameter from createScope.
+
+    Before:
+    ```dart
+    var scope2 = koin.createScope('myScope', named<ScopeType>());
+    ```  
+    Now:
+    ```dart
+    var scope2 = koin.createScope<ScopeType>('myScope');
+    ```  
+
+
 ## 0.11.0+1
 
 - Update readme
