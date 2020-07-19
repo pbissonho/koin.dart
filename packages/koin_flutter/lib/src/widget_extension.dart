@@ -60,7 +60,7 @@ extension StatefulWidgetScopeExtensiont<T extends StatefulWidget> on T {
   }
 
   Scope _createScope(Koin koin) {
-    return koin.createScope(scopeId, _scopeName, this);
+    return koin.createScopeWithQualifier(scopeId, _scopeName, this);
   }
 }
 

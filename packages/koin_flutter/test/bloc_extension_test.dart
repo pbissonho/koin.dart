@@ -230,7 +230,7 @@ void main() {
 
     testWidgets("the bloc instance is disposed when the scope is closed koin",
         (tester) async {
-      var scope = koin.createScopeT<ScopeWidget>('myScope', null);
+      var scope = koin.createScope<ScopeWidget>('myScope');
       var bloc = scope.get<Bloc>();
       expect(bloc, isNotNull);
       expect(bloc.isDisposed, false);

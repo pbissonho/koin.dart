@@ -1,3 +1,7 @@
+## 0.9.2
+
+- Fix internal error.
+
 ## 0.9.1
 
 - Update to koin v0.12.0
