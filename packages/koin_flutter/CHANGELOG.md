@@ -1,3 +1,8 @@
+## 0.9.1
+
+- Update to koin v0.12.0
+- Internal improvements.
+
 ## 0.9.0
 
 - Added `currentScope` method as extension for State class.
