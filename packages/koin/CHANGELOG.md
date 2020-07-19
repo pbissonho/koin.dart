@@ -1,3 +1,7 @@
+## 0.12.1
+
+- Fix pub analysis issues
+
 ## 0.12.0
 
 - Update readme
