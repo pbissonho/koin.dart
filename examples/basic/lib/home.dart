@@ -1,6 +1,17 @@
 import 'package:koin/koin.dart';
 import 'package:flutter/material.dart';
+import 'package:koin_flutter/koin_flutter.dart';
 
+// This is a simple example that makes use of setState
+// to make the example accessible to new Flutter developers.
+
+// In the 'counter' example you will find a more complete
+// example using the Bloc library for state management.
+
+// Define your Counter
+var appModule = Module()..single((s) => Counter());
+
+//A simple Counter to be used with setState
 class Counter {
   int _counter = 0;
 
@@ -15,63 +26,50 @@ class Counter {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+class CounterPage extends StatefulWidget {
+  CounterPage({Key key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyCounterPageState createState() => _MyCounterPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> with KoinComponentMixin {
-  Counter counterController;
-  Counter namedCounter;
+class _MyCounterPageState extends State<CounterPage> with ScopeStateMixin {
+  Counter counter;
 
   @override
   void initState() {
-    counterController = get<Counter>();
-    namedCounter = get(named("CounterX"));
+    // Resolve the single counter instance
+    counter = get<Counter>();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    stopKoin();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text("Counter page"),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              '${counterController.counter}',
-              style: Theme.of(context).textTheme.display1,
-            ),
-            Text(
-              'Named counter: ${namedCounter.counter}',
-              style: Theme.of(context).textTheme.display1,
+              '${counter.counter}',
+              style: Theme.of(context).textTheme.headline1,
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          // Increment your counter using setState
           setState(() {
-            counterController.increment();
-            namedCounter..increment()..increment();
+            counter.increment();
           });
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
