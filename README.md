@@ -20,8 +20,8 @@ Written in pure Dart, using functional resolution only: no proxy, no code genera
 | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | [koin](https://github.com/pbissonho/koin.dart/tree/master/packages/koin)                 | [![pub package](https://img.shields.io/pub/v/koin.svg)](https://pub.dev/packages/koin)                 |
 | [koin_test](https://github.com/pbissonho/koin.dart/tree/master/packages/koin_test)       | [![pub package](https://img.shields.io/pub/v/koin_test.svg)](https://pub.dev/packages/koin_test)       |
-| [koin_flutter](https://github.com/pbissonho/koin.dart/tree/master/packages/koin_flutter) | [![pub package](https://img.shields.io/pub/v/koin_flutter.svg)](https://pub.dev/packages/koin_flutte) |
-
+| [koin_flutter](https://github.com/pbissonho/koin.dart/tree/master/packages/koin_flutter) | [![pub package](https://img.shields.io/pub/v/koin_flutter.svg)](https://pub.dev/packages/koin_flutter) |
+| [koin_bloc](https://github.com/pbissonho/koin.dart/tree/master/packages/koin_bloc) | [![pub package](https://img.shields.io/pub/v/koin_bloc.svg)](https://pub.dev/packages/koin_bloc) |
 
 ## Documentation 🚒
 
@@ -29,21 +29,6 @@ Written in pure Dart, using functional resolution only: no proxy, no code genera
 * [Koin in 5 minutes](http://koindart.dev/docs/start/quickstart/dart)
 * [Getting Started](http://koindart.dev/docs/start/getting-started/starting-koin)
 * [Documentation References](http://koindart.dev/docs/reference/koin-core/definitions)
-
-## Ask a Question? 🚑
-
-- Post your question on [Stackoverflow - #koindart tag](https://stackoverflow.com/questions/tagged/koin)
-
-## Reporting issues 💥
-
-Found a bug on a specific feature? Open an issue on [Github issues](https://github.com/pbissonho/koin.dart/issues)
-
-## Contribute 🛠
-
-Want to help or share a proposal about Koin? problem on a specific feature? 
-
-- Open an issue to explain the issue you want to solve [Open an issue](https://github.com/pbissonho/koin.dart/issues)
-- After discussion to validate your ideas, you can open a PR or even a draft PR if the contribution is a big one [Current PRs](https://github.com/pbissonho/koin.dart/pulls)
 
 
 # Setup
@@ -139,6 +124,21 @@ class MyHomePage extends StatelessWidget {
 - Logging
 - Support to injection parameters
 
+
+## Ask a Question? 🚑
+
+- Post your question on [Stackoverflow - #koindart tag](https://stackoverflow.com/questions/tagged/koin)
+
+## Reporting issues 💥
+
+Found a bug on a specific feature? Open an issue on [Github issues](https://github.com/pbissonho/koin.dart/issues)
+
+## Contribute 🛠
+
+Want to help or share a proposal about Koin? problem on a specific feature? 
+
+- Open an issue to explain the issue you want to solve [Open an issue](https://github.com/pbissonho/koin.dart/issues)
+- After discussion to validate your ideas, you can open a PR or even a draft PR if the contribution is a big one [Current PRs](https://github.com/pbissonho/koin.dart/pulls)
 
 ## Maintainers
 

@@ -32,7 +32,7 @@ const features = [
     description: (
       <>
         Koin has a powerful set of features, such as multiple bindings,
-        multiple bindings, named definitions, lazy inject end injection parameters.
+        ,named definitions, lazy inject end injection parameters.
       </>
     ),
   },

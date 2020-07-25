@@ -31,7 +31,7 @@ This means that those parameters are values passed with `get()` and `by inject()
 class MyComponent extends View with KoinComponentMixin {
   Presenter presenter;
   MyComponent() {
-    presenter = getP<Presenter>(parameters: parametersOf([this]));
+    presenter = getWithParams<Presenter>(parameters: parametersOf([this]));
   }
 }
 ```
@@ -58,7 +58,7 @@ In a `KoinComponent`, just use the `parametersOf` function with your arguments l
 class MyComponent extends View with KoinComponentMixin {
   Presenter presenter;
   MyComponent() {
-    presenter = getP<Presenter>(parameters: parametersOf([this, 10]));
+    presenter = getWithParams<Presenter>(parameters: parametersOf([this, 10]));
   }
 }
 ```

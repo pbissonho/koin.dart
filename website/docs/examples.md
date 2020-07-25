@@ -4,11 +4,12 @@ title: Flutter Examples
 ---
 
 ## Basic
-Um exemplo em Flutter contento as funcionalides mais simples.
+An extremely simple example in Flutter.
 Code: [Repository](https://github.com/pbissonho/koin.dart/tree/master/examples/basic)
 
 ## Counter
-Um exemplo em Flutter exibindo o uso de Scopos.
+
+A more elaborate example using Bloc library as a state management.
 Code: [Repository](https://github.com/pbissonho/koin.dart/tree/master/examples/counter)
 
 ## Real world
@@ -22,5 +23,4 @@ A application to demonstrate the Koin in a real application.
  - Password reset
 
 Code: [Repository](https://github.com/pbissonho/Flutter-Authentication)
-
 

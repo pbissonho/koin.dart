@@ -30,7 +30,7 @@ Once `startKoin` has been called, Koin will read all your modules & definitions.
 Your Koin container can have several options:
 
 * `logger` - to enable logging - see <<logging.adoc#_logging,logging>> section
-* `properties()`, `fileProperties( )` or `environmentProperties( )` to load properties from environment, koin.properties file, extra properties ... - see <<properties.adoc#_lproperties,properties>> section
+
 
 :::important
 The `startKoin` can't be called more than once. If you need several point to load modules, use the `loadKoinModules` function.
