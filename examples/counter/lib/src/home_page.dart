@@ -1,14 +1,28 @@
-import 'package:counter/src/counter.dart';
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:koin/koin.dart';
 import 'package:koin_flutter/koin_flutter.dart';
+import 'package:koin_bloc/koin_bloc.dart';
+
+// Define your cubit
+class CounterCubit extends Cubit<int> {
+  CounterCubit(int intial) : super(intial);
+
+  void increment() => emit(state + 1);
+
+  @override
+  Future<void> close()async{
+    print('[CounterCubit] - Closed State: $state' );
+    super.close();
+  }
+}
 
 /// Define a koin module with a scope for `SimpleCounterPage`.
 /// Define a scope and definition with just one line.
-/// Here, the `SimpleCounterPage` scope is being defined, which contains a definition for `Counter`.
+/// Here, the `SimpleCounterPage` scope is being defined, which contains a definition for `CounterCubit`.
 var simpleModule = Module()
-  ..scopeOne<Counter, SimpleCounterPage>((scope) => Counter(0));
+  ..scopeOneCubit<CounterCubit, SimpleCounterPage>((_) => CounterCubit(0));
 
 class SimpleCounterPage extends StatefulWidget {
   @override
@@ -20,23 +34,20 @@ class _SimpleCounterPageState extends State<SimpleCounterPage>
     with ScopeStateMixin {
   @override
   Widget build(BuildContext context) {
-    // Get the Counter of the scope instantiated for the SimpleCounterPage.
-    var counter = currentScope.get<Counter>();
     return Scaffold(
       body: Center(
         child: Column(
           children: <Widget>[
             Text(
-              'ScopedSingle Counter',
+              'Scoped Counter',
             ),
-            Observer(
-              builder: (_) {
-                return Text(
-                  '${counter.value}',
-                  style: Theme.of(context).textTheme.headline1,
-                );
+            BlocBuilder<CounterCubit, int>(
+              // Get the Counter of the scope instantiated for the SimpleCounterPage.
+              cubit: currentScope.get<CounterCubit>(),
+              builder: (BuildContext context, state) {
+                return Text(state.toString());
               },
-            ),
+            )
           ],
         ),
       ),
@@ -45,13 +56,12 @@ class _SimpleCounterPageState extends State<SimpleCounterPage>
 }
 
 var homeModule = Module()
-  ..single<Counter>((s) => Counter(0))
-
+  ..cubit<CounterCubit>((s) => CounterCubit(0))
   /// Using `scopeOne` that only allows you to declare a definition.
   /// Using `scope` it is possible to declare several definitions for the scope.
   ..scope<MyHomePage>((s) {
-    s.scoped((s) => Counter(0));
-    s.factory1<Counter, int>((s, value) => Counter(value),
+    s.scopedCubit((s) => CounterCubit(0));
+    s.factory1<CounterCubit, int>((s, inital) => CounterCubit(inital),
         qualifier: named("Fac"));
   });
 
@@ -64,19 +74,26 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
-  Counter counter;
-  Counter counter2;
-  Counter counterSingle;
+  CounterCubit counterScoped;
+  CounterCubit counterFactory;
+  CounterCubit counterSingle;
 
   @override
   void initState() {
     // Get the instance from root scope.
     counterSingle = get();
     // Get the factory instance of the scope defined for MyHomePage.
-    counter2 = currentScope.get<Counter>(named("Fac"), parametersOf([50]));
+    counterFactory = currentScope.get<CounterCubit>(named("Fac"), parametersOf([50]));
     //Get the singleton definition of the current instantiated scope for MyHomePage.
-    counter = currentScope.get();
+    counterScoped = currentScope.get();
     super.initState();
+  }
+
+  @override
+  void dispose() { 
+   // Koin does not manage a factory instance, therefore it is necessary to close manually.
+    counterFactory.close();
+    super.dispose();
   }
 
   @override
@@ -103,10 +120,11 @@ class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
             Text(
               'ScopedSingle Counter',
             ),
-            Observer(
-              builder: (_) {
+            BlocBuilder(
+              cubit: counterScoped,
+              builder: (BuildContext context, state) {
                 return Text(
-                  '${counter.value}',
+                  state.toString(),
                   style: Theme.of(context).textTheme.headline1,
                 );
               },
@@ -114,10 +132,11 @@ class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
             Text(
               'Factory Counter',
             ),
-            Observer(
-              builder: (_) {
+            BlocBuilder(
+              cubit: counterFactory,
+              builder: (BuildContext context, state) {
                 return Text(
-                  '${counter2.value}',
+                  state.toString(),
                   style: Theme.of(context).textTheme.headline1,
                 );
               },
@@ -125,10 +144,11 @@ class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
             Text(
               'Single',
             ),
-            Observer(
-              builder: (_) {
+            BlocBuilder(
+              cubit: counterSingle,
+              builder: (BuildContext context, state) {
                 return Text(
-                  '${counterSingle.value}',
+                  state.toString(),
                   style: Theme.of(context).textTheme.headline1,
                 );
               },
@@ -138,8 +158,8 @@ class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          counter.increment();
-          counter2.increment();
+          counterScoped.increment();
+          counterFactory.increment();
           counterSingle.increment();
         },
         tooltip: 'Increment',
