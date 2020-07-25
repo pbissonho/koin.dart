@@ -8,7 +8,7 @@ abstract class Disposable {
   void dispose();
 }
 
-extension BlocModuleExtension on Module {
+extension DisposableModuleExtension on Module {
   /// Defines a BLoC as single definition that will be automatically closed.
   /// The `dispose` method of the instance created by the [definition] will be called when the global context of the koin is finalized.
   ///
@@ -31,7 +31,7 @@ extension BlocModuleExtension on Module {
   ///var blocModule = Module()..bloc((s) => Bloc());
   ///```
   ///
-  BeanDefinition<T> bloc<T extends Disposable>(
+  BeanDefinition<T> disposable<T extends Disposable>(
     DefinitionFunction<T> definition, {
     Qualifier qualifier,
     bool createdAtStart = false,
@@ -45,9 +45,41 @@ extension BlocModuleExtension on Module {
     beanDefinition.onClose((bloc) => bloc.dispose());
     return beanDefinition;
   }
+
+  /// Declare in a simplified way a scope that has
+  /// only one Bloc [definition].
+
+  /// Declare a Bloc scoped definition [T] for scope [TScope].
+  /// Declare and define a scoped with just one line.
+
+  ///
+  ///Standard: Used when it is necessary to declare several
+  ///definitions for a scope.
+  ///```
+  ///  ..scope<Login>((s) {
+  ///  s.scopedBloc((s) => LoginBloc(s.get()));
+  ///})
+  ///```
+  /// Declare a scope and define a scoped with just one line:
+  ///```
+  /// Module()..scopeOne<MyBloc, MyScope>((s) => MyBloc());
+  ///```
+  BeanDefinition<T> scopeOneDisposable<T extends Disposable, TScope>(
+    DefinitionFunction<T> definition, {
+    Qualifier qualifier,
+    bool createdAtStart = false,
+    bool override = false,
+  }) {
+    final beanDefinition = scopeOne<T, TScope>(definition,
+        qualifier: qualifier,
+        createdAtStart: createdAtStart,
+        override: override);
+    beanDefinition.onClose((value) => value.dispose());
+    return beanDefinition;
+  }
 }
 
-extension ScopeSetBlocExtension on ScopeDSL {
+extension ScopeSetDisposableExtension on ScopeDSL {
   /// Defines a BLoC as scoped definition that will be automatically closed when the scope is closed.
   /// The `dispose` method of the instance created by the [definition] will be called when the scope is closed.
   ///
@@ -73,7 +105,7 @@ extension ScopeSetBlocExtension on ScopeDSL {
   /// });
   ///```
   ///
-  BeanDefinition<T> scopedBloc<T extends Disposable>(
+  BeanDefinition<T> scopedDisposable<T extends Disposable>(
     DefinitionFunction<T> definition, {
     Qualifier qualifier,
     bool createdAtStart = false,
