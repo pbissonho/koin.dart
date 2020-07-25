@@ -1,3 +1,23 @@
+## 0.9.3
+
+- Depreciated `bloc` and `scopedBloc`. With the launch of the "koin_bloc" package, these methods will be removed in the next versions to avoid confusion.
+  
+  * Now use `disposable` and `scopedDisposable`
+  
+  Pass to use:
+
+  ```dart
+   final blocModule = Module()..disposable((s) => Bloc());
+  ```
+  ```dart
+  final blocModule = Module()
+  ..scope<ScopeWidget>((scope) {
+     scope.scopedDisposable<ScopedBloc>((s) => ScopedBloc());
+   });
+  ```
+
+- Documentation improvements.
+
 ## 0.9.2
 
 - Fix internal error.

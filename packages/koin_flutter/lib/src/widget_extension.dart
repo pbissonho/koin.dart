@@ -46,7 +46,6 @@ extension ComponentWidgetExtension<T> on Diagnosticable {
 ///
 /// Allows scope to be created and related to StatefulWidget transparently.
 extension StatefulWidgetScopeExtensiont<T extends StatefulWidget> on T {
-  
   /// Id of the current scope related to StatefulWidget [T].
   String get scopeId => '$runtimeType@$hashCode';
 
@@ -94,7 +93,7 @@ mixin ScopeStateMixin<T extends StatefulWidget> on State<T> {
   Scope _scope;
 
   /// Return the current scope of the 'StatefulWidget' widget instance.
-  /// 
+  ///
   /// `Scope` instance created and related to the StatefulWidget
   /// instance in the widget tree.
   Scope get currentScope {
