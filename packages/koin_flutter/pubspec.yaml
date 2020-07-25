@@ -13,6 +13,7 @@ dependencies:
     path: ../koin
   
 dev_dependencies:
+  effective_dart: ^1.2.0
   koin_test:
     path: ../koin_test
   flutter_test:
