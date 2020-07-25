@@ -2,17 +2,17 @@ import 'package:koin/koin.dart';
 import 'disposable_extension.dart';
 
 extension DisposableModuleExtension on Module {
-  
   ///Pass to use:
   ///First import disposable_extension.dart and define a Disposable
-  ///```
-  ///var blocModule = Module()..disposable((s) => Bloc());
-  ///``` 
-  /// With the launch of the "koin_bloc" package, this will have been renamed to avoid confusion.
+  /// ```
+  /// var blocModule = Module()..disposable((s) => Bloc());
+  /// ```
+  /// With the launch of the "koin_bloc" package, this will have been
+  /// renamed to avoid confusion.
   ///
   /// This will be removed in the next versions, , then use 'disposable'.
-  /// 
-  /// 
+  ///
+  ///
   @deprecated
   BeanDefinition<T> bloc<T extends Disposable>(
     DefinitionFunction<T> definition, {
@@ -29,15 +29,16 @@ extension DisposableModuleExtension on Module {
     return beanDefinition;
   }
 
-  ///Pass to use:
-  ///First import disposable_extension.dart and define a Disposable
-  ///```
+  /// Pass to use:
+  /// First import disposable_extension.dart and define a Disposable
+  /// ```
   /// Module()..scopeOneDisposable<MyBloc, MyScope>((s) => MyBloc());
-  ///```
-  ///With the launch of the "koin_bloc" package, this will have been renamed to avoid confusion.
+  /// ```
+  /// With the launch of the "koin_bloc" package, this will have been
+  /// renamed to avoid confusion.
   ///
   /// This will be removed in the next versions, then use 'scopeOneDisposable'.
-  /// 
+  ///
   @deprecated
   BeanDefinition<T> scopeOneBloc<T extends Disposable, TScope>(
     DefinitionFunction<T> definition, {
@@ -55,16 +56,17 @@ extension DisposableModuleExtension on Module {
 }
 
 extension ScopeSetDisposableExtension on ScopeDSL {
-  ///Pass to use:
-  ///First import disposable_extension.dart and define a Disposable
-  ///```
-  ///var blocModule = Module()
+  /// Pass to use:
+  /// First import [disposable_extension.dart] and define a Disposable
+  /// ```
+  /// var blocModule = Module()
   /// ..scope<ScopeWidget>((scope) {
   ///   scope.scopedDisposable<ScopedBloc>((s) => ScopedBloc());
   /// });
-  ///```
+  /// ```
   ///
-  /// With the launch of the "koin_bloc" package, this will have been renamed to avoid confusion.
+  /// With the launch of the "koin_bloc" package, this will have been
+  /// renamed to avoid confusion.
   ///
   /// This will be removed in the next versions, then use 'scopedDisposable'.
   @deprecated

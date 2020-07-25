@@ -5,7 +5,8 @@ linter:
     prefer_relative_imports: false
     prefer_const_literals_to_create_immutable: true
     sort_constructors_first: true
-
+    public_member_api_docs: false
+    one_member_abstracts: false  
 analyzer:
   exclude:
     - test/.test_coverage.dart

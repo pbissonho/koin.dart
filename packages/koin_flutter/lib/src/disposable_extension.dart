@@ -4,18 +4,27 @@ import 'package:koin/koin.dart';
 /// or it is necessary to finalize some internal component.
 /// The `dispose` method will be called when the scope is closed.
 abstract class Disposable {
-  /// Method called when the scope that this component is instantiated is closed.
+  /// Method called when the scope that this component
+  /// is instantiated is closed.
   void dispose();
 }
 
+/// Introduces `disposable` and  `scopeOneDisposable` keywords that comes in 
+/// complement of single and scoped,to help declare disposable component.
+/// 
+/// Facilitates the use of Koin with state management that
+/// depends on the flow controllers that need to be closed.
 extension DisposableModuleExtension on Module {
-  /// Defines a BLoC as single definition that will be automatically closed.
-  /// The `dispose` method of the instance created by the [definition] will be called when the global context of the koin is finalized.
+  /// Defines a `Disposable` as single [definition] that will be automatically
+  /// closed.
+  /// 
+  /// The `dispose` method of the instance created by the [definition] will 
+  /// be called when the global context of the koin is finalized.
   ///
   /// Implement `Disposable` interface when the business classes use streams
   /// or it is necessary to finalize some internal component.
   ///
-  /// Implement the Disposable interface:
+  /// Implement the `Disposable` interface:
   ///```
   ///class Bloc implements Disposable {
   ///
@@ -80,13 +89,16 @@ extension DisposableModuleExtension on Module {
 }
 
 extension ScopeSetDisposableExtension on ScopeDSL {
-  /// Defines a BLoC as scoped definition that will be automatically closed when the scope is closed.
-  /// The `dispose` method of the instance created by the [definition] will be called when the scope is closed.
+  /// Defines a BLoC as scoped [definition] that will be automatically
+  /// closed when the scope is closed.
+  /// 
+  /// The `dispose` method of the instance created by the [definition] will
+  /// be called when the scope is closed.
   ///
   /// Implement `Disposable` interface when the business classes use streams
   /// or it is necessary to finalize some internal component.
   ///
-  /// Implement the Disposable interface:
+  /// Implement the `Disposable` interface:
   ///```
   ///class Bloc implements Disposable {
   ///
