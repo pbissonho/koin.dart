@@ -12,8 +12,8 @@ class CounterCubit extends Cubit<int> {
   void increment() => emit(state + 1);
 
   @override
-  Future<void> close()async{
-    print('[CounterCubit] - Closed State: $state' );
+  Future<void> close() async {
+    print('[CounterCubit] - Closed State: $state');
     super.close();
   }
 }
@@ -57,6 +57,7 @@ class _SimpleCounterPageState extends State<SimpleCounterPage>
 
 var homeModule = Module()
   ..cubit<CounterCubit>((s) => CounterCubit(0))
+
   /// Using `scopeOne` that only allows you to declare a definition.
   /// Using `scope` it is possible to declare several definitions for the scope.
   ..scope<MyHomePage>((s) {
@@ -83,15 +84,16 @@ class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
     // Get the instance from root scope.
     counterSingle = get();
     // Get the factory instance of the scope defined for MyHomePage.
-    counterFactory = currentScope.get<CounterCubit>(named("Fac"), parametersOf([50]));
+    counterFactory =
+        currentScope.get<CounterCubit>(named("Fac"), parametersOf([50]));
     //Get the singleton definition of the current instantiated scope for MyHomePage.
     counterScoped = currentScope.get();
     super.initState();
   }
 
   @override
-  void dispose() { 
-   // Koin does not manage a factory instance, therefore it is necessary to close manually.
+  void dispose() {
+    // Koin does not manage a factory instance, therefore it is necessary to close manually.
     counterFactory.close();
     super.dispose();
   }
