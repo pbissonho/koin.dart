@@ -161,16 +161,16 @@ packages:
   koin:
     dependency: "direct main"
     description:
-      name: koin
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.12.0"
+      path: "../koin"
+      relative: true
+    source: path
+    version: "0.12.1"
   koin_test:
     dependency: "direct dev"
     description:
-      name: koin_test
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../koin_test"
+      relative: true
+    source: path
     version: "0.11.6"
   kt_dart:
     dependency: transitive

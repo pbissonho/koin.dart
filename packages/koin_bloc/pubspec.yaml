@@ -8,8 +8,11 @@ environment:
 
 dependencies:
   bloc: ^6.0.1
-  koin: ^0.12.1 
+  koin:
+    path: ../koin 
 dev_dependencies:
   pedantic: ^1.9.0
-  koin_test: ^0.11.6
+  koin_test:
+    path: ../koin_test
   test: ^1.14.4
+    
