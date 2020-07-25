@@ -40,7 +40,6 @@ typedef ParametersCreator = DefinitionParameters Function(Qualifier qualifier);
 
 class CheckParameters extends ParametersBinding {}
 
-
 CheckParameters checkParametersOf(Map<Type, DefinitionParameters> creators) {
   var checkParameters = CheckParameters();
   creators.forEach((type, creator) {

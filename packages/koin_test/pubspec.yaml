@@ -1,8 +1,7 @@
 name: koin_test
-description: A testing library for koin.
+description: A testing library for koin, makes easy mock of definitions and module testing.
 version: 0.11.6
 homepage: https://github.com/pbissonho/koin.dart
-
 
 environment:
   sdk: '>=2.6.0 <3.0.0'

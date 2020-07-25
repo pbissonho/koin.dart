@@ -30,9 +30,8 @@ void testKoinDeclaration(
 }
 
 @isTest
-void testModules(String description,
-    List<Module> modules,{
-    Level level,
+void testModules(String description, List<Module> modules,
+    {Level level,
     CheckParameters checkParameters,
     String testOn,
     Timeout timeout,
@@ -55,9 +54,8 @@ void testModules(String description,
 }
 
 @isTest
-void testModule(String description,
-    Module module,{
-    Level level,
+void testModule(String description, Module module,
+    {Level level,
     CheckParameters checkParameters,
     String testOn,
     Timeout timeout,
