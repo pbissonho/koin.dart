@@ -1,22 +1,30 @@
-A library for Dart developers.
-
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+A package to make it easier to use Bloc library with Koin.dart.
 
 ## Usage
 
-A simple usage example:
-
+Create your Cubit or Bloc
 ```dart
-import 'package:koin_bloc/koin_bloc.dart';
-
-main() {
-  var awesome = new Awesome();
+class CounterCubit extends Cubit<int> {
+  CounterCubit() : super(0);
 }
 ```
 
-## Features and bugs
+```dart
+// Your scope class
+class MyScope {}
+```
 
-Please file feature requests and bugs at the [issue tracker][tracker].
 
-[tracker]: http://example.com/issues/replaceme
+Define a module with your cubit
+```dart
+var cubitModule = Module()
+  // Define a single cubit.
+  // Single Cubit will be closed when the global context of the koin is closed.
+  ..cubit((s) => CounterCubit())
+  // Define a scoped cubit for MyScopeWidget.
+  // Scoped Cubit will be closed when the scope instance is closed,
+  //that is, when MyScopeWidget is removed from the widget tree
+  ..scope<MyScope>((scope) {
+    scope.scopedCubit<CounterCubit>((scope) => CounterCubit());
+  });
+```  
