@@ -1,3 +1,7 @@
+## 0.9.4
+
+- Export `Disposable` on koin_bloc.dart import.
+
 ## 0.9.3
 
 - Depreciated `bloc` and `scopedBloc`. With the launch of the "koin_bloc" package, these methods will be removed in the next versions to avoid confusion.

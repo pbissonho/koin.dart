@@ -1,9 +1,8 @@
 import 'package:koin/koin.dart';
 import 'disposable_extension.dart';
 
-extension DisposableModuleExtension on Module {
+extension BlocModuleExtension on Module {
   ///Pass to use:
-  ///First import disposable_extension.dart and define a Disposable
   /// ```
   /// var blocModule = Module()..disposable((s) => Bloc());
   /// ```
@@ -30,7 +29,6 @@ extension DisposableModuleExtension on Module {
   }
 
   /// Pass to use:
-  /// First import disposable_extension.dart and define a Disposable
   /// ```
   /// Module()..scopeOneDisposable<MyBloc, MyScope>((s) => MyBloc());
   /// ```
@@ -55,9 +53,8 @@ extension DisposableModuleExtension on Module {
   }
 }
 
-extension ScopeSetDisposableExtension on ScopeDSL {
+extension ScopeSetBlocExtension on ScopeDSL {
   /// Pass to use:
-  /// First import [disposable_extension.dart] and define a Disposable
   /// ```
   /// var blocModule = Module()
   /// ..scope<ScopeWidget>((scope) {
