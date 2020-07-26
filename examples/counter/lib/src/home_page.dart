@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:koin/koin.dart';
+import 'package:koin_devtools/koin_devtools.dart';
 import 'package:koin_flutter/koin_flutter.dart';
 import 'package:koin_bloc/koin_bloc.dart';
 
@@ -15,6 +16,11 @@ class CounterCubit extends Cubit<int> {
   Future<void> close() async {
     print('[CounterCubit] - Closed State: $state');
     super.close();
+  }
+
+  @override
+  String toString() {
+    return "State: $state";
   }
 }
 
@@ -35,6 +41,7 @@ class _SimpleCounterPageState extends State<SimpleCounterPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      endDrawer: KoinDevTools(),
       body: Center(
         child: Column(
           children: <Widget>[
@@ -100,16 +107,27 @@ class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    print("BUILD");
     return Scaffold(
+      endDrawer: KoinDevTools(),
       appBar: AppBar(
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.refresh),
+            icon: Text("PushAndRemoveUntil"),
             onPressed: () {
               Navigator.pushAndRemoveUntil(context,
                   MaterialPageRoute(builder: (c) {
                 return MyHomePage();
               }), (smk) => false);
+            },
+          ),
+          IconButton(
+            icon: Text("Push"),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (c) {
+                return MyHomePage();
+              }));
             },
           ),
         ],
