@@ -99,6 +99,7 @@ mixin ScopeStateMixin<T extends StatefulWidget> on State<T> {
   Scope get currentScope {
     if (_scope != null) return _scope;
     _scope = widget.scope;
+    scopeObserver.onCreateScope(ScopeWidgetContext(widget, _scope, setState));
     return _scope;
   }
 
@@ -116,6 +117,33 @@ mixin ScopeStateMixin<T extends StatefulWidget> on State<T> {
       }
     } else if (!_scope.closed) {
       _scope.close();
+      scopeObserver.onCloseScope(_scope.id);
     }
   }
+}
+
+ScopeWidgetObersever scopeObserver = ScopeWidgetObersever();
+
+class ScopeWidgetObersever {
+  static void setObserver(ScopeWidgetObersever observer) {
+    scopeObserver = observer;
+  }
+
+  Map<String, ScopeWidgetContext> scopeContexts = {};
+
+  void onCreateScope(ScopeWidgetContext scopeWidgetContext) {
+    scopeContexts[scopeWidgetContext.scope.id] = scopeWidgetContext;
+  }
+
+  void onCloseScope(String id) {
+    scopeContexts.removeWhere((key, value) => value.scope.id == id);
+  }
+}
+
+class ScopeWidgetContext {
+  ScopeWidgetContext(this.widgetScopeSource, this.scope, this.rebuildFunction);
+
+  final Widget widgetScopeSource;
+  final Scope scope;
+  final dynamic rebuildFunction;
 }
