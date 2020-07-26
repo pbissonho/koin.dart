@@ -1,3 +1,7 @@
+## 0.9.5
+
+- Added ScopeWidgetObeserver
+
 ## 0.9.4
 
 - Export `Disposable` on koin_bloc.dart import.

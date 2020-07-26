@@ -91,17 +91,17 @@ packages:
   koin:
     dependency: "direct main"
     description:
-      path: "../koin"
-      relative: true
-    source: path
-    version: "0.12.1"
+      name: koin
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.13.0"
   koin_flutter:
     dependency: "direct main"
     description:
-      path: "../koin_flutter"
-      relative: true
-    source: path
-    version: "0.9.4"
+      name: koin_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.5"
   kt_dart:
     dependency: "direct main"
     description:

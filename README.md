@@ -22,6 +22,8 @@ Written in pure Dart, using functional resolution only: no proxy, no code genera
 | [koin_test](https://github.com/pbissonho/koin.dart/tree/master/packages/koin_test)       | [![pub package](https://img.shields.io/pub/v/koin_test.svg)](https://pub.dev/packages/koin_test)       |
 | [koin_flutter](https://github.com/pbissonho/koin.dart/tree/master/packages/koin_flutter) | [![pub package](https://img.shields.io/pub/v/koin_flutter.svg)](https://pub.dev/packages/koin_flutter) |
 | [koin_bloc](https://github.com/pbissonho/koin.dart/tree/master/packages/koin_bloc) | [![pub package](https://img.shields.io/pub/v/koin_bloc.svg)](https://pub.dev/packages/koin_bloc) |
+| [koin_devtools](https://github.com/pbissonho/koin.dart/tree/master/packages/koin_devtools) | [![pub package](https://img.shields.io/pub/v/koin_devtools.svg)](https://pub.dev/packages/koin_devtools) |
+
 
 ## Documentation 🚒
 
@@ -46,6 +48,45 @@ dependencies:
   koin: ^[version]
   koin_fluter: ^[version]
 ```
+
+
+It has a powerful set of features.
+
+- Have complete control of your objects (Repositors, Blocs, Stores...).
+- Dispose your objects at the exact moment that you are no longer using them.
+- Does not depend on the Flutter
+- Combine your state management classes in a simple way.
+- Standard support for the Bloc library, but it can be easily used with any state management.
+- DevTools to inspect the state of your objects.
+- Your dependencies are instances only when needed.
+  * Its class is instant when used for the first time. Koin.dart has a implementation of [Lazy](https://www.lordcodes.com/articles/the-power-of-lazy-properties-in-kotlin) by Kotlin to provide this functionality.
+- Integration with the life cycle of widgets in Flutter without depending on the context.
+- Koin.dart is extensively tested.
+  * Which tests were all ported from the original version, so expect the same internal behavior as the Kotlin version.
+  * In addition, Koin.dart has more tests to provide coverage above 97%, to ensure the correct internal behavior.
+- It is not invasive. 
+  * Insert Koin.dart in your project without changing the structure of your Widgets or changing your state management package.
+ 
+
+
+## Features
+
+- Pragmatic
+- Modules
+- Scopes
+- Singleton definition
+- Factory definition
+- Scoped definition
+- Support to multiple bindings
+- Support to named definition
+- Easy testing
+- Lazy inject
+- Logging
+- Support to injection parameters
+- Standard support for Bloc library
+- DevTools for state inspection
+
+
 
 # Quick Start
 
@@ -107,22 +148,6 @@ class MyHomePage extends StatelessWidget {
   }
 }
 ```
-
-
-## Features
-
-- Pragmatic
-- Modules
-- Scopes
-- Singleton definition
-- Factory definition
-- Scoped definition
-- Support to multiple bindings
-- Support to named definition
-- Easy testing
-- Lazy inject
-- Logging
-- Support to injection parameters
 
 
 ## Ask a Question? 🚑

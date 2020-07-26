@@ -1,3 +1,10 @@
+## 0.13.0
+
+- Export 'instance_factory.dart'
+- Refactoring
+- Make private members that shouldn't be public.
+  * These methods were not in the main API or in the documentation, so don't worry.
+    
 ## 0.12.1
 
 - Fix pub analysis issues
