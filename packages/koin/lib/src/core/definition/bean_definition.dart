@@ -22,6 +22,7 @@ import '../qualifier.dart';
 import '../scope/scope_definition.dart';
 import 'definition.dart';
 import 'options.dart';
+
 //import 'properties.dart';
 
 class Callbacks<T> {
@@ -180,13 +181,13 @@ class BeanDefinition<T> with EquatableMixin {
   }
 
   ///
-  /// onCloseCallback is called when definition is closed.
-  ///
+  /// OnCloseCallback is called when definition is closed.
   BeanDefinition<T> onClose(void Function(T value) onCloseCallback) {
-    var copyT = copy(callbacks: Callbacks(onCloseCallback: onCloseCallback));
+    var scopeDefinitionCopy =
+        copy(callbacks: Callbacks(onCloseCallback: onCloseCallback));
     scopeDefinition.remove(this);
-    scopeDefinition.save(copyT);
-    return copyT;
+    scopeDefinition.save(scopeDefinitionCopy);
+    return scopeDefinitionCopy;
   }
 }
 

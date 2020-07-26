@@ -45,7 +45,7 @@ class SingleInstanceFactory<T> extends InstanceFactory<T> {
   T create(InstanceContext context) {
     if (_value != null) return _value;
 
-    var created = super.create(context);
+    final created = super.create(context);
     if (created == null) {
       throw IllegalStateException(
           "Single instance created couldn't return value");

@@ -2,8 +2,7 @@ import 'package:koin/koin.dart';
 import 'package:koin/src/core/instance/instance_factory.dart';
 import 'package:test/test.dart';
 
-import 'package:kt_dart/collection.dart';
-
+import 'package:kt_dart/kt.dart';
 
 extension KoinApplicationEx<T> on KoinApplication {
   void expectDefinitionsCount(int count) {
@@ -16,7 +15,8 @@ extension KoinApplicationEx<T> on KoinApplication {
   }
 
   InstanceFactory getInstanceFactory(Type type) {
-    return koin.scopeRegistry.rootScope.instanceRegistry.instances.values
+    return koin.scopeRegistry.rootScope
+        .getAllInstanceFactory()
         .firstOrNull((it) => it.beanDefinition.primaryType == type);
   }
 }
@@ -28,7 +28,7 @@ extension ScopeEx<T> on Scope {
   }
 
   InstanceFactory getInstanceFactory(Type type) {
-    return instanceRegistry.instances.values
+    return getAllInstanceFactory()
         .firstOrNull((it) => it.beanDefinition.primaryType == type);
   }
 }

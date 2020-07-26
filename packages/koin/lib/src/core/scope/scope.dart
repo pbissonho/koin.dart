@@ -1,3 +1,5 @@
+import '../instance/instance_factory.dart';
+
 ///
 /// Copyright 2017-2018 the original author or authors.
 ///
@@ -12,7 +14,7 @@
 /// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
-////
+///
 
 import '../error/exceptions.dart';
 import '../measure.dart';
@@ -36,7 +38,6 @@ class Scope {
 
   final KtHashSet<Scope> _linkedScope = KtHashSet<Scope>.empty();
   InstanceRegistry _instanceRegistry;
-  InstanceRegistry get instanceRegistry => _instanceRegistry;
   bool _closed = false;
 
   bool get closed => _closed;
@@ -138,12 +139,12 @@ class Scope {
   /// @param parameters
   ///
   T get<T>([Qualifier qualifier, DefinitionParameters parameters]) {
-    var type = T;
+    final type = T;
     return getWithType(type, qualifier, parameters);
   }
 
   T getWithParams<T>({Qualifier qualifier, DefinitionParameters parameters}) {
-    var type = T;
+    final type = T;
     return getWithType(type, qualifier, parameters);
   }
 
@@ -156,7 +157,7 @@ class Scope {
   ///@return instance of type T or null
   ///
   T getOrNull<T>([Qualifier qualifier, DefinitionParameters parameters]) {
-    var type = T;
+    final type = T;
     return getWithTypeOrNull(type, qualifier, parameters);
   }
 
@@ -190,7 +191,7 @@ class Scope {
       Type type, Qualifier qualifier, DefinitionParameters parameters) {
     if (koin.logger.isAt(Level.debug)) {
       // KoinApplication.logger.debug("+- get '${type.toString()}'");
-      var result = Measure.measureDuration(() {
+      final result = Measure.measureDuration(() {
         return resolveInstance<T>(type, qualifier, parameters);
       });
       koin.logger
@@ -211,19 +212,19 @@ class Scope {
 
     parameters ??= emptyParametersHolder();
 
-    var indexKeyCurrent = indexKey(type, qualifier);
+    final indexKeyCurrent = indexKey(type, qualifier);
 
-    var instance =
+    final instance =
         _instanceRegistry.resolveInstance<T>(indexKeyCurrent, parameters);
 
     if (instance != null) return instance;
-    var inOtherScope = findInOtherScope<T>(type, qualifier, parameters);
+    final inOtherScope = findInOtherScope<T>(type, qualifier, parameters);
     if (inOtherScope != null) return inOtherScope;
 
-    var fromSource = getFromSource<T>(type);
+    final fromSource = getFromSource<T>(type);
 
     if (fromSource == null) {
-      var qualifierString =
+      final qualifierString =
           qualifier != null ? " & qualifier:'$qualifier'" : '';
       throw NoBeanDefFoundException("""
 No definition found for class:'$type'$qualifierString. Check your definitions!""");
@@ -241,7 +242,7 @@ No definition found for class:'$type'$qualifierString. Check your definitions!""
 
   T findInOtherScope<T>(
       Type type, Qualifier qualifier, DefinitionParameters parameters) {
-    var scope = _linkedScope.firstOrNull((scope) =>
+    final scope = _linkedScope.firstOrNull((scope) =>
         scope.getWithTypeOrNull<T>(type, qualifier, parameters) != null);
 
     return scope?.getWithType(type, qualifier, parameters);
@@ -302,7 +303,12 @@ No definition found for class:'$type'$qualifierString. Check your definitions!""
   ///
   /// @return list of instances of type T
   ///
-  List<T> getAllWithType<T>(Type type) => _instanceRegistry.getAll(type);
+  List<T> getAllWithType<T>(Type type) => _instanceRegistry.getAllByType(type);
+
+  /// Returns all InstanceFactory's scope.
+  KtList<InstanceFactory> getAllInstanceFactory<T>() {
+    return _instanceRegistry.getAllFactoryAsList();
+  }
 
   ///
   /// Get instance of primary type P and secondary type S

@@ -10,13 +10,9 @@ import '../definition_parameters.dart';
 class InstanceContext {
   final Koin koin;
   final Scope scope;
-  DefinitionParameters _parameters;
-  DefinitionParameters get parameters => _parameters;
+  DefinitionParameters parameters;
 
-  InstanceContext({this.koin, this.scope, DefinitionParameters parameters}) {
-    if (parameters == null) {
-      _parameters = emptyParametersHolder();
-    }
-    _parameters = parameters;
+  InstanceContext({this.koin, this.scope, this.parameters}) {
+    parameters ??= emptyParametersHolder();
   }
 }

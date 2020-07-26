@@ -1,3 +1,4 @@
+import 'package:koin/instance_factory.dart';
 import 'package:koin/koin.dart';
 import 'package:koin/src/core/context/context_functions.dart';
 import 'package:koin/src/core/context/koin_context_handler.dart';
@@ -34,12 +35,13 @@ void main() {
 
     app.getBeanDefinition(ComponentA);
 
-    expect(
-        app.koin.scopeRegistry.rootScope.instanceRegistry.instances.values
+    final factoryInstance = app.koin.scopeRegistry.rootScope
+            .getAllInstanceFactory()
             .first(
                 (factory) => factory.beanDefinition.primaryType == ComponentA)
-            .isCreated(),
-        true);
+        as SingleInstanceFactory;
+
+    expect(factoryInstance.isCreated(), true);
   });
 
   test('can isolate koin apps e standalone', () {

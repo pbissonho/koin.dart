@@ -22,6 +22,7 @@ import '../module.dart';
 import '../qualifier.dart';
 import '../scope/scope.dart';
 import '../scope/scope_definition.dart';
+import 'package:meta/meta.dart';
 
 ///
 /// Scope Registry
@@ -31,20 +32,21 @@ import '../scope/scope_definition.dart';
 ///
 class ScopeRegistry {
   final Koin koin;
-  KtHashMap<String, ScopeDefinition> scopeDefinitions =
-      KtHashMap<String, ScopeDefinition>.empty();
-  KtHashMap<String, Scope> scopes = KtHashMap<String, Scope>.empty();
 
-//  ScopeDefinition _rootScopeDefinition;
+  @protected
+  @visibleForTesting
+  KtHashMap<String, ScopeDefinition> scopeDefinitions = KtHashMap.empty();
+
+  final _scopes = KtHashMap<String, Scope>.empty();
+
   Scope _rootScope;
   Scope get rootScope => _rootScope;
 
+  /// Returns the number of definitions adding up from all scopes
   int size() {
-    var sum = scopeDefinitions.values
-        .map<int>((definition) => definition.size())
+    return scopeDefinitions.values
+        .map<int>((scopeDefinition) => scopeDefinition.size())
         .sum();
-
-    return sum;
   }
 
   ScopeRegistry(this.koin);
@@ -75,7 +77,7 @@ class ScopeRegistry {
   }
 
   void declareInstances(ScopeDefinition scopeDefinition) {
-    scopes.values
+    _scopes.values
         .filter((it) => it.scopeDefinition == scopeDefinition)
         .forEach((it) => it.loadDefinitions(scopeDefinition));
   }
@@ -89,23 +91,20 @@ class ScopeRegistry {
   }
 
   void mergeDefinitions(ScopeDefinition definition) {
-    var existing = scopeDefinitions[definition.qualifier.value];
+    final existing = scopeDefinitions[definition.qualifier.value];
 
     if (existing == null) {
       throw IllegalStateException(
           "Scope definition '$definition' not found in $scopeDefinitions");
     }
 
-    definition.definitions.forEach((it) {
-      existing.save(it);
-    });
+    definition.definitions.forEach(existing.save);
   }
 
   void createRootScopeDefinition() {
-    var scopeDefinition = ScopeDefinition.rootDefinition();
+    final scopeDefinition = ScopeDefinition.rootDefinition();
     scopeDefinitions[ScopeDefinition.rootScopeQualifier.value] =
         scopeDefinition;
-    // _rootScopeDefinition = scopeDefinition;
   }
 
   void createRootScope() {
@@ -114,21 +113,21 @@ class ScopeRegistry {
   }
 
   Scope getScopeOrNull(String scopeId) {
-    return scopes[scopeId];
+    return _scopes[scopeId];
   }
 
   Scope createScope(String scopeId, Qualifier qualifier, dynamic source) {
-    if (scopes.containsKey(scopeId)) {
+    if (_scopes.containsKey(scopeId)) {
       throw ScopeAlreadyCreatedException(
           "Scope with id '$scopeId' is already created");
     }
 
-    var scopeDefinition = scopeDefinitions[qualifier.value];
+    final scopeDefinition = scopeDefinitions[qualifier.value];
 
     if (scopeDefinition != null) {
-      var createdScope =
+      final createdScope =
           createScopeWithDefinition(scopeId, scopeDefinition, source);
-      scopes[scopeId] = createdScope;
+      _scopes[scopeId] = createdScope;
       return createdScope;
     } else {
       throw NoScopeDefFoundException(
@@ -138,7 +137,7 @@ class ScopeRegistry {
 
   Scope createScopeWithDefinition(
       String scopeId, ScopeDefinition scopeDefinition, dynamic source) {
-    var scope = Scope(
+    final scope = Scope(
         id: scopeId,
         scopeDefinition: scopeDefinition,
         koin: koin,
@@ -155,23 +154,23 @@ class ScopeRegistry {
   }
 
   void deleteScopeByID(String scopeId) {
-    scopes.remove(scopeId);
+    _scopes.remove(scopeId);
   }
 
   void deleteScope(Scope scope) {
-    scopes.remove(scope.id);
+    _scopes.remove(scope.id);
   }
 
   void close() {
     clearScopes();
-    scopes.clear();
+    _scopes.clear();
     scopeDefinitions.clear();
     //  _rootScopeDefinition = null;
     _rootScope = null;
   }
 
   void clearScopes() {
-    scopes.values.forEach((scope) {
+    _scopes.values.forEach((scope) {
       scope.clear();
     });
   }
@@ -195,7 +194,7 @@ class ScopeRegistry {
   }
 
   void unloadInstances(ScopeDefinition scopeDefinition) {
-    scopes.values
+    _scopes.values
         .filter((it) => it.scopeDefinition == scopeDefinition)
         .forEach((it) {
       it.dropInstances(scopeDefinition);

@@ -46,7 +46,7 @@ abstract class InstanceFactory<T> {
     logger.isAtdebug('| create instance for $beanDefinition', Level.debug);
 
     try {
-      var parameters = context.parameters;
+      final parameters = context.parameters;
       return beanDefinition.definition.create(parameters, context.scope);
     } catch (erro) {
       logger.error('''
