@@ -4,7 +4,7 @@ module.exports = {
     {
       type: 'category',
       label: 'Koin.dart',
-      items: ['home', 'setup', 'resources','support'],
+      items: ['home', 'setup', 'resources', 'support'],
     },
     {
       type: 'category',
@@ -53,6 +53,10 @@ module.exports = {
           ],
         },
       ],
+    },
+    {
+      type: 'doc',
+      id: 'devTools', // string - document id
     },
     {
       type: 'category',
