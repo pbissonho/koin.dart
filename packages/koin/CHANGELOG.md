@@ -1,3 +1,8 @@
+## 0.13.1
+
+- Internal improvements
+- Update readme
+
 ## 0.13.0
 
 - Export 'instance_factory.dart'

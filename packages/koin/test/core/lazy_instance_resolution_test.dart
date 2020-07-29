@@ -1,5 +1,5 @@
 import 'package:koin/koin.dart';
-import 'package:koin/src/core/lazy/lazy.dart';
+import 'package:koin/src/core/lazy.dart';
 import 'package:test/test.dart';
 
 import '../components.dart';
@@ -30,7 +30,6 @@ void main() {
 
     var a1 = app.koin.inject<ComponentA>();
     var a2 = app.koin.inject<ComponentA>();
-
 
     expect(a1, a2);
   });

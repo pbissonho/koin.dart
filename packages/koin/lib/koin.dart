@@ -8,7 +8,7 @@ export 'src/core/definition/definition.dart';
 export 'src/core/definition_parameters.dart';
 
 export 'src/core/module.dart';
-export 'src/core/lazy/lazy.dart';
+export 'src/core/lazy.dart';
 export 'src/core/logger.dart';
 
 export 'src/core/qualifier.dart';

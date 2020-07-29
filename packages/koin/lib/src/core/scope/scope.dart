@@ -22,7 +22,7 @@ import '../registry/instance_registry.dart';
 import 'package:kt_dart/kt.dart';
 
 import '../definition/bean_definition.dart';
-import '../lazy/lazy.dart';
+import '../lazy.dart';
 import '../koin_dart.dart';
 import '../definition_parameters.dart';
 import '../logger.dart';

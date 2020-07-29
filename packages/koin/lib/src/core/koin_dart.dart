@@ -20,7 +20,7 @@ import 'package:kt_dart/kt.dart';
 
 import 'definition_parameters.dart';
 import 'error/exceptions.dart';
-import 'lazy/lazy.dart';
+import 'lazy.dart';
 import 'qualifier.dart';
 // import 'registry/proterty_registry.dart';
 import 'registry/scope_registry.dart';

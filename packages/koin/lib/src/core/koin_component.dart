@@ -19,7 +19,7 @@ import 'context/koin_context_handler.dart';
 import 'qualifier.dart';
 import 'definition_parameters.dart';
 import 'koin_dart.dart';
-import 'lazy/lazy.dart';
+import 'lazy.dart';
 
 ///
 /// KoinComponentMixin interface marker to bring Koin extensions features
