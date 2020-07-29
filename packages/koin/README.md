@@ -39,19 +39,22 @@ Written in pure Dart, using functional resolution only: no code generation, no r
 - Does not depend on the Flutter
 - Combine your state management classes in a simple way.
 - Standard support for the Bloc library, but it can be easily used with any state management.
+
 - DevTools to inspect the state of your objects.
   * Inspect the internal state of each class at any time on a Flutter page.
-  * Hot Restart a Flutter route(Page).
-    * Flutter Hot Restart restarts the entire application, with Koin DevTools you can restart only the part you want.
+
 - Dependencies are instances only when needed.
   * Its class is instant when used for the first time. Koin has a implementation of [Lazy](https://www.lordcodes.com/articles/the-power-of-lazy-properties-in-kotlin) by Kotlin to provide this functionality.
 - Integration with the life cycle of widgets in Flutter without depending on the context.
+
 - Very tested
   * Which tests were all ported from the original version, so expect the same internal behavior as the Kotlin version.
   * In addition, Koin has more tests to a high level of test coverage, to ensure the correct internal behavior.
+
 - It is not invasive. 
   * Insert Koin in your project without changing the structure of your Widgets or changing your state management package.
   * Most of your application will not know that Koin exists,so you decrease the coupling and simplify the understanding and make testing easier.
+
 - As it does not depend on the context at any time you use it in applications that do not depend on Flutter.
 
 

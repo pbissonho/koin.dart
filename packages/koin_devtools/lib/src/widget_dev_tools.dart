@@ -124,6 +124,7 @@ class _ScopeCardState extends State<ScopeCard> {
                                 .copyWith(color: Colors.white),
                           ),
                         ),
+                        /* 
                         Expanded(
                             flex: 1,
                             child: LayoutBuilder(
@@ -142,7 +143,7 @@ class _ScopeCardState extends State<ScopeCard> {
                                   },
                                 );
                               },
-                            )),
+                            )),*/
                       ],
                     ),
                   ),
