@@ -1,3 +1,7 @@
+## 0.9.6
+
+- Improvements in ScopeWidgetObeserver
+
 ## 0.9.5
 
 - Added ScopeWidgetObeserver

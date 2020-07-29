@@ -18,7 +18,10 @@ extension ComponentWidgetExtension<T> on Diagnosticable {
     return getKoin().get<T>(qualifier, parameters);
   }
 
-  /// Lazy inject instance from Koin
+  /// Returns a Lazy object that provides the instance for [T].
+  ///
+  /// The `instance ` resolved is is created only when `value` by `Lazy` being
+  /// called for the first time.
   Lazy<T> inject<T>([Qualifier qualifier, DefinitionParameters parameters]) {
     return getKoin().inject<T>(qualifier, parameters);
   }
@@ -97,7 +100,7 @@ mixin ScopeStateMixin<T extends StatefulWidget> on State<T> {
   /// `Scope` instance created and related to the StatefulWidget
   /// instance in the widget tree.
   Scope get currentScope {
-    if (_scope != null) return _scope;
+    if (_scope != null && !_scope.closed) return _scope;
     _scope = widget.scope;
     scopeObserver.onCreateScope(ScopeWidgetContext(widget, _scope, setState));
     return _scope;
@@ -105,6 +108,11 @@ mixin ScopeStateMixin<T extends StatefulWidget> on State<T> {
 
   Scope _getScopeOrNull() {
     return KoinContextHandler.get().getScopeOrNull((widget.scopeId));
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
   }
 
   @override
@@ -140,10 +148,25 @@ class ScopeWidgetObersever {
   }
 }
 
+typedef SetState = void Function(VoidCallback callback);
+
 class ScopeWidgetContext {
-  ScopeWidgetContext(this.widgetScopeSource, this.scope, this.rebuildFunction);
+  ScopeWidgetContext(
+    this.widgetScopeSource,
+    this.scope,
+    this.setState,
+  );
 
   final Widget widgetScopeSource;
-  final Scope scope;
-  final dynamic rebuildFunction;
+  Scope scope;
+  final SetState setState;
+
+  void hotRestartScope() {
+    scope.close();
+    scopeObserver.onCloseScope(scope.id);
+    var qualifier = TypeQualifier(widgetScopeSource.runtimeType);
+    scope =
+        KoinContextHandler.get().createScopeWithQualifier(scope.id, qualifier);
+    setState(() {});
+  }
 }
