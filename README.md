@@ -12,9 +12,9 @@
 
 A pragmatic lightweight dependency injection framework. This is a port of [Koin](https://github.com/InsertKoinIO/koin) for Dart projects.
 
-Written in pure Dart, using functional resolution only: no proxy, no code generation, no reflection, no Flutter context.
+Written in pure Dart, using functional resolution only: no code generation, no reflection, no Flutter context.
 
-`Koin is a DSL, a light container and a pragmatic API`
+`Koin is a light container and a pragmatic API`
 
 | Package                                                                            | Pub                                                                                                    |
 | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
@@ -33,40 +33,32 @@ Written in pure Dart, using functional resolution only: no proxy, no code genera
 * [Documentation References](http://koindart.dev/docs/reference/koin-core/definitions)
 
 
-# Setup
+## What does Koin have and what can I do with it?
 
-## Add dependency
-
-```yaml
-dependencies:
-  koin: ^[version]
-```
-### Flutter
-
-```yaml
-dependencies:
-  koin: ^[version]
-  koin_fluter: ^[version]
-```
-
-
-It has a powerful set of features.
-
-- Have complete control of your objects (Repositors, Blocs, Stores...).
-- Dispose your objects at the exact moment that you are no longer using them.
+- Allows to dispose your objects at the exact moment that you are no longer using them.
 - Does not depend on the Flutter
 - Combine your state management classes in a simple way.
 - Standard support for the Bloc library, but it can be easily used with any state management.
 - DevTools to inspect the state of your objects.
-- Your dependencies are instances only when needed.
-  * Its class is instant when used for the first time. Koin.dart has a implementation of [Lazy](https://www.lordcodes.com/articles/the-power-of-lazy-properties-in-kotlin) by Kotlin to provide this functionality.
+  * Inspect the internal state of each class at any time on a Flutter page.
+  * Hot Restart a Flutter route(Page).
+    * Flutter Hot Restart restarts the entire application, with Koin DevTools you can restart only the part you want.
+- Dependencies are instances only when needed.
+  * Its class is instant when used for the first time. Koin has a implementation of [Lazy](https://www.lordcodes.com/articles/the-power-of-lazy-properties-in-kotlin) by Kotlin to provide this functionality.
 - Integration with the life cycle of widgets in Flutter without depending on the context.
-- Koin.dart is extensively tested.
+- Very tested
   * Which tests were all ported from the original version, so expect the same internal behavior as the Kotlin version.
-  * In addition, Koin.dart has more tests to provide coverage above 97%, to ensure the correct internal behavior.
+  * In addition, Koin has more tests to a high level of test coverage, to ensure the correct internal behavior.
 - It is not invasive. 
-  * Insert Koin.dart in your project without changing the structure of your Widgets or changing your state management package.
- 
+  * Insert Koin in your project without changing the structure of your Widgets or changing your state management package.
+  * Most of your application will not know that Koin exists,so you decrease the coupling and simplify the understanding and make testing easier.
+- As it does not depend on the context at any time you use it in applications that do not depend on Flutter.
+
+
+## What Koin.dart is not?
+
+It is not a state manager. Koin does not have any type of state management, use Koin with your
+favorite state management package.
 
 
 ## Features
@@ -87,25 +79,43 @@ It has a powerful set of features.
 - DevTools for state inspection
 
 
-
 # Quick Start
+
+## Setup
+
+### Dart 
+
+```yaml
+dependencies:
+  koin: ^[version]
+```
+### Flutter
+
+```yaml
+dependencies:
+  koin: ^[version]
+  koin_fluter: ^[version]
+```
+
 
 ## Declare a Koin module
 
 ```dart
 // Given some classes 
-class Controller {
-  final BusinessService service;
+class Bloc {
+  final Repository service;
 
-  Controller(this.service);
+  Bloc(this.service);
+
+  get state => "Hello";
 }
 
-class BusinessService {}
+class Repository {}
 
 // just declare it
 var myModule = Module()
-  ..single((s) => Controller(s.get()))
-  ..single((s) => BusinessService());
+  ..single((s) => Bloc(s.get()))
+  ..single((s) => Repository());
 ```
 
 ## Starting Koin
@@ -141,9 +151,9 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     // Get a dependency
-    var controller = get<Controller>();
+    var bloc = get<Bloc>();
     return Container(
-      child: Text("${controller.toString()}"),
+      child: Text("${bloc.state()}"),
     );
   }
 }

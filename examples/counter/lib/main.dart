@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:koin/koin.dart';
-import 'src/home_page.dart';
+
+import 'src/advanced_counter_example.dart';
 
 void main() {
   startKoin((app) {

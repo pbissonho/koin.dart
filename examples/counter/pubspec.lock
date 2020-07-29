@@ -115,28 +115,28 @@ packages:
       path: "../../packages/koin"
       relative: true
     source: path
-    version: "0.12.1"
+    version: "0.13.0"
   koin_bloc:
     dependency: "direct main"
     description:
       path: "../../packages/koin_bloc"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.1.1"
   koin_devtools:
     dependency: "direct main"
     description:
-      path: "/home/pedro/Documentos/koin.dart/packages/koin_devtools"
-      relative: false
+      path: "../../packages/koin_devtools"
+      relative: true
     source: path
-    version: "0.0.1"
+    version: "0.1.0"
   koin_flutter:
     dependency: "direct main"
     description:
       path: "../../packages/koin_flutter"
       relative: true
     source: path
-    version: "0.9.4"
+    version: "0.9.5"
   kt_dart:
     dependency: transitive
     description:

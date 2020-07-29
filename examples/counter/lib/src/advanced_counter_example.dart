@@ -6,7 +6,6 @@ import 'package:koin_devtools/koin_devtools.dart';
 import 'package:koin_flutter/koin_flutter.dart';
 import 'package:koin_bloc/koin_bloc.dart';
 
-// Define your cubit
 class CounterCubit extends Cubit<int> {
   CounterCubit(int intial) : super(intial);
 
@@ -27,7 +26,7 @@ class CounterCubit extends Cubit<int> {
 /// Define a koin module with a scope for `SimpleCounterPage`.
 /// Define a scope and definition with just one line.
 /// Here, the `SimpleCounterPage` scope is being defined, which contains a definition for `CounterCubit`.
-var simpleModule = Module()
+final simpleModule = Module()
   ..scopeOneCubit<CounterCubit, SimpleCounterPage>((_) => CounterCubit(0));
 
 class SimpleCounterPage extends StatefulWidget {
@@ -62,7 +61,7 @@ class _SimpleCounterPageState extends State<SimpleCounterPage>
   }
 }
 
-var homeModule = Module()
+final homeModule = Module()
   ..cubit<CounterCubit>((s) => CounterCubit(0))
 
   /// Using `scopeOne` that only allows you to declare a definition.
@@ -82,38 +81,22 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
-  CounterCubit counterScoped;
-  CounterCubit counterFactory;
-  CounterCubit counterSingle;
-
-  @override
-  void initState() {
-    // Get the instance from root scope.
-    counterSingle = get();
-    // Get the factory instance of the scope defined for MyHomePage.
-    counterFactory =
-        currentScope.get<CounterCubit>(named("Fac"), parametersOf([50]));
-    //Get the singleton definition of the current instantiated scope for MyHomePage.
-    counterScoped = currentScope.get();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    // Koin does not manage a factory instance, therefore it is necessary to close manually.
-    counterFactory.close();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    print("BUILD");
+    // Get the instance from root scope.
+    final counterSingle = get<CounterCubit>();
+    // Get the factory instance of the scope defined for MyHomePage.
+    final counterFactory =
+        currentScope.get<CounterCubit>(named("Fac"), parametersOf([50]));
+    //Get the singleton definition of the current instantiated scope for MyHomePage.
+    final counterScoped = currentScope.get<CounterCubit>();
     return Scaffold(
+      // Inspect the state of your instances scope.
       endDrawer: KoinDevTools(),
       appBar: AppBar(
         actions: <Widget>[
           IconButton(
-            icon: Text("PushAndRemoveUntil"),
+            icon: Text("PushAndRemoveUntil", overflow: TextOverflow.clip),
             onPressed: () {
               Navigator.pushAndRemoveUntil(context,
                   MaterialPageRoute(builder: (c) {
@@ -124,8 +107,7 @@ class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
           IconButton(
             icon: Text("Push"),
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (c) {
+              Navigator.push(context, MaterialPageRoute(builder: (c) {
                 return MyHomePage();
               }));
             },
@@ -188,7 +170,3 @@ class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
     );
   }
 }
-
-
-
-
