@@ -60,36 +60,25 @@ class ScopesListWidget extends StatelessWidget {
   }
 }
 
-class ScopeWidget extends StatelessWidget {
-  final ScopeWidgetContext scopeContext;
-
-  const ScopeWidget({Key key, this.scopeContext}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text('${scopeContext.scope}'),
-      leading: IconButton(
-        icon: Icon(Icons.refresh),
-        onPressed: () {
-          scopeContext.rebuildFunction(() {});
-        },
-      ),
-    );
-  }
-}
-
-class ScopeCard extends StatelessWidget {
+class ScopeCard extends StatefulWidget {
   final ScopeWidgetContext scopeContext;
 
   const ScopeCard({Key key, this.scopeContext}) : super(key: key);
 
   @override
+  _ScopeCardState createState() => _ScopeCardState();
+}
+
+class _ScopeCardState extends State<ScopeCard> {
+  @override
   Widget build(BuildContext context) {
     var views = <FactoryViewer>[];
 
-    scopeContext.scope.getAllInstanceFactory().dart.forEach((instanceFactory) {
-      views.add(FactoryViewer(instanceFactory, scopeContext.scope));
+    widget.scopeContext.scope
+        .getAllInstanceFactory()
+        .dart
+        .forEach((instanceFactory) {
+      views.add(FactoryViewer(instanceFactory, widget.scopeContext.scope));
     });
 
     return ExpandableNotifier(
@@ -126,14 +115,34 @@ class ScopeCard extends StatelessWidget {
                           ),
                         ),
                         Expanded(
+                          flex: 3,
                           child: Text(
-                            '${scopeContext.widgetScopeSource?.runtimeType ?? ''}  Id:${scopeContext.scope.id.toString()}',
+                            '${widget.scopeContext.widgetScopeSource?.runtimeType ?? ''}  Id:${widget.scopeContext.scope.id.toString()}',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1
                                 .copyWith(color: Colors.white),
                           ),
                         ),
+                        Expanded(
+                            flex: 1,
+                            child: LayoutBuilder(
+                              builder: (BuildContext context,
+                                  BoxConstraints constraints) {
+                                if (widget
+                                    .scopeContext.scope.scopeDefinition.isRoot)
+                                  return Container(
+                                    child: Text("Root"),
+                                  );
+
+                                return IconButton(
+                                  icon: Icon(Icons.restore),
+                                  onPressed: () {
+                                    widget.scopeContext.hotRestartScope();
+                                  },
+                                );
+                              },
+                            )),
                       ],
                     ),
                   ),
@@ -213,7 +222,7 @@ Future<void> _showFactoryViewerDialog(
           children: <Widget>[
             Text("Qualifier: ${factoryViewer.qualifier}"),
             Text(
-              "Data: ${factoryViewer.instanceToString}",
+              "State: ${factoryViewer.instanceToString}",
               textAlign: TextAlign.left,
               overflow: TextOverflow.ellipsis,
             ),
