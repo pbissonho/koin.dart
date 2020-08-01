@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:koin/koin.dart';
 
-import 'src/advanced_counter_example.dart';
+import 'src/counter_example.dart';
 
 void main() {
   startKoin((app) {
     app.printLogger(level: Level.debug);
-    app.module(homeModule);
+//    app.module(counterModule);
   });
   runApp(MyApp());
 }
@@ -19,6 +19,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: MyHomePage());
+        home: SimpleCounterPage());
   }
 }

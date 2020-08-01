@@ -28,11 +28,14 @@ class _SimpleCounterPageState extends State<SimpleCounterPage>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-          child: BlocBuilder<CounterCubit, int>(
+          child: Column(
+        children: <Widget>[
+          BlocBuilder<CounterCubit, int>(
               // Get the Counter of the scope instantiated for the SimpleCounterPage.
               cubit: currentScope.get<CounterCubit>(),
-              builder: (BuildContext context, state) =>
-                  Text(state.toString()))),
+              builder: (BuildContext context, state) => Text(state.toString())),
+        ],
+      )),
     );
   }
 }

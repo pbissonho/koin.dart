@@ -10,7 +10,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    // Start your simple module
     startKoin((app) {
       app.module(appModule);
     });
