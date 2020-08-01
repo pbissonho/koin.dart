@@ -28,7 +28,6 @@ class ComponentB implements ComponentBInterface {
   int testId() => id;
 }
 
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();

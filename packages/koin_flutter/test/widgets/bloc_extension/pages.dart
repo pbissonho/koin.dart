@@ -17,29 +17,29 @@ class Bloc extends BlocBase with Disposable {
 }
 
 class BlocComponentTest extends KoinComponent {
-  Bloc blocX;
-
   BlocComponentTest() {
     blocX = get();
   }
+  Bloc blocX;
 }
 
 class BlocComponentMixinTest with KoinComponentMixin {
-  Bloc blocX;
-
   BlocComponentMixinTest() {
     blocX = get();
   }
+  Bloc blocX;
 }
-
 
 final buttonKey = UniqueKey();
 final fisrtPage = UniqueKey();
 final secondPageKey = UniqueKey();
 
-class ScopeWidget extends StatefulWidget {
+class ScopeWidget extends StatefulWidget with HotRestartScopeMixin {
   @override
   ScopeWidgetState createState() => ScopeWidgetState();
+
+  @override
+  Widget get route => ScopeWidget();
 }
 
 class ScopeWidgetState extends State<ScopeWidget> with ScopeStateMixin {
@@ -61,7 +61,7 @@ class ScopeWidgetState extends State<ScopeWidget> with ScopeStateMixin {
         child: Icon(Icons.add),
         onTap: () {
           Navigator.pushAndRemoveUntil(context,
-              MaterialPageRoute(builder: (BuildContext context) {
+              MaterialPageRoute(builder: (context) {
             return SecondPage();
           }), (t) => false);
         },
@@ -70,9 +70,12 @@ class ScopeWidgetState extends State<ScopeWidget> with ScopeStateMixin {
   }
 }
 
-class WidgetNotUseScope extends StatefulWidget {
+class WidgetNotUseScope extends StatefulWidget with HotRestartScopeMixin {
   @override
   WidgetNotUseScopeState createState() => WidgetNotUseScopeState();
+
+  @override
+  Widget get route => WidgetNotUseScope();
 }
 
 class WidgetNotUseScopeState extends State<WidgetNotUseScope>
@@ -87,7 +90,7 @@ class WidgetNotUseScopeState extends State<WidgetNotUseScope>
         child: Icon(Icons.add),
         onTap: () {
           Navigator.pushAndRemoveUntil(context,
-              MaterialPageRoute(builder: (BuildContext context) {
+              MaterialPageRoute(builder: (context) {
             return SecondPage();
           }), (router) => false);
         },
@@ -117,15 +120,18 @@ class _SecondPageState extends State<SecondPage> {
   }
 }
 
-class UseScopeWidget extends StatefulWidget {
+class UseScopeWidget extends StatefulWidget with HotRestartScopeMixin {
   @override
   UseScopeWidgetState createState() => UseScopeWidgetState(scope.get<Bloc>());
+
+  @override
+  Widget get route => UseScopeWidget();
 }
 
 class UseScopeWidgetState extends State<UseScopeWidget> with ScopeStateMixin {
-  final Bloc myBloc;
-
   UseScopeWidgetState(this.myBloc);
+
+  final Bloc myBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +143,7 @@ class UseScopeWidgetState extends State<UseScopeWidget> with ScopeStateMixin {
         child: Icon(Icons.add),
         onTap: () {
           Navigator.pushAndRemoveUntil(context,
-              MaterialPageRoute(builder: (BuildContext context) {
+              MaterialPageRoute(builder: (context) {
             return SecondPage();
           }), (t) => false);
         },
@@ -167,8 +173,6 @@ class UseScopeExtensionWidgetState extends State<UseScopeExtensionWidget> {
     super.dispose();
   }
 
-  UseScopeExtensionWidgetState();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -179,7 +183,7 @@ class UseScopeExtensionWidgetState extends State<UseScopeExtensionWidget> {
         child: Icon(Icons.add),
         onTap: () {
           Navigator.pushAndRemoveUntil(context,
-              MaterialPageRoute(builder: (BuildContext context) {
+              MaterialPageRoute(builder: (context) {
             return SecondPage();
           }), (t) => false);
         },

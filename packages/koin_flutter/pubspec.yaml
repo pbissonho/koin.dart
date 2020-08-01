@@ -9,13 +9,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  koin: ^0.13.0
+  koin:
+    path: ../koin
     
   
   
 dev_dependencies:
   effective_dart: ^1.2.0
-  koin_test: ^0.11.7
+  koin_test:
+    path: ../koin_test
   flutter_test:
     sdk: flutter
 

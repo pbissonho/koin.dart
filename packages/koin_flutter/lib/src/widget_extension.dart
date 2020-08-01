@@ -7,13 +7,58 @@ extension ComponentWidgetExtension<T> on Diagnosticable {
   /// Get the associated Koin instance
   Koin getKoin() => KoinContextHandler.get();
 
-  /// Get the associated Koin instance
+  ///{@template koinsingle}
+  /// Return single definition instance for
+  /// Example of use:
+  ///
+  ///
+  /// First, you need to define the definition for
+  /// And your module must be started in  so that it is possible
+  /// to resolve the instance.
+  ///
+  /// ```
+  /// var blocModule = Module()..single((s) => Bloc());
+  ///
+  /// ```
+  ///
+  /// {@endtemplate}
+
+  /// Resolve the instance in a Flutter widget
+  /// ```
+  /// class Page extends StatelessWidget {
+  ///   final bloc = get<CouterBloc>();
+  ///   @override
+  ///   Widget build(BuildContext context) {
+  ///     return Container(
+  ///       child: Text(bloc.state.toString()),
+  ///     );
+  ///   }
+  /// }
+  /// ```
+  ///
   T get<T>([Qualifier qualifier, DefinitionParameters parameters]) {
     return getKoin().get<T>(qualifier, parameters);
   }
 
-  /// Get the associated Koin instance.
+  /// Return single definition instance for [T]
   /// Use when it is necessary to pass [parameters] to the instance.
+  ///
+  ///
+  /// ```
+  /// class Page extends StatelessWidget {
+  ///  final bloc = getWithParams<CouterBloc>();
+  ///  @override
+  ///  Widget build(BuildContext context) {
+  ///    return Container(
+  ///      child: Text(bloc.state.toString()),
+  ///    );
+  ///  }
+  /// }
+  /// 
+  /// ```
+  ///
+  /// {@macro koinsingle}
+  ///
   T getWithParams<T>({Qualifier qualifier, DefinitionParameters parameters}) {
     return getKoin().get<T>(qualifier, parameters);
   }
@@ -52,7 +97,7 @@ extension StatefulWidgetScopeExtensiont<T extends StatefulWidget> on T {
   /// Id of the current scope related to StatefulWidget [T].
   String get scopeId => '$runtimeType@$hashCode';
 
-  Qualifier get _scopeName => TypeQualifier(runtimeType);
+  Qualifier get _scopeQualifier => TypeQualifier(runtimeType);
 
   /// Return the current scope.
   ///
@@ -76,7 +121,7 @@ extension StatefulWidgetScopeExtensiont<T extends StatefulWidget> on T {
   }
 
   Scope _createScope(Koin koin) {
-    return koin.createScopeWithQualifier(scopeId, _scopeName, this);
+    return koin.createScopeWithQualifier(scopeId, _scopeQualifier, this);
   }
 }
 
@@ -87,6 +132,16 @@ extension ScopeWidgetExtension<T extends StatefulWidget> on State<T> {
   Scope get currentScope {
     return widget.scope;
   }
+
+  /// Return the current scope of the `StatefulWidget` from the `State` class.
+  Scope get scopeContext => currentScope;
+}
+
+/// A mixin that overrides the `dispose` method to call the
+/// `currentScope.close()`method of the current scope when the [T]
+/// is removed from widget tree.
+mixin HotRestartScopeMixin on StatefulWidget {
+  Widget get route;
 }
 
 /// A mixin that overrides the `dispose` method to call the
@@ -95,24 +150,33 @@ extension ScopeWidgetExtension<T extends StatefulWidget> on State<T> {
 mixin ScopeStateMixin<T extends StatefulWidget> on State<T> {
   Scope _scope;
 
-  /// Return the current scope of the 'StatefulWidget' widget instance.
+  /// Return the current scope of the `StatefulWidget` widget instance.
   ///
-  /// `Scope` instance created and related to the StatefulWidget
+  /// `Scope` instance created and related to the `StatefulWidget`
   /// instance in the widget tree.
   Scope get currentScope {
     if (_scope != null && !_scope.closed) return _scope;
     _scope = widget.scope;
-    scopeObserver.onCreateScope(ScopeWidgetContext(widget, _scope, setState));
+    scopeObserver
+        .onCreateScope(ScopeWidgetContext(widget, _scope, setState, _replace));
     return _scope;
+  }
+
+  Scope get scopeContext => currentScope;
+
+  /// Replace the current `route` with a new one so that
+  /// the child states' hot restart.
+  void _replace() {
+    if (widget is HotRestartScopeMixin) {
+      Navigator.replace(context,
+          oldRoute: ModalRoute.of(context),
+          newRoute: MaterialPageRoute(
+              builder: (context) => (widget as HotRestartScopeMixin).route));
+    }
   }
 
   Scope _getScopeOrNull() {
     return KoinContextHandler.get().getScopeOrNull((widget.scopeId));
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
   }
 
   @override
@@ -155,11 +219,13 @@ class ScopeWidgetContext {
     this.widgetScopeSource,
     this.scope,
     this.setState,
+    this.replace,
   );
 
   final Widget widgetScopeSource;
   Scope scope;
   final SetState setState;
+  final Function replace;
 
   void hotRestartScope() {
     scope.close();
@@ -167,6 +233,6 @@ class ScopeWidgetContext {
     var qualifier = TypeQualifier(widgetScopeSource.runtimeType);
     scope =
         KoinContextHandler.get().createScopeWithQualifier(scope.id, qualifier);
-    setState(() {});
+    replace();
   }
 }
