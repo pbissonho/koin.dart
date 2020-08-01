@@ -2,14 +2,14 @@ import 'package:bloc/bloc.dart';
 import 'package:koin/koin.dart';
 
 extension BlocModuleExtension on Module {
-  /// Defines a Cubit as single definition that will be automatically closed.
-  /// The `close` method of the Cubit created by the [definition] will be called when the global context of the koin is finalized.
+  /// Defines a [Cubit] as [single] definition that will be automatically closed.
+  /// The `close` method of the [Cubit] created by the [definition] will be called when the global context of the koin is finalized.
   ///
   ///
-  ///Define the Cubit:
-  ///```
-  ///var myModule = Module()..cubit((s) => MyCubit());
-  ///```
+  /// Define the Cubit:
+  /// ```
+  /// var myModule = Module()..cubit((s) => MyCubit());
+  /// ```
   ///
   BeanDefinition<T> cubit<T extends Cubit>(
     DefinitionFunction<T> definition, {
