@@ -6,24 +6,28 @@ import 'package:kt_dart/kt.dart';
 import 'package:koin/instance_factory.dart';
 
 class _DevTools {
-  Map<String, ScopeWidgetContext> koinContextScopes() {
+  static Map<String, ScopeWidgetContext> koinContextScopes() {
     final scopesMap = <String, ScopeWidgetContext>{};
     scopesMap['Root'] = ScopeWidgetContext(
-        null, KoinContextHandler.get().scopeRegistry.rootScope, null);
+        null, KoinContextHandler.get().scopeRegistry.rootScope, null, null);
     scopesMap.addAll(scopeObserver.scopeContexts);
     return scopesMap;
   }
 }
 
+/// Push a new route with [KoinDevTools] Widget.
 void showDevTools(BuildContext context) {
   Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
     return KoinDevTools();
   }));
 }
 
+/// [Widget] that allows you to view or koin scopes.
+/// It allows viewing the internal state of the instances.
+///
+/// And perform a hot restart of only one scope, the hot restart button will recreate
+/// the scope and rebuild the widget scope.
 class KoinDevTools extends StatelessWidget {
-  final _DevTools devTools = _DevTools();
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -35,18 +39,18 @@ class KoinDevTools extends StatelessWidget {
           centerTitle: false,
           title: Text("Koin DevTools"),
         ),
-        body: ScopesListWidget(
-          scopes: devTools.koinContextScopes(),
+        body: _ScopesListWidget(
+          scopes: _DevTools.koinContextScopes(),
         ),
       ),
     );
   }
 }
 
-class ScopesListWidget extends StatelessWidget {
+class _ScopesListWidget extends StatelessWidget {
   final Map<String, ScopeWidgetContext> scopes;
 
-  const ScopesListWidget({Key key, this.scopes}) : super(key: key);
+  const _ScopesListWidget({Key key, this.scopes}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,31 +58,31 @@ class ScopesListWidget extends StatelessWidget {
     return ListView.builder(
       itemCount: scopes.length,
       itemBuilder: (BuildContext context, int index) {
-        return ScopeCard(scopeContext: list[index]);
+        return _ScopeCard(scopeContext: list[index]);
       },
     );
   }
 }
 
-class ScopeCard extends StatefulWidget {
+class _ScopeCard extends StatefulWidget {
   final ScopeWidgetContext scopeContext;
 
-  const ScopeCard({Key key, this.scopeContext}) : super(key: key);
+  const _ScopeCard({Key key, this.scopeContext}) : super(key: key);
 
   @override
   _ScopeCardState createState() => _ScopeCardState();
 }
 
-class _ScopeCardState extends State<ScopeCard> {
+class _ScopeCardState extends State<_ScopeCard> {
   @override
   Widget build(BuildContext context) {
-    var views = <FactoryViewer>[];
+    var views = <_FactoryViewer>[];
 
     widget.scopeContext.scope
         .getAllInstanceFactory()
         .dart
         .forEach((instanceFactory) {
-      views.add(FactoryViewer(instanceFactory, widget.scopeContext.scope));
+      views.add(_FactoryViewer(instanceFactory, widget.scopeContext.scope));
     });
 
     return ExpandableNotifier(
@@ -124,7 +128,6 @@ class _ScopeCardState extends State<ScopeCard> {
                                 .copyWith(color: Colors.white),
                           ),
                         ),
-                        /* 
                         Expanded(
                             flex: 1,
                             child: LayoutBuilder(
@@ -143,7 +146,7 @@ class _ScopeCardState extends State<ScopeCard> {
                                   },
                                 );
                               },
-                            )),*/
+                            )),
                       ],
                     ),
                   ),
@@ -153,7 +156,7 @@ class _ScopeCardState extends State<ScopeCard> {
                   shrinkWrap: true,
                   primary: false,
                   itemBuilder: (_, index) {
-                    return InstanceWidget(instanceViewer: views[index]);
+                    return _InstanceWidget(instanceViewer: views[index]);
                   },
                 ),
               ),
@@ -165,7 +168,7 @@ class _ScopeCardState extends State<ScopeCard> {
   }
 }
 
-class FactoryViewer {
+class _FactoryViewer {
   final InstanceFactory _instanceFactory;
   final Scope _scope;
   BeanDefinition get _beanDefinition => _instanceFactory.beanDefinition;
@@ -188,13 +191,13 @@ class FactoryViewer {
     return 'Without qualifier.';
   }
 
-  FactoryViewer(this._instanceFactory, this._scope);
+  _FactoryViewer(this._instanceFactory, this._scope);
 }
 
-class InstanceWidget extends StatelessWidget {
-  final FactoryViewer instanceViewer;
+class _InstanceWidget extends StatelessWidget {
+  final _FactoryViewer instanceViewer;
 
-  const InstanceWidget({Key key, this.instanceViewer}) : super(key: key);
+  const _InstanceWidget({Key key, this.instanceViewer}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -213,8 +216,8 @@ class InstanceWidget extends StatelessWidget {
 }
 
 Future<void> _showFactoryViewerDialog(
-    context, FactoryViewer factoryViewer) async {
-  showDialog<FactoryViewer>(
+    context, _FactoryViewer factoryViewer) async {
+  showDialog<_FactoryViewer>(
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(

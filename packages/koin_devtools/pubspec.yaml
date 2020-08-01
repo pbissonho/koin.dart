@@ -10,8 +10,10 @@ dependencies:
   flutter:
     sdk: flutter
   kt_dart: ^0.7.0+1
-  koin: ^0.13.0
-  koin_flutter: ^0.9.6
+  koin:
+    path: ../koin
+  koin_flutter:
+    path: ../../packages/koin_flutter
   expandable: ^4.1.4
 dev_dependencies:
   flutter_test:
