@@ -64,7 +64,7 @@ class ScopeRegistry {
 
   void loadModule(Module module) {
     declareScope(module.rootScope);
-    declareScopes(module.otherScopes);
+    declareScopes(module.scopeDefinitions);
   }
 
   void declareScopes(List<ScopeDefinition> list) {
@@ -102,7 +102,7 @@ class ScopeRegistry {
   }
 
   void createRootScopeDefinition() {
-    final scopeDefinition = ScopeDefinition.rootDefinition();
+    final scopeDefinition = ScopeDefinition.root();
     scopeDefinitions[ScopeDefinition.rootScopeQualifier.value] =
         scopeDefinition;
   }
@@ -180,7 +180,7 @@ class ScopeRegistry {
   }
 
   void unloadModule(Module module) {
-    var scopeDefinitions = List<ScopeDefinition>.from(module.otherScopes)
+    var scopeDefinitions = List<ScopeDefinition>.from(module.scopeDefinitions)
       ..add(module.rootScope);
     scopeDefinitions.forEach(unloadDefinitions);
     module.isLoaded = false;

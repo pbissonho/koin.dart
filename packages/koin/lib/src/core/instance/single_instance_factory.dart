@@ -28,24 +28,24 @@ class SingleInstanceFactory<T> extends InstanceFactory<T> {
   SingleInstanceFactory(Koin koin, BeanDefinition<T> beanDefinition)
       : super(koin: koin, beanDefinition: beanDefinition);
 
-  T _value;
+  T _state;
 
-  bool isCreated() => _value != null;
+  bool get created => _state != null;
 
   @override
-  void drop() {
-    if (isCreated()) {
-      beanDefinition?.callbacks?.runCallback(_value);
+  void dispose() {
+    if (created) {
+      beanDefinition?.onDispose?.runCallback(_state);
     }
 
-    _value = null;
+    _state = null;
   }
 
   @override
-  T create(InstanceContext context) {
-    if (_value != null) return _value;
+  T createState(InstanceContext context) {
+    if (_state != null) return _state;
 
-    final created = super.create(context);
+    final created = super.createState(context);
     if (created == null) {
       throw IllegalStateException(
           "Single instance created couldn't return value");
@@ -55,9 +55,9 @@ class SingleInstanceFactory<T> extends InstanceFactory<T> {
 
   @override
   T get(InstanceContext context) {
-    if (!isCreated()) {
-      _value = create(context);
+    if (!created) {
+      _state = createState(context);
     }
-    return _value;
+    return _state;
   }
 }

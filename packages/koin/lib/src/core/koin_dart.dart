@@ -17,6 +17,7 @@
 import 'logger.dart';
 import 'module.dart';
 import 'package:kt_dart/kt.dart';
+import 'scope/scope_definition.dart';
 
 import 'definition_parameters.dart';
 import 'error/exceptions.dart';
@@ -194,9 +195,7 @@ class Koin {
     return _scopeRegistry.createScope(scopeId, qualifier, source);
   }
 
-  ///
-  /// Create a Scope instance
-  ///
+  // Returns whether or not there is a definition for [qualifier].
   Scope createScopeWithQualifier(String scopeId, Qualifier qualifier,
       [dynamic source]) {
     logger.isAtdebug('!- create scope - id:$scopeId q:$qualifier', Level.debug);
@@ -344,6 +343,10 @@ class Koin {
   void loadModule(Module module) {
     _modules.add(module);
     _scopeRegistry.loadModule(module);
+  }
+
+  void loadScopeDefinition(ScopeDefinition scopeDefinition) {
+    _scopeRegistry.declareScope(scopeDefinition);
   }
 
   void unloadModule(Module module) {

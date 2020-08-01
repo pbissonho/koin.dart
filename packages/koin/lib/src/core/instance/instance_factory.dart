@@ -42,7 +42,7 @@ abstract class InstanceFactory<T> {
   /// @param context
   /// @return T
   ///
-  T create(InstanceContext context) {
+  T createState(InstanceContext context) {
     logger.isAtdebug('| create instance for $beanDefinition', Level.debug);
 
     try {
@@ -59,5 +59,5 @@ Instance creation error : could not create instance for $beanDefinition: ${erro.
   ///
   /// Release the held instance (if hold)
   ///
-  void drop();
+  void dispose();
 }

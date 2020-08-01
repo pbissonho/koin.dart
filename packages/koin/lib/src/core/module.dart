@@ -38,9 +38,9 @@ import '../dsl/scope_dsl.dart';
 class Module {
   final bool createAtStart;
   final bool override;
-  ScopeDefinition rootScope = ScopeDefinition.rootDefinition();
+  ScopeDefinition rootScope = ScopeDefinition.root();
   bool isLoaded = false;
-  List<ScopeDefinition> otherScopes = <ScopeDefinition>[];
+  List<ScopeDefinition> scopeDefinitions = <ScopeDefinition>[];
 
   Module([this.createAtStart = false, this.override = false]);
 
@@ -54,7 +54,7 @@ class Module {
     scopeCreate(scopeCreated);
 
     // ScopeDSL(scopeDefinition).apply(scopeSet);
-    otherScopes.add(scopeDefinition);
+    scopeDefinitions.add(scopeDefinition);
   }
 
   ///
@@ -66,7 +66,7 @@ class Module {
     makeScope(scopeCreated);
 
     // ScopeDSL(scopeDefinition).apply(scopeSet);
-    otherScopes.add(scopeDefinition);
+    scopeDefinitions.add(scopeDefinition);
   }
 
   /// Declare in a simplified way a scope that has
@@ -94,7 +94,7 @@ class Module {
     bool override = false,
   }) {
     var scopeDefinition = ScopeDefinition(TypeQualifier(TScope), isRoot: false);
-    otherScopes.add(scopeDefinition);
+    scopeDefinitions.add(scopeDefinition);
 
     var beanDefinition = Definitions.saveSingle<T>(
         qualifier,

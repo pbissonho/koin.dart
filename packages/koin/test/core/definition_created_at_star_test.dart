@@ -17,7 +17,7 @@ void main() {
     expect(true, defA.options.isCreatedAtStart);
 
     var instanceFactory = app.getInstanceFactory(ComponentA);
-    expect(false, (instanceFactory as SingleInstanceFactory).isCreated());
+    expect(false, (instanceFactory as SingleInstanceFactory).created);
   });
 
   test('is created at start', () {
@@ -29,7 +29,7 @@ void main() {
     var defA = app.getBeanDefinition(ComponentA);
     expect(true, defA.options.isCreatedAtStart);
     var instanceFactory = app.getInstanceFactory(ComponentA);
-    expect(true, (instanceFactory as SingleInstanceFactory).isCreated());
+    expect(true, (instanceFactory as SingleInstanceFactory).created);
 
     stopKoin();
   });
@@ -43,7 +43,7 @@ void main() {
     expect(false, defA.options.isCreatedAtStart);
 
     var instanceFactory = app.getInstanceFactory(ComponentA);
-    expect(false, (instanceFactory as SingleInstanceFactory).isCreated());
+    expect(false, (instanceFactory as SingleInstanceFactory).created);
 
     app.close();
   });

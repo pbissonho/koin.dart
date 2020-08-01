@@ -41,7 +41,7 @@ void main() {
                 (factory) => factory.beanDefinition.primaryType == ComponentA)
         as SingleInstanceFactory;
 
-    expect(factoryInstance.isCreated(), true);
+    expect(factoryInstance.created, true);
   });
 
   test('can isolate koin apps e standalone', () {

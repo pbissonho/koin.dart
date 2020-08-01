@@ -86,6 +86,6 @@ with new definition typed '$type'""");
 
   static String rootScopeId = '-Root-';
   static Qualifier rootScopeQualifier = named(rootScopeId);
-  static ScopeDefinition rootDefinition() =>
+  static ScopeDefinition root() =>
       ScopeDefinition(rootScopeQualifier, isRoot: true);
 }

@@ -1,4 +1,3 @@
-
 class Simple {}
 
 class ComponentA {}

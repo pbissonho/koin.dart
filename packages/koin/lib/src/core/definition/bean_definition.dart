@@ -25,22 +25,18 @@ import 'options.dart';
 
 //import 'properties.dart';
 
-class Callbacks<T> {
-  final void Function(T value) _onCloseCallback;
+class Callback<T> {
+  final void Function(T value) _callBack;
 
-  bool hasCallback() {
-    var check = _onCloseCallback != null;
-    return check;
-  }
+  bool hasCallback() => _callBack != null;
 
   void runCallback(T value) {
     if (hasCallback()) {
-      _onCloseCallback(value);
+      _callBack(value);
     }
   }
 
-  Callbacks({Function(T value) onCloseCallback})
-      : _onCloseCallback = onCloseCallback;
+  Callback({Function(T value) callback}) : _callBack = callback;
 }
 
 enum Kind {
@@ -65,7 +61,7 @@ class BeanDefinition<T> with EquatableMixin {
   List<Type> secondaryTypes;
   final Options options;
   // final Properties _properties = Properties();
-  Callbacks<T> callbacks;
+  Callback<T> onDispose;
 
   BeanDefinition(
       {this.scopeDefinition,
@@ -74,7 +70,7 @@ class BeanDefinition<T> with EquatableMixin {
       this.definition,
       this.kind,
       this.options = const Options(),
-      Callbacks<T> callbacks,
+      Callback<T> onDispose,
       List<Type> secondaryTypes}) {
     if (secondaryTypes == null) {
       this.secondaryTypes = <Type>[];
@@ -82,16 +78,16 @@ class BeanDefinition<T> with EquatableMixin {
       this.secondaryTypes = secondaryTypes;
     }
 
-    if (callbacks == null) {
-      this.callbacks = Callbacks<T>();
+    if (onDispose == null) {
+      this.onDispose = Callback<T>();
     } else {
-      this.callbacks = callbacks;
+      this.onDispose = onDispose;
     }
   }
 
-  BeanDefinition<T> copy({List<Type> secondaryTypes, Callbacks<T> callbacks}) {
+  BeanDefinition<T> copy({List<Type> secondaryTypes, Callback<T> onDispose}) {
     var newSecondaryTypes;
-    var newCallbacks;
+    var onDisposeCopy;
 
     if (secondaryTypes == null) {
       newSecondaryTypes = this.secondaryTypes;
@@ -99,10 +95,10 @@ class BeanDefinition<T> with EquatableMixin {
       newSecondaryTypes = secondaryTypes;
     }
 
-    if (callbacks == null) {
-      newCallbacks = this.callbacks;
+    if (onDispose == null) {
+      onDisposeCopy = this.onDispose;
     } else {
-      newCallbacks = callbacks;
+      onDisposeCopy = onDispose;
     }
 
     return BeanDefinition<T>(
@@ -113,7 +109,7 @@ class BeanDefinition<T> with EquatableMixin {
         kind: kind,
         options: options,
         secondaryTypes: newSecondaryTypes,
-        callbacks: newCallbacks);
+        onDispose: onDisposeCopy);
   }
 
   @override
@@ -182,9 +178,8 @@ class BeanDefinition<T> with EquatableMixin {
 
   ///
   /// OnCloseCallback is called when definition is closed.
-  BeanDefinition<T> onClose(void Function(T value) onCloseCallback) {
-    var scopeDefinitionCopy =
-        copy(callbacks: Callbacks(onCloseCallback: onCloseCallback));
+  BeanDefinition<T> onClose(void Function(T value) onDispose) {
+    var scopeDefinitionCopy = copy(onDispose: Callback(callback: onDispose));
     scopeDefinition.remove(this);
     scopeDefinition.save(scopeDefinitionCopy);
     return scopeDefinitionCopy;

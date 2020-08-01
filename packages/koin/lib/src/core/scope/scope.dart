@@ -27,8 +27,11 @@ import '../koin_dart.dart';
 import '../definition_parameters.dart';
 import '../logger.dart';
 import '../qualifier.dart';
-import 'scope_callback.dart';
 import 'scope_definition.dart';
+
+abstract class ScopeCallback {
+  void onScopeClose(Scope scope);
+}
 
 class Scope {
   final String id;

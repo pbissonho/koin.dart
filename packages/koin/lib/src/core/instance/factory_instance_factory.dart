@@ -20,21 +20,21 @@ import '../koin_dart.dart';
 import 'instance_context.dart';
 import 'instance_factory.dart';
 
-//
+///
 /// Factory Instance Holder
 ///
-// @author Arnaud Giuliani
-//
+/// @author Arnaud Giuliani
+///
 class FactoryInstanceFactory<T> extends InstanceFactory<T> {
   FactoryInstanceFactory(Koin koin, BeanDefinition<T> beanDefinition)
       : super(koin: koin, beanDefinition: beanDefinition);
   @override
-  void drop() {
-    beanDefinition.callbacks.runCallback(null);
+  void dispose() {
+    beanDefinition.onDispose.runCallback(null);
   }
 
   @override
   T get(InstanceContext context) {
-    return create(context);
+    return createState(context);
   }
 }

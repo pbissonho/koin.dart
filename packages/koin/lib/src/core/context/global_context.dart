@@ -22,7 +22,7 @@ import 'koin_context.dart';
 //Ported to Dart from Kotlin by:
 //@author - Pedro Bissonho
 
-///Global context - current Koin Application available globally
+/// Global context - current Koin Application available globally
 ///
 ///Support to help inject automatically instances once KoinApp has been started
 ///
@@ -30,12 +30,15 @@ class GlobalContext implements KoinContext {
   Koin _koin;
 
   ///
-  /// StandAlone Koin App instance
+  /// Returns the global instance of the [Koin].
+  ///
+  /// If koin has not been started with "startKoin" an
+  /// IllegalStateException will be thrown.
   ///
   @override
   Koin get() {
     if (_koin == null) {
-      throw IllegalStateException('KoinApplication has not been started');
+      throw IllegalStateException('KoinApplication has not been started.');
     }
     return _koin;
   }

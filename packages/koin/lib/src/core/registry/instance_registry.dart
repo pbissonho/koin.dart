@@ -12,7 +12,7 @@ import '../instance/single_instance_factory.dart';
 import '../instance/factory_instance_factory.dart';
 import '../logger.dart';
 
-// Creates and manages the koin instances.
+// Creates and manages instance factorys.
 class InstanceRegistry {
   final Koin koin;
   final Scope _scope;
@@ -94,7 +94,7 @@ class InstanceRegistry {
   }
 
   void close() {
-    _instances.values.forEach((it) => it.drop());
+    _instances.values.forEach((it) => it.dispose());
     _instances.clear();
   }
 
