@@ -7,7 +7,6 @@ Sometimes you can't declare only components via Koin. Dependening on your runtim
 - [Bridge with Koin instance](#bridge-with-koin-instance)
 
 
-
 ## KoinComponent interface
 
 Tag your class with the `KoinComponent` interface to unlock Koin injection features:
