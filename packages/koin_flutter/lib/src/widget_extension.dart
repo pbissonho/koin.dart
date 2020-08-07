@@ -54,7 +54,7 @@ extension ComponentWidgetExtension<T> on Diagnosticable {
   ///    );
   ///  }
   /// }
-  /// 
+  ///
   /// ```
   ///
   /// {@macro koinsingle}
@@ -191,6 +191,116 @@ mixin ScopeStateMixin<T extends StatefulWidget> on State<T> {
       _scope.close();
       scopeObserver.onCloseScope(_scope.id);
     }
+  }
+}
+
+/// Class that propagate the 'Scope' down the tree.
+///
+/// Example of use:
+/// ```
+/// class MyScopedClass {
+///   int get state => 10;
+/// }
+///
+/// // Define a koin module with a scope for `ScopePage`.
+/// // Here, the `ScopePage` scope is being defined, which contains a definition
+/// // for `MyScopedClass`.
+/// final simpleModule = Module()
+///   ..scopeOne<MyScopedClass, ScopePage>((_) => MyScopedClass());
+///
+/// class ScopePage extends StatefulWidget {
+///   @override
+///   _ScopePageState createState() => _ScopePageState();
+/// }
+///
+/// class _ScopePageState extends State<ScopePage> with ScopeStateMixin {
+///   @override
+///   Widget build(BuildContext context) {
+///    final counterScoped = currentScope.get<MyScopedClass>();
+///     return Scaffold(
+///       appBar: AppBar(
+///         actions: <Widget>[
+///           IconButton(
+///             icon: Text("ScopeProvider", overflow: TextOverflow.clip),
+///             onPressed: () {
+///               // Use ScopeProvider to propagate the scope to the widget tree.
+///               // That allow to pass the current scope to another route.
+///               Navigator.push(context, MaterialPageRoute(builder: (c) {
+///                 return ScopeProvider(
+///                     scope: currentScope, child: UseScopePage());
+///               }));
+///             },
+///           ),
+///         ],
+///       ),
+///       body: Center(
+///         child: Text(counterScoped.state.toString()),
+///       ),
+///     );
+///   }
+/// }
+///
+/// //The second page that uses the scope of the widget above.
+/// class UseScopePage extends StatelessWidget {
+///   @override
+///   Widget build(BuildContext context) {
+///     final counterScoped = context.scope.get<MyScopedClass>();
+///     return Scaffold(
+///       body: Center(
+///         child: Text(counterScoped.state.toString()),
+///       ),
+///     );
+///   }
+/// }
+/// ```
+/// For more information see `InheritedWidget`.
+///
+class ScopeProvider extends InheritedWidget {
+  const ScopeProvider({
+    Key key,
+    @required this.scope,
+    @required Widget child,
+  })  : assert(scope != null),
+        assert(child != null),
+        super(key: key, child: child);
+
+  final Scope scope;
+
+  static ScopeProvider of(BuildContext context) {
+    final scope = context.dependOnInheritedWidgetOfExactType<ScopeProvider>();
+
+    if (scope == null) {
+      throw ScopeNotFoundException(
+          '''The scope was not found.The current context does not have a scope.
+          See the ScopeProvider information to propagate the scope to the widget tree.''');
+    }
+
+    return scope;
+  }
+
+  @override
+  bool updateShouldNotify(ScopeProvider old) => scope != old.scope;
+}
+
+/// Extension that allows to retrieve a [Scope] from the current context.
+/// Equivalent to `ScopeProvider.of(context.scope`.
+extension ScopeContextExtension on BuildContext {
+  Scope get scope {
+    return ScopeProvider.of(this).scope;
+  }
+}
+
+/// Exception that should be thrown when a scope is not found.
+/// This occurs when 'context.scope' is used in a context that has not been
+/// scoped.
+class ScopeNotFoundException implements Exception {
+  ScopeNotFoundException(this.msg);
+
+  final String msg;
+
+  @override
+  String toString() {
+    return '$runtimeType: $msg';
   }
 }
 
