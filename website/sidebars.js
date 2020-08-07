@@ -8,16 +8,6 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Koin in 5 minutes',
-      collapsed: true,
-      items: [
-        'start/quickstart/dart',
-        'start/quickstart/flutter',
-        'start/quickstart/test',
-      ],
-    },
-    {
-      type: 'category',
       label: 'Getting Started',
       collapsed: true,
       items: [
