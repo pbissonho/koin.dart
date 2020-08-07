@@ -1,10 +1,14 @@
 
 # Koin Components
 
-
 Sometimes you can't declare only components via Koin. Dependening on your runtime technology, you might need to retrieve instances from Koin in a class that was not created with Koin (e.g. Android)
 
-## The KoinComponent interface
+- [KoinComponent interface](#koinComponent-interface)
+- [Bridge with Koin instance](#bridge-with-koin-instance)
+
+
+
+## KoinComponent interface
 
 Tag your class with the `KoinComponent` interface to unlock Koin injection features:
 
@@ -66,7 +70,7 @@ void main() {
 }
 ```
 
-#### Bootstrapping
+### Bootstrapping
 
 > `KoinComponent` interface is also used to help you bootstrap an application from outside of Koin. Also, you can bring  `KoinComponent` feature by extension functions directly on some target classes (i.e: Activity, Fragment have KoinComponent feature in Android). 
 

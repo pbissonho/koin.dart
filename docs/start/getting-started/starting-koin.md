@@ -1,3 +1,4 @@
+
 # Start Koin
 
 > Koin is a DSL, a container & a pragamtic API to leverage your dependencies. 
@@ -7,9 +8,16 @@ The Koin DSL consists in:
 * KoinApplication DSL: describe how to configure your Koin application
 * Module DSL: describe your definitions
 
-Starting Koin consists in using the `startKoin` fuction as below:
+- [Start Koin - Dart](#start-koin-dart)
+- [Starting-for-Flutter](#Starting-for-Flutter)
+- [Custom Koin instance ](#custom-Koin-instance )
+- [Logging](#logging)
+- [Recap](#Recap)
 
-## StartKoin
+
+## Start Koin - Dart
+
+Starting Koin consists in using the `startKoin` fuction as below:
 
 In a classical Dart file:
 
@@ -88,7 +96,7 @@ At start, Koin log what definition is bound by name or type (if log is activated
 [INFO] [Koin] bind type:'Heater' ~ [type:Single,class:'Heater']
 ```
 
-## DSL
+## Recap
 
 A quick recap of the Koin DSL keywords:
 

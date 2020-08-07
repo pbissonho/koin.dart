@@ -2,6 +2,12 @@
 
 The `koin-test` project brings you small but powerful tools to test your Koin application.
 
+- [Getting your components](#Getting-your-components)
+- [Checking your modules](#Checking-your-modules)
+- [Mocking on the fly](#Mocking-on-the-fly)
+- [Starting & stopping for tests](#Starting-&-stopping-for-tests)
+
+
 ## Getting your components
 
 Just tag your test class with `KoinTest`, and you will be able to unlock `KoinComponent` & testing features:

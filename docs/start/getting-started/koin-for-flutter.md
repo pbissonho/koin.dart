@@ -1,5 +1,10 @@
 # Koin for Flutter
 
+- [Starting Koin for Flutter](#koinComponent-interface)
+- [Flutter Components as KoinComponents](#bridge-with-koin-instance)
+- [Extended Scope API](#extended-scope-api)
+
+
 ## Starting Koin for Flutter
 
 In any Flutter Widget:

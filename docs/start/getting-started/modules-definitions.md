@@ -1,5 +1,15 @@
 # Modules Definitions
 
+- [Module & definitions](#module-&-definitions)
+- [Qualifiers](#qualifiers)
+- [Additional types](#additional-types)
+- [Loading after start](#loading-after-start)
+- [Dropping definitions](#dropping-definitions)
+- [Declare on the fly](#declare-on-the-fly)
+- [DSL Recap](#dsl-recap)
+
+
+
 Writing definitions in Koin is done via Kotlin functions, that describe ishow is built your instance. Once you have configured your Koin application, let's write some modules and definitions.
 
 ## Module & definitions

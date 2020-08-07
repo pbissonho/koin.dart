@@ -1,5 +1,8 @@
 # Definitions
 
+
+
+
 By using Koin, you describe definitions in modules. In this section we will see how to declare, organize & link your modules.
 
 ## Writing a module
