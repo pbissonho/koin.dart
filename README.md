@@ -60,10 +60,6 @@ favorite state management package.
 * [Getting Started](http://koindart.dev/docs/start/getting-started/starting-koin)
 * [Documentation References](http://koindart.dev/docs/reference/koin-core/definitions)
 * [Examples](#Examples)
-* [Reporting issues](#Reporting-issues)
-* [Contribute](#contribute)
-* [Credits](#Credits)
-* [Dependencies](#Dependencies)
 
 
 ## Quick Start
