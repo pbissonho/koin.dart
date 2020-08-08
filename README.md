@@ -29,15 +29,16 @@ Written in pure Dart, using functional resolution only: no code generation, no r
 
 - Allows to dispose your objects at the moment that you are no longer using them.
 - It does not depend on the Flutter.
-  * Can be used with Flutter, console or backend applications.
-- Combine your state management classes in a simple way.
+  * The core does not depend on Flutter, so it is possible to use any Dart application.
+
 - Standard support for the Bloc library, but it can be easily used with any state management.
 
 - DevTools to inspect the state of your objects.
   * Inspect the internal state of each class at any time on a Flutter page.
 
 - Dependencies are instances only when needed.
-  * Its class is instant when used for the first time. Koin has a implementation of [Lazy](https://www.lordcodes.com/articles/the-power-of-lazy-properties-in-kotlin) by Kotlin to provide this functionality.
+  * Its class is instant when used for the first time.
+  * Koin has a implementation of [Lazy](https://www.lordcodes.com/articles/the-power-of-lazy-properties-in-kotlin) by Kotlin to enhance this functionality.
 
 - Very tested
   * Koin has a high test coverage, to ensure the correct internal behavior
