@@ -10,8 +10,7 @@
 
 ---
 
-A pragmatic lightweight dependency injection framework. This is a port of [Koin](https://github.com/InsertKoinIO/koin) for Dart projects. Can be used with Flutter, console or backend applications.
-
+A pragmatic lightweight dependency injection framework. This is a port of [Koin](https://github.com/InsertKoinIO/koin) for Dart projects.
 
 Written in pure Dart, using functional resolution only: no code generation, no reflection.
 
@@ -41,8 +40,7 @@ Written in pure Dart, using functional resolution only: no code generation, no r
   * Its class is instant when used for the first time. Koin has a implementation of [Lazy](https://www.lordcodes.com/articles/the-power-of-lazy-properties-in-kotlin) by Kotlin to provide this functionality.
 
 - Very tested
-  * Which tests were all ported from the original version, so expect the same internal behavior as the Kotlin version.
-  * In addition, Koin has more tests to a high level of test coverage, to ensure the correct internal behavior.
+  * Koin has a high test coverage, to ensure the correct internal behavior
 
 - It is not invasive. 
   * Insert Koin in your project without changing the structure of your Widgets or changing your state management package.
@@ -63,10 +61,9 @@ favorite state management package.
 * [Documentation References](http://koindart.dev/docs/reference/koin-core/definitions)
 * [Examples](#Examples)
 * [Reporting issues](#Reporting-issues)
-* [Resources](#Examples)
-* [Examples](#Examples)
-* [Examples](#Examples)
-
+* [Contribute](#contribute)
+* [Credits](#Credits)
+* [Dependencies](#Dependencies)
 
 
 ## Quick Start
@@ -277,7 +274,6 @@ Want to help or share a proposal about Koin? problem on a specific feature?
 ## Credits
 
 - [Arnaud Giuliani](https://github.com/arnaudgiuliani) and all contributors to the [original Koin](https://github.com/InsertKoinIO/koin) version written in Kotlin.
-- [Pedro Bissonho](https://github.com/pbissonho) - For making the port for Dart.
 
 ## Dependencies
 
