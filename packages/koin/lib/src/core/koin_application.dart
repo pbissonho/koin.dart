@@ -75,40 +75,21 @@ class KoinApplication {
     koin.loadModules(modules);
   }
 
-  // TODO
-  /*
-  ///
-  /// Load properties from Map
-  /// @param values
-  ///
-  KoinApplication properties(Map<String, dynamic> values) {
-    // koin.propertyRegistry.saveProperties(values)
-    return this;
-  }
-
-  ///
-  /// Load properties from file
-  /// @param fileName
-  ///
-  KoinApplication fileProperties({String fileName = '/koin.properties'}) {
-    // koin.propertyRegistry.loadPropertiesFromFile(fileName);
-    return this;
-  }
-
-  ///
-  /// Load properties from environment
-  ///
-  KoinApplication environmentProperties() {
-    //  koin.propertyRegistry.loadEnvironmentProperties()
-    return this;
-  }*/
-
   ///
   /// Set Koin Logger
   /// @param logger - logger
   ///
   KoinApplication logger(Logger logger) {
     koin.logger = logger;
+    return this;
+  }
+
+  ///
+  /// Set Koin Logger
+  /// @param logger - logger
+  ///
+  KoinApplication emptyInstanceLoggerObserver() {
+    koin.loggerInstanceObserver = null;
     return this;
   }
 

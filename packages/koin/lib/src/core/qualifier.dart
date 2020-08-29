@@ -81,5 +81,3 @@ class TypeQualifier<T> extends Qualifier with EquatableMixin {
   @override
   List<Object> get props => [_type];
 }
-
-// improvements to following Effective Dart rules.

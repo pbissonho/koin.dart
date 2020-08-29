@@ -193,14 +193,11 @@ class Scope {
   T getWithType<T>(
       Type type, Qualifier qualifier, DefinitionParameters parameters) {
     if (koin.logger.isAt(Level.debug)) {
-      // KoinApplication.logger.debug("+- get '${type.toString()}'");
       final result = Measure.measureDuration(() {
         return resolveInstance<T>(type, qualifier, parameters);
       });
-      koin.logger
-          .debug("+- get '${type.toString()} in ${result.duration} ms '");
-      // KoinApplication.logger
-      //     .debug("+- got '${type.toString()}' in ${result.duration} ms");
+      koin.loggerInstanceObserver
+          .onResolve(type.toString(), result.duration.toString());
       return result.result;
     } else {
       return resolveInstance<T>(type, qualifier, parameters);
@@ -342,38 +339,6 @@ No definition found for class:'$type'$qualifierString. Check your definitions!""
       return definition;
     }
   }
-
-  /*
-  ///
-  /// Retrieve a property
-  /// @param key
-  /// @param defaultValue
-  ///
-  T getProperty<T>(String key, T defaultValue) {
-    return koin.getProperty(key, defaultValue);
-  }
-
-  ///
-  /// Retrieve a property
-  /// @param key
-  ///
-  T getPropertyOrNull<T>(String key) {
-    return koin.getPropertyOrNull(key);
-  }
-
-  ///
-  /// Retrieve a property
-  /// @param key
-  ///
-  T getPropertyWithException<T>(String key) {
-    var property = koin.getPropertyOrNull(key);
-
-    if (property == null) {
-      throw MissingPropertyException("Property '$key' not found");
-    } else {
-      return property;
-    }
-  }*/
 
   ///
   /// Close all instances from this scope

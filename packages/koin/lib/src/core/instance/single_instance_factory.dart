@@ -37,7 +37,7 @@ class SingleInstanceFactory<T> extends InstanceFactory<T> {
     if (created) {
       beanDefinition?.onDispose?.runCallback(_state);
     }
-
+    koin.loggerInstanceObserver?.onDispose(this);
     _state = null;
   }
 

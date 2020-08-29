@@ -17,7 +17,6 @@
 import '../definition/bean_definition.dart';
 import '../error/exceptions.dart';
 import '../koin_dart.dart';
-import '../logger.dart';
 import 'instance_context.dart';
 
 ///
@@ -43,13 +42,12 @@ abstract class InstanceFactory<T> {
   /// @return T
   ///
   T createState(InstanceContext context) {
-    logger.isAtdebug('| create instance for $beanDefinition', Level.debug);
-
     try {
       final parameters = context.parameters;
+      koin.loggerInstanceObserver?.onCreate(this);
       return beanDefinition.definition.create(parameters, context.scope);
     } catch (erro) {
-      logger.error('''
+      koin.logger.error('''
 Instance creation error : could not create instance for $beanDefinition: ${erro.toString()}''');
       throw InstanceCreationException(
           'Could not create instance for $beanDefinition', erro.toString());

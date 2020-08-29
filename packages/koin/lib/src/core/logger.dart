@@ -27,8 +27,6 @@ const koinTage = '[Koin]';
 
 enum Level { info, error, debug, none }
 
-Logger logger = Logger.logger;
-
 abstract class Logger {
   final Level level;
 
@@ -68,13 +66,16 @@ abstract class Logger {
 }
 
 class EmptyLogger extends Logger {
-  const EmptyLogger(Level loglevel);
+  const EmptyLogger(Level loglevel) : super(Level.none);
 
   @override
   bool isAtLog(Level level, String msg, Level isAtLevel) => false;
 
   @override
   void log(Level level, String message) {}
+
+  @override
+  bool isAt(Level level) => false;
 }
 
 class PrintLogger extends Logger {

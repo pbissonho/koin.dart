@@ -19,6 +19,16 @@ KoinApplication startKoin(Function(KoinApplication app) appDeclaration,
 }
 
 ///
+/// Start a Koin Application as StandAlone
+///
+Future<void> asyncStartKoin(Function(KoinApplication app) appDeclaration,
+    {KoinContext koinContext}) async {
+  await Future.microtask(() {
+    startKoin(appDeclaration, koinContext: koinContext);
+  });
+}
+
+///
 /// Stop current StandAlone Koin application
 ///
 void stopKoin() => KoinContextHandler.stop();

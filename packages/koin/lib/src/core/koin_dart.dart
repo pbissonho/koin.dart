@@ -1,3 +1,4 @@
+import 'context/koin_context.dart';
 ////
 /// Copyright 2017-2018 the original author or authors.
 ///
@@ -23,7 +24,6 @@ import 'definition_parameters.dart';
 import 'error/exceptions.dart';
 import 'lazy.dart';
 import 'qualifier.dart';
-// import 'registry/proterty_registry.dart';
 import 'registry/scope_registry.dart';
 import 'scope/scope.dart';
 import '../ext/instance_scope_ext.dart';
@@ -39,18 +39,17 @@ import '../ext/instance_scope_ext.dart';
 
 class Koin {
   ScopeRegistry _scopeRegistry;
-  // TODO
-  // PropertyRegistry _propertyRegistry;
   Logger logger;
+  LoggerInstanceObserverBase loggerInstanceObserver;
+
   final KtHashSet<Module> _modules = KtHashSet<Module>.empty();
 
   ScopeRegistry get scopeRegistry => _scopeRegistry;
 
   Koin() {
     _scopeRegistry = ScopeRegistry(this);
-    // TODO
-    //  _propertyRegistry = PropertyRegistry(this);
     logger = EmptyLogger(Level.debug);
+    loggerInstanceObserver = LoggerInstanceObserver(this);
   }
 
   ///
@@ -221,22 +220,6 @@ class Koin {
     return _scopeRegistry.createScope(scopeId, qualifier, null);
   }
 
-  // TODO
-  /*
-   /// 
-  /// Create a Scope instance
-  ///
-  Scope createScopeTS<T>() {
-    var type = T;
-    var scopeId = type.
-
-    var qualifier = TypeQualifier(T);
-    if (logger.isAt(Level.debug)) {
-      logger.debug('!- create scope - id:$scopeId q:$qualifier');
-    }
-    return _scopeRegistry.createScope(scopeId, qualifier, source);
-  }*/
-
   ///
   /// Get or Create a Scope instance
   ///
@@ -286,53 +269,15 @@ class Koin {
     _scopeRegistry.deleteScopeByID(scopeId);
   }
 
-  /*
-
-  /**
-     * Retrieve a property
-     * @param key
-     * @param defaultValue
-     */
-    fun <T> getProperty(key: String, defaultValue: T): T {
-        return _propertyRegistry.getProperty<T>(key) ?: defaultValue
-    }
-
-    /**
-     * Retrieve a property
-     * @param key
-     */
-    fun <T> getProperty(key: String): T? {
-        return _propertyRegistry.getProperty(key)
-    }
-
-    /**
-     * Save a property
-     * @param key
-     * @param value
-     */
-    fun <T : Any> setProperty(key: String, value: T) {
-        _propertyRegistry.saveProperty(key, value)
-    }
-
-    /**
-     * Delete a property
-     * @param key
-     */
-    fun deleteProperty(key: String) {
-        _propertyRegistry.deleteProperty(key)
-    }
-*/
-
   ///
-  ///Close all resources from context
-  //
+  /// Close all resources from context
+  ///
   void close() {
     _modules.forEach((m) {
       m.isLoaded = false;
     });
     _modules.clear();
     _scopeRegistry.close();
-    //_propertyRegistry.close()
   }
 
   void loadModules(List<Module> modules) {
@@ -362,10 +307,4 @@ class Koin {
   void createRootScope() {
     _scopeRegistry.createRootScope();
   }
-
-  /* TODO
-  getProperty(String key, defaultValue) {}
-
-  getPropertyOrNull(String key) {}
-  */
 }
