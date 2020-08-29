@@ -18,7 +18,7 @@ import 'package:koin/koin.dart';
 import 'check_module_dsl.dart';
 import 'package:koin/src/core/scope/scope_definition.dart';
 import 'package:koin/src/dsl/koin_application_dsl.dart';
-
+import 'package:koin/internal.dart';
 import 'package:kt_dart/collection.dart';
 
 extension KoinApplicationExt on KoinApplication {
@@ -50,7 +50,7 @@ extension KoinExt on Koin {
     logger.info('[Check] modules checked');
   }
 
-  Map<CheckedComponent, DefinitionParameters> makeParameters(
+  Map<CheckedComponent, DefinitionParameter> makeParameters(
       CheckParameters checkParameters) {
     var bindings = ParametersBinding();
     bindings.koin = this;
@@ -61,14 +61,14 @@ extension KoinExt on Koin {
   }
 
   void checkScopedDefinitions(
-      Map<CheckedComponent, DefinitionParameters> allParameters) {
+      Map<CheckedComponent, DefinitionParameter> allParameters) {
     scopeRegistry.scopeDefinitions.values.forEach((scopeDefinition) {
       runScope(scopeDefinition, allParameters);
     });
   }
 
   void runScope(ScopeDefinition scopeDefinition,
-      Map<CheckedComponent, DefinitionParameters> allParameters) {
+      Map<CheckedComponent, DefinitionParameter> allParameters) {
     var scope = getOrCreateScopeQualifier(
         scopeDefinition.qualifier.value, scopeDefinition.qualifier);
 
@@ -78,11 +78,11 @@ extension KoinExt on Koin {
   }
 }
 
-void runDefinition(Map<CheckedComponent, DefinitionParameters> allParameters,
+void runDefinition(Map<CheckedComponent, DefinitionParameter> allParameters,
     BeanDefinition it, Scope scope) {
   var parameters =
       allParameters[CheckedComponent(it.qualifier, it.primaryType)];
-  parameters ??= parametersOf([]);
+  parameters ??= emptyParameter();
 
   scope.getWithType(it.primaryType, it.qualifier, parameters);
 }

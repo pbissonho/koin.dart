@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:koin/koin.dart';
+import 'package:koin/internal.dart';
 
 /// Extension to provide `KoinComponent` methods for Flutter Widgets.
 extension ComponentWidgetExtension<T> on Diagnosticable {
@@ -13,7 +14,7 @@ extension ComponentWidgetExtension<T> on Diagnosticable {
   ///
   ///
   /// First, you need to define the definition for
-  /// And your module must be started in  so that it is possible
+  /// And your module must be started in so that it is possible
   /// to resolve the instance.
   ///
   /// ```
@@ -36,8 +37,8 @@ extension ComponentWidgetExtension<T> on Diagnosticable {
   /// }
   /// ```
   ///
-  T get<T>([Qualifier qualifier, DefinitionParameters parameters]) {
-    return getKoin().get<T>(qualifier, parameters);
+  T get<T>([Qualifier qualifier]) {
+    return getKoin().get<T>(qualifier);
   }
 
   /// Return single definition instance for [T]
@@ -59,35 +60,35 @@ extension ComponentWidgetExtension<T> on Diagnosticable {
   ///
   /// {@macro koinsingle}
   ///
-  T getWithParams<T>({Qualifier qualifier, DefinitionParameters parameters}) {
-    return getKoin().get<T>(qualifier, parameters);
+  T getWithParam<T, P>(P param, {Qualifier qualifier}) {
+    return getKoin().getWithParam<T, P>(param, qualifier: qualifier);
   }
 
   /// Returns a Lazy object that provides the instance for [T].
   ///
   /// The `instance ` resolved is is created only when `value` by `Lazy` being
   /// called for the first time.
-  Lazy<T> inject<T>([Qualifier qualifier, DefinitionParameters parameters]) {
-    return getKoin().inject<T>(qualifier, parameters);
+  Lazy<T> inject<T>([Qualifier qualifier]) {
+    return getKoin().inject<T>(qualifier);
   }
 
   /// Lazy inject instance from Koin
   /// Use when it is necessary to pass [parameters] to the instance.
-  Lazy<T> injectWithParams<T>(
-      {Qualifier qualifier, DefinitionParameters parameters}) {
-    return getKoin().inject<T>(qualifier, parameters);
+  Lazy<T> injectWithParam<T, P>({Qualifier qualifier, P param}) {
+    return getKoin().injectWithParam<T, P>(param, qualifier: qualifier);
   }
 
   /// Get instance instance from Koin by Primary Type [P], as secondary type [S]
-  S bind<S, P>([Qualifier qualifier, DefinitionParameters parameters]) {
-    return getKoin().bind<S, P>(parameters);
+  S bind<S, P>([Qualifier qualifier]) {
+    return getKoin().bind<S, P>();
   }
 
+  /* TODO
   /// Get instance instance from Koin by Primary Type [P], as secondary type [S]
   S bindWithParams<S, P>(
       {Qualifier qualifier, DefinitionParameters parameters}) {
     return getKoin().bind<S, P>(parameters);
-  }
+  }*/
 }
 
 /// Extension to provide the Koin scope API for StatefulWidget.

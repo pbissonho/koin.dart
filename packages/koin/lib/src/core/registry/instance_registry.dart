@@ -1,7 +1,7 @@
 import 'package:kt_dart/kt.dart';
 
-import '../definition_parameters.dart';
-import '../error/exceptions.dart';
+import '../definition_parameter.dart';
+import '../exceptions.dart';
 import '../scope/scope.dart';
 
 import '../koin_dart.dart';
@@ -83,14 +83,16 @@ class InstanceRegistry {
     }
   }
 
-  T resolveInstance<T>(String indexKey, DefinitionParameters parameters) {
+  T resolveInstance<T>(String indexKey, DefinitionParameter parameters) {
     var instance =
         _instances[indexKey]?.get(defaultInstanceContext(parameters)) as T;
     return instance;
   }
 
-  InstanceContext defaultInstanceContext(DefinitionParameters parameters) {
-    return InstanceContext(koin: koin, scope: _scope, parameters: parameters);
+  InstanceContext defaultInstanceContext(
+      DefinitionParameter definitionParameter) {
+    return InstanceContext(
+        koin: koin, scope: _scope, definitionParameter: definitionParameter);
   }
 
   void close() {
@@ -119,15 +121,15 @@ class InstanceRegistry {
 
   KtList<InstanceFactory> getAllFactoryAsList() => _instances.values.toList();
 
-  S bind<S>(
-      Type primaryType, Type secondaryType, DefinitionParameters parameters) {
+  S bind<S>(Type primaryType, Type secondaryType,
+      DefinitionParameter definitionParameter) {
     var instance = _instances.values.firstOrNull((instance) {
       final canBind =
           instance.beanDefinition.canBind(primaryType, secondaryType);
       return canBind;
     });
 
-    return instance?.get(defaultInstanceContext(parameters)) as S;
+    return instance?.get(defaultInstanceContext(definitionParameter)) as S;
   }
 
   void dropDefinition(BeanDefinition definition) {

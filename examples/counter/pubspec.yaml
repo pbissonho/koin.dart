@@ -32,7 +32,8 @@ dependencies:
   koin_bloc: 
     path: ../../packages/koin_bloc
   koin_devtools:
-    path: ../../packages/koin_devtools 
+    path: ../../packages/koin_devtools
+  get_it: ^4.0.4  
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,5 @@
-import 'package:koin/src/core/definition/definition.dart';
+import 'package:koin/extension.dart';
+import 'package:koin/internal.dart';
 import 'package:koin/src/core/definition/definitions.dart';
 import 'package:koin/src/core/instance/instance_context.dart';
 import 'package:koin/src/core/koin_dart.dart';
@@ -12,8 +13,6 @@ import '../components.dart';
 import '../extensions/koin_application_ext.dart';
 
 import 'package:koin/src/core/qualifier.dart';
-import 'package:koin/src/core/definition_parameters.dart';
-
 import 'package:koin/src/core/definition/bean_definition.dart';
 
 void main() {
@@ -27,11 +26,11 @@ void main() {
 
   test('equals definitions', () {
     var def1 = Definitions.createSingle(
-        definition: DefinitionX<ComponentA>((s) => ComponentA()),
+        definition: Definition<ComponentA>((s) => ComponentA()),
         scopeDefinition: rootScope.scopeDefinition,
         options: Options());
     var def2 = Definitions.createSingle(
-        definition: DefinitionX<ComponentA>((s) => ComponentA()),
+        definition: Definition<ComponentA>((s) => ComponentA()),
         scopeDefinition: rootScope.scopeDefinition,
         options: Options());
 
@@ -40,7 +39,7 @@ void main() {
 
   test('scope definition', () {
     var def1 = Definitions.createSingle(
-        definition: DefinitionX<ComponentA>((s) => ComponentA()),
+        definition: Definition<ComponentA>((s) => ComponentA()),
         scopeDefinition: rootScope.scopeDefinition,
         options: Options());
 
@@ -50,11 +49,11 @@ void main() {
 
   test('equals definitions - but diif kind', () {
     var def1 = Definitions.createSingle(
-        definition: DefinitionX<ComponentA>((s) => ComponentA()),
+        definition: Definition<ComponentA>((s) => ComponentA()),
         scopeDefinition: rootScope.scopeDefinition,
         options: Options());
     var def2 = Definitions.createSingle(
-        definition: DefinitionX<ComponentA>((s) => ComponentA()),
+        definition: Definition<ComponentA>((s) => ComponentA()),
         scopeDefinition: rootScope.scopeDefinition,
         options: Options());
 
@@ -98,7 +97,9 @@ void main() {
 
     app.getBeanDefinition(ComponentA);
     var instance = app.getInstanceFactory(ComponentA).get(InstanceContext(
-        koin: app.koin, scope: rootScope, parameters: emptyParametersHolder()));
+        koin: app.koin,
+        scope: rootScope,
+        definitionParameter: emptyParameter()));
 
     expect(instance, app.koin.get<ComponentA>());
   });

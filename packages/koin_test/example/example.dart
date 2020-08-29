@@ -15,6 +15,13 @@ class ServiceB {
   String getName() => 'Name';
 }
 
+class ServiceParam {
+  final String firstName;
+  final String lastName;
+
+  ServiceParam(this.firstName, this.lastName);
+}
+
 class ServiceC {
   final String firstName;
   final String lastName;
@@ -36,8 +43,8 @@ class ServiceFake extends Fake implements ServiceA {
 
 var customModule = Module()
   ..single<ServiceA>(((s) => ServiceA()))
-  ..factory2<ServiceC, String, String>(
-      ((s, fisrt, second) => ServiceC(fisrt, second)));
+  ..factoryWithParam<ServiceC, ServiceParam>(
+      ((s, param) => ServiceC(param.firstName, param.lastName)));
 
 // Since ServiceC has not been defined, koin will throw an exception when trying
 // to instantiate ServicoB.
@@ -49,7 +56,7 @@ void main() {
 
   testModule('shoud be a valid module', customModule,
       checkParameters: checkParametersOf({
-        ServiceC: parametersOf(['Name', 'LastName']),
+        ServiceC: ServiceParam('Name', 'LastName'),
       }));
 
   test('shoud be a invalid module', () {
@@ -64,8 +71,8 @@ void main() {
     declareModule((module) {
       module
         ..single<ServiceA>(((s) => ServiceA()))
-        ..factory2<ServiceC, String, String>(
-            ((s, fisrt, second) => ServiceC(fisrt, second)));
+        ..factoryWithParam<ServiceC, ServiceParam>(
+            ((s, param) => ServiceC(param.firstName, param.lastName)));
     });
 
     var serviceMock = ServiceAMock();
@@ -85,8 +92,8 @@ void main() {
     declareModule((module) {
       module
         ..single<ServiceA>(((s) => ServiceA()))
-        ..factory2<ServiceC, String, String>(
-            ((s, fisrt, second) => ServiceC(fisrt, second)));
+        ..factoryWithParam<ServiceC, ServiceParam>(
+            ((s, param) => ServiceC(param.firstName, param.lastName)));
     });
 
     var serviceMock = ServiceFake();

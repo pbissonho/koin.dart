@@ -15,7 +15,7 @@
  */
 
 import '../definition/bean_definition.dart';
-import '../error/exceptions.dart';
+import '../exceptions.dart';
 import '../koin_dart.dart';
 import 'instance_context.dart';
 
@@ -43,7 +43,7 @@ abstract class InstanceFactory<T> {
   ///
   T createState(InstanceContext context) {
     try {
-      final parameters = context.parameters;
+      final parameters = context.definitionParameter;
       koin.loggerInstanceObserver?.onCreate(this);
       return beanDefinition.definition.create(parameters, context.scope);
     } catch (erro) {

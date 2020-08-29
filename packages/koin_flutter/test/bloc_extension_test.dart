@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:koin/koin.dart';
 import 'package:koin_test/koin_test.dart';
+import 'package:koin/internal.dart';
+import 'package:koin/instance_scope_ext.dart';
 
 import 'widgets/bloc_extension/modules.dart';
 import 'widgets/bloc_extension/pages.dart';
-import 'package:koin_flutter/koin_flutter.dart';
 
 void main() {
   Koin koin;
@@ -66,8 +67,8 @@ void main() {
     final gestureFinder = find.byType(GestureDetector);
 
     testWidgets(
-        'the scope should not be created - when scope() or currentScope() is not called',
-        (tester) async {
+        '''the scope should not be created - when scope() or currentScope()
+         is not called''', (tester) async {
       loadKoinModule(testModule1);
 
       final scopeWidget = WidgetNotUseScope();
@@ -83,7 +84,7 @@ void main() {
     });
 
     testWidgets(
-        'shoud not create a scope for the StatefulWidget - when the scope() or currentScope() not is called at least once',
+        '''shoud not create a scope for the StatefulWidget - when the scope() or currentScope() not is called at least once''',
         (tester) async {
       loadKoinModule(testModule1);
       final scopeWidget = ScopeWidget();
@@ -99,8 +100,8 @@ void main() {
 
     group('shoud close scope ', () {
       testWidgets(
-          'when the StatefulWidget is removed from tree - scope started by currentScope() method',
-          (WidgetTester tester) async {
+          '''when the StatefulWidget is removed from tree - scope started by currentScope() method''',
+          (tester) async {
         // Create the widget by telling the tester to build it.
         loadKoinModule(testModule1);
         final scopeWidget = ScopeWidget();
@@ -125,8 +126,8 @@ void main() {
       });
 
       testWidgets(
-          'when the StatefulWidget is removed from tree - scope started by scope() method',
-          (WidgetTester tester) async {
+          '''when the StatefulWidget is removed from tree - scope started by scope()
+           method''', (tester) async {
         // Create the widget by telling the tester to build it.
         loadKoinModule(testModule2);
 
@@ -153,8 +154,8 @@ void main() {
     });
 
     testWidgets(
-        'when the StatefulWidget is removed from tree - scope started by currentScope() extension',
-        (WidgetTester tester) async {
+        '''when the StatefulWidget is removed from tree - scope started by currentScope()
+         extension''', (tester) async {
       // Create the widget by telling the tester to build it.
       loadKoinModule(testModule3);
 

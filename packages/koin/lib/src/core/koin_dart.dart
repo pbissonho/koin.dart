@@ -1,3 +1,5 @@
+import 'definition_parameter.dart';
+
 import 'context/koin_context.dart';
 ////
 /// Copyright 2017-2018 the original author or authors.
@@ -20,8 +22,7 @@ import 'module.dart';
 import 'package:kt_dart/kt.dart';
 import 'scope/scope_definition.dart';
 
-import 'definition_parameters.dart';
-import 'error/exceptions.dart';
+import 'exceptions.dart';
 import 'lazy.dart';
 import 'qualifier.dart';
 import 'registry/scope_registry.dart';
@@ -41,7 +42,6 @@ class Koin {
   ScopeRegistry _scopeRegistry;
   Logger logger;
   LoggerInstanceObserverBase loggerInstanceObserver;
-
   final KtHashSet<Module> _modules = KtHashSet<Module>.empty();
 
   ScopeRegistry get scopeRegistry => _scopeRegistry;
@@ -55,51 +55,49 @@ class Koin {
   ///
   /// Lazy inject a Koin instance
   ///
-  Lazy<T> inject<T>([Qualifier qualifier, DefinitionParameters parameters]) {
-    return _scopeRegistry.rootScope.inject(parameters, qualifier);
+  Lazy<T> inject<T>([Qualifier qualifier, DefinitionParameter parameters]) {
+    return _scopeRegistry.rootScope.inject(qualifier);
   }
 
   ///
   /// Lazy inject a Koin instance
   ///
-  Lazy<T> injectWithParams<T>(
-      {Qualifier qualifier, DefinitionParameters parameters}) {
-    return _scopeRegistry.rootScope.inject(parameters, qualifier);
+  Lazy<T> injectWithParam<T, P>(P param, {Qualifier qualifier}) {
+    return _scopeRegistry.rootScope
+        .injectWithParam<T, P>(param, qualifier: qualifier);
   }
 
   ///
   /// Lazy inject a Koin instance if available.
   /// Return Lazy instance of type T or null.
   ////
-  Lazy<T> injectOrNull<T>(
-      Qualifier qualifier, DefinitionParameters parameters) {
+  Lazy<T> injectOrNull<T>(Qualifier qualifier, DefinitionParameter parameters) {
     return _scopeRegistry.rootScope.injectOrNull(parameters, qualifier);
   }
 
   ///
   /// Get a Koin instance
   ///
-  T get<T>([Qualifier qualifier, DefinitionParameters parameters]) {
+  T get<T>([Qualifier qualifier]) {
     return _scopeRegistry.rootScope.get<T>(
       qualifier,
-      parameters,
     );
   }
 
   ///
   /// Get a Koin instance
   ///
-  T getWithParams<T>({Qualifier qualifier, DefinitionParameters parameters}) {
-    return _scopeRegistry.rootScope.get<T>(
-      qualifier,
-      parameters,
+  T getWithParam<T, P>(P parameter, {Qualifier qualifier}) {
+    return _scopeRegistry.rootScope.getWithParam<T, P>(
+      parameter,
+      qualifier: qualifier,
     );
   }
 
   ///
   /// Get a Koin instance if available with return instance of type T or null.
   ///
-  T getOrNull<T>([Qualifier qualifier, DefinitionParameters parameters]) {
+  T getOrNull<T>([Qualifier qualifier, DefinitionParameter parameters]) {
     return _scopeRegistry.rootScope.getOrNull<T>(
       qualifier,
       parameters,
@@ -111,14 +109,14 @@ class Koin {
   /// @return instance of type T
   ///
   T getWithType<T>(
-      [Type type, Qualifier qualifier, DefinitionParameters parameters]) {
+      [Type type, Qualifier qualifier, DefinitionParameter parameters]) {
     return _scopeRegistry.rootScope.getWithType<T>(type, qualifier, parameters);
   }
 
   ///
   /// Get a Koin instance if available
   T getOrNullWithType<T>(
-      [Type type, Qualifier qualifier, DefinitionParameters parameters]) {
+      [Type type, Qualifier qualifier, DefinitionParameter parameters]) {
     return _scopeRegistry.rootScope
         .getWithTypeOrNull(type, qualifier, parameters);
   }
@@ -157,7 +155,7 @@ class Koin {
   ///
   /// @return instance of type [S]
   ///
-  S bind<S, P>([DefinitionParameters parameters]) {
+  S bind<S, P>([DefinitionParameter parameters]) {
     return _scopeRegistry.rootScope.bind<S, P>(parameters);
   }
 
@@ -169,7 +167,7 @@ class Koin {
   /// @return instance of type [S]
   ///
   S bindWithType<S>(Type secondaryType, Type primaryType,
-      [DefinitionParameters parameters]) {
+      [DefinitionParameter parameters]) {
     return _scopeRegistry.rootScope
         .bindWithType(primaryType, secondaryType, parameters);
   }

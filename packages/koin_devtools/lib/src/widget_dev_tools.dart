@@ -1,9 +1,9 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:koin/koin.dart';
 import 'package:koin_flutter/koin_flutter.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:koin/instance_factory.dart';
+import 'package:koin/internal.dart';
 
 class _DevTools {
   static Map<String, ScopeWidgetContext> koinContextScopes() {
@@ -178,7 +178,9 @@ class _FactoryViewer {
       return "The instance is not stored.";
     return _instanceFactory
         .get(InstanceContext(
-            koin: _instanceFactory.koin, scope: _scope, parameters: null))
+            koin: _instanceFactory.koin,
+            scope: _scope,
+            definitionParameter: emptyParameter()))
         .toString();
   }
 

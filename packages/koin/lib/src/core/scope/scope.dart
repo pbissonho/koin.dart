@@ -16,7 +16,7 @@ import '../instance/instance_factory.dart';
 /// limitations under the License.
 ///
 
-import '../error/exceptions.dart';
+import '../exceptions.dart';
 import '../measure.dart';
 import '../registry/instance_registry.dart';
 import 'package:kt_dart/kt.dart';
@@ -24,13 +24,14 @@ import 'package:kt_dart/kt.dart';
 import '../definition/bean_definition.dart';
 import '../lazy.dart';
 import '../koin_dart.dart';
-import '../definition_parameters.dart';
+import '../definition_parameter.dart';
+
 import '../logger.dart';
 import '../qualifier.dart';
 import 'scope_definition.dart';
 
 abstract class ScopeCallback {
-  void onScopeClose(Scope scope);
+  void onScopeClose();
 }
 
 class Scope {
@@ -99,10 +100,12 @@ class Scope {
   /// @return Lazy instance of type T
   ///
   Lazy<T> inject<T>([
-    DefinitionParameters parameters,
     Qualifier qualifier,
   ]) {
-    return lazy<T>(() => get<T>(qualifier, parameters));
+    return lazy<T>(() {
+      final type = T;
+      return getWithType(type, qualifier, emptyParameter());
+    });
   }
 
   ///
@@ -113,11 +116,14 @@ class Scope {
   ///
   /// @return Lazy instance of type T
   ///
-  Lazy<T> injectWithParams<T>({
-    DefinitionParameters parameters,
+  Lazy<T> injectWithParam<T, P>(
+    P parameter, {
     Qualifier qualifier,
   }) {
-    return lazy<T>(() => get<T>(qualifier, parameters));
+    return lazy<T>(() {
+      final type = T;
+      return getWithType(type, qualifier, DefinitionParameter(parameter));
+    });
   }
 
   ///
@@ -129,10 +135,10 @@ class Scope {
   ///@return Lazy instance of type T or null
   ///
   Lazy<T> injectOrNull<T>([
-    DefinitionParameters parameters,
+    DefinitionParameter definitionParameter,
     Qualifier qualifier,
   ]) {
-    return lazy<T>(() => getOrNull<T>(qualifier, parameters));
+    return lazy<T>(() => getOrNull<T>(qualifier, definitionParameter));
   }
 
   ///
@@ -141,14 +147,14 @@ class Scope {
   /// @param scope
   /// @param parameters
   ///
-  T get<T>([Qualifier qualifier, DefinitionParameters parameters]) {
+  T get<T>([Qualifier qualifier]) {
     final type = T;
-    return getWithType(type, qualifier, parameters);
+    return getWithType(type, qualifier, emptyParameter());
   }
 
-  T getWithParams<T>({Qualifier qualifier, DefinitionParameters parameters}) {
+  T getWithParam<T, P>(P parameter, {Qualifier qualifier}) {
     final type = T;
-    return getWithType(type, qualifier, parameters);
+    return getWithType(type, qualifier, DefinitionParameter<P>(parameter));
   }
 
   ///
@@ -159,9 +165,10 @@ class Scope {
   ///
   ///@return instance of type T or null
   ///
-  T getOrNull<T>([Qualifier qualifier, DefinitionParameters parameters]) {
+  T getOrNull<T>(
+      [Qualifier qualifier, DefinitionParameter definitionParameter]) {
     final type = T;
-    return getWithTypeOrNull(type, qualifier, parameters);
+    return getWithTypeOrNull(type, qualifier, definitionParameter);
   }
 
   ///
@@ -173,9 +180,9 @@ class Scope {
   /// @return instance of type T or null
   ///
   T getWithTypeOrNull<T>(
-      Type type, Qualifier qualifier, DefinitionParameters parameters) {
+      Type type, Qualifier qualifier, DefinitionParameter definitionParameter) {
     try {
-      return getWithType(type, qualifier, parameters);
+      return getWithType(type, qualifier, definitionParameter);
     } catch (e) {
       koin.logger.error("Can't get instance for $type");
       return null;
@@ -191,34 +198,35 @@ class Scope {
   /// @return instance of type T
   ///
   T getWithType<T>(
-      Type type, Qualifier qualifier, DefinitionParameters parameters) {
+      Type type, Qualifier qualifier, DefinitionParameter definitionParameter) {
     if (koin.logger.isAt(Level.debug)) {
       final result = Measure.measureDuration(() {
-        return resolveInstance<T>(type, qualifier, parameters);
+        return resolveInstance<T>(type, qualifier, definitionParameter);
       });
       koin.loggerInstanceObserver
           .onResolve(type.toString(), result.duration.toString());
       return result.result;
     } else {
-      return resolveInstance<T>(type, qualifier, parameters);
+      return resolveInstance<T>(type, qualifier, definitionParameter);
     }
   }
 
   T resolveInstance<T>(
-      Type type, Qualifier qualifier, DefinitionParameters parameters) {
+      Type type, Qualifier qualifier, DefinitionParameter definitionParameter) {
     if (_closed) {
       throw ClosedScopeException('Scope $id is closed');
     }
 
-    parameters ??= emptyParametersHolder();
+    definitionParameter ??= emptyParameter();
 
     final indexKeyCurrent = indexKey(type, qualifier);
 
-    final instance =
-        _instanceRegistry.resolveInstance<T>(indexKeyCurrent, parameters);
+    final instance = _instanceRegistry.resolveInstance<T>(
+        indexKeyCurrent, definitionParameter);
 
     if (instance != null) return instance;
-    final inOtherScope = findInOtherScope<T>(type, qualifier, parameters);
+    final inOtherScope =
+        findInOtherScope<T>(type, qualifier, definitionParameter);
     if (inOtherScope != null) return inOtherScope;
 
     final fromSource = getFromSource<T>(type);
@@ -241,11 +249,12 @@ No definition found for class:'$type'$qualifierString. Check your definitions!""
   }
 
   T findInOtherScope<T>(
-      Type type, Qualifier qualifier, DefinitionParameters parameters) {
+      Type type, Qualifier qualifier, DefinitionParameter definitionParameter) {
     final scope = _linkedScope.firstOrNull((scope) =>
-        scope.getWithTypeOrNull<T>(type, qualifier, parameters) != null);
+        scope.getWithTypeOrNull<T>(type, qualifier, definitionParameter) !=
+        null);
 
-    return scope?.getWithType(type, qualifier, parameters);
+    return scope?.getWithType(type, qualifier, definitionParameter);
   }
 
   void createEagerInstances() {
@@ -316,8 +325,8 @@ No definition found for class:'$type'$qualifierString. Check your definitions!""
   ///
   ///@return instance of type S
   ///
-  S bind<S, P>([DefinitionParameters parameters]) {
-    return bindWithType(P, S, parameters);
+  S bind<S, P>([DefinitionParameter definitionParameter]) {
+    return bindWithType(P, S, definitionParameter);
   }
 
   ///
@@ -326,10 +335,10 @@ No definition found for class:'$type'$qualifierString. Check your definitions!""
   ///
   /// @return instance of type S
   ///
-  S bindWithType<S>(
-      Type primaryType, Type secondaryType, DefinitionParameters parameters) {
+  S bindWithType<S>(Type primaryType, Type secondaryType,
+      DefinitionParameter definitionParameter) {
     var definition =
-        _instanceRegistry.bind(primaryType, secondaryType, parameters);
+        _instanceRegistry.bind(primaryType, secondaryType, definitionParameter);
 
     if (definition == null) {
       throw NoBeanDefFoundException("""
@@ -354,7 +363,7 @@ No definition found for class:'$type'$qualifierString. Check your definitions!""
 
     // call on close from callbacks
     callbacks.forEach((callback) {
-      callback.onScopeClose(this);
+      callback.onScopeClose();
     });
     callbacks.clear();
 

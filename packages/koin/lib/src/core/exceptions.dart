@@ -67,12 +67,6 @@ class NoParameterFoundException extends KoinException {
   NoParameterFoundException(String msg) : super(msg);
 }
 
-/*
-TODO
-class NoPropertyFileFoundException extends KoinException {
-  NoPropertyFileFoundException(String msg) : super(msg);
-}*/
-
 class NoScopeDefFoundException extends KoinException {
   NoScopeDefFoundException(String msg) : super(msg);
 }
@@ -85,8 +79,6 @@ class ScopeNotCreatedException extends KoinException {
   ScopeNotCreatedException(String msg) : super(msg);
 }
 
-///
-///
 class IllegalStateException extends KoinException {
   IllegalStateException(String msg) : super(msg);
 }

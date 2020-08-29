@@ -161,9 +161,6 @@ class MyHomePage extends StatelessWidget {
 - DevTools for state inspection
 
 
-
-
-
 ## Setup 
 
 ### Dart
@@ -252,16 +249,15 @@ class _PageState extends State<Page> {
 }
 ```
 
-
-## Ask a Question? 🚑
+## Ask a Question?
 
 - Post your question on [Stackoverflow - #koindart tag](https://stackoverflow.com/questions/tagged/koin)
 
-## Reporting issues 💥
+## Reporting issues
 
 Found a bug on a specific feature? Open an issue on [Github issues](https://github.com/pbissonho/koin.dart/issues)
 
-## Contribute 🛠
+## Contribute
 
 Want to help or share a proposal about Koin? problem on a specific feature? 
 

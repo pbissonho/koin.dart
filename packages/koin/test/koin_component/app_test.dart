@@ -44,16 +44,16 @@ class CounterAppMixinWithParams with KoinComponentMixin {
   Counter counter;
 
   CounterAppMixinWithParams() {
-    counter = getWithParams(parameters: parametersOf([10]));
+    counter = getWithParam<Counter, int>(10);
   }
 
   Lazy<Counter> testInject() {
-    return injectWithParams<Counter>(parameters: parametersOf([30]));
+    return injectWithParam<Counter, int>(30);
   }
 
   CounterInterface testBind() {
-    return bindWithParams<CounterInterface, Counter>(
-        parameters: parametersOf([50]));
+    // TODO
+    //return bindWithParams<CounterInterface, Counter>(50);
   }
 }
 
@@ -118,14 +118,13 @@ void main() {
       var koin = startKoin((appX) {
         appX.printLogger();
         appX.module(Module()
-          ..factory1<Counter, int>((s, value) => Counter(value))
+          ..factoryWithParam<Counter, int>((s, value) => Counter(value))
               .bind<CounterInterface>());
       }).koin;
 
       var myApp = CounterAppMixinWithParams();
       expect(myApp.counter.value, 10);
-      expect(myApp.counter.value,
-          koin.getWithParams<Counter>(parameters: parametersOf([10])).value);
+      expect(myApp.counter.value, koin.getWithParam<Counter, int>(10).value);
       stopKoin();
     });
 
@@ -133,7 +132,7 @@ void main() {
       var koin = startKoin((appX) {
         appX.printLogger();
         appX.module(Module()
-          ..factory1<Counter, int>((s, value) => Counter(value))
+          ..factoryWithParam<Counter, int>((s, value) => Counter(value))
               .bind<CounterInterface>());
       }).koin;
 
@@ -141,7 +140,7 @@ void main() {
 
       expect(myApp.testInject().value.value, 30);
       expect(myApp.testInject().value.value,
-          koin.getWithParams<Counter>(parameters: parametersOf([30])).value);
+          koin.getWithParam<Counter, int>(30).value);
       stopKoin();
     });
 
@@ -149,15 +148,14 @@ void main() {
       var koin = startKoin((appX) {
         appX.printLogger();
         appX.module(Module()
-          ..factory1<Counter, int>((s, value) => Counter(value))
+          ..factoryWithParam<Counter, int>((s, value) => Counter(value))
               .bind<CounterInterface>());
       }).koin;
 
       var myApp = CounterAppMixinWithParams();
 
       expect(myApp.testBind().value, 50);
-      expect(myApp.testBind().value,
-          koin.getWithParams<Counter>(parameters: parametersOf([50])).value);
+      expect(myApp.testBind().value, koin.getWithParam<Counter, int>(50).value);
       stopKoin();
     });
   });

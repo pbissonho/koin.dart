@@ -3,6 +3,8 @@ import 'package:koin/koin.dart';
 import 'package:koin_test/koin_test.dart';
 import 'package:mockito/mockito.dart';
 
+/*
+
 // Just a few services to exemplify.
 class ServiceA {
   String getName() => 'Name';
@@ -100,3 +102,4 @@ void main() {
     expect(service.getName(), 'FakeName');
   });
 }
+*/

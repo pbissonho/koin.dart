@@ -1,19 +1,13 @@
 library koin;
 
 export 'src/core/context/context_functions.dart';
-export 'src/core/context/global_context.dart';
-export 'src/core/context/koin_context_handler.dart';
-export 'src/core/definition/definition.dart';
-
-export 'src/core/definition_parameters.dart';
+export 'src/core/scope/scope.dart' show ScopeCallback;
 
 export 'src/core/module.dart';
 export 'src/core/lazy.dart';
 export 'src/core/logger.dart';
 
 export 'src/core/qualifier.dart';
-export 'src/core/scope/scope.dart';
-export 'src/core/definition/bean_definition.dart' show BeanDefinition;
 
 export 'src/dsl/scope_dsl.dart';
 export 'src/dsl/module_dsl.dart';

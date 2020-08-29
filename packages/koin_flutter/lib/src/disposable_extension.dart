@@ -1,4 +1,6 @@
 import 'package:koin/koin.dart';
+import 'package:koin/extension.dart';
+import 'package:koin/internal.dart';
 
 /// Interface that must be implemented in the business classes that use streams
 /// or it is necessary to finalize some internal component.

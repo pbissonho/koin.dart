@@ -19,6 +19,13 @@ class ServiceB {
   }
 }
 
+class ServiceParam {
+  final String name;
+  final String lastName;
+
+  ServiceParam(this.name, this.lastName);
+}
+
 class ServiceC {
   final String name;
   final String lastName;
@@ -41,14 +48,14 @@ class ServiceFake extends Fake implements Service {
 
 var customModule = Module()
   ..single<Service>(((s) => Service()))
-  ..factory2<ServiceC, String, String>(
-      ((s, name, last) => ServiceC(name, last)));
+  ..factoryWithParam<ServiceC, ServiceParam>(
+      ((s, param) => ServiceC(param.name, param.lastName)));
 
 var moduleWithScope = Module()
   ..scope((s) {
     s.scoped<Service>(((s) => Service()));
-    s.factory2<ServiceC, String, String>(
-        ((s, name, last) => ServiceC(name, last)));
+    s.factoryWithParam<ServiceC, ServiceParam>(
+        ((s, param) => ServiceC(param.name, param.lastName)));
   });
 
 var invalidModule = Module()..single<ServiceB>(((s) => ServiceB(s.get())));
@@ -65,7 +72,7 @@ void main() {
   });
 
   var checkParameters = CheckParameters()
-    ..create<ServiceC>(parametersOf(['Tutuca', 'Butuca']));
+    ..create<ServiceC, ServiceParam>(ServiceParam('Name', 'LastName'));
 
   testKoinDeclaration('SimpleTest', (app) {
     app.module(customModule);
@@ -73,22 +80,22 @@ void main() {
 
   testModule('MyModule', customModule,
       checkParameters: checkParametersOf({
-        ServiceC: parametersOf(['Name', 'LastName'])
+        ServiceC: ServiceParam('Name', 'LastName'),
       }));
 
   testModule('valid module', customModule,
       checkParameters: checkParametersOf({
-        ServiceC: parametersOf(['Name', 'LastName']),
+        ServiceC: ServiceParam('Name', 'LastName'),
       }));
 
   testModule('valid module with scope', moduleWithScope,
       checkParameters: checkParametersOf({
-        ServiceC: parametersOf(['Name', 'LastName']),
+        ServiceC: ServiceParam('Name', 'LastName'),
       }));
 
   test(('shoud be a valid module '), () {
     appDeclaration.checkModules(checkParametersOf({
-      ServiceC: parametersOf(['Name', 'LastName']),
+      ServiceC: ServiceParam('Name', 'LastName'),
     }));
   });
 
@@ -102,8 +109,8 @@ void main() {
     declareModule((module) {
       module
         ..single<Service>(((s) => Service()))
-        ..factory2<ServiceC, String, String>(
-            ((s, name, last) => ServiceC(name, last)));
+        ..factoryWithParam<ServiceC, ServiceParam>(
+            ((s, param) => ServiceC(param.name, param.lastName)));
     });
 
     var serviceMock = ServiceMock();
@@ -122,8 +129,8 @@ void main() {
     declareModule((module) {
       module
         ..single<Service>(((s) => Service()))
-        ..factory2<ServiceC, String, String>(
-            ((s, name, last) => ServiceC(name, last)));
+        ..factoryWithParam<ServiceC, ServiceParam>(
+            ((s, param) => ServiceC(param.name, param.lastName)));
     });
 
     var serviceMock = ServiceFake();

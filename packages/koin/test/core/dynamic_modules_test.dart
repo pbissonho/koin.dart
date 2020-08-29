@@ -1,7 +1,7 @@
 import 'package:koin/koin.dart';
 import 'package:koin/src/core/context/context_functions.dart';
 import 'package:koin/src/core/context/koin_context_handler.dart';
-import 'package:koin/src/core/error/exceptions.dart';
+import 'package:koin/src/core/exceptions.dart';
 import 'package:test/test.dart';
 import 'package:koin/src/dsl/module_dsl.dart';
 
@@ -9,7 +9,6 @@ import '../components.dart';
 import 'package:koin/src/dsl/koin_application_dsl.dart';
 import 'package:koin/src/core/definition/bean_definition.dart';
 import '../extensions/koin_application_ext.dart';
-import 'package:koin/src/core/definition_parameters.dart';
 import 'package:koin/src/core/qualifier.dart';
 
 void main() {
@@ -162,7 +161,7 @@ void main() {
 
   test('should reload module definition', () {
     final currentModule = module()
-      ..single1<MySingle, int>((s, id) => MySingle(id));
+      ..singleWithParam<MySingle, int>((s, id) => MySingle(id));
 
     final app = koinApplication((app) {
       app.printLogger();
@@ -173,7 +172,7 @@ void main() {
 
     expect(
       42,
-      app.koin.getWithParams<MySingle>(parameters: parametersOf([42])).id,
+      app.koin.getWithParam<MySingle, int>(42).id,
     );
 
     koin.unloadModule(currentModule);
@@ -183,13 +182,13 @@ void main() {
 
     expect(
       24,
-      app.koin.getWithParams<MySingle>(parameters: parametersOf([24])).id,
+      app.koin.getWithParam<MySingle, int>(24).id,
     );
   });
 
   test('should reload module definition - global context', () {
     final currentModule = module()
-      ..single1<MySingle, int>((s, id) => MySingle(id));
+      ..singleWithParam<MySingle, int>((s, id) => MySingle(id));
 
     startKoin((app) {
       app.module(currentModule);
@@ -197,9 +196,7 @@ void main() {
 
     expect(
       42,
-      KoinContextHandler.get()
-          .getWithParams<MySingle>(parameters: parametersOf([42]))
-          .id,
+      KoinContextHandler.get().getWithParam<MySingle, int>(42).id,
     );
 
     unloadKoinModule(currentModule);
@@ -207,9 +204,7 @@ void main() {
 
     expect(
       24,
-      KoinContextHandler.get()
-          .getWithParams<MySingle>(parameters: parametersOf([24]))
-          .id,
+      KoinContextHandler.get().getWithParam<MySingle, int>(24).id,
     );
 
     stopKoin();
@@ -217,7 +212,7 @@ void main() {
 
   test('should reload modules definition - global context', () {
     final currentModule = module()
-      ..single1<MySingle, int>((s, id) => MySingle(id));
+      ..singleWithParam<MySingle, int>((s, id) => MySingle(id));
 
     startKoin((app) {
       app.module(currentModule);
@@ -225,9 +220,7 @@ void main() {
 
     expect(
       42,
-      KoinContextHandler.get()
-          .getWithParams<MySingle>(parameters: parametersOf([42]))
-          .id,
+      KoinContextHandler.get().getWithParam<MySingle, int>(42).id,
     );
 
     unloadKoinModules([currentModule]);
@@ -235,9 +228,7 @@ void main() {
 
     expect(
       24,
-      KoinContextHandler.get()
-          .getWithParams<MySingle>(parameters: parametersOf([24]))
-          .id,
+      KoinContextHandler.get().getWithParam<MySingle, int>(24).id,
     );
 
     stopKoin();

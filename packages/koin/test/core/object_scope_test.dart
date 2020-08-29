@@ -1,6 +1,6 @@
 import 'package:koin/koin.dart';
 import 'package:koin/src/core/context/context_functions.dart';
-import 'package:koin/src/core/error/exceptions.dart';
+import 'package:koin/src/core/exceptions.dart';
 import 'package:test/test.dart';
 
 import '../components.dart';
@@ -165,7 +165,7 @@ void main() {
 
     var a = koin.get<A>();
 
-    var b1 = a.scope.getWithParams<B>();
+    var b1 = a.scope.get<B>();
 
     a.scope.close();
 

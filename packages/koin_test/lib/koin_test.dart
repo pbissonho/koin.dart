@@ -20,6 +20,7 @@ export 'src/check/check_modules.dart';
 export 'src/check/check_module_dsl.dart';
 export 'src/module_test.dart';
 export 'src/mock/declare_mock.dart';
+import 'package:koin/internal.dart';
 
 import 'package:koin/koin.dart';
 import 'package:test/test.dart';
@@ -84,13 +85,15 @@ T declare<T>(T instance, [Qualifier qualifier]) {
 ///
 /// Lazy inject an instance from Koin in the test environment.
 ///
-Lazy<T> inject<T>([Qualifier qualifier, DefinitionParameters parameters]) {
-  return KoinContextHandler.get().inject<T>(qualifier, parameters);
+Lazy<T> inject<T>([Qualifier qualifier]) {
+  return KoinContextHandler.get().inject<T>(qualifier);
 }
 
 ///
 /// Get an instance from Koin in the test environment.
 ///
-T get<T>([Qualifier qualifier, DefinitionParameters parameters]) {
-  return KoinContextHandler.get().get<T>(qualifier, parameters);
+T get<T>([
+  Qualifier qualifier,
+]) {
+  return KoinContextHandler.get().get<T>(qualifier);
 }

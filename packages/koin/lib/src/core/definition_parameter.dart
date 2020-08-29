@@ -14,35 +14,30 @@
  * limitations under the License.
  */
 
-import 'dart:collection';
+import 'dart:core';
 
-import '../error/exceptions.dart';
-
+/// DefinitionParameters - Parameter holder
 ///
-/// Definitions Properties
+/// Usable with exploded declaration
+///
 // @author - Arnaud GIULIANI
 //
 // Ported to Dart from Kotlin by:
 // @author - Pedro Bissonho
-//
-class Properties {
-  final HashMap<String, dynamic> _data = HashMap<String, dynamic>();
 
-  void set<T>(String key, T value) {
-    _data[key] = value;
-  }
+class DefinitionParameter<T> {
+  final T parameter;
 
-  T getOrNull<T>(String key) {
-    return _data[key] as T;
-  }
+  DefinitionParameter(this.parameter);
 
-  T get<T>(String key) {
-    var value = _data[key];
+  T get() => parameter;
 
-    if (value != null) {
-      return value;
-    } else {
-      throw MissingPropertyException('Missing property for $key');
-    }
-  }
+  bool isEmpty() => parameter == null;
+
+  bool isNotEmpty() => !isEmpty();
 }
+
+///
+/// Builds a [DefinitionParameters] with a null element.
+///
+DefinitionParameter emptyParameter() => DefinitionParameter(null);

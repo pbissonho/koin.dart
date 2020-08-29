@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import '../error/exceptions.dart';
+import '../exceptions.dart';
 import '../koin_application.dart';
 import '../koin_dart.dart';
 import 'koin_context.dart';

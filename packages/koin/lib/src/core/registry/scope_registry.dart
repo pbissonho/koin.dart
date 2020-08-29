@@ -15,7 +15,7 @@
  */
 import 'package:kt_dart/kt.dart';
 
-import '../error/exceptions.dart';
+import '../exceptions.dart';
 
 import '../koin_dart.dart';
 import '../module.dart';

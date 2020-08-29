@@ -15,7 +15,7 @@
  */
 
 import '../definition/bean_definition.dart';
-import '../error/exceptions.dart';
+import '../exceptions.dart';
 import '../koin_dart.dart';
 import 'instance_context.dart';
 import 'instance_factory.dart';

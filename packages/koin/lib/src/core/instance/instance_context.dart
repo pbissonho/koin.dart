@@ -1,6 +1,6 @@
+import '../definition_parameter.dart';
 import '../scope/scope.dart';
 import '../koin_dart.dart';
-import '../definition_parameters.dart';
 
 ///
 /// Instance resolution Context
@@ -10,9 +10,9 @@ import '../definition_parameters.dart';
 class InstanceContext {
   final Koin koin;
   final Scope scope;
-  DefinitionParameters parameters;
+  DefinitionParameter definitionParameter;
 
-  InstanceContext({this.koin, this.scope, this.parameters}) {
-    parameters ??= emptyParametersHolder();
+  InstanceContext({this.koin, this.scope, this.definitionParameter}) {
+    definitionParameter ??= emptyParameter();
   }
 }

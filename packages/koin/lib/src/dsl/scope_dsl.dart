@@ -32,39 +32,18 @@ class ScopeDSL {
     Qualifier qualifier,
     bool override = false,
   }) {
-    return Definitions.saveSingle<T>(qualifier, DefinitionX<T>(definition),
+    return Definitions.saveSingle<T>(qualifier, Definition<T>(definition),
         scopeDefinition, Options(isCreatedAtStart: false, override: override));
   }
 
   BeanDefinition<T> scoped1<T, A>(
-    DefinitionFunction1<T, A> definition, {
-    Qualifier qualifier,
-    bool override = false,
-  }) {
-    return Definitions.saveSingle<T>(qualifier, Definition1<T, A>(definition),
-        scopeDefinition, Options(isCreatedAtStart: false, override: override));
-  }
-
-  BeanDefinition<T> scoped2<T, A, B>(
-    DefinitionFunction2<T, A, B> definition, {
+    DefinitionFunctionWithParam<T, A> definition, {
     Qualifier qualifier,
     bool override = false,
   }) {
     return Definitions.saveSingle<T>(
         qualifier,
-        Definition2<T, A, B>(definition),
-        scopeDefinition,
-        Options(isCreatedAtStart: false, override: override));
-  }
-
-  BeanDefinition<T> scoped3<T, A, B, C>(
-    DefinitionFunction3<T, A, B, C> definition, {
-    Qualifier qualifier,
-    bool override = false,
-  }) {
-    return Definitions.saveSingle<T>(
-        qualifier,
-        Definition3<T, A, B, C>(definition),
+        DefinitionWithParam<T, A>(definition),
         scopeDefinition,
         Options(isCreatedAtStart: false, override: override));
   }
@@ -74,39 +53,18 @@ class ScopeDSL {
     Qualifier qualifier,
     bool override = false,
   }) {
-    return Definitions.saveFactory<T>(qualifier, DefinitionX<T>(definition),
+    return Definitions.saveFactory<T>(qualifier, Definition<T>(definition),
         scopeDefinition, Options(isCreatedAtStart: false, override: override));
   }
 
-  BeanDefinition<T> factory1<T, A>(
-    DefinitionFunction1<T, A> definition, {
-    Qualifier qualifier,
-    bool override = false,
-  }) {
-    return Definitions.saveFactory<T>(qualifier, Definition1<T, A>(definition),
-        scopeDefinition, Options(isCreatedAtStart: false, override: override));
-  }
-
-  BeanDefinition<T> factory2<T, A, B>(
-    DefinitionFunction2<T, A, B> definition, {
+  BeanDefinition<T> factoryWithParam<T, A>(
+    DefinitionFunctionWithParam<T, A> definition, {
     Qualifier qualifier,
     bool override = false,
   }) {
     return Definitions.saveFactory<T>(
         qualifier,
-        Definition2<T, A, B>(definition),
-        scopeDefinition,
-        Options(isCreatedAtStart: false, override: override));
-  }
-
-  BeanDefinition<T> factory3<T, A, B, C>(
-    DefinitionFunction3<T, A, B, C> definition, {
-    Qualifier qualifier,
-    bool override = false,
-  }) {
-    return Definitions.saveFactory<T>(
-        qualifier,
-        Definition3<T, A, B, C>(definition),
+        DefinitionWithParam<T, A>(definition),
         scopeDefinition,
         Options(isCreatedAtStart: false, override: override));
   }

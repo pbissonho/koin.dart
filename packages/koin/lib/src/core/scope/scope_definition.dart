@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import '../definition/definition.dart';
-import '../error/exceptions.dart';
+import '../exceptions.dart';
 import '../qualifier.dart';
 import 'package:kt_dart/kt.dart';
 
@@ -62,7 +62,7 @@ with new definition typed '$type'""");
     //TODO
     var beanDefinition = Definitions.createSingle<T>(
         qualifier: qualifier,
-        definition: DefinitionX((s) => instance),
+        definition: Definition((s) => instance),
         scopeDefinition: this,
         options: Options(isCreatedAtStart: false, override: override),
         secondaryTypes: secondaryTypes2);

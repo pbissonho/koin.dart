@@ -1,4 +1,4 @@
-import 'package:koin/src/core/error/exceptions.dart';
+import 'package:koin/src/core/exceptions.dart';
 import 'package:test/test.dart';
 
 import 'package:koin/src/dsl/koin_application_dsl.dart';

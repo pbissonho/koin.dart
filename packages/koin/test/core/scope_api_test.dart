@@ -1,7 +1,7 @@
 import 'package:koin/koin.dart';
-import 'package:koin/src/core/error/exceptions.dart';
+import 'package:koin/src/core/exceptions.dart';
 import 'package:test/test.dart';
-
+import 'package:koin/internal.dart';
 import '../components.dart';
 
 class ScopeClass {}
@@ -153,7 +153,7 @@ class ScopeCallbackTest implements ScopeCallback {
   ScopeCallbackTest(this.onClose);
 
   @override
-  void onScopeClose(Scope scope) {
+  void onScopeClose() {
     onClose();
   }
 }

@@ -1,7 +1,7 @@
 import 'package:koin/koin.dart';
 import 'package:koin/src/core/context/context_functions.dart';
 import 'package:test/test.dart';
-
+import 'package:koin/internal.dart';
 import '../components.dart';
 
 class ScopeType {}
@@ -267,7 +267,7 @@ void main() {
         .koin;
     var scope1 = koin.createScopeWithQualifier('myScope1', named('SCOPE_1'));
     var scope2 = koin.createScopeWithQualifier('myScope2', named('SCOPE_2'));
-    var b = scope2.get<ComponentB>(null, parametersOf([scope1]));
+    var b = scope2.getWithParam<ComponentB, Scope>(scope1);
     var a = scope1.get<ComponentA>();
 
     expect(a, b.a);
@@ -284,7 +284,7 @@ void main() {
 
     var scope1 = koin.createScopeWithQualifier('myScope1', named('SCOPE_1'));
     var parameters = 42;
-    var a = scope1.get<MySingle>(null, parametersOf([42]));
+    var a = scope1.getWithParam<MySingle, int>(42);
     expect(parameters, a.id);
   });
 }

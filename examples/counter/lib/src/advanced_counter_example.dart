@@ -21,7 +21,7 @@ final homeModule = Module()
   /// Using `scope` it is possible to declare several definitions for the scope.
   ..scope<MyHomePage>((s) {
     s.scopedCubit((s) => CounterCubit(0));
-    s.factory1<CounterCubit, int>((s, inital) => CounterCubit(inital),
+    s.factoryWithParam<CounterCubit, int>((s, inital) => CounterCubit(inital),
         qualifier: named("Fac"));
   });
 
@@ -36,8 +36,8 @@ class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
     // Get the instance from root scope.
     CounterCubit counterSingle = get();
     // Get the factory instance of the scope defined for MyHomePage.
-    CounterCubit counterFactory =
-        currentScope.get<CounterCubit>(named("Fac"), parametersOf([50]));
+    CounterCubit counterFactory = currentScope
+        .getWithParam<CounterCubit, int>(50, qualifier: named("Fac"));
     //Get the singleton definition of the current instantiated scope for MyHomePage.
     CounterCubit counterScoped = currentScope.get<CounterCubit>();
     return ScopeProvider(

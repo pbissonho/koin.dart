@@ -18,6 +18,7 @@ import 'dart:collection';
 
 import 'package:equatable/equatable.dart';
 import 'package:koin/koin.dart';
+import 'package:koin/internal.dart';
 
 class CheckedComponent with EquatableMixin {
   final Qualifier qualifier;
@@ -29,18 +30,18 @@ class CheckedComponent with EquatableMixin {
 }
 
 class ParametersBinding {
-  Map creators = HashMap<CheckedComponent, DefinitionParameters>();
+  Map creators = HashMap<CheckedComponent, DefinitionParameter>();
   Koin koin;
-  void create<T>(DefinitionParameters creator, {Qualifier qualifier}) {
-    creators[CheckedComponent(qualifier, T)] = creator;
+  void create<T, P>(P parameter, {Qualifier qualifier}) {
+    creators[CheckedComponent(qualifier, T)] = DefinitionParameter<P>(parameter);
   }
 }
 
-typedef ParametersCreator = DefinitionParameters Function(Qualifier qualifier);
+typedef ParameterCreator = DefinitionParameter Function(Qualifier qualifier);
 
 class CheckParameters extends ParametersBinding {}
 
-CheckParameters checkParametersOf(Map<Type, DefinitionParameters> creators) {
+CheckParameters checkParametersOf(Map<Type, dynamic> creators) {
   var checkParameters = CheckParameters();
   creators.forEach((type, creator) {
     checkParameters.creators[CheckedComponent(null, type)] = creator;

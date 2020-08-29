@@ -98,7 +98,7 @@ class Module {
 
     var beanDefinition = Definitions.saveSingle<T>(
         qualifier,
-        DefinitionX<T>(definition),
+        Definition<T>(definition),
         scopeDefinition,
         Options(isCreatedAtStart: createdAtStart, override: override));
     return beanDefinition;
@@ -115,7 +115,7 @@ class Module {
   }) {
     return Definitions.saveSingle<T>(
         qualifier,
-        DefinitionX(definition),
+        Definition(definition),
         rootScope,
         makeOptions(override: override, createdAtStart: createdAtStart));
   }
@@ -123,47 +123,15 @@ class Module {
   ///
   /// Declare a Single definition
   ///
-  BeanDefinition<T> single1<T, A>(
-    DefinitionFunction1<T, A> definition, {
+  BeanDefinition<T> singleWithParam<T, A>(
+    DefinitionFunctionWithParam<T, A> definition, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
     return Definitions.saveSingle<T>(
         qualifier,
-        Definition1<T, A>(definition),
-        rootScope,
-        makeOptions(override: override, createdAtStart: createdAtStart));
-  }
-
-  ///
-  /// Declare a Single definition
-  ///
-  BeanDefinition<T> single2<T, A, B>(
-    DefinitionFunction2<T, A, B> definition, {
-    Qualifier qualifier,
-    bool createdAtStart = false,
-    bool override = false,
-  }) {
-    return Definitions.saveSingle<T>(
-        qualifier,
-        Definition2<T, A, B>(definition),
-        rootScope,
-        makeOptions(override: override, createdAtStart: createdAtStart));
-  }
-
-  ///
-  /// Declare a Single definition
-  ///
-  BeanDefinition<T> single3<T, A, B, C>(
-    DefinitionFunction3<T, A, B, C> definition, {
-    Qualifier qualifier,
-    bool createdAtStart = false,
-    bool override = false,
-  }) {
-    return Definitions.saveSingle<T>(
-        qualifier,
-        Definition3<T, A, B, C>(definition),
+        DefinitionWithParam<T, A>(definition),
         rootScope,
         makeOptions(override: override, createdAtStart: createdAtStart));
   }
@@ -183,51 +151,22 @@ class Module {
     bool createdAtStart = false,
     bool override = false,
   }) {
-    return Definitions.saveFactory<T>(qualifier, DefinitionX<T>(definition),
+    return Definitions.saveFactory<T>(qualifier, Definition<T>(definition),
         rootScope, makeOptions(override: override));
   }
 
   ///
   /// Declare a Factory definition
   ///
-  BeanDefinition<T> factory1<T, A>(
-    DefinitionFunction1<T, A> definition, {
-    Qualifier qualifier,
-    bool createdAtStart = false,
-    bool override = false,
-  }) {
-    return Definitions.saveFactory<T>(qualifier, Definition1<T, A>(definition),
-        rootScope, makeOptions(override: override));
-  }
-
-  ///
-  /// Declare a Factory definition
-  ///
-  BeanDefinition<T> factory2<T, A, B>(
-    DefinitionFunction2<T, A, B> definition, {
+  BeanDefinition<T> factoryWithParam<T, A>(
+    DefinitionFunctionWithParam<T, A> definition, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
     return Definitions.saveFactory<T>(
         qualifier,
-        Definition2<T, A, B>(definition),
-        rootScope,
-        makeOptions(override: override));
-  }
-
-  ///
-  /// Declare a Factory definition
-  ///
-  BeanDefinition<T> factory3<T, A, B, C>(
-    DefinitionFunction3<T, A, B, C> definition, {
-    Qualifier qualifier,
-    bool createdAtStart = false,
-    bool override = false,
-  }) {
-    return Definitions.saveFactory<T>(
-        qualifier,
-        Definition3<T, A, B, C>(definition),
+        DefinitionWithParam<T, A>(definition),
         rootScope,
         makeOptions(override: override));
   }
