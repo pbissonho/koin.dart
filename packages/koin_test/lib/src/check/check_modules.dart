@@ -16,8 +16,7 @@
 
 import 'package:koin/koin.dart';
 import 'check_module_dsl.dart';
-import 'package:koin/src/core/scope/scope_definition.dart';
-import 'package:koin/src/dsl/koin_application_dsl.dart';
+import 'package:koin/src/scope/scope_definition.dart';
 import 'package:koin/internal.dart';
 import 'package:kt_dart/collection.dart';
 

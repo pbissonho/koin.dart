@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import 'package:koin/src/internal/exceptions.dart';
 import 'package:kt_dart/kt.dart';
-
-import '../exceptions.dart';
 
 import '../koin_dart.dart';
 import '../module.dart';

@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-import '../exceptions.dart';
-
+import '../internal/exceptions.dart';
 import '../koin_application.dart';
 import '../koin_dart.dart';
-import 'koin_context.dart';
+import 'context.dart';
 
 ///
 /// Help hold any implementation of KoinContext

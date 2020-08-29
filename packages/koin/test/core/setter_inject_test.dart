@@ -1,4 +1,5 @@
 import 'package:koin/koin.dart';
+import 'package:koin/src/koin_component.dart';
 
 class B {}
 

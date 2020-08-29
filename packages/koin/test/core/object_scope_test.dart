@@ -1,12 +1,11 @@
 import 'package:koin/koin.dart';
-import 'package:koin/src/core/context/context_functions.dart';
-import 'package:koin/src/core/exceptions.dart';
+import 'package:koin/src/context/context_functions.dart';
+import 'package:koin/src/internal/exceptions.dart';
 import 'package:test/test.dart';
 
 import '../components.dart';
 import 'setter_inject_test.dart';
-import 'package:koin/src/ext/instance_scope_ext.dart';
-
+import 'package:koin/scope_instance.dart';
 void main() {
   tearDown(stopKoin);
 

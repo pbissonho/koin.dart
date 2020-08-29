@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
+import 'package:koin/src/internal/exceptions.dart';
+
 import '../definition/bean_definition.dart';
-import '../exceptions.dart';
 import '../koin_dart.dart';
 import 'instance_context.dart';
 

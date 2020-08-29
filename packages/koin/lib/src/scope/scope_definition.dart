@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
+import '../internal/exceptions.dart';
 import '../definition/definition.dart';
-import '../exceptions.dart';
 import '../qualifier.dart';
 import 'package:kt_dart/kt.dart';
 

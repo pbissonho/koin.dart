@@ -1,4 +1,5 @@
 import 'package:koin/koin.dart';
+import 'package:koin/src/koin_component.dart';
 import 'package:test/test.dart';
 
 import '../components.dart';

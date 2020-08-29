@@ -1,7 +1,7 @@
+import 'package:koin/src/internal/exceptions.dart';
 import 'package:kt_dart/kt.dart';
 
 import '../definition_parameter.dart';
-import '../exceptions.dart';
 import '../scope/scope.dart';
 
 import '../koin_dart.dart';

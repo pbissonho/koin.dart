@@ -1,6 +1,6 @@
 import 'package:koin/koin.dart';
-import 'package:koin/src/core/context/context_functions.dart';
-import 'package:koin/src/core/instance/single_instance_factory.dart';
+import 'package:koin/src/context/context_functions.dart';
+import 'package:koin/src/instance/single_instance_factory.dart';
 import 'package:test/test.dart';
 
 import '../components.dart';

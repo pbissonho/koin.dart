@@ -1,5 +1,5 @@
 import 'package:koin/koin.dart';
-import 'package:koin/src/core/lazy.dart';
+import 'package:koin/src/lazy.dart';
 import 'package:test/test.dart';
 
 import '../components.dart';

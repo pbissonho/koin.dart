@@ -1,10 +1,9 @@
-import 'package:koin/src/core/exceptions.dart';
+import 'package:koin/src/koin_application.dart';
+import 'package:koin/src/internal/exceptions.dart';
+import 'package:koin/src/module.dart';
 import 'package:test/test.dart';
 
-import 'package:koin/src/dsl/koin_application_dsl.dart';
 import '../components.dart';
-
-import 'package:koin/src/dsl/module_dsl.dart';
 
 void main() {
   test('description', () {

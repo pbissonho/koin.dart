@@ -1,15 +1,13 @@
 import 'package:koin/koin.dart';
-import 'package:koin/src/core/context/context_functions.dart';
-import 'package:koin/src/core/context/koin_context_handler.dart';
-import 'package:koin/src/core/exceptions.dart';
+import 'package:koin/src/context/context_functions.dart';
+import 'package:koin/src/context/context_handler.dart';
+import 'package:koin/src/internal/exceptions.dart';
 import 'package:test/test.dart';
-import 'package:koin/src/dsl/module_dsl.dart';
 
 import '../components.dart';
-import 'package:koin/src/dsl/koin_application_dsl.dart';
-import 'package:koin/src/core/definition/bean_definition.dart';
+import 'package:koin/src/definition/bean_definition.dart';
 import '../extensions/koin_application_ext.dart';
-import 'package:koin/src/core/qualifier.dart';
+import 'package:koin/src/qualifier.dart';
 
 void main() {
   test('should unload single definition', () {

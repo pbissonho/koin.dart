@@ -1,4 +1,4 @@
-import 'package:koin/src/core/measure.dart';
+import 'package:koin/src/measure.dart';
 import 'package:test/test.dart';
 import 'dart:io';
 

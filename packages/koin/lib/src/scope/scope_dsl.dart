@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import '../core/qualifier.dart';
-import '../core/scope/scope_definition.dart';
+import '../qualifier.dart';
+import '../scope/scope_definition.dart';
 
-import '../core/definition/bean_definition.dart';
-import '../core/definition/definitions.dart';
-import '../core/definition/options.dart';
-import '../core/definition/definition.dart';
+import '../definition/bean_definition.dart';
+import '../definition/definitions.dart';
+import '../definition/options.dart';
+import '../definition/definition.dart';
 
 class ScopeDSL {
   final ScopeDefinition scopeDefinition;

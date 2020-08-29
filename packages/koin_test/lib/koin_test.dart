@@ -25,8 +25,6 @@ import 'package:koin/internal.dart';
 import 'package:koin/koin.dart';
 import 'package:test/test.dart';
 
-import 'package:koin/src/core/context/koin_context_handler.dart';
-
 /// Koin Test tools
 /// @author Pedro Bissonho
 ///

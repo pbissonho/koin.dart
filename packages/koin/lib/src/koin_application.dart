@@ -135,3 +135,14 @@ class KoinApplication {
     return app;
   }
 }
+
+/// Create a KoinApplication instance and help configure it
+/// @author Arnaud Giuliani
+///
+KoinApplication koinApplication(
+    void Function(KoinApplication app) appDeclaration) {
+  var koinApplication = KoinApplication.init();
+  appDeclaration(koinApplication);
+  koinApplication.koin.createContextIfNeeded();
+  return koinApplication;
+}

@@ -1,7 +1,7 @@
-import '../core/context/koin_context_handler.dart';
-import '../core/koin_dart.dart';
-import '../core/qualifier.dart';
-import '../core/scope/scope.dart';
+import '../context/context_handler.dart';
+import '../koin_dart.dart';
+import '../qualifier.dart';
+import '../scope/scope.dart';
 
 extension ScopeExt<T> on T {
   String get scopeId => '$runtimeType@$hashCode';

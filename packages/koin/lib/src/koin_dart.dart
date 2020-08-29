@@ -1,6 +1,6 @@
 import 'definition_parameter.dart';
 
-import 'context/koin_context.dart';
+import 'internal/exceptions.dart';
 ////
 /// Copyright 2017-2018 the original author or authors.
 ///
@@ -20,14 +20,13 @@ import 'context/koin_context.dart';
 import 'logger.dart';
 import 'module.dart';
 import 'package:kt_dart/kt.dart';
+import 'observer.dart';
 import 'scope/scope_definition.dart';
-
-import 'exceptions.dart';
+import '../scope_instance.dart';
 import 'lazy.dart';
 import 'qualifier.dart';
 import 'registry/scope_registry.dart';
 import 'scope/scope.dart';
-import '../ext/instance_scope_ext.dart';
 
 /// Koin
 ///

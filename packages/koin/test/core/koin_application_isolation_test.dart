@@ -1,8 +1,7 @@
 import 'package:koin/instance_factory.dart';
 import 'package:koin/koin.dart';
-import 'package:koin/src/core/context/context_functions.dart';
-import 'package:koin/src/core/context/koin_context_handler.dart';
-import 'package:koin/src/dsl/koin_application_dsl.dart';
+import 'package:koin/src/context/context_functions.dart';
+import 'package:koin/src/context/context_handler.dart';
 import 'package:test/test.dart';
 
 import '../components.dart';

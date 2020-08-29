@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import '../../koin.dart';
-import 'context/koin_context_handler.dart';
+import 'context/context_handler.dart';
 import 'definition_parameter.dart';
 import 'qualifier.dart';
 import 'koin_dart.dart';
@@ -66,8 +65,6 @@ mixin KoinComponentMixin {
     return getKoin().bind<S, P>(definitionParameter);
   }
 
-  
-  
   ///
   /// Get instance instance from Koin by Primary Type K, as secondary type S
   /// @param parameters

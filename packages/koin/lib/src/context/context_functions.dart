@@ -1,8 +1,7 @@
-import '../../../koin.dart';
 import '../koin_application.dart';
-import 'global_context.dart';
-import 'koin_context.dart';
-import 'koin_context_handler.dart';
+import '../module.dart';
+import 'context.dart';
+import 'context_handler.dart';
 
 ///
 /// Start a Koin Application as StandAlone

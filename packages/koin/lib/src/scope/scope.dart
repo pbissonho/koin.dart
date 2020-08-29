@@ -1,3 +1,4 @@
+import '../internal/exceptions.dart';
 import '../instance/instance_factory.dart';
 
 ///
@@ -16,7 +17,6 @@ import '../instance/instance_factory.dart';
 /// limitations under the License.
 ///
 
-import '../exceptions.dart';
 import '../measure.dart';
 import '../registry/instance_registry.dart';
 import 'package:kt_dart/kt.dart';

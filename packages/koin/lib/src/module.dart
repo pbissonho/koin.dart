@@ -21,8 +21,7 @@ import 'definition/bean_definition.dart';
 import 'definition/definition.dart';
 import 'definition/options.dart';
 import 'qualifier.dart';
-
-import '../dsl/scope_dsl.dart';
+import 'scope/scope_dsl.dart';
 
 // ignore_for_file: avoid_positional_boolean_parameters
 
@@ -174,4 +173,20 @@ class Module {
   List<Module> operator +(Module other) {
     return List.from([this, other]);
   }
+}
+
+///
+/// Define a Module
+/// @param createdAtStart
+/// @param override
+///
+/// @author Arnaud Giuliani
+///
+Module module({
+  bool createdAtStart = false,
+  bool override = false,
+}) {
+  var module = Module(createdAtStart, override);
+  // moduleDeclaration(module);
+  return module;
 }

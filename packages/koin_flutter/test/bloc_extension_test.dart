@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:koin/koin.dart';
 import 'package:koin_test/koin_test.dart';
 import 'package:koin/internal.dart';
-import 'package:koin/instance_scope_ext.dart';
+import 'package:koin/scope_instance.dart';
 
 import 'widgets/bloc_extension/modules.dart';
 import 'widgets/bloc_extension/pages.dart';

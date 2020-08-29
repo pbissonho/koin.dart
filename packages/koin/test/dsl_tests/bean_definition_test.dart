@@ -1,19 +1,20 @@
 import 'package:koin/extension.dart';
 import 'package:koin/internal.dart';
-import 'package:koin/src/core/definition/definitions.dart';
-import 'package:koin/src/core/instance/instance_context.dart';
-import 'package:koin/src/core/koin_dart.dart';
-import 'package:koin/src/core/scope/scope.dart';
-import 'package:koin/src/dsl/koin_application_dsl.dart';
-import 'package:koin/src/dsl/module_dsl.dart';
+import 'package:koin/src/koin_application.dart';
+import 'package:koin/src/definition/definitions.dart';
+import 'package:koin/src/instance/instance_context.dart';
+import 'package:koin/src/koin_dart.dart';
+import 'package:koin/src/module.dart';
+import 'package:koin/src/scope/scope.dart';
 import 'package:test/test.dart';
 
-import 'package:koin/src/core/definition/options.dart';
+import 'package:koin/src/definition/options.dart';
 import '../components.dart';
-import '../extensions/koin_application_ext.dart';
 
-import 'package:koin/src/core/qualifier.dart';
-import 'package:koin/src/core/definition/bean_definition.dart';
+import 'package:koin/src/qualifier.dart';
+import 'package:koin/src/definition/bean_definition.dart';
+
+import '../extensions/koin_application_ext.dart';
 
 void main() {
   Koin koin;

@@ -1,4 +1,4 @@
-import 'package:koin/src/core/qualifier.dart';
+import 'package:koin/src/qualifier.dart';
 import 'package:test/test.dart';
 
 class App {}
