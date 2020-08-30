@@ -19,7 +19,6 @@ import '../scope/scope_definition.dart';
 
 import '../definition/bean_definition.dart';
 import '../definition/definitions.dart';
-import '../definition/options.dart';
 import '../definition/definition.dart';
 
 class ScopeDSL {

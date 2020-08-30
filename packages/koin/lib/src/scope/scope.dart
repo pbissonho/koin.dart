@@ -1,3 +1,5 @@
+import 'package:koin/src/definition/definition_parameter.dart';
+
 import '../../koin.dart';
 import '../internal/exceptions.dart';
 import '../instance/instance_factory.dart';
@@ -25,7 +27,6 @@ import 'package:kt_dart/kt.dart';
 import '../definition/bean_definition.dart';
 import '../lazy.dart';
 import '../koin_dart.dart';
-import '../definition_parameter.dart';
 
 import '../logger.dart';
 import '../qualifier.dart';
@@ -354,9 +355,9 @@ No definition found for class:'$type'$qualifierString. Check your definitions!""
     return '[$id]';
   }
 
-  void dropInstances(ScopeDefinition scopeDefinition) {
+  void disposeInstances(ScopeDefinition scopeDefinition) {
     scopeDefinition.definitions.forEach((definition) {
-      _instanceRegistry.dropDefinition(definition);
+      _instanceRegistry.disposeDefinition(definition);
     });
   }
 

@@ -196,7 +196,7 @@ class ScopeRegistry {
     _scopes.values
         .filter((it) => it.scopeDefinition == scopeDefinition)
         .forEach((it) {
-      it.dropInstances(scopeDefinition);
+      it.disposeInstances(scopeDefinition);
     });
   }
 }

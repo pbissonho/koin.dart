@@ -19,7 +19,6 @@ import 'definition/definitions.dart';
 import 'scope/scope_definition.dart';
 import 'definition/bean_definition.dart';
 import 'definition/definition.dart';
-import 'definition/options.dart';
 import 'qualifier.dart';
 import 'scope/scope_dsl.dart';
 

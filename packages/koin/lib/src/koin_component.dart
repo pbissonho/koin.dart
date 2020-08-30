@@ -15,7 +15,7 @@
  */
 
 import 'context/context_handler.dart';
-import 'definition_parameter.dart';
+import 'definition/definition_parameter.dart';
 import 'qualifier.dart';
 import 'koin_dart.dart';
 import 'lazy.dart';

@@ -1,7 +1,6 @@
 import '../qualifier.dart';
 import 'bean_definition.dart';
 import '../scope/scope_definition.dart';
-import '../definition/options.dart';
 import 'definition.dart';
 
 class Definitions {

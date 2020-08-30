@@ -8,7 +8,6 @@ import 'package:koin/src/module.dart';
 import 'package:koin/src/scope/scope.dart';
 import 'package:test/test.dart';
 
-import 'package:koin/src/definition/options.dart';
 import '../components.dart';
 
 import 'package:koin/src/qualifier.dart';

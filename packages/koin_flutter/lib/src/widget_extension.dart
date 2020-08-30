@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:koin/koin.dart';
 import 'package:koin/internal.dart';
 
+import 'scope_observer.dart';
+
 /// Extension to provide `KoinComponent` methods for Flutter Widgets.
 extension ComponentWidgetExtension<T> on Diagnosticable {
   /// Get the associated Koin instance
@@ -302,48 +304,5 @@ class ScopeNotFoundException implements Exception {
   @override
   String toString() {
     return '$runtimeType: $msg';
-  }
-}
-
-ScopeWidgetObersever scopeObserver = ScopeWidgetObersever();
-
-class ScopeWidgetObersever {
-  static void setObserver(ScopeWidgetObersever observer) {
-    scopeObserver = observer;
-  }
-
-  Map<String, ScopeWidgetContext> scopeContexts = {};
-
-  void onCreateScope(ScopeWidgetContext scopeWidgetContext) {
-    scopeContexts[scopeWidgetContext.scope.id] = scopeWidgetContext;
-  }
-
-  void onCloseScope(String id) {
-    scopeContexts.removeWhere((key, value) => value.scope.id == id);
-  }
-}
-
-typedef SetState = void Function(VoidCallback callback);
-
-class ScopeWidgetContext {
-  ScopeWidgetContext(
-    this.widgetScopeSource,
-    this.scope,
-    this.setState,
-    this.replace,
-  );
-
-  final Widget widgetScopeSource;
-  Scope scope;
-  final SetState setState;
-  final Function replace;
-
-  void hotRestartScope() {
-    scope.close();
-    scopeObserver.onCloseScope(scope.id);
-    var qualifier = TypeQualifier(widgetScopeSource.runtimeType);
-    scope =
-        KoinContextHandler.get().createScopeWithQualifier(scope.id, qualifier);
-    replace();
   }
 }

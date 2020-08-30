@@ -1,7 +1,7 @@
+import '../definition/definition_parameter.dart';
 import '../internal/exceptions.dart';
 import 'package:kt_dart/kt.dart';
 
-import '../definition_parameter.dart';
 import '../scope/scope.dart';
 
 import '../koin_dart.dart';
@@ -132,7 +132,7 @@ class InstanceRegistry {
     return instance?.get(defaultInstanceContext(definitionParameter)) as S;
   }
 
-  void dropDefinition(BeanDefinition definition) {
+  void disposeDefinition(BeanDefinition definition) {
     var ids = _instances
         .filter((it) => it.value.beanDefinition == definition)
         .map((it) => it.key);

@@ -22,7 +22,6 @@
 /// Ported to Dart from Kotlin by:
 /// @author - Pedro Bissonho
 ///
-
 import 'package:equatable/equatable.dart';
 
 /// Help qualify a component

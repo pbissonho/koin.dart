@@ -38,22 +38,19 @@ class Measure {
   ///
   /// Measure code execution and get result
   ///
-  static Pair measureDuration(Object Function() function) {
+  static _Pair measureDuration(Object Function() function) {
     var start = Stopwatch()..start();
     var result = function();
     var duration = start.elapsed.inMilliseconds.toDouble();
-    return Pair(duration, result);
+    return _Pair(duration, result);
   }
 }
 
-///
-///
-///
-class Pair<T> {
+class _Pair<T> {
   final double duration;
   final T result;
 
-  Pair(this.duration, this.result);
+  _Pair(this.duration, this.result);
 
   @override
   String toString() => 'Duration: ${duration}ms - Result: $result';

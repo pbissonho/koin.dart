@@ -19,9 +19,6 @@ import 'package:equatable/equatable.dart';
 import '../qualifier.dart';
 import '../scope/scope_definition.dart';
 import 'definition.dart';
-import 'options.dart';
-
-//import 'properties.dart';
 
 class Callback<T> {
   final void Function(T value) _callBack;
@@ -40,6 +37,13 @@ class Callback<T> {
 enum Kind {
   single,
   factory,
+}
+
+class Options {
+  final bool isCreatedAtStart;
+  final bool override;
+
+  const Options({this.isCreatedAtStart = false, this.override = false});
 }
 
 ///

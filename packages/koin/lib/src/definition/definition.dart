@@ -1,5 +1,5 @@
-import '../definition_parameter.dart';
 import '../scope/scope.dart';
+import 'definition_parameter.dart';
 
 typedef DefinitionFunction<T> = T Function(Scope scope);
 

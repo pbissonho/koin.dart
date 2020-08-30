@@ -6,7 +6,6 @@ import 'package:kt_dart/kt.dart';
 
 import '../definition/bean_definition.dart';
 import '../definition/definitions.dart';
-import '../definition/options.dart';
 
 class ScopeDefinition extends Equatable {
   final Qualifier qualifier;
