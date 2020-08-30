@@ -15,9 +15,7 @@
  */
 
 import 'dart:core';
-
 import 'package:equatable/equatable.dart';
-
 import '../qualifier.dart';
 import '../scope/scope_definition.dart';
 import 'definition.dart';
@@ -60,7 +58,6 @@ class BeanDefinition<T> with EquatableMixin {
   final Kind kind;
   List<Type> secondaryTypes;
   final Options options;
-  // final Properties _properties = Properties();
   Callback<T> onDispose;
 
   BeanDefinition(

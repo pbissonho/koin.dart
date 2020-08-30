@@ -66,7 +66,7 @@ void main() {
       app.module(module()..single((s) => ComponentA()));
     }).koin;
 
-    var a = koin.inject<ComponentA>(null, null);
+    var a = koin.inject<ComponentA>();
     var ab = koin.get<ComponentA>();
 
     expect(a.value, ab);

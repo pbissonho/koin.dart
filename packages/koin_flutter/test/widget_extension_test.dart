@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:koin/koin.dart';
-import 'widgets/widget_extension/pages.dart';
 import 'widgets/widget_extension/modules.dart';
+import 'widgets/widget_extension/pages.dart';
 
 void main() {
-  tearDown(() {
-    stopKoin();
-  });
+  tearDown(stopKoin);
 
-  testWidgets('can get with State extension', (WidgetTester tester) async {
+  testWidgets('can get with State extension', (tester) async {
     startKoin((app) {
       app.module(module1);
     });
@@ -34,8 +32,7 @@ void main() {
     expect(componentIdFactoryFinder, findsOneWidget);
   });
 
-  testWidgets('can get with StatelessWidget extension',
-      (WidgetTester tester) async {
+  testWidgets('can get with StatelessWidget extension', (tester) async {
     startKoin((app) {
       app.module(module2);
     });
@@ -57,8 +54,7 @@ void main() {
     expect(componentIdFactoryFinder, findsOneWidget);
   });
 
-  testWidgets('can get with StatefulWidget extension',
-      (WidgetTester tester) async {
+  testWidgets('can get with StatefulWidget extension', (tester) async {
     startKoin((app) {
       app.module(module3);
     });
@@ -84,7 +80,7 @@ void main() {
   });
 
   testWidgets('can get with StatefulWidget extension - withParams',
-      (WidgetTester tester) async {
+      (tester) async {
     startKoin((app) {
       app.module(moduleWithParams);
     });
@@ -114,7 +110,7 @@ void main() {
   });
 
   testWidgets('can get with StatefulWidget extension - withParams',
-      (WidgetTester tester) async {
+      (tester) async {
     startKoin((app) {
       app.module(moduleWithParams);
     });

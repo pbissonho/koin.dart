@@ -260,7 +260,7 @@ void main() {
             scope.scoped((s) => ComponentA());
           })
           ..scopeWithType(named('SCOPE_2'), (scope) {
-            scope.scoped1<ComponentB, Scope>((s, scope) {
+            scope.scopedWithParam<ComponentB, Scope>((s, scope) {
               return ComponentB(scope.get());
             });
           }))
@@ -278,7 +278,7 @@ void main() {
         .printLogger()
         .module(Module()
           ..scopeWithType(named('SCOPE_1'), (scope) {
-            scope.scoped1<MySingle, int>((s, id) => MySingle(id));
+            scope.scopedWithParam<MySingle, int>((s, id) => MySingle(id));
           }))
         .koin;
 

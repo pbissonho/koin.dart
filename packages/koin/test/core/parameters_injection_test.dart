@@ -48,7 +48,7 @@ void main() {
     var app = koinApplication((app) {
       app.module(Module()
         ..scopeWithType(scopeKey, (s) {
-          s.scoped1<MySingle, int>((s, id) => MySingle(id));
+          s.scopedWithParam<MySingle, int>((s, id) => MySingle(id));
         }));
     });
 

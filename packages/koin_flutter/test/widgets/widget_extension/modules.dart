@@ -33,5 +33,5 @@ var moduleWithParams = Module()
   ..factoryWithParam<Component, int>((s, id) => Component(id),
       qualifier: named("Fac"))
   ..scope<HomePageWithParams>((s) {
-    s.scoped1<Component, int>((s, value) => Component(value));
+    s.scopedWithParam<Component, int>((s, value) => Component(value));
   });

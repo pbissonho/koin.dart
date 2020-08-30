@@ -31,10 +31,6 @@ class DefinitionParameter<T> {
   DefinitionParameter(this.parameter);
 
   T get() => parameter;
-
-  bool isEmpty() => parameter == null;
-
-  bool isNotEmpty() => !isEmpty();
 }
 
 ///

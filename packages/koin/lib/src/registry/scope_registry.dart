@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import 'package:koin/src/internal/exceptions.dart';
+import '../internal/exceptions.dart';
 import 'package:kt_dart/kt.dart';
 
 import '../koin_dart.dart';
@@ -35,7 +35,6 @@ class ScopeRegistry {
   @protected
   @visibleForTesting
   KtHashMap<String, ScopeDefinition> scopeDefinitions = KtHashMap.empty();
-
   final _scopes = KtHashMap<String, Scope>.empty();
 
   Scope _rootScope;
@@ -127,6 +126,7 @@ class ScopeRegistry {
       final createdScope =
           createScopeWithDefinition(scopeId, scopeDefinition, source);
       _scopes[scopeId] = createdScope;
+
       return createdScope;
     } else {
       throw NoScopeDefFoundException(

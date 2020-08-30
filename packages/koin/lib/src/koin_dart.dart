@@ -1,7 +1,9 @@
 import 'definition_parameter.dart';
-
 import 'internal/exceptions.dart';
-////
+
+import 'koin_component.dart';
+
+///
 /// Copyright 2017-2018 the original author or authors.
 ///
 /// Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,7 +30,6 @@ import 'qualifier.dart';
 import 'registry/scope_registry.dart';
 import 'scope/scope.dart';
 
-/// Koin
 ///
 /// Gather main features to use on Koin context
 ///
@@ -36,12 +37,17 @@ import 'scope/scope.dart';
 /// Ported to Dart from Kotlin by:
 /// @author - Pedro Bissonho
 ///
-
-class Koin {
+class Koin with ScopedComponentMixin {
   ScopeRegistry _scopeRegistry;
   Logger logger;
   LoggerInstanceObserverBase loggerInstanceObserver;
+  final KtHashSet<ScopeObserver> scopeObserves =
+      KtHashSet<ScopeObserver>.empty();
   final KtHashSet<Module> _modules = KtHashSet<Module>.empty();
+
+  void withScopeObserver(ScopeObserver scopeObserver) {
+    scopeObserves.add(scopeObserver);
+  }
 
   ScopeRegistry get scopeRegistry => _scopeRegistry;
 
@@ -49,21 +55,7 @@ class Koin {
     _scopeRegistry = ScopeRegistry(this);
     logger = EmptyLogger(Level.debug);
     loggerInstanceObserver = LoggerInstanceObserver(this);
-  }
-
-  ///
-  /// Lazy inject a Koin instance
-  ///
-  Lazy<T> inject<T>([Qualifier qualifier, DefinitionParameter parameters]) {
-    return _scopeRegistry.rootScope.inject(qualifier);
-  }
-
-  ///
-  /// Lazy inject a Koin instance
-  ///
-  Lazy<T> injectWithParam<T, P>(P param, {Qualifier qualifier}) {
-    return _scopeRegistry.rootScope
-        .injectWithParam<T, P>(param, qualifier: qualifier);
+    scopeObserves.add(KoinScopeObserver());
   }
 
   ///
@@ -72,25 +64,6 @@ class Koin {
   ////
   Lazy<T> injectOrNull<T>(Qualifier qualifier, DefinitionParameter parameters) {
     return _scopeRegistry.rootScope.injectOrNull(parameters, qualifier);
-  }
-
-  ///
-  /// Get a Koin instance
-  ///
-  T get<T>([Qualifier qualifier]) {
-    return _scopeRegistry.rootScope.get<T>(
-      qualifier,
-    );
-  }
-
-  ///
-  /// Get a Koin instance
-  ///
-  T getWithParam<T, P>(P parameter, {Qualifier qualifier}) {
-    return _scopeRegistry.rootScope.getWithParam<T, P>(
-      parameter,
-      qualifier: qualifier,
-    );
   }
 
   ///
@@ -149,16 +122,6 @@ class Koin {
   }
 
   ///
-  /// Get instance of primary type [P] and return as secondary type [S]
-  /// (not for scoped instances)
-  ///
-  /// @return instance of type [S]
-  ///
-  S bind<S, P>([DefinitionParameter parameters]) {
-    return _scopeRegistry.rootScope.bind<S, P>(parameters);
-  }
-
-  ///
   /// Get instance of primary type [primaryType] and return as secondary
   /// type [S]
   /// (not for scoped instances)
@@ -186,34 +149,25 @@ class Koin {
   /// Create a Scope instance
   ///
   Scope createScope<T>(String scopeId, [dynamic source]) {
-    var qualifier = TypeQualifier(T);
-    logger.isAtdebug('!- create scope - id:$scopeId q:$qualifier', Level.debug);
-    return _scopeRegistry.createScope(scopeId, qualifier, source);
+    return _createScope(scopeId, TypeQualifier(T), source);
   }
 
   // Returns whether or not there is a definition for [qualifier].
   Scope createScopeWithQualifier(String scopeId, Qualifier qualifier,
       [dynamic source]) {
-    logger.isAtdebug('!- create scope - id:$scopeId q:$qualifier', Level.debug);
-    return _scopeRegistry.createScope(scopeId, qualifier, source);
+    return _createScope(scopeId, qualifier, source);
   }
 
   ///
   /// Create a Scope instance
   ///
-  Scope createScopeWithSource<T>(String scopeId, dynamic source) {
-    var qualifier = TypeQualifier(T);
+  Scope createScopeWithSource<T>(String scopeId, dynamic source) =>
+      _createScope(scopeId, TypeQualifier(T), source);
+
+  Scope createScopeT2<T>() => _createScope(T.scopeId, TypeQualifier(T), null);
+
+  Scope _createScope(String scopeId, Qualifier qualifier, dynamic source) {
     logger.isAtdebug('!- create scope - id:$scopeId q:$qualifier', Level.debug);
-    return _scopeRegistry.createScope(scopeId, qualifier, source);
-  }
-
-  Scope createScopeT2<T>() {
-    var type = T;
-    var scopeId = type.scopeId;
-    var qualifier = TypeQualifier(T);
-
-    logger.isAtdebug('!- create scope - id:$scopeId q:$qualifier', Level.debug);
-
     return _scopeRegistry.createScope(scopeId, qualifier, null);
   }
 
@@ -304,4 +258,7 @@ class Koin {
   void createRootScope() {
     _scopeRegistry.createRootScope();
   }
+
+  @override
+  Scope componentScope() => _scopeRegistry.rootScope;
 }

@@ -19,6 +19,7 @@ import 'definition_parameter.dart';
 import 'qualifier.dart';
 import 'koin_dart.dart';
 import 'lazy.dart';
+import 'scope/scope.dart';
 
 ///
 /// KoinComponentMixin interface marker to bring Koin extensions features
@@ -45,9 +46,8 @@ mixin KoinComponentMixin {
   /// @param qualifier
   /// @param parameters
   ///
-  Lazy<T> inject<T>(
-      [Qualifier qualifier, DefinitionParameter definitionParameter]) {
-    return getKoin().inject<T>(qualifier, definitionParameter);
+  Lazy<T> inject<T>([Qualifier qualifier]) {
+    return getKoin().inject<T>(qualifier);
   }
 
   ///
@@ -61,8 +61,8 @@ mixin KoinComponentMixin {
   /// Get instance instance from Koin by Primary Type P, as secondary type S
   /// @param parameters
   ///
-  S bind<S, P>([Qualifier qualifier, DefinitionParameter definitionParameter]) {
-    return getKoin().bind<S, P>(definitionParameter);
+  S bind<S, P>([Qualifier qualifier]) {
+    return getKoin().bind<S, P>();
   }
 
   ///
@@ -72,7 +72,56 @@ mixin KoinComponentMixin {
   /// TODO
   S bindWithParam<S, K, P>(
       {Qualifier qualifier, DefinitionParameter definitionParameter}) {
-    return getKoin().bind<S, P>(definitionParameter);
+    return getKoin().bind<S, P>(qualifier);
+  }
+}
+
+mixin ScopedComponentMixin {
+  ///
+  /// Get the associated Koin instance
+  ///
+  Scope componentScope();
+
+  T get<T>([Qualifier qualifier]) {
+    return componentScope().get<T>(qualifier);
+  }
+
+  T getWithParam<T, P>(P param, {Qualifier qualifier}) {
+    return componentScope().getWithParam<T, P>(param);
+  }
+
+  ///
+  /// Lazy inject instance from Koin
+  /// @param qualifier
+  /// @param parameters
+  ///
+  Lazy<T> inject<T>([Qualifier qualifier]) {
+    return componentScope().inject<T>(qualifier);
+  }
+
+  ///
+  /// Lazy inject instance from Koin
+  ///
+  Lazy<T> injectWithParam<T, P>(P param, {Qualifier qualifier}) {
+    return componentScope().injectWithParam<T, P>(param, qualifier: qualifier);
+  }
+
+  ///componentScope
+  /// Get instance instance from Koin by Primary Type P, as secondary type S
+  /// @param parameters
+  ///
+  S bind<S, P>([Qualifier qualifier]) {
+    return componentScope().bind<S, P>(qualifier);
+  }
+
+  ///
+  /// Get instance instance from Koin by Primary Type K, as secondary type S
+  /// @param parameters
+  ///
+  /// TODO
+  S bindWithParam<S, K, P>(
+      {Qualifier qualifier, DefinitionParameter definitionParameter}) {
+    return componentScope().bind<S, P>();
   }
 }
 

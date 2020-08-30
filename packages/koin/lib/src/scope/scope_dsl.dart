@@ -36,7 +36,7 @@ class ScopeDSL {
         scopeDefinition, Options(isCreatedAtStart: false, override: override));
   }
 
-  BeanDefinition<T> scoped1<T, A>(
+  BeanDefinition<T> scopedWithParam<T, A>(
     DefinitionFunctionWithParam<T, A> definition, {
     Qualifier qualifier,
     bool override = false,

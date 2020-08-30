@@ -2,9 +2,6 @@ import '../internal/exceptions.dart';
 import '../koin_application.dart';
 import '../koin_dart.dart';
 
-
-
-
 /*
  * Copyright 2017-2020 the original author or authors.
  *

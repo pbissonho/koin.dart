@@ -1,10 +1,23 @@
 import 'instance/instance_factory.dart';
 import 'koin_dart.dart';
 import 'logger.dart';
+import 'scope/scope.dart';
 
 abstract class ScopeObserver {
-  void onCreate();
-  void onClose();
+  void onCreate(Scope scope);
+  void onClose(Scope scope);
+}
+
+class KoinScopeObserver implements ScopeObserver {
+  @override
+  void onClose(Scope scope) {
+    // TODO: implement onClose
+  }
+
+  @override
+  void onCreate(Scope scope) {
+    // TODO: implement onCreate
+  }
 }
 
 abstract class LoggerInstanceObserverBase {

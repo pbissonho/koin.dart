@@ -1,3 +1,4 @@
+import '../../koin.dart';
 import '../internal/exceptions.dart';
 import '../instance/instance_factory.dart';
 
@@ -34,7 +35,7 @@ abstract class ScopeCallback {
   void onScopeClose();
 }
 
-class Scope {
+class Scope with ScopedComponentMixin {
   final String id;
   final ScopeDefinition scopeDefinition;
   final Koin koin;
@@ -91,14 +92,6 @@ class Scope {
     }
   }
 
-  ///
-  ///Lazy inject a Koin instance
-  /// @param qualifier
-  /// @param scope
-  /// @param parameters
-  ///
-  /// @return Lazy instance of type T
-  ///
   Lazy<T> inject<T>([
     Qualifier qualifier,
   ]) {
@@ -108,14 +101,6 @@ class Scope {
     });
   }
 
-  ///
-  ///Lazy inject a Koin instance
-  /// @param qualifier
-  /// @param scope
-  /// @param parameters
-  ///
-  /// @return Lazy instance of type T
-  ///
   Lazy<T> injectWithParam<T, P>(
     P parameter, {
     Qualifier qualifier,
@@ -141,12 +126,6 @@ class Scope {
     return lazy<T>(() => getOrNull<T>(qualifier, definitionParameter));
   }
 
-  ///
-  /// Get a Koin instance
-  /// @param qualifier
-  /// @param scope
-  /// @param parameters
-  ///
   T get<T>([Qualifier qualifier]) {
     final type = T;
     return getWithType(type, qualifier, emptyParameter());
@@ -325,8 +304,8 @@ No definition found for class:'$type'$qualifierString. Check your definitions!""
   ///
   ///@return instance of type S
   ///
-  S bind<S, P>([DefinitionParameter definitionParameter]) {
-    return bindWithType(P, S, definitionParameter);
+  S bind<S, P>([Qualifier qualifier]) {
+    return bindWithType(P, S, emptyParameter());
   }
 
   ///
@@ -386,4 +365,7 @@ No definition found for class:'$type'$qualifierString. Check your definitions!""
       _instanceRegistry.createDefinition(definition);
     });
   }
+
+  @override
+  Scope componentScope() => this;
 }
