@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:koin/koin.dart';
 import 'package:koin/extension.dart';
-import 'package:koin/internal.dart';
+import 'package:koin/internals.dart';
 
 extension BlocModuleExtension on Module {
   /// Defines a [Cubit] as [single] definition that will be automatically closed.

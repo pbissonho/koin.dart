@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:koin/koin.dart';
-import 'package:koin/internal.dart';
+import 'package:koin/internals.dart';
 
 import 'scope_observer.dart';
 
@@ -160,7 +160,7 @@ mixin ScopeStateMixin<T extends StatefulWidget> on State<T> {
   Scope get currentScope {
     if (_scope != null && !_scope.closed) return _scope;
     _scope = widget.scope;
-    scopeObserver
+    FlutterKoinObserver.scopeRouterObserver
         .onCreateScope(ScopeWidgetContext(widget, _scope, setState, _replace));
     return _scope;
   }
@@ -192,7 +192,7 @@ mixin ScopeStateMixin<T extends StatefulWidget> on State<T> {
       }
     } else if (!_scope.closed) {
       _scope.close();
-      scopeObserver.onCloseScope(_scope.id);
+      FlutterKoinObserver.scopeRouterObserver.onCloseScope(_scope.id);
     }
   }
 }

@@ -2,7 +2,7 @@ import 'package:koin/koin.dart';
 import 'package:koin/src/instance/instance_factory.dart';
 import 'package:test/test.dart';
 import 'package:kt_dart/kt.dart';
-import 'package:koin/internal.dart';
+import 'package:koin/internals.dart';
 
 extension KoinApplicationEx<T> on KoinApplication {
   void expectDefinitionsCount(int count) {

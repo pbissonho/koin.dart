@@ -18,7 +18,7 @@ import 'dart:collection';
 
 import 'package:equatable/equatable.dart';
 import 'package:koin/koin.dart';
-import 'package:koin/internal.dart';
+import 'package:koin/internals.dart';
 
 class CheckedComponent with EquatableMixin {
   final Qualifier qualifier;

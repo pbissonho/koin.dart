@@ -1,4 +1,4 @@
-import 'package:koin/internal.dart';
+import 'package:koin/internals.dart';
 import 'package:koin/koin.dart';
 import 'package:koin/src/internal/exceptions.dart';
 import 'package:test/test.dart';

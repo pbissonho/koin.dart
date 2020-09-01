@@ -26,6 +26,12 @@ abstract class LoggerInstanceObserverBase {
   void onResolve(String type, String duration);
 }
 
+abstract class InstanceObserverBase {
+  void onCreate(InstanceFactory instanceFactory);
+  void onDispose(InstanceFactory instanceFactory);
+  void onResolve(InstanceFactory instanceFactory, String duration);
+}
+
 class LoggerInstanceObserver implements LoggerInstanceObserverBase {
   final Koin koin;
 

@@ -1,8 +1,8 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:koin_flutter/internal.dart';
+import 'package:koin_flutter/internals.dart';
 import 'package:koin/instance_factory.dart';
-import 'package:koin/internal.dart';
+import 'package:koin/internals.dart';
 import 'package:kt_dart/kt.dart';
 
 class _DevTools {
@@ -10,7 +10,7 @@ class _DevTools {
     final scopesMap = <String, ScopeWidgetContext>{};
     scopesMap['Root'] = ScopeWidgetContext(
         null, KoinContextHandler.get().scopeRegistry.rootScope, null, null);
-    scopesMap.addAll(scopeObserver.scopeContexts);
+    scopesMap.addAll(FlutterKoinObserver.scopeRouterObserver.scopeContexts);
     return scopesMap;
   }
 }

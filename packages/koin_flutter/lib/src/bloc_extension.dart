@@ -1,6 +1,6 @@
 import 'package:koin/extension.dart';
 import 'package:koin/koin.dart';
-import 'package:koin/internal.dart';
+import 'package:koin/internals.dart';
 import 'disposable_extension.dart';
 
 extension BlocModuleExtension on Module {

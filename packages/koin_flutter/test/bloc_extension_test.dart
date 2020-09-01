@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:koin/koin.dart';
 import 'package:koin_test/koin_test.dart';
-import 'package:koin/internal.dart';
+import 'package:koin/internals.dart';
 import 'package:koin/scope_instance.dart';
 
 import 'widgets/bloc_extension/modules.dart';

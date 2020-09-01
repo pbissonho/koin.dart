@@ -17,7 +17,7 @@
 import 'package:koin/koin.dart';
 import 'check_module_dsl.dart';
 import 'package:koin/src/scope/scope_definition.dart';
-import 'package:koin/internal.dart';
+import 'package:koin/internals.dart';
 import 'package:kt_dart/collection.dart';
 
 extension KoinApplicationExt on KoinApplication {

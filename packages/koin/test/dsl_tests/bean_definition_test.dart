@@ -1,5 +1,5 @@
 import 'package:koin/extension.dart';
-import 'package:koin/internal.dart';
+import 'package:koin/internals.dart';
 import 'package:koin/src/koin_application.dart';
 import 'package:koin/src/definition/definitions.dart';
 import 'package:koin/src/instance/instance_context.dart';

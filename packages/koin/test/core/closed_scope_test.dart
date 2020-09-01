@@ -1,7 +1,7 @@
 import 'package:koin/koin.dart';
 import 'package:koin/src/context/context_functions.dart';
 import 'package:test/test.dart';
-import 'package:koin/internal.dart';
+import 'package:koin/internals.dart';
 import '../components.dart';
 
 class ScopeType {}

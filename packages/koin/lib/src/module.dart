@@ -56,7 +56,7 @@ class Module {
   }
 
   ///
-  ///Class Typed Scope
+  /// Class Typed Scope
   ///
   void scope<T>(Function(ScopeDSL dsl) makeScope) {
     var scopeDefinition = ScopeDefinition(TypeQualifier(T), isRoot: false);
@@ -186,6 +186,5 @@ Module module({
   bool override = false,
 }) {
   var module = Module(createdAtStart, override);
-  // moduleDeclaration(module);
   return module;
 }
