@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import '../definition/bean_definition.dart';
+import '../definition/provider_definition.dart';
 
 import '../koin_dart.dart';
 import 'instance_context.dart';
@@ -26,7 +26,7 @@ import 'instance_factory.dart';
 /// @author Arnaud Giuliani
 ///
 class FactoryInstanceFactory<T> extends InstanceFactory<T> {
-  FactoryInstanceFactory(Koin koin, BeanDefinition<T> beanDefinition)
+  FactoryInstanceFactory(Koin koin, ProviderDefinition<T> beanDefinition)
       : super(koin: koin, beanDefinition: beanDefinition);
   @override
   void dispose() {

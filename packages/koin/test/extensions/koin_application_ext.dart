@@ -1,4 +1,5 @@
 import 'package:koin/koin.dart';
+import 'package:koin/src/definition/provider_definition.dart';
 import 'package:koin/src/instance/instance_factory.dart';
 import 'package:test/test.dart';
 import 'package:kt_dart/kt.dart';
@@ -9,7 +10,7 @@ extension KoinApplicationEx<T> on KoinApplication {
     expect(koin.scopeRegistry.size(), count);
   }
 
-  BeanDefinition<T> getBeanDefinition(Type type) {
+  ProviderDefinition<T> getBeanDefinition(Type type) {
     return koin.scopeRegistry.rootScope.scopeDefinition.definitions
         .firstOrNull((it) => it.primaryType == type);
   }
@@ -22,7 +23,7 @@ extension KoinApplicationEx<T> on KoinApplication {
 }
 
 extension ScopeEx<T> on Scope {
-  BeanDefinition<T> getBeanDefinition(Type type) {
+  ProviderDefinition<T> getBeanDefinition(Type type) {
     return scopeDefinition.definitions
         .firstOrNull((it) => it.primaryType == type);
   }

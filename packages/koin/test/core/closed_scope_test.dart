@@ -14,6 +14,7 @@ class CustomSingle {
 
 void main() {
   var scopeName = 'MY_SCOPE';
+
   test('get definition from current scopes type', () {
     var koin = KoinApplication()
         .printLogger()

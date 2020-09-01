@@ -5,7 +5,7 @@ import 'package:koin/src/internal/exceptions.dart';
 import 'package:test/test.dart';
 
 import '../components.dart';
-import 'package:koin/src/definition/bean_definition.dart';
+import 'package:koin/src/definition/provider_definition.dart';
 import '../extensions/koin_application_ext.dart';
 import 'package:koin/src/qualifier.dart';
 

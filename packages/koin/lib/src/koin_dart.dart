@@ -62,17 +62,17 @@ class Koin with ScopedComponentMixin {
   /// Lazy inject a Koin instance if available.
   /// Return Lazy instance of type T or null.
   ////
-  Lazy<T> injectOrNull<T>(Qualifier qualifier, DefinitionParameter parameters) {
-    return _scopeRegistry.rootScope.injectOrNull(parameters, qualifier);
+  Lazy<T> injectOrNull<T>(Qualifier qualifier, Parameter parameter) {
+    return _scopeRegistry.rootScope.injectOrNull(parameter, qualifier);
   }
 
   ///
   /// Get a Koin instance if available with return instance of type T or null.
   ///
-  T getOrNull<T>([Qualifier qualifier, DefinitionParameter parameters]) {
+  T getOrNull<T>([Qualifier qualifier, Parameter parameter]) {
     return _scopeRegistry.rootScope.getOrNull<T>(
       qualifier,
-      parameters,
+      parameter,
     );
   }
 
@@ -81,16 +81,16 @@ class Koin with ScopedComponentMixin {
   /// @return instance of type T
   ///
   T getWithType<T>(
-      [Type type, Qualifier qualifier, DefinitionParameter parameters]) {
-    return _scopeRegistry.rootScope.getWithType<T>(type, qualifier, parameters);
+      [Type type, Qualifier qualifier, Parameter parameter]) {
+    return _scopeRegistry.rootScope.getWithType<T>(type, qualifier, parameter);
   }
 
   ///
   /// Get a Koin instance if available
   T getOrNullWithType<T>(
-      [Type type, Qualifier qualifier, DefinitionParameter parameters]) {
+      [Type type, Qualifier qualifier, Parameter parameter]) {
     return _scopeRegistry.rootScope
-        .getWithTypeOrNull(type, qualifier, parameters);
+        .getWithTypeOrNull(type, qualifier, parameter);
   }
 
   ///
@@ -129,9 +129,9 @@ class Koin with ScopedComponentMixin {
   /// @return instance of type [S]
   ///
   S bindWithType<S>(Type secondaryType, Type primaryType,
-      [DefinitionParameter parameters]) {
+      [Parameter parameter]) {
     return _scopeRegistry.rootScope
-        .bindWithType(primaryType, secondaryType, parameters);
+        .bindWithType(primaryType, secondaryType, parameter);
   }
 
   void createEagerInstances() {

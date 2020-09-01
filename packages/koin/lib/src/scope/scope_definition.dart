@@ -1,19 +1,19 @@
-import '../internal/exceptions.dart';
 import '../definition/definition.dart';
+import '../internal/exceptions.dart';
 import '../qualifier.dart';
 import 'package:kt_dart/kt.dart';
 
-import '../definition/bean_definition.dart';
+import '../definition/provider_definition.dart';
 import '../definition/definitions.dart';
 
 class ScopeDefinition {
   final Qualifier qualifier;
   final bool isRoot;
-  final KtHashSet<BeanDefinition> definitions = KtHashSet.empty();
+  final KtHashSet<ProviderDefinition> definitions = KtHashSet.empty();
 
   ScopeDefinition(this.qualifier, {this.isRoot});
 
-  void save(BeanDefinition beanDefinition, {bool forceOverride = false}) {
+  void save(ProviderDefinition beanDefinition, {bool forceOverride = false}) {
     if (definitions.contains(beanDefinition)) {
       if (beanDefinition.options.override || forceOverride) {
         definitions.remove(beanDefinition);
@@ -27,13 +27,13 @@ class ScopeDefinition {
     definitions.add(beanDefinition);
   }
 
-  void remove(BeanDefinition beanDefinition) {
+  void remove(ProviderDefinition beanDefinition) {
     definitions.remove(beanDefinition);
   }
 
   int size() => definitions.size;
 
-  BeanDefinition<T> saveNewDefinition<T>(
+  ProviderDefinition<T> saveNewDefinition<T>(
       T instance, Qualifier qualifier, List<Type> secondaryTypes,
       {bool override}) {
     var type = T;
@@ -60,7 +60,7 @@ with new definition typed '$type'""");
     //TODO
     var beanDefinition = Definitions.createSingle<T>(
         qualifier: qualifier,
-        definition: Definition((s) => instance),
+        providerCreate: ProviderCreateDefinition((s) => instance),
         scopeDefinition: this,
         options: Options(isCreatedAtStart: false, override: override),
         secondaryTypes: secondaryTypes2);

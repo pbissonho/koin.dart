@@ -16,7 +16,7 @@
 
 import '../internal/exceptions.dart';
 
-import '../definition/bean_definition.dart';
+import '../definition/provider_definition.dart';
 import '../koin_dart.dart';
 import 'instance_context.dart';
 import 'instance_factory.dart';
@@ -26,7 +26,7 @@ import 'instance_factory.dart';
 // @author Arnaud Giuliani
 ///
 class SingleInstanceFactory<T> extends InstanceFactory<T> {
-  SingleInstanceFactory(Koin koin, BeanDefinition<T> beanDefinition)
+  SingleInstanceFactory(Koin koin, ProviderDefinition<T> beanDefinition)
       : super(koin: koin, beanDefinition: beanDefinition);
 
   T _state;

@@ -1,63 +1,63 @@
 import '../qualifier.dart';
-import 'bean_definition.dart';
 import '../scope/scope_definition.dart';
 import 'definition.dart';
+import 'provider_definition.dart';
 
 class Definitions {
-  static BeanDefinition<T> saveSingle<T>(
+  static ProviderDefinition<T> saveSingle<T>(
       Qualifier qualifier,
-      DefinitionBase<T> definition,
+      ProviderCreateBase<T> providerCreate,
       ScopeDefinition scopeDefinition,
       Options options) {
     var beanDefinition = createSingle<T>(
         qualifier: qualifier,
-        definition: definition,
+        providerCreate: providerCreate,
         scopeDefinition: scopeDefinition,
         options: options);
     scopeDefinition.save(beanDefinition);
     return beanDefinition;
   }
 
-  static BeanDefinition<T> createSingle<T>(
+  static ProviderDefinition<T> createSingle<T>(
       {Qualifier qualifier,
-      DefinitionBase<T> definition,
+      ProviderCreateBase<T> providerCreate,
       ScopeDefinition scopeDefinition,
       Options options,
       List<Type> secondaryTypes}) {
-    return BeanDefinition<T>(
+    return ProviderDefinition<T>(
         scopeDefinition: scopeDefinition,
         primaryType: T,
         qualifier: qualifier,
-        definition: definition,
+        definition: providerCreate,
         kind: Kind.single,
         options: options,
         secondaryTypes: secondaryTypes);
   }
 
-  static BeanDefinition<T> createFactory<T>(
+  static ProviderDefinition<T> createFactory<T>(
       {Qualifier qualifier,
-      DefinitionBase<T> definition,
+      ProviderCreateBase<T> providerCreate,
       ScopeDefinition scopeDefinition,
       Options options,
       List<Type> secondaryTypes}) {
-    return BeanDefinition<T>(
+    return ProviderDefinition<T>(
         scopeDefinition: scopeDefinition,
         primaryType: T,
         qualifier: qualifier,
-        definition: definition,
+        definition: providerCreate,
         kind: Kind.factory,
         options: options,
         secondaryTypes: secondaryTypes);
   }
 
-  static BeanDefinition<T> saveFactory<T>(
+  static ProviderDefinition<T> saveFactory<T>(
       Qualifier qualifier,
-      DefinitionBase<T> definition,
+      ProviderCreateBase<T> providerCreate,
       ScopeDefinition scopeDefinition,
       Options options) {
     var beanDefinition = createFactory<T>(
         qualifier: qualifier,
-        definition: definition,
+        providerCreate: providerCreate,
         scopeDefinition: scopeDefinition,
         options: options);
     scopeDefinition.save(beanDefinition);

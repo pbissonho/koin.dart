@@ -1,5 +1,4 @@
-import 'package:koin/src/definition/definition_parameter.dart';
-
+import '../definition/definition_parameter.dart';
 import '../../koin.dart';
 import '../internal/exceptions.dart';
 import '../instance/instance_factory.dart';
@@ -24,7 +23,7 @@ import '../measure.dart';
 import '../registry/instance_registry.dart';
 import 'package:kt_dart/kt.dart';
 
-import '../definition/bean_definition.dart';
+import '../definition/provider_definition.dart';
 import '../lazy.dart';
 import '../koin_dart.dart';
 
@@ -108,7 +107,7 @@ class Scope with ScopedComponentMixin {
   }) {
     return lazy<T>(() {
       final type = T;
-      return getWithType(type, qualifier, DefinitionParameter(parameter));
+      return getWithType(type, qualifier, Parameter(parameter));
     });
   }
 
@@ -121,10 +120,10 @@ class Scope with ScopedComponentMixin {
   ///@return Lazy instance of type T or null
   ///
   Lazy<T> injectOrNull<T>([
-    DefinitionParameter definitionParameter,
+    Parameter parameter,
     Qualifier qualifier,
   ]) {
-    return lazy<T>(() => getOrNull<T>(qualifier, definitionParameter));
+    return lazy<T>(() => getOrNull<T>(qualifier, parameter));
   }
 
   T get<T>([Qualifier qualifier]) {
@@ -134,7 +133,7 @@ class Scope with ScopedComponentMixin {
 
   T getWithParam<T, P>(P parameter, {Qualifier qualifier}) {
     final type = T;
-    return getWithType(type, qualifier, DefinitionParameter<P>(parameter));
+    return getWithType(type, qualifier, Parameter<P>(parameter));
   }
 
   ///
@@ -145,10 +144,9 @@ class Scope with ScopedComponentMixin {
   ///
   ///@return instance of type T or null
   ///
-  T getOrNull<T>(
-      [Qualifier qualifier, DefinitionParameter definitionParameter]) {
+  T getOrNull<T>([Qualifier qualifier, Parameter parameter]) {
     final type = T;
-    return getWithTypeOrNull(type, qualifier, definitionParameter);
+    return getWithTypeOrNull(type, qualifier, parameter);
   }
 
   ///
@@ -159,10 +157,9 @@ class Scope with ScopedComponentMixin {
   ///
   /// @return instance of type T or null
   ///
-  T getWithTypeOrNull<T>(
-      Type type, Qualifier qualifier, DefinitionParameter definitionParameter) {
+  T getWithTypeOrNull<T>(Type type, Qualifier qualifier, Parameter parameter) {
     try {
-      return getWithType(type, qualifier, definitionParameter);
+      return getWithType(type, qualifier, parameter);
     } catch (e) {
       koin.logger.error("Can't get instance for $type");
       return null;
@@ -177,36 +174,33 @@ class Scope with ScopedComponentMixin {
   ///
   /// @return instance of type T
   ///
-  T getWithType<T>(
-      Type type, Qualifier qualifier, DefinitionParameter definitionParameter) {
+  T getWithType<T>(Type type, Qualifier qualifier, Parameter parameter) {
     if (koin.logger.isAt(Level.debug)) {
       final result = Measure.measureDuration(() {
-        return resolveInstance<T>(type, qualifier, definitionParameter);
+        return resolveInstance<T>(type, qualifier, parameter);
       });
       koin.loggerInstanceObserver
           .onResolve(type.toString(), result.duration.toString());
       return result.result;
     } else {
-      return resolveInstance<T>(type, qualifier, definitionParameter);
+      return resolveInstance<T>(type, qualifier, parameter);
     }
   }
 
-  T resolveInstance<T>(
-      Type type, Qualifier qualifier, DefinitionParameter definitionParameter) {
+  T resolveInstance<T>(Type type, Qualifier qualifier, Parameter parameter) {
     if (_closed) {
       throw ClosedScopeException('Scope $id is closed');
     }
 
-    definitionParameter ??= emptyParameter();
+    parameter ??= emptyParameter();
 
     final indexKeyCurrent = indexKey(type, qualifier);
 
-    final instance = _instanceRegistry.resolveInstance<T>(
-        indexKeyCurrent, definitionParameter);
+    final instance =
+        _instanceRegistry.resolveInstance<T>(indexKeyCurrent, parameter);
 
     if (instance != null) return instance;
-    final inOtherScope =
-        findInOtherScope<T>(type, qualifier, definitionParameter);
+    final inOtherScope = findInOtherScope<T>(type, qualifier, parameter);
     if (inOtherScope != null) return inOtherScope;
 
     final fromSource = getFromSource<T>(type);
@@ -228,13 +222,11 @@ No definition found for class:'$type'$qualifierString. Check your definitions!""
     }
   }
 
-  T findInOtherScope<T>(
-      Type type, Qualifier qualifier, DefinitionParameter definitionParameter) {
+  T findInOtherScope<T>(Type type, Qualifier qualifier, Parameter parameter) {
     final scope = _linkedScope.firstOrNull((scope) =>
-        scope.getWithTypeOrNull<T>(type, qualifier, definitionParameter) !=
-        null);
+        scope.getWithTypeOrNull<T>(type, qualifier, parameter) != null);
 
-    return scope?.getWithType(type, qualifier, definitionParameter);
+    return scope?.getWithType(type, qualifier, parameter);
   }
 
   void createEagerInstances() {
@@ -315,10 +307,9 @@ No definition found for class:'$type'$qualifierString. Check your definitions!""
   ///
   /// @return instance of type S
   ///
-  S bindWithType<S>(Type primaryType, Type secondaryType,
-      DefinitionParameter definitionParameter) {
+  S bindWithType<S>(Type primaryType, Type secondaryType, Parameter parameter) {
     var definition =
-        _instanceRegistry.bind(primaryType, secondaryType, definitionParameter);
+        _instanceRegistry.bind(primaryType, secondaryType, parameter);
 
     if (definition == null) {
       throw NoBeanDefFoundException("""

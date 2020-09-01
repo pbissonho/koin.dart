@@ -25,10 +25,10 @@ import 'dart:core';
 // Ported to Dart from Kotlin by:
 // @author - Pedro Bissonho
 
-class DefinitionParameter<T> {
+class Parameter<T> {
   final T parameter;
 
-  DefinitionParameter(this.parameter);
+  Parameter(this.parameter);
 
   T get() => parameter;
 }
@@ -36,4 +36,4 @@ class DefinitionParameter<T> {
 ///
 /// Builds a [DefinitionParameters] with a null element.
 ///
-DefinitionParameter emptyParameter() => DefinitionParameter(null);
+Parameter emptyParameter() => Parameter(null);

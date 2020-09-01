@@ -2,10 +2,10 @@ import 'package:koin/internals.dart';
 import 'package:test/test.dart';
 
 void main() {
-  DefinitionParameter definitionParameter;
+  Parameter definitionParameter;
 
   setUp(() {
-    definitionParameter = DefinitionParameter(50);
+    definitionParameter = Parameter(50);
   });
 
   test('shoud get the  component', () {

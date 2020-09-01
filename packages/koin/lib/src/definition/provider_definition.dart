@@ -52,17 +52,17 @@ class Options {
 //
 // Ported to Dart from Kotlin by:
 // @author - Pedro Bissonho
-class BeanDefinition<T> {
+class ProviderDefinition<T> {
   final ScopeDefinition scopeDefinition;
   final Type primaryType;
   final Qualifier qualifier;
-  final DefinitionBase<T> definition;
+  final ProviderCreateBase<T> definition;
   final Kind kind;
   List<Type> secondaryTypes;
   final Options options;
   Callback<T> onDispose;
 
-  BeanDefinition(
+  ProviderDefinition(
       {this.scopeDefinition,
       this.primaryType,
       this.qualifier,
@@ -84,7 +84,7 @@ class BeanDefinition<T> {
     }
   }
 
-  BeanDefinition<T> copy({List<Type> secondaryTypes, Callback<T> onDispose}) {
+  ProviderDefinition<T> copy({List<Type> secondaryTypes, Callback<T> onDispose}) {
     var newSecondaryTypes;
     var onDisposeCopy;
 
@@ -100,7 +100,7 @@ class BeanDefinition<T> {
       onDisposeCopy = onDispose;
     }
 
-    return BeanDefinition<T>(
+    return ProviderDefinition<T>(
         scopeDefinition: scopeDefinition,
         primaryType: primaryType,
         qualifier: qualifier,
@@ -150,7 +150,7 @@ class BeanDefinition<T> {
   ///
   /// Definition Binding
   ///
-  BeanDefinition bind<S>() {
+  ProviderDefinition bind<S>() {
     var newTypes = List<Type>.from([S]);
     newTypes.addAll(secondaryTypes);
 
@@ -163,7 +163,7 @@ class BeanDefinition<T> {
   ///
   /// Definition Bindings
   ///
-  BeanDefinition binds(List<Type> types) {
+  ProviderDefinition binds(List<Type> types) {
     types.addAll(secondaryTypes);
 
     var copyT = copy(secondaryTypes: types);
@@ -174,7 +174,7 @@ class BeanDefinition<T> {
 
   ///
   /// OnCloseCallback is called when definition is closed.
-  BeanDefinition<T> onClose(void Function(T value) onDispose) {
+  ProviderDefinition<T> onClose(void Function(T value) onDispose) {
     var scopeDefinitionCopy = copy(onDispose: Callback(callback: onDispose));
     scopeDefinition.remove(this);
     scopeDefinition.save(scopeDefinitionCopy);
@@ -190,7 +190,7 @@ class BeanDefinition<T> {
 
   @override
   bool operator ==(other) {
-    return other is BeanDefinition &&
+    return other is ProviderDefinition &&
         other.primaryType == primaryType &&
         other.qualifier == qualifier &&
         other.scopeDefinition == scopeDefinition;

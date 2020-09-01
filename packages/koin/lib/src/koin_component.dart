@@ -71,7 +71,7 @@ mixin KoinComponentMixin {
   ///
   /// TODO
   S bindWithParam<S, K, P>(
-      {Qualifier qualifier, DefinitionParameter definitionParameter}) {
+      {Qualifier qualifier, Parameter parameter}) {
     return getKoin().bind<S, P>(qualifier);
   }
 }
@@ -120,7 +120,7 @@ mixin ScopedComponentMixin {
   ///
   /// TODO
   S bindWithParam<S, K, P>(
-      {Qualifier qualifier, DefinitionParameter definitionParameter}) {
+      {Qualifier qualifier, Parameter parameter}) {
     return componentScope().bind<S, P>();
   }
 }

@@ -17,7 +17,7 @@
 import 'dart:core';
 import 'definition/definitions.dart';
 import 'scope/scope_definition.dart';
-import 'definition/bean_definition.dart';
+import 'definition/provider_definition.dart';
 import 'definition/definition.dart';
 import 'qualifier.dart';
 import 'scope/scope_dsl.dart';
@@ -85,8 +85,8 @@ class Module {
   ///```
   /// Module()..scopeOne<MyBloc, MyScope>((s) => MyBloc());
   ///```
-  BeanDefinition<T> scopeOne<T, TScope>(
-    DefinitionFunction<T> definition, {
+  ProviderDefinition<T> scopeOne<T, TScope>(
+    ProviderCreate<T> create, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
@@ -96,7 +96,7 @@ class Module {
 
     var beanDefinition = Definitions.saveSingle<T>(
         qualifier,
-        Definition<T>(definition),
+        ProviderCreateDefinition<T>(create),
         scopeDefinition,
         Options(isCreatedAtStart: createdAtStart, override: override));
     return beanDefinition;
@@ -105,15 +105,15 @@ class Module {
   ///
   /// Declare a Single definition
   ///
-  BeanDefinition<T> single<T>(
-    DefinitionFunction<T> definition, {
+  ProviderDefinition<T> single<T>(
+    ProviderCreate<T> create, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
     return Definitions.saveSingle<T>(
         qualifier,
-        Definition(definition),
+        ProviderCreateDefinition(create),
         rootScope,
         makeOptions(override: override, createdAtStart: createdAtStart));
   }
@@ -121,7 +121,7 @@ class Module {
   ///
   /// Declare a Single definition
   ///
-  BeanDefinition<T> singleWithParam<T, A>(
+  ProviderDefinition<T> singleWithParam<T, A>(
     DefinitionFunctionWithParam<T, A> definition, {
     Qualifier qualifier,
     bool createdAtStart = false,
@@ -143,20 +143,23 @@ class Module {
   ///
   /// Declare a Factory definition
   ///
-  BeanDefinition<T> factory<T>(
-    DefinitionFunction<T> definition, {
+  ProviderDefinition<T> factory<T>(
+    ProviderCreate<T> create, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
-    return Definitions.saveFactory<T>(qualifier, Definition<T>(definition),
-        rootScope, makeOptions(override: override));
+    return Definitions.saveFactory<T>(
+        qualifier,
+        ProviderCreateDefinition<T>(create),
+        rootScope,
+        makeOptions(override: override));
   }
 
   ///
   /// Declare a Factory definition
   ///
-  BeanDefinition<T> factoryWithParam<T, A>(
+  ProviderDefinition<T> factoryWithParam<T, A>(
     DefinitionFunctionWithParam<T, A> definition, {
     Qualifier qualifier,
     bool createdAtStart = false,

@@ -17,7 +17,7 @@
 import '../qualifier.dart';
 import '../scope/scope_definition.dart';
 
-import '../definition/bean_definition.dart';
+import '../definition/provider_definition.dart';
 import '../definition/definitions.dart';
 import '../definition/definition.dart';
 
@@ -26,16 +26,19 @@ class ScopeDSL {
 
   ScopeDSL(this.scopeDefinition);
 
-  BeanDefinition<T> scoped<T>(
-    DefinitionFunction<T> definition, {
+  ProviderDefinition<T> scoped<T>(
+    ProviderCreate<T> create, {
     Qualifier qualifier,
     bool override = false,
   }) {
-    return Definitions.saveSingle<T>(qualifier, Definition<T>(definition),
-        scopeDefinition, Options(isCreatedAtStart: false, override: override));
+    return Definitions.saveSingle<T>(
+        qualifier,
+        ProviderCreateDefinition<T>(create),
+        scopeDefinition,
+        Options(isCreatedAtStart: false, override: override));
   }
 
-  BeanDefinition<T> scopedWithParam<T, A>(
+  ProviderDefinition<T> scopedWithParam<T, A>(
     DefinitionFunctionWithParam<T, A> definition, {
     Qualifier qualifier,
     bool override = false,
@@ -47,16 +50,19 @@ class ScopeDSL {
         Options(isCreatedAtStart: false, override: override));
   }
 
-  BeanDefinition<T> factory<T>(
-    DefinitionFunction<T> definition, {
+  ProviderDefinition<T> factory<T>(
+    ProviderCreate<T> create, {
     Qualifier qualifier,
     bool override = false,
   }) {
-    return Definitions.saveFactory<T>(qualifier, Definition<T>(definition),
-        scopeDefinition, Options(isCreatedAtStart: false, override: override));
+    return Definitions.saveFactory<T>(
+        qualifier,
+        ProviderCreateDefinition<T>(create),
+        scopeDefinition,
+        Options(isCreatedAtStart: false, override: override));
   }
 
-  BeanDefinition<T> factoryWithParam<T, A>(
+  ProviderDefinition<T> factoryWithParam<T, A>(
     DefinitionFunctionWithParam<T, A> definition, {
     Qualifier qualifier,
     bool override = false,

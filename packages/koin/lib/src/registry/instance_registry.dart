@@ -5,7 +5,7 @@ import 'package:kt_dart/kt.dart';
 import '../scope/scope.dart';
 
 import '../koin_dart.dart';
-import '../definition/bean_definition.dart';
+import '../definition/provider_definition.dart';
 import '../instance/instance_factory.dart';
 import '../instance/instance_context.dart';
 import '../instance/single_instance_factory.dart';
@@ -21,7 +21,7 @@ class InstanceRegistry {
 
   InstanceRegistry(this.koin, this._scope);
 
-  void create(KtHashSet<BeanDefinition> definitions) {
+  void create(KtHashSet<ProviderDefinition> definitions) {
     definitions.forEach((definition) {
       if (_scope.scopeDefinition.isRoot) {
         koin.logger.isAtdebug('- $definition', Level.debug);
@@ -32,7 +32,7 @@ class InstanceRegistry {
     });
   }
 
-  void saveDefinition(BeanDefinition definition, {bool override}) {
+  void saveDefinition(ProviderDefinition definition, {bool override}) {
     var defOverride = definition.options.override || override;
     var instanceFactory = createInstanceFactory(koin, definition);
     saveInstance(
@@ -52,7 +52,7 @@ class InstanceRegistry {
 
   InstanceFactory createInstanceFactory(
     Koin koin,
-    BeanDefinition definition,
+    ProviderDefinition definition,
   ) {
     InstanceFactory instance;
 
@@ -83,16 +83,16 @@ class InstanceRegistry {
     }
   }
 
-  T resolveInstance<T>(String indexKey, DefinitionParameter parameters) {
+  T resolveInstance<T>(String indexKey, Parameter parameter) {
     var instance =
-        _instances[indexKey]?.get(defaultInstanceContext(parameters)) as T;
+        _instances[indexKey]?.get(defaultInstanceContext(parameter)) as T;
     return instance;
   }
 
   InstanceContext defaultInstanceContext(
-      DefinitionParameter definitionParameter) {
+      Parameter parameter) {
     return InstanceContext(
-        koin: koin, scope: _scope, definitionParameter: definitionParameter);
+        koin: koin, scope: _scope, parameter: parameter);
   }
 
   void close() {
@@ -122,24 +122,24 @@ class InstanceRegistry {
   KtList<InstanceFactory> getAllFactoryAsList() => _instances.values.toList();
 
   S bind<S>(Type primaryType, Type secondaryType,
-      DefinitionParameter definitionParameter) {
+      Parameter parameter) {
     var instance = _instances.values.firstOrNull((instance) {
       final canBind =
           instance.beanDefinition.canBind(primaryType, secondaryType);
       return canBind;
     });
 
-    return instance?.get(defaultInstanceContext(definitionParameter)) as S;
+    return instance?.get(defaultInstanceContext(parameter)) as S;
   }
 
-  void disposeDefinition(BeanDefinition definition) {
+  void disposeDefinition(ProviderDefinition definition) {
     var ids = _instances
         .filter((it) => it.value.beanDefinition == definition)
         .map((it) => it.key);
     ids.forEach(_instances.remove);
   }
 
-  void createDefinition(BeanDefinition definition) {
+  void createDefinition(ProviderDefinition definition) {
     saveDefinition(definition, override: false);
   }
 }

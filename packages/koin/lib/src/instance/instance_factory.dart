@@ -16,7 +16,7 @@
 
 import '../internal/exceptions.dart';
 
-import '../definition/bean_definition.dart';
+import '../definition/provider_definition.dart';
 import '../koin_dart.dart';
 import 'instance_context.dart';
 
@@ -26,7 +26,7 @@ import 'instance_context.dart';
 ///
 abstract class InstanceFactory<T> {
   final Koin koin;
-  final BeanDefinition<T> beanDefinition;
+  final ProviderDefinition<T> beanDefinition;
 
   InstanceFactory({this.koin, this.beanDefinition});
 
@@ -44,7 +44,7 @@ abstract class InstanceFactory<T> {
   ///
   T createState(InstanceContext context) {
     try {
-      final parameters = context.definitionParameter;
+      final parameters = context.parameter;
       koin.loggerInstanceObserver?.onCreate(this);
       return beanDefinition.definition.create(parameters, context.scope);
     } catch (erro) {

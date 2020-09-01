@@ -1,5 +1,5 @@
-import 'package:koin/extension.dart';
 import 'package:koin/internals.dart';
+import 'package:koin/src/definition/definition.dart';
 import 'package:koin/src/koin_application.dart';
 import 'package:koin/src/definition/definitions.dart';
 import 'package:koin/src/instance/instance_context.dart';
@@ -11,7 +11,7 @@ import 'package:test/test.dart';
 import '../components.dart';
 
 import 'package:koin/src/qualifier.dart';
-import 'package:koin/src/definition/bean_definition.dart';
+import 'package:koin/src/definition/provider_definition.dart';
 
 import '../extensions/koin_application_ext.dart';
 
@@ -26,11 +26,13 @@ void main() {
 
   test('equals definitions', () {
     var def1 = Definitions.createSingle(
-        definition: Definition<ComponentA>((s) => ComponentA()),
+        providerCreate:
+            ProviderCreateDefinition<ComponentA>((s) => ComponentA()),
         scopeDefinition: rootScope.scopeDefinition,
         options: Options());
     var def2 = Definitions.createSingle(
-        definition: Definition<ComponentA>((s) => ComponentA()),
+        providerCreate:
+            ProviderCreateDefinition<ComponentA>((s) => ComponentA()),
         scopeDefinition: rootScope.scopeDefinition,
         options: Options());
 
@@ -39,7 +41,8 @@ void main() {
 
   test('scope definition', () {
     var def1 = Definitions.createSingle(
-        definition: Definition<ComponentA>((s) => ComponentA()),
+        providerCreate:
+            ProviderCreateDefinition<ComponentA>((s) => ComponentA()),
         scopeDefinition: rootScope.scopeDefinition,
         options: Options());
 
@@ -49,11 +52,13 @@ void main() {
 
   test('equals definitions - but diif kind', () {
     var def1 = Definitions.createSingle(
-        definition: Definition<ComponentA>((s) => ComponentA()),
+        providerCreate:
+            ProviderCreateDefinition<ComponentA>((s) => ComponentA()),
         scopeDefinition: rootScope.scopeDefinition,
         options: Options());
     var def2 = Definitions.createSingle(
-        definition: Definition<ComponentA>((s) => ComponentA()),
+        providerCreate:
+            ProviderCreateDefinition<ComponentA>((s) => ComponentA()),
         scopeDefinition: rootScope.scopeDefinition,
         options: Options());
 
@@ -99,7 +104,7 @@ void main() {
     var instance = app.getInstanceFactory(ComponentA).get(InstanceContext(
         koin: app.koin,
         scope: rootScope,
-        definitionParameter: emptyParameter()));
+        parameter: emptyParameter()));
 
     expect(instance, app.koin.get<ComponentA>());
   });
