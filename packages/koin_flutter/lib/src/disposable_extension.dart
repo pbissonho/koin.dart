@@ -1,6 +1,6 @@
-import 'package:koin/koin.dart';
 import 'package:koin/extension.dart';
 import 'package:koin/internals.dart';
+import 'package:koin/koin.dart';
 
 /// Interface that must be implemented in the business classes that use streams
 /// or it is necessary to finalize some internal component.
@@ -17,10 +17,10 @@ abstract class Disposable {
 /// Facilitates the use of Koin with state management that
 /// depends on the flow controllers that need to be closed.
 extension DisposableModuleExtension on Module {
-  /// Defines a `Disposable` as single [definition] that will be automatically
+  /// Defines a `Disposable` as single [create] that will be automatically
   /// closed.
   ///
-  /// The `dispose` method of the instance created by the [definition] will
+  /// The `dispose` method of the instance created by the [create] will
   /// be called when the global context of the koin is finalized.
   ///
   /// Implement `Disposable` interface when the business classes use streams
@@ -42,13 +42,13 @@ extension DisposableModuleExtension on Module {
   ///var blocModule = Module()..bloc((s) => Bloc());
   ///```
   ///
-  BeanDefinition<T> disposable<T extends Disposable>(
-    DefinitionFunction<T> definition, {
+  ProviderDefinition<T> disposable<T extends Disposable>(
+    ProviderCreate<T> create, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
-    var beanDefinition = single<T>(definition,
+    var beanDefinition = single<T>(create,
         qualifier: qualifier,
         createdAtStart: createdAtStart,
         override: override);
@@ -75,13 +75,13 @@ extension DisposableModuleExtension on Module {
   ///```
   /// Module()..scopeOne<MyBloc, MyScope>((s) => MyBloc());
   ///```
-  BeanDefinition<T> scopeOneDisposable<T extends Disposable, TScope>(
-    DefinitionFunction<T> definition, {
+  ProviderDefinition<T> scopeOneDisposable<T extends Disposable, TScope>(
+    ProviderCreate<T> create, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
-    final beanDefinition = scopeOne<T, TScope>(definition,
+    final beanDefinition = scopeOne<T, TScope>(create,
         qualifier: qualifier,
         createdAtStart: createdAtStart,
         override: override);
@@ -119,14 +119,14 @@ extension ScopeSetDisposableExtension on ScopeDSL {
   /// });
   ///```
   ///
-  BeanDefinition<T> scopedDisposable<T extends Disposable>(
-    DefinitionFunction<T> definition, {
+  ProviderDefinition<T> scopedDisposable<T extends Disposable>(
+    ProviderCreate<T> create, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
     var beanDefinition =
-        scoped<T>(definition, qualifier: qualifier, override: override);
+        scoped<T>(create, qualifier: qualifier, override: override);
 
     beanDefinition.onClose((bloc) => bloc.dispose());
     return beanDefinition;

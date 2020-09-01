@@ -8,7 +8,7 @@ import 'package:koin_bloc/koin_bloc.dart';
 
 // An example of more complex usage using singles, factorys, and scopeds.
 // Each instance of 'MyHomePage' in the tree receives a unique scope,
-// so you can have multiple instances of MyHomePage in the tree without sharing the definitions instances between them.
+// so you can have multiple instances of MyHomePage in the tree without sharing the providers instances between them.
 class CounterCubit extends Cubit<int> {
   CounterCubit(int intial) : super(intial);
   void increment() => emit(state + 1);
@@ -17,10 +17,10 @@ class CounterCubit extends Cubit<int> {
 final homeModule = Module()
   ..cubit((s) => CounterCubit(0))
 
-  /// Using `scopeOne` that only allows you to declare a definition.
-  /// Using `scope` it is possible to declare several definitions for the scope.
+  /// Using `scopeOne` that only allows you to declare a provider.
+  /// Using `scope` it is possible to declare several providers for the scope.
   ..scope<MyHomePage>((s) {
-    // Declare the fist scoped definition.
+    // Declare the fist scoped provider.
     s.scopedCubit((s) => CounterCubit(0));
     s.factoryWithParam<CounterCubit, int>((s, inital) => CounterCubit(inital),
         qualifier: named("Fac"));
@@ -40,10 +40,10 @@ class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
     // Get the instance from root scope.
     CounterCubit counterSingle = get();
     // Get the factory instance of the scope defined for MyHomePage.
-    CounterCubit counterFactory = currentScope
+    CounterCubit counterFactory = scopeContext
         .getWithParam<CounterCubit, int>(50, qualifier: named("Fac"));
     //Get the singleton definition of the current instantiated scope for MyHomePage.
-    CounterCubit counterScoped = currentScope.get<CounterCubit>();
+    CounterCubit counterScoped = scopeContext.get<CounterCubit>();
     return ScopeProvider(
       scope: currentScope,
       child: Scaffold(
@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
                 // That allow to pass the current scope to another route.
                 Navigator.push(context, MaterialPageRoute(builder: (c) {
                   return ScopeProvider(
-                      scope: currentScope, child: UseScopePage());
+                      scope: scopeContext, child: UseScopePage());
                 }));
               },
             ),

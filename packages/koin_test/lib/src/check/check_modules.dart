@@ -49,7 +49,7 @@ extension KoinExt on Koin {
     logger.info('[Check] modules checked');
   }
 
-  Map<CheckedComponent, DefinitionParameter> makeParameters(
+  Map<CheckedComponent, Parameter> makeParameters(
       CheckParameters checkParameters) {
     var bindings = ParametersBinding();
     bindings.koin = this;
@@ -60,14 +60,14 @@ extension KoinExt on Koin {
   }
 
   void checkScopedDefinitions(
-      Map<CheckedComponent, DefinitionParameter> allParameters) {
+      Map<CheckedComponent, Parameter> allParameters) {
     scopeRegistry.scopeDefinitions.values.forEach((scopeDefinition) {
       runScope(scopeDefinition, allParameters);
     });
   }
 
   void runScope(ScopeDefinition scopeDefinition,
-      Map<CheckedComponent, DefinitionParameter> allParameters) {
+      Map<CheckedComponent, Parameter> allParameters) {
     var scope = getOrCreateScopeQualifier(
         scopeDefinition.qualifier.value, scopeDefinition.qualifier);
 
@@ -77,8 +77,8 @@ extension KoinExt on Koin {
   }
 }
 
-void runDefinition(Map<CheckedComponent, DefinitionParameter> allParameters,
-    BeanDefinition it, Scope scope) {
+void runDefinition(Map<CheckedComponent, Parameter> allParameters,
+    ProviderDefinition it, Scope scope) {
   var parameters =
       allParameters[CheckedComponent(it.qualifier, it.primaryType)];
   parameters ??= emptyParameter();

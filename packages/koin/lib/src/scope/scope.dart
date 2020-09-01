@@ -1,4 +1,4 @@
-import '../definition/definition_parameter.dart';
+import '../definition/parameter.dart';
 import '../../koin.dart';
 import '../internal/exceptions.dart';
 import '../instance/instance_factory.dart';

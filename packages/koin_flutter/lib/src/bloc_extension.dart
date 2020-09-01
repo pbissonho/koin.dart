@@ -15,8 +15,8 @@ extension BlocModuleExtension on Module {
   ///
   ///
   @deprecated
-  BeanDefinition<T> bloc<T extends Disposable>(
-    DefinitionFunction<T> definition, {
+  ProviderDefinition<T> bloc<T extends Disposable>(
+    ProviderCreate<T> definition, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
@@ -40,8 +40,8 @@ extension BlocModuleExtension on Module {
   /// This will be removed in the next versions, then use 'scopeOneDisposable'.
   ///
   @deprecated
-  BeanDefinition<T> scopeOneBloc<T extends Disposable, TScope>(
-    DefinitionFunction<T> definition, {
+  ProviderDefinition<T> scopeOneBloc<T extends Disposable, TScope>(
+    ProviderCreate<T> definition, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
@@ -69,16 +69,16 @@ extension ScopeSetBlocExtension on ScopeDSL {
   ///
   /// This will be removed in the next versions, then use 'scopedDisposable'.
   @deprecated
-  BeanDefinition<T> scopedBloc<T extends Disposable>(
-    DefinitionFunction<T> definition, {
+  ProviderDefinition<T> scopedBloc<T extends Disposable>(
+    ProviderCreate<T> create, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
-    var beanDefinition =
-        scoped<T>(definition, qualifier: qualifier, override: override);
+    var providerDefinition =
+        scoped<T>(create, qualifier: qualifier, override: override);
 
-    beanDefinition.onClose((bloc) => bloc.dispose());
-    return beanDefinition;
+    providerDefinition.onClose((bloc) => bloc.dispose());
+    return providerDefinition;
   }
 }

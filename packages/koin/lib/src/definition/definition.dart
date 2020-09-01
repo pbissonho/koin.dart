@@ -1,5 +1,5 @@
 import '../scope/scope.dart';
-import 'definition_parameter.dart';
+import 'parameter.dart';
 
 typedef ProviderCreate<T> = T Function(Scope scope);
 

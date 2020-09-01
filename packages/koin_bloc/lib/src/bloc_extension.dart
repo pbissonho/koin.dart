@@ -4,8 +4,8 @@ import 'package:koin/extension.dart';
 import 'package:koin/internals.dart';
 
 extension BlocModuleExtension on Module {
-  /// Defines a [Cubit] as [single] definition that will be automatically closed.
-  /// The `close` method of the [Cubit] created by the [definition] will be called when the global context of the koin is finalized.
+  /// Defines a [Cubit] as [single] provider that will be automatically closed.
+  /// The `close` method of the [Cubit] created by the [create] will be called when the global context of the koin is finalized.
   ///
   ///
   /// Define the Cubit:
@@ -13,23 +13,23 @@ extension BlocModuleExtension on Module {
   /// var myModule = Module()..cubit((s) => MyCubit());
   /// ```
   ///
-  BeanDefinition<T> cubit<T extends Cubit>(
-    DefinitionFunction<T> definition, {
+  ProviderDefinition<T> cubit<T extends Cubit>(
+    ProviderCreate<T> create, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
-    var beanDefinition = single<T>(definition,
+    var providerDefinition = single<T>(create,
         qualifier: qualifier,
         createdAtStart: createdAtStart,
         override: override);
 
-    beanDefinition.onClose((cubit) => cubit.close());
-    return beanDefinition;
+    providerDefinition.onClose((cubit) => cubit.close());
+    return providerDefinition;
   }
 
   /// Declare in a simplified way a scope that has
-  /// only one a Cubit [definition].
+  /// only one a Cubit [create].
 
   /// Declare a Cubit scoped definition [T] for scope [TScope].
   /// Declare and define a scoped with just one line.
@@ -46,24 +46,24 @@ extension BlocModuleExtension on Module {
   ///```
   /// Module()..scopeOneCubit<LoginCubit, MyScope>((s) => LoginCubit());
   ///```
-  BeanDefinition<T> scopeOneCubit<T extends Cubit, TScope>(
-    DefinitionFunction<T> definition, {
+  ProviderDefinition<T> scopeOneCubit<T extends Cubit, TScope>(
+    ProviderCreate<T> create, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
-    final beanDefinition = scopeOne<T, TScope>(definition,
+    final providerDefinition = scopeOne<T, TScope>(create,
         qualifier: qualifier,
         createdAtStart: createdAtStart,
         override: override);
-    beanDefinition.onClose((cubit) => cubit.close());
-    return beanDefinition;
+    providerDefinition.onClose((cubit) => cubit.close());
+    return providerDefinition;
   }
 }
 
 extension ScopeSetCubitExtension on ScopeDSL {
   /// Defines a Cubit as scoped definition that will be automatically closed when the scope is closed.
-  /// The `close` method of the Cubit instance created by the [definition] will be called when the scope is closed.
+  /// The `close` method of the Cubit instance created by the [create] will be called when the scope is closed.
   ///
   ///Defines the Cubit for a scope:
   ///```
@@ -72,14 +72,14 @@ extension ScopeSetCubitExtension on ScopeDSL {
   ///   scope.scopedCubit<LoginCubit>((s) => LoginCubit());
   /// });
   ///```
-  BeanDefinition<T> scopedCubit<T extends Cubit>(
-    DefinitionFunction<T> definition, {
+  ProviderDefinition<T> scopedCubit<T extends Cubit>(
+    ProviderCreate<T> create, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
     var beanDefinition =
-        scoped<T>(definition, qualifier: qualifier, override: override);
+        scoped<T>(create, qualifier: qualifier, override: override);
 
     beanDefinition.onClose((bloc) => bloc.close());
     return beanDefinition;

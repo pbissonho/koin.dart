@@ -1,4 +1,4 @@
-import '../definition/definition_parameter.dart';
+import '../definition/parameter.dart';
 import '../scope/scope.dart';
 import '../koin_dart.dart';
 

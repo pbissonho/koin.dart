@@ -14,7 +14,6 @@ A pragmatic lightweight dependency injection framework. This is a port of [Koin]
 
 Written in pure Dart, using functional resolution only: no code generation, no reflection.
 
-`Koin is a light container and a pragmatic API`
 
 | Package                                                                            | Pub                                                                                                    |
 | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
@@ -34,7 +33,7 @@ Written in pure Dart, using functional resolution only: no code generation, no r
 - Standard support for the Bloc library, but it can be easily used with any state management.
 
 - DevTools to inspect the state of your objects.
-  * Inspect the internal state of each class at any time on a Flutter page.
+  * Inspect the internal state of each object at any time on a Flutter page.
 
 - Dependencies are instances only when needed.
   * Its class is instant when used for the first time.
@@ -49,11 +48,11 @@ Written in pure Dart, using functional resolution only: no code generation, no r
 
 ## What Koin.dart is not?
 
-It is not a state manager. Koin does not have any type of state management, use Koin with your
-favorite state management package.
+It is not a state manager. Koin does not have any type of state management, use koin with any state manager.
 
 
-## Table Of Contents 🚒
+
+## Table Of Contents
 
 * [Quick Start](#Quick-Start)
 * [Features](#Features)
@@ -61,6 +60,14 @@ favorite state management package.
 * [Getting Started](http://koindart.dev/docs/start/getting-started/starting-koin)
 * [Documentation References](http://koindart.dev/docs/reference/koin-core/definitions)
 * [Examples](#Examples)
+
+
+## Roadmap
+
+* Improve documentation
+* Add more examples
+* Create an external DevTools 
+* Add logger plugin for [logger](https://pub.dev/packages/logger) pachage
 
 
 ## Quick Start
@@ -96,9 +103,11 @@ class Bloc {
 
 class Repository {}
 
-// just declare it
+// just declare your providers
 var myModule = Module()
+  // Declare a single provider for Bloc class
   ..single((s) => Bloc(s.get()))
+  // Declare a single provider for Repository class
   ..single((s) => Repository());
 ```
 
@@ -148,15 +157,15 @@ class MyHomePage extends StatelessWidget {
 - Pragmatic
 - Modules
 - Scopes
-- Singleton definition
-- Factory definition
-- Scoped definition
+- Singleton provider
+- Factory provider
+- Scoped provider
 - Support to multiple bindings
-- Support to named definition
+- Support to named provider
 - Easy testing
 - Lazy inject
 - Logging
-- Support to injection parameters
+- Support to parameter injection 
 - Standard support for Bloc library
 - DevTools for state inspection
 
@@ -201,7 +210,7 @@ dev_dependencies:
 ## Examples
 
 ### Basic
-An extremely simple example in Flutter.
+An simple example in Flutter.
 Code: [Repository](https://github.com/pbissonho/koin.dart/tree/master/examples/basic)
 
 ### Counter
@@ -211,7 +220,7 @@ Code: [Repository](https://github.com/pbissonho/koin.dart/tree/master/examples/c
 
 ### Real world
 
-A application to demonstrate the Koin in a real application.
+A application to demonstrate the Koin in a real world application.
 
 #### Features
  - Log in
@@ -223,6 +232,8 @@ Code: [Repository](https://github.com/pbissonho/Flutter-Authentication)
 
 
 ## DevTools 
+
+Koin DevTools allows you to inspect the internal state of the objects created by the providers.
 
 ### Usage
 
@@ -240,7 +251,7 @@ class _PageState extends State<Page> {
     return Scaffold(
      /// Just insert the KoinDevTools
       endDrawer: KoinDevTools(),
-      body: IconButton(icon: Text('DevTools'), onPressed: () {
+      body: IconButton(icon: Text('Shod DevTools'), onPressed: () {
         // Or use this
         showDevTools(context);
       },),
@@ -271,4 +282,3 @@ Want to help or share a proposal about Koin? problem on a specific feature?
 ## Dependencies
 
 - [Kt.dart](https://pub.dev/packages/kt_dart) port by [Pascal Welsch](https://github.com/passsy)
-- [Equatable](https://pub.dev/packages/equatable) created by [Felix Angelov](https://github.com/felangel)

@@ -1,4 +1,4 @@
-import '../definition/definition_parameter.dart';
+import '../definition/parameter.dart';
 import '../internal/exceptions.dart';
 import 'package:kt_dart/kt.dart';
 

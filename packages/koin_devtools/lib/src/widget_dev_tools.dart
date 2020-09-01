@@ -171,7 +171,7 @@ class _ScopeCardState extends State<_ScopeCard> {
 class _FactoryViewer {
   final InstanceFactory _instanceFactory;
   final Scope _scope;
-  BeanDefinition get _beanDefinition => _instanceFactory.beanDefinition;
+  ProviderDefinition get _beanDefinition => _instanceFactory.beanDefinition;
   //final bool created;
   String get instanceToString {
     if (_instanceFactory is FactoryInstanceFactory)
@@ -180,7 +180,7 @@ class _FactoryViewer {
         .get(InstanceContext(
             koin: _instanceFactory.koin,
             scope: _scope,
-            definitionParameter: emptyParameter()))
+            parameter: emptyParameter()))
         .toString();
   }
 

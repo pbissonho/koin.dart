@@ -12,7 +12,7 @@ class CounterCubit extends Cubit<int> {
 }
 
 /// Define a koin module with a scope for `SimpleCounterPage`.
-/// Here, the `SimpleCounterPage` scope is being defined, which contains a definition for `CounterCubit`.
+/// Here, the `SimpleCounterPage` scope is being defined, which contains a provider for `CounterCubit`.
 final simpleModule = Module()
   ..scopeOneCubit<CounterCubit, SimpleCounterPage>((_) => CounterCubit(0));
 
@@ -32,7 +32,7 @@ class _SimpleCounterPageState extends State<SimpleCounterPage>
         children: <Widget>[
           BlocBuilder<CounterCubit, int>(
               // Get the Counter of the scope instantiated for the SimpleCounterPage.
-              cubit: currentScope.get<CounterCubit>(),
+              cubit: scopeContext.get<CounterCubit>(),
               builder: (BuildContext context, state) => Text(state.toString())),
         ],
       )),

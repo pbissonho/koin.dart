@@ -30,14 +30,14 @@ class CheckedComponent with EquatableMixin {
 }
 
 class ParametersBinding {
-  Map creators = HashMap<CheckedComponent, DefinitionParameter>();
+  Map creators = HashMap<CheckedComponent, Parameter>();
   Koin koin;
   void create<T, P>(P parameter, {Qualifier qualifier}) {
-    creators[CheckedComponent(qualifier, T)] = DefinitionParameter<P>(parameter);
+    creators[CheckedComponent(qualifier, T)] = Parameter<P>(parameter);
   }
 }
 
-typedef ParameterCreator = DefinitionParameter Function(Qualifier qualifier);
+typedef ParameterCreator = Parameter Function(Qualifier qualifier);
 
 class CheckParameters extends ParametersBinding {}
 
