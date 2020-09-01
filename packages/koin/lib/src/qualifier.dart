@@ -14,6 +14,8 @@
  * limitations under the License.
  * */
 
+import 'package:meta/meta.dart';
+
 ///
 /// Qualifier
 ///
@@ -22,9 +24,10 @@
 /// Ported to Dart from Kotlin by:
 /// @author - Pedro Bissonho
 ///
-import 'package:equatable/equatable.dart';
 
 /// Help qualify a component
+
+@immutable
 abstract class Qualifier {
   final String _value;
 
@@ -33,6 +36,14 @@ abstract class Qualifier {
 
   /// Help qualify a component
   Qualifier(this._value);
+
+  @override
+  int get hashCode => _value.hashCode;
+
+  @override
+  bool operator ==(other) {
+    return other is Qualifier && other.value == value;
+  }
 }
 
 /// Give a String qualifier
@@ -52,7 +63,7 @@ Qualifier qualifier<T>([String name]) {
 }
 
 /// String Qualifier
-class StringQualifier extends Qualifier with EquatableMixin {
+class StringQualifier extends Qualifier {
   /// String Qualifier
   StringQualifier(String value) : super(value);
 
@@ -60,13 +71,10 @@ class StringQualifier extends Qualifier with EquatableMixin {
   String toString() {
     return _value;
   }
-
-  @override
-  List<Object> get props => [_value];
 }
 
 /// Type Qualifier
-class TypeQualifier<T> extends Qualifier with EquatableMixin {
+class TypeQualifier<T> extends Qualifier {
   final T _type;
 
   /// Type Qualifier
@@ -76,7 +84,4 @@ class TypeQualifier<T> extends Qualifier with EquatableMixin {
   String toString() {
     return _type.toString();
   }
-
-  @override
-  List<Object> get props => [_type];
 }

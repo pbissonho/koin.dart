@@ -1,5 +1,3 @@
-import 'package:equatable/equatable.dart';
-
 typedef Initializer<T> = T Function();
 
 /// A class that provides lazy object initialization.
@@ -24,7 +22,7 @@ typedef Initializer<T> = T Function();
 ///print(example.value.id);
 ///  ```
 ///
-class Lazy<T> with EquatableMixin {
+class Lazy<T> {
   T _value;
 
   final Initializer<T> _initializer;
@@ -50,7 +48,12 @@ class Lazy<T> with EquatableMixin {
   T call() => _resolve();
 
   @override
-  List<Object> get props => [value];
+  int get hashCode => _value.hashCode;
+
+  @override
+  bool operator ==(other) {
+    return other is Lazy && other.value == value;
+  }
 }
 
 ///

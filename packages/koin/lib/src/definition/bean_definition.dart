@@ -15,7 +15,6 @@
  */
 
 import 'dart:core';
-import 'package:equatable/equatable.dart';
 import '../qualifier.dart';
 import '../scope/scope_definition.dart';
 import 'definition.dart';
@@ -53,8 +52,7 @@ class Options {
 //
 // Ported to Dart from Kotlin by:
 // @author - Pedro Bissonho
-//
-class BeanDefinition<T> with EquatableMixin {
+class BeanDefinition<T> {
   final ScopeDefinition scopeDefinition;
   final Type primaryType;
   final Qualifier qualifier;
@@ -135,9 +133,6 @@ class BeanDefinition<T> with EquatableMixin {
     return '[$defKind:$defType$defName$defScope$defOtherTypes]';
   }
 
-  @override
-  List<Object> get props => [primaryType, qualifier, scopeDefinition];
-
   bool hasType(Type type) {
     return primaryType == type || secondaryTypes.contains(type);
   }
@@ -184,6 +179,21 @@ class BeanDefinition<T> with EquatableMixin {
     scopeDefinition.remove(this);
     scopeDefinition.save(scopeDefinitionCopy);
     return scopeDefinitionCopy;
+  }
+
+  @override
+  List<Object> get props => [primaryType, qualifier, scopeDefinition];
+
+  @override
+  int get hashCode =>
+      primaryType.hashCode ^ qualifier.hashCode ^ scopeDefinition.hashCode;
+
+  @override
+  bool operator ==(other) {
+    return other is BeanDefinition &&
+        other.primaryType == primaryType &&
+        other.qualifier == qualifier &&
+        other.scopeDefinition == scopeDefinition;
   }
 }
 

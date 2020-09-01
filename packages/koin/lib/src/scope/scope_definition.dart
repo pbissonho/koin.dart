@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 import '../internal/exceptions.dart';
 import '../definition/definition.dart';
 import '../qualifier.dart';
@@ -7,7 +6,7 @@ import 'package:kt_dart/kt.dart';
 import '../definition/bean_definition.dart';
 import '../definition/definitions.dart';
 
-class ScopeDefinition extends Equatable {
+class ScopeDefinition {
   final Qualifier qualifier;
   final bool isRoot;
   final KtHashSet<BeanDefinition> definitions = KtHashSet.empty();
@@ -76,6 +75,16 @@ with new definition typed '$type'""");
 
   @override
   List<Object> get props => [qualifier, isRoot];
+
+  @override
+  int get hashCode => qualifier.hashCode ^ isRoot.hashCode;
+
+  @override
+  bool operator ==(other) {
+    return other is ScopeDefinition &&
+        other.qualifier == qualifier &&
+        other.isRoot == isRoot;
+  }
 
   ScopeDefinition copy() {
     var copy = ScopeDefinition(qualifier, isRoot: isRoot);
