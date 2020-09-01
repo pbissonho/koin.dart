@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 the original author or authors.
+ * Copyright 2017-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
@@ -27,12 +27,25 @@ const koinTage = '[Koin]';
 
 enum Level { info, error, debug, none }
 
+/// Koin has a simple logging API to log any Koin activity
+/// (allocation, lookup ...) Koin proposes some implementation of logging,
+/// in function of the target platform:
+/// * `PrintLogger` - directly log into console (included in `koin-core`)
+/// * `EmptyLogger` - log nothing (included in `koin-core`)
+/// ## Set logging at start
+/// By default Koin use the `EmptyLogger`. You can use directly
+/// the `PrintLogger` as following:
+/// ```dart
+/// startKoin((app){
+///    app.printLogger(level: Level.info);
+///  });
+///```
 abstract class Logger {
   final Level level;
 
   const Logger([this.level = Level.info]);
 
-  static Logger logger = PrintLogger(Level.debug);
+  static Logger logger = Logger.print(Level.debug);
 
   void log(Level level, String msg);
 
@@ -41,6 +54,9 @@ abstract class Logger {
       log(level, msg);
     }
   }
+
+  factory Logger.empty(Level level) => _EmptyLogger(level);
+  factory Logger.print(Level level) => _PrintLogger(level);
 
   void debug(String msg, {Level level}) {
     log(Level.debug, msg);
@@ -65,8 +81,8 @@ abstract class Logger {
   bool isAt(Level level) => this.level == level;
 }
 
-class EmptyLogger extends Logger {
-  const EmptyLogger(Level loglevel) : super(Level.none);
+class _EmptyLogger extends Logger {
+  const _EmptyLogger(Level loglevel) : super(Level.none);
 
   @override
   bool isAtLog(Level level, String msg, Level isAtLevel) => false;
@@ -78,8 +94,8 @@ class EmptyLogger extends Logger {
   bool isAt(Level level) => false;
 }
 
-class PrintLogger extends Logger {
-  const PrintLogger(Level level) : super(level);
+class _PrintLogger extends Logger {
+  const _PrintLogger(Level level) : super(level);
 
   @override
   void log(Level level, String msg) {

@@ -36,7 +36,7 @@ void main() {
 
   test('allow declare a logger', () {
     startKoin((app) {
-      app.logger(PrintLogger(Level.error));
+      app.logger(Logger.print(Level.error));
     });
 
     expect(KoinContextHandler.get().logger.level, Level.error);

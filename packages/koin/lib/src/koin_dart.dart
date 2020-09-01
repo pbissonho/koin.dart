@@ -53,7 +53,7 @@ class Koin with ScopedComponentMixin {
 
   Koin() {
     _scopeRegistry = ScopeRegistry(this);
-    logger = EmptyLogger(Level.debug);
+    logger = Logger.empty(Level.debug);
     loggerInstanceObserver = LoggerInstanceObserver(this);
     scopeObserves.add(KoinScopeObserver());
   }

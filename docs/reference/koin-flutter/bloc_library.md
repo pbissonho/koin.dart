@@ -4,9 +4,9 @@
 The `koin_bloc` package is dedicated to bring Flutter [Bloc library](https://bloclibrary.dev/#/) features.
 The `koin_bloc` makes it easy to use koin with Bloc library.
 
-## Bloc DSL
+## Bloc API
 
-The `koin_bloc.dart` introduces DSL keywords that comes in complement of single and scoped, to help declare a Bloc or Cubit component.
+The `koin_bloc.dart` introduces API keywords that comes in complement of single and scoped, to help declare a Bloc or Cubit component.
 
 - `cubit` definition, create an `single `and `close` the object at the end of the global koin context lifetime.
 - `scopedCubit` definition, create an object `scoped` and `close` when the associated scope is closed(Lifetime end).

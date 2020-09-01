@@ -20,9 +20,13 @@ final homeModule = Module()
   /// Using `scopeOne` that only allows you to declare a definition.
   /// Using `scope` it is possible to declare several definitions for the scope.
   ..scope<MyHomePage>((s) {
+    // Declare the fist scoped definition.
     s.scopedCubit((s) => CounterCubit(0));
     s.factoryWithParam<CounterCubit, int>((s, inital) => CounterCubit(inital),
         qualifier: named("Fac"));
+    // And it is possible to declare as needed
+    // ...
+    // ...
   });
 
 class MyHomePage extends StatefulWidget {

@@ -7,7 +7,7 @@ By using Koin, you describe definitions in modules. In this section we will see 
 
 ## Writing a module
 
-A Koin module is the *space to declare all your components*. Use the `module` function to declare a Koin module:
+A Koin module is the space to declare all your components. Use the `module` function to declare a Koin module:
 
 ```dart
 final myModule = module();// your dependencies here

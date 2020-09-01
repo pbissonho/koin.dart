@@ -29,7 +29,7 @@ extension KoinApplicationExt on KoinApplication {
 void checkModules(Level level, CheckParameters checkParameters,
     Function(KoinApplication app) appDeclaration) {
   koinApplication(appDeclaration)
-    ..logger(PrintLogger(level))
+    ..logger(Logger.print(level))
     ..checkModules(checkParameters);
 }
 
