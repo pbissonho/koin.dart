@@ -122,14 +122,14 @@ class Module {
   /// Declare a Single definition
   ///
   ProviderDefinition<T> singleWithParam<T, A>(
-    DefinitionFunctionWithParam<T, A> definition, {
+    ProviderCreateParam<T, A> create, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
     return Definitions.saveSingle<T>(
         qualifier,
-        DefinitionWithParam<T, A>(definition),
+        ProviderCreateParamDefinition<T, A>(create),
         rootScope,
         makeOptions(override: override, createdAtStart: createdAtStart));
   }
@@ -160,14 +160,14 @@ class Module {
   /// Declare a Factory definition
   ///
   ProviderDefinition<T> factoryWithParam<T, A>(
-    DefinitionFunctionWithParam<T, A> definition, {
+    ProviderCreateParam<T, A> create, {
     Qualifier qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
     return Definitions.saveFactory<T>(
         qualifier,
-        DefinitionWithParam<T, A>(definition),
+        ProviderCreateParamDefinition<T, A>(create),
         rootScope,
         makeOptions(override: override));
   }

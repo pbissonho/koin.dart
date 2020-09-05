@@ -39,13 +39,13 @@ class ScopeDSL {
   }
 
   ProviderDefinition<T> scopedWithParam<T, A>(
-    DefinitionFunctionWithParam<T, A> definition, {
+    ProviderCreateParam<T, A> create, {
     Qualifier qualifier,
     bool override = false,
   }) {
     return Definitions.saveSingle<T>(
         qualifier,
-        DefinitionWithParam<T, A>(definition),
+        ProviderCreateParamDefinition<T, A>(create),
         scopeDefinition,
         Options(isCreatedAtStart: false, override: override));
   }
@@ -63,13 +63,13 @@ class ScopeDSL {
   }
 
   ProviderDefinition<T> factoryWithParam<T, A>(
-    DefinitionFunctionWithParam<T, A> definition, {
+    ProviderCreateParam<T, A> create, {
     Qualifier qualifier,
     bool override = false,
   }) {
     return Definitions.saveFactory<T>(
         qualifier,
-        DefinitionWithParam<T, A>(definition),
+        ProviderCreateParamDefinition<T, A>(create),
         scopeDefinition,
         Options(isCreatedAtStart: false, override: override));
   }

@@ -16,7 +16,6 @@ class CounterCubit extends Cubit<int> {
 
 final homeModule = Module()
   ..cubit((s) => CounterCubit(0))
-
   /// Using `scopeOne` that only allows you to declare a provider.
   /// Using `scope` it is possible to declare several providers for the scope.
   ..scope<MyHomePage>((s) {

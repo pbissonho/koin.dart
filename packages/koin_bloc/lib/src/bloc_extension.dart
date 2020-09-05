@@ -29,20 +29,20 @@ extension BlocModuleExtension on Module {
   }
 
   /// Declare in a simplified way a scope that has
-  /// only one a Cubit [create].
+  /// only one a Cubit by [create].
 
-  /// Declare a Cubit scoped definition [T] for scope [TScope].
+  /// Declare a Cubit scoped provider [T] for scope [TScope].
   /// Declare and define a scoped with just one line.
 
   ///
   ///Standard: Used when it is necessary to declare several
-  ///definitions for a scope.
+  ///providers for a scope.
   ///```
   ///  ..scope<Login>((s) {
   ///  s.scopedStream((s) => LoginCubit(s.get()));
   ///})
   ///```
-  /// Declare a scope and define a scoped with just one line:
+  /// Declare a scope and define a scoped provider with just one line:
   ///```
   /// Module()..scopeOneCubit<LoginCubit, MyScope>((s) => LoginCubit());
   ///```
@@ -62,7 +62,7 @@ extension BlocModuleExtension on Module {
 }
 
 extension ScopeSetCubitExtension on ScopeDSL {
-  /// Defines a Cubit as scoped definition that will be automatically closed when the scope is closed.
+  /// Defines a Cubit as scoped provider that will be automatically closed when the scope is closed.
   /// The `close` method of the Cubit instance created by the [create] will be called when the scope is closed.
   ///
   ///Defines the Cubit for a scope:

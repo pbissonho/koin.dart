@@ -80,8 +80,7 @@ class Koin with ScopedComponentMixin {
   /// Get a Koin instance
   /// @return instance of type T
   ///
-  T getWithType<T>(
-      [Type type, Qualifier qualifier, Parameter parameter]) {
+  T getWithType<T>([Type type, Qualifier qualifier, Parameter parameter]) {
     return _scopeRegistry.rootScope.getWithType<T>(type, qualifier, parameter);
   }
 

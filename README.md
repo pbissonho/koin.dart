@@ -67,7 +67,7 @@ It is not a state manager. Koin does not have any type of state management, use 
 * Improve documentation
 * Add more examples
 * Create an external DevTools 
-* Add logger plugin for [logger](https://pub.dev/packages/logger) pachage
+* Add logger plugin for [logger](https://pub.dev/packages/logger) 
 
 
 ## Quick Start

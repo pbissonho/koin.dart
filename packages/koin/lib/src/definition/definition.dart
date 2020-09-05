@@ -3,7 +3,7 @@ import 'parameter.dart';
 
 typedef ProviderCreate<T> = T Function(Scope scope);
 
-typedef DefinitionFunctionWithParam<T, A> = T Function(Scope scope, A param);
+typedef ProviderCreateParam<T, A> = T Function(Scope scope, A param);
 
 abstract class ProviderCreateBase<T> {
   T create(Parameter parameter, Scope scope);
@@ -20,13 +20,13 @@ class ProviderCreateDefinition<T> implements ProviderCreateBase<T> {
   }
 }
 
-class DefinitionWithParam<T, A> implements ProviderCreateBase<T> {
-  final DefinitionFunctionWithParam<T, A> definition;
+class ProviderCreateParamDefinition<T, A> implements ProviderCreateBase<T> {
+  final ProviderCreateParam<T, A> _create;
 
-  DefinitionWithParam(this.definition);
+  ProviderCreateParamDefinition(this._create);
 
   @override
   T create(Parameter parameter, Scope scope) {
-    return definition(scope, parameter.get());
+    return _create(scope, parameter.get());
   }
 }
