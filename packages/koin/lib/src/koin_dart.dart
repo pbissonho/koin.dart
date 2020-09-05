@@ -167,7 +167,7 @@ class Koin with ScopedComponentMixin {
 
   Scope _createScope(String scopeId, Qualifier qualifier, dynamic source) {
     logger.isAtdebug('!- create scope - id:$scopeId q:$qualifier', Level.debug);
-    return _scopeRegistry.createScope(scopeId, qualifier, null);
+    return _scopeRegistry.createScope(scopeId, qualifier, source);
   }
 
   ///
@@ -259,5 +259,11 @@ class Koin with ScopedComponentMixin {
   }
 
   @override
-  Scope componentScope() => _scopeRegistry.rootScope;
+  Scope get componentScope => _scopeRegistry.rootScope;
+
+  @override
+  S bindWithParam<S, K, P>(P param, {Qualifier qualifier}) {
+    return _scopeRegistry.rootScope
+        .bindWithParam<S, K, P>(param, qualifier: qualifier);
+  }
 }

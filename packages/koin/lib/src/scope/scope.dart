@@ -136,6 +136,11 @@ class Scope with ScopedComponentMixin {
     return getWithType(type, qualifier, Parameter<P>(parameter));
   }
 
+  @override
+  S bindWithParam<S, K, P>(P param, {Qualifier qualifier}) {
+    return bindWithType(K, S, Parameter<P>(param));
+  }
+
   ///
   /// Get a Koin instance if available
   /// @param qualifier
@@ -191,8 +196,6 @@ class Scope with ScopedComponentMixin {
     if (_closed) {
       throw ClosedScopeException('Scope $id is closed');
     }
-
-    parameter ??= emptyParameter();
 
     final indexKeyCurrent = indexKey(type, qualifier);
 
@@ -292,13 +295,13 @@ No definition found for class:'$type'$qualifierString. Check your definitions!""
   }
 
   ///
-  /// Get instance of primary type P and secondary type S
+  /// Get instance of primary type T and secondary type S
   /// (not for scoped instances)
   ///
   ///@return instance of type S
   ///
-  S bind<S, P>([Qualifier qualifier]) {
-    return bindWithType(P, S, emptyParameter());
+  S bind<S, T>([Qualifier qualifier]) {
+    return bindWithType(T, S, emptyParameter());
   }
 
   ///
@@ -359,5 +362,5 @@ No definition found for class:'$type'$qualifierString. Check your definitions!""
   }
 
   @override
-  Scope componentScope() => this;
+  Scope get componentScope => this;
 }

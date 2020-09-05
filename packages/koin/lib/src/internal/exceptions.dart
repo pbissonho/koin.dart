@@ -28,7 +28,10 @@ abstract class KoinException implements Exception {
 
   @override
   String toString() {
-    return 'KoinException: $runtimeType: $msg';
+    return '''
+---- Koin Exception -----
+Type: $runtimeType:
+Message: $msg''';
   }
 }
 

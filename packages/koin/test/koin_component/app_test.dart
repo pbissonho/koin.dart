@@ -53,8 +53,7 @@ class CounterAppMixinWithParams with KoinComponentMixin {
   }
 
   CounterInterface testBind() {
-    // TODO
-    //return bindWithParams<CounterInterface, Counter>(50);
+    return bindWithParam<CounterInterface, Counter, int>(50);
   }
 }
 

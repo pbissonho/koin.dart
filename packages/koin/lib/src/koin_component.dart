@@ -15,7 +15,6 @@
  */
 
 import 'context/context_handler.dart';
-import 'definition/parameter.dart';
 import 'qualifier.dart';
 import 'koin_dart.dart';
 import 'lazy.dart';
@@ -70,9 +69,8 @@ mixin KoinComponentMixin {
   /// @param parameters
   ///
   /// TODO
-  S bindWithParam<S, K, P>(
-      {Qualifier qualifier, Parameter parameter}) {
-    return getKoin().bind<S, P>(qualifier);
+  S bindWithParam<S, K, P>(P param, {Qualifier qualifier}) {
+    return getKoin().bindWithParam<S, K, P>(param, qualifier: qualifier);
   }
 }
 
@@ -80,14 +78,14 @@ mixin ScopedComponentMixin {
   ///
   /// Get the associated Koin instance
   ///
-  Scope componentScope();
+  Scope get componentScope;
 
   T get<T>([Qualifier qualifier]) {
-    return componentScope().get<T>(qualifier);
+    return componentScope.get<T>(qualifier);
   }
 
   T getWithParam<T, P>(P param, {Qualifier qualifier}) {
-    return componentScope().getWithParam<T, P>(param);
+    return componentScope.getWithParam<T, P>(param);
   }
 
   ///
@@ -96,14 +94,14 @@ mixin ScopedComponentMixin {
   /// @param parameters
   ///
   Lazy<T> inject<T>([Qualifier qualifier]) {
-    return componentScope().inject<T>(qualifier);
+    return componentScope.inject<T>(qualifier);
   }
 
   ///
   /// Lazy inject instance from Koin
   ///
   Lazy<T> injectWithParam<T, P>(P param, {Qualifier qualifier}) {
-    return componentScope().injectWithParam<T, P>(param, qualifier: qualifier);
+    return componentScope.injectWithParam<T, P>(param, qualifier: qualifier);
   }
 
   ///componentScope
@@ -111,7 +109,7 @@ mixin ScopedComponentMixin {
   /// @param parameters
   ///
   S bind<S, P>([Qualifier qualifier]) {
-    return componentScope().bind<S, P>(qualifier);
+    return componentScope.bind<S, P>(qualifier);
   }
 
   ///
@@ -119,10 +117,7 @@ mixin ScopedComponentMixin {
   /// @param parameters
   ///
   /// TODO
-  S bindWithParam<S, K, P>(
-      {Qualifier qualifier, Parameter parameter}) {
-    return componentScope().bind<S, P>();
-  }
+  S bindWithParam<S, K, P>(P param, {Qualifier qualifier});
 }
 
 /// KoinComponent interface marker to bring Koin extensions features.

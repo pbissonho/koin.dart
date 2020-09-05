@@ -82,7 +82,7 @@ abstract class Logger {
 }
 
 class _EmptyLogger extends Logger {
-  const _EmptyLogger(Level loglevel) : super(Level.none);
+  const _EmptyLogger(Level loglevel) : super(loglevel);
 
   @override
   bool isAtLog(Level level, String msg, Level isAtLevel) => false;
@@ -95,7 +95,7 @@ class _EmptyLogger extends Logger {
 }
 
 class _PrintLogger extends Logger {
-  const _PrintLogger(Level level) : super(level);
+  const _PrintLogger(Level loglevel) : super(loglevel);
 
   @override
   void log(Level level, String msg) {
