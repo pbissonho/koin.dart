@@ -11,18 +11,16 @@ abstract class ComponentBInterface {
 }
 
 class Component implements ComponentInterface {
-  final int id;
-
   Component(this.id);
+  final int id;
 
   @override
   int testId() => id;
 }
 
 class ComponentB implements ComponentBInterface {
-  final int id;
-
   ComponentB(this.id);
+  final int id;
 
   @override
   int testId() => id;
@@ -49,14 +47,9 @@ class _HomePageWithParamsState extends State<HomePageWithParams>
   @override
   void initState() {
     componentSingle = getWithParam<Component, int>(1);
-    lazyComponent = inject<Component>();
-    // TODO
-    /*
-    componentBSingle = bindWithParams<ComponentBInterface, ComponentB>(
-        parameters: parametersOf([10]));
-*/
+    lazyComponent = injectWithParam<Component, int>(1);
+    componentBSingle = bindWithParam<ComponentBInterface, ComponentB, int>(10);
     componentScoped = currentScope.getWithParam<Component, int>(30);
-
     componentFactory =
         getWithParam<Component, int>(60, qualifier: named("Fac"));
     super.initState();
@@ -112,30 +105,35 @@ class _HomePageState extends State<HomePage> with ScopeStateMixin {
   }
 }
 
+final module3 = Module()
+  ..single((s) => Component(20)).bind<ComponentInterface>()
+  ..factoryWithParam<Component, int>((s, id) => Component(id),
+      qualifier: named("Fac"))
+  ..scope<HomePage3>((s) {
+    s.scoped((s) => Component(50));
+  });
+
 class HomePage3 extends StatefulWidget {
   @override
-  _HomePageState3 createState() => _HomePageState3(
-      component: get<Component>(),
-      componentBind: bind<ComponentInterface, Component>(),
-      componentScoped: scope.get<Component>(),
-      componentFactory:
-          getWithParam<Component, int>(60, qualifier: named("Fac")),
-      lazyComponent: inject<Component>());
+  _HomePageState3 createState() => _HomePageState3();
 }
 
 class _HomePageState3 extends State<HomePage3> {
-  final Component component;
-  final ComponentInterface componentBind;
-  final Lazy<Component> lazyComponent;
-  final Component componentScoped;
-  final Component componentFactory;
+  Component component;
+  ComponentInterface componentBind;
+  Lazy<Component> lazyComponent;
+  Component componentScoped;
+  Component componentFactory;
 
-  _HomePageState3(
-      {this.component,
-      this.componentBind,
-      this.lazyComponent,
-      this.componentScoped,
-      this.componentFactory});
+  @override
+  void initState() {
+    component = get<Component>();
+    componentBind = bind<ComponentInterface, Component>();
+    componentScoped = scopeContext.get<Component>();
+    componentFactory =
+        getWithParam<Component, int>(60, qualifier: named("Fac"));
+    lazyComponent = inject<Component>();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -153,18 +151,28 @@ class _HomePageState3 extends State<HomePage3> {
   }
 }
 
+final momePageStatelessModule = Module()
+  ..single((s) => Component(20)).bind<ComponentInterface>()
+  ..factoryWithParam<Component, int>((s, id) => Component(id),
+      qualifier: named("Fac"));
+
 class HomePageStateless extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final comp =
+    final getWithParamResult =
         getWithParam<Component, int>(60, qualifier: named('Fac')).id.toString();
+    final bindResult =
+        bind<ComponentInterface, Component>().testId().toString();
+    final injectResult = inject<Component>().value.id.toString();
+    final getResult = get<Component>().id.toString();
+
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Text("${bind<ComponentInterface, Component>().testId().toString()}"),
-          Text("${inject<Component>().value.id.toString()}"),
-          Text("${get<Component>().id.toString()}"),
-          Text(comp),
+          Text("$getWithParamResult"),
+          Text("$bindResult"),
+          Text("$injectResult"),
+          Text(getResult),
         ],
       ),
     );

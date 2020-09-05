@@ -22,19 +22,16 @@ void main() {
     final componentIdFinder = find.text('20');
     // Create the Finders.
     final componentScopedIdFinder = find.text('50');
-    // Create the Finders.
     final componentIdFactoryFinder = find.text('60');
 
-    // Use the `findsOneWidget` matcher provided by flutter_test to
-    // verify that the Text widgets appear exactly once in the widget tree.
     expect(componentIdFinder, findsNWidgets(3));
     expect(componentScopedIdFinder, findsOneWidget);
     expect(componentIdFactoryFinder, findsOneWidget);
   });
 
-  testWidgets('can get with StatelessWidget extension', (tester) async {
+  testWidgets('can get with StatelessWidget extension -', (tester) async {
     startKoin((app) {
-      app.module(module2);
+      app.module(momePageStatelessModule);
     });
 
     // Create the widget by telling the tester to build it.
@@ -45,13 +42,11 @@ void main() {
 
     // Create the Finders.
     final componentIdFinder = find.text('20');
-    // Create the Finders.
-    final componentIdFactoryFinder = find.text('60');
 
-    // Use the `findsOneWidget` matcher provided by flutter_test to
-    // verify that the Text widgets appear exactly once in the widget tree.
+    // Create the Finders.
+    final componentIdFinder60 = find.text('60');
     expect(componentIdFinder, findsNWidgets(3));
-    expect(componentIdFactoryFinder, findsOneWidget);
+    expect(componentIdFinder60, findsOneWidget);
   });
 
   testWidgets('can get with StatefulWidget extension', (tester) async {
@@ -72,14 +67,12 @@ void main() {
     // Create the Finders.
     final componentIdFactoryFinder = find.text('60');
 
-    // Use the `findsOneWidget` matcher provided by flutter_test to
-    // verify that the Text widgets appear exactly once in the widget tree.
     expect(componentIdFinder, findsNWidgets(3));
     expect(componentScopedIdFinder, findsOneWidget);
     expect(componentIdFactoryFinder, findsOneWidget);
   });
 
-  testWidgets('can get with StatefulWidget extension - withParams',
+  testWidgets('can get with StatefulWidget extension - withParam',
       (tester) async {
     startKoin((app) {
       app.module(moduleWithParams);
@@ -93,45 +86,10 @@ void main() {
 
     // Create the Finders.
     final componentSingleIdFinder = find.text('1');
-    // Create the Finders.
     final componentBSingleFinder = find.text('10');
-    // Create the Finders.
     final componentIdFactoryFinder = find.text('60');
-
-    // Create the Finders.
     final componentScopedFinder = find.text('30');
 
-    // Use the `findsOneWidget` matcher provided by flutter_test to
-    // verify that the Text widgets appear exactly once in the widget tree.
-    expect(componentSingleIdFinder, findsNWidgets(2));
-    expect(componentBSingleFinder, findsOneWidget);
-    expect(componentIdFactoryFinder, findsOneWidget);
-    expect(componentScopedFinder, findsOneWidget);
-  });
-
-  testWidgets('can get with StatefulWidget extension - withParams',
-      (tester) async {
-    startKoin((app) {
-      app.module(moduleWithParams);
-    });
-
-    // Create the widget by telling the tester to build it.
-    await tester.pumpWidget(MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: HomePageWithParams(),
-    ));
-
-    // Create the Finders.
-    final componentSingleIdFinder = find.text('1');
-    // Create the Finders.
-    final componentBSingleFinder = find.text('10');
-    // Create the Finders.
-    final componentIdFactoryFinder = find.text('60');
-    // Create the Finders.
-    final componentScopedFinder = find.text('30');
-
-    // Use the `findsOneWidget` matcher provided by flutter_test to
-    // verify that the Text widgets appear exactly once in the widget tree.
     expect(componentSingleIdFinder, findsNWidgets(2));
     expect(componentBSingleFinder, findsOneWidget);
     expect(componentIdFactoryFinder, findsOneWidget);

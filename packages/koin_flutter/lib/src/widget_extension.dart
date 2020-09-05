@@ -76,7 +76,7 @@ extension ComponentWidgetExtension<T> on Diagnosticable {
 
   /// Lazy inject instance from Koin
   /// Use when it is necessary to pass [parameters] to the instance.
-  Lazy<T> injectWithParam<T, P>({Qualifier qualifier, P param}) {
+  Lazy<T> injectWithParam<T, P>(P param, {Qualifier qualifier}) {
     return getKoin().injectWithParam<T, P>(param, qualifier: qualifier);
   }
 
@@ -85,12 +85,10 @@ extension ComponentWidgetExtension<T> on Diagnosticable {
     return getKoin().bind<S, P>();
   }
 
-  /* TODO
   /// Get instance instance from Koin by Primary Type [P], as secondary type [S]
-  S bindWithParams<S, P>(
-      {Qualifier qualifier, DefinitionParameters parameters}) {
-    return getKoin().bind<S, P>(parameters);
-  }*/
+  S bindWithParam<S, T, P>(P param, {Qualifier qualifier}) {
+    return getKoin().bindWithParam<S, T, P>(param);
+  }
 }
 
 /// Extension to provide the Koin scope API for StatefulWidget.
