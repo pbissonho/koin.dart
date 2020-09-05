@@ -85,7 +85,7 @@ mixin ScopedComponentMixin {
   }
 
   T getWithParam<T, P>(P param, {Qualifier qualifier}) {
-    return componentScope.getWithParam<T, P>(param);
+    return componentScope.getWithParam<T, P>(param, qualifier: qualifier);
   }
 
   ///
