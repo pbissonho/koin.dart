@@ -51,7 +51,7 @@ extension KoinExt on Koin {
 
   Map<CheckedComponent, Parameter> makeParameters(
       CheckParameters checkParameters) {
-    var bindings = ParametersBinding();
+    var bindings = CheckParameters();
     bindings.koin = this;
 
     bindings.creators = checkParameters.creators;
@@ -59,8 +59,7 @@ extension KoinExt on Koin {
     return bindings.creators;
   }
 
-  void checkScopedDefinitions(
-      Map<CheckedComponent, Parameter> allParameters) {
+  void checkScopedDefinitions(Map<CheckedComponent, Parameter> allParameters) {
     scopeRegistry.scopeDefinitions.values.forEach((scopeDefinition) {
       runScope(scopeDefinition, allParameters);
     });

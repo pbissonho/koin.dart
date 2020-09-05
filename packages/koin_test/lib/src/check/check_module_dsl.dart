@@ -29,22 +29,20 @@ class CheckedComponent with EquatableMixin {
   List<Object> get props => [type, qualifier];
 }
 
-class ParametersBinding {
+class CheckParameters {
   Map creators = HashMap<CheckedComponent, Parameter>();
   Koin koin;
-  void create<T, P>(P parameter, {Qualifier qualifier}) {
-    creators[CheckedComponent(qualifier, T)] = Parameter<P>(parameter);
+  void create<T, P>(P param, {Qualifier qualifier}) {
+    creators[CheckedComponent(qualifier, T)] = Parameter<P>(param);
   }
 }
 
 typedef ParameterCreator = Parameter Function(Qualifier qualifier);
 
-class CheckParameters extends ParametersBinding {}
-
 CheckParameters checkParametersOf(Map<Type, dynamic> creators) {
   var checkParameters = CheckParameters();
   creators.forEach((type, creator) {
-    checkParameters.creators[CheckedComponent(null, type)] = creator;
+    checkParameters.creators[CheckedComponent(null, type)] = Parameter(creator);
   });
 
   return checkParameters;
