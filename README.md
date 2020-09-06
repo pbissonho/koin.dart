@@ -24,9 +24,10 @@ Written in pure Dart, using functional resolution only: no code generation, no r
 | [koin_devtools](https://github.com/pbissonho/koin.dart/tree/master/packages/koin_devtools) | [![pub package](https://img.shields.io/pub/v/koin_devtools.svg)](https://pub.dev/packages/koin_devtools) |
 
 
-## What does Koin have and what can I do with it?
+## Why should I use Koin?
 
 - Allows to dispose your objects at the moment that you are no longer using them.
+
 - It does not depend on the Flutter.
   * The core does not depend on Flutter, so it is possible to use any Dart application.
 
@@ -39,12 +40,11 @@ Written in pure Dart, using functional resolution only: no code generation, no r
   * Its class is instant when used for the first time.
   * Koin has a implementation of [Lazy](https://www.lordcodes.com/articles/the-power-of-lazy-properties-in-kotlin) by Kotlin to enhance this functionality.
 
-- Very tested
-  * Koin has a high test coverage, to ensure the correct internal behavior
-
 - It is not invasive. 
   * Insert Koin in your project without changing the structure of your Widgets or changing your state management package.
-  * Most of your application will not know that Koin exists,so you decrease the coupling and simplify the understanding and make testing easier.
+  * Most of your application will not know that Koin exists,so you decrease the coupling and make testing easier.
+
+
 
 ## What Koin.dart is not?
 
@@ -274,6 +274,10 @@ Want to help or share a proposal about Koin? problem on a specific feature?
 
 - Open an issue to explain the issue you want to solve [Open an issue](https://github.com/pbissonho/koin.dart/issues)
 - After discussion to validate your ideas, you can open a PR or even a draft PR if the contribution is a big one [Current PRs](https://github.com/pbissonho/koin.dart/pulls)
+
+## Maintainers	
+
+- [Pedro Bissonho](https://github.com/pbissonho)
 
 ## Credits
 

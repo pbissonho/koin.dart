@@ -89,10 +89,8 @@ class InstanceRegistry {
     return instance;
   }
 
-  InstanceContext defaultInstanceContext(
-      Parameter parameter) {
-    return InstanceContext(
-        koin: koin, scope: _scope, parameter: parameter);
+  InstanceContext defaultInstanceContext(Parameter parameter) {
+    return InstanceContext(koin: koin, scope: _scope, parameter: parameter);
   }
 
   void close() {
@@ -121,8 +119,7 @@ class InstanceRegistry {
 
   KtList<InstanceFactory> getAllFactoryAsList() => _instances.values.toList();
 
-  S bind<S>(Type primaryType, Type secondaryType,
-      Parameter parameter) {
+  S bind<S>(Type primaryType, Type secondaryType, Parameter parameter) {
     var instance = _instances.values.firstOrNull((instance) {
       final canBind =
           instance.beanDefinition.canBind(primaryType, secondaryType);

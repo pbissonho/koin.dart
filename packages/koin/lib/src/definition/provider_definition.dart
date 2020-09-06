@@ -84,7 +84,8 @@ class ProviderDefinition<T> {
     }
   }
 
-  ProviderDefinition<T> copy({List<Type> secondaryTypes, Callback<T> onDispose}) {
+  ProviderDefinition<T> copy(
+      {List<Type> secondaryTypes, Callback<T> onDispose}) {
     var newSecondaryTypes;
     var onDisposeCopy;
 

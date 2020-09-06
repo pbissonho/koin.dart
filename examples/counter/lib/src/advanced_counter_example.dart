@@ -7,7 +7,7 @@ import 'package:koin_flutter/koin_flutter.dart';
 import 'package:koin_bloc/koin_bloc.dart';
 
 // An example of more complex usage using singles, factorys, and scopeds.
-// Each instance of 'MyHomePage' in the tree receives a unique scope,
+// Each instance of 'MyHomePage' in the tree receives a unique scope.
 // so you can have multiple instances of MyHomePage in the tree without sharing the providers instances between them.
 class CounterCubit extends Cubit<int> {
   CounterCubit(int intial) : super(intial);
@@ -16,6 +16,7 @@ class CounterCubit extends Cubit<int> {
 
 final homeModule = Module()
   ..cubit((s) => CounterCubit(0))
+
   /// Using `scopeOne` that only allows you to declare a provider.
   /// Using `scope` it is possible to declare several providers for the scope.
   ..scope<MyHomePage>((s) {
