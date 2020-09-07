@@ -1,3 +1,16 @@
+## 0.14.0
+
+- Update readme
+- Refactoring performed to improve code maintenance
+- Breaking changes
+  * It will no longer be possible to pass a list of parameters. Now it is only possible to pass a single parameter.This change was made to make the API more accurate and to avoid errors.
+    * factory1, factory2 and factory3 have been replaced by factoryWithParam
+    * single1, single2 and single3 have been replaced by singleWithParam
+    * scoped1, scoped2 and scoped3 have been replaced by scopedWithParam
+
+ 
+- Added asyncStartKoin function to allow the koin to start asynchronously.
+
 ## 0.13.1+1
 
 - Update readme

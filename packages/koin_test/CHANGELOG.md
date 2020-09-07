@@ -1,3 +1,8 @@
+## 0.12.0
+
+- Update to koin v0.14.0
+- checkParametersOf changed to receive only one parameter for provider(definition)
+
 ## 0.11.7
 
 - Update to koin v0.13.0

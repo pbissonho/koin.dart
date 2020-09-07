@@ -37,7 +37,6 @@ extension KoinExt on Koin {
   ///
   /// Check all definition's dependencies - start all modules and check if definitions can run
   ///
-
   void checkModules(CheckParameters checkParameters) {
     logger.info('[Check] checking current modules ...');
 

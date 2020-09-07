@@ -171,14 +171,14 @@ packages:
       path: "../koin"
       relative: true
     source: path
-    version: "0.13.1+1"
+    version: "0.14.0"
   koin_test:
     dependency: "direct dev"
     description:
       path: "../koin_test"
       relative: true
     source: path
-    version: "0.11.7"
+    version: "0.12.0"
   kt_dart:
     dependency: transitive
     description:
