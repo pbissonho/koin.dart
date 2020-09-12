@@ -108,7 +108,7 @@ packages:
       path: "../../packages/koin"
       relative: true
     source: path
-    version: "0.13.1+1"
+    version: "0.14.0"
   koin_bloc:
     dependency: "direct main"
     description:
@@ -129,7 +129,7 @@ packages:
       path: "../../packages/koin_flutter"
       relative: true
     source: path
-    version: "0.9.6"
+    version: "0.10.0"
   kt_dart:
     dependency: transitive
     description:

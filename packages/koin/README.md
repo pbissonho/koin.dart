@@ -10,11 +10,10 @@
 
 ---
 
-A pragmatic lightweight dependency injection framework. This is a port of [Koin](https://github.com/InsertKoinIO/koin) for Dart projects.
+An pragmatic and flexible lightweight dependency injection library. This is a port of [Koin](https://github.com/InsertKoinIO/koin) for Dart projects.
 
-Written in pure Dart, using functional resolution only: no code generation, no reflection, no Flutter context.
+Written in pure Dart, using functional resolution only: no code generation, no reflection.
 
-`Koin is a light container and a pragmatic API`
 
 | Package                                                                            | Pub                                                                                                    |
 | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
@@ -25,66 +24,75 @@ Written in pure Dart, using functional resolution only: no code generation, no r
 | [koin_devtools](https://github.com/pbissonho/koin.dart/tree/master/packages/koin_devtools) | [![pub package](https://img.shields.io/pub/v/koin_devtools.svg)](https://pub.dev/packages/koin_devtools) |
 
 
-## Documentation 🚒
+## Why should I use Koin?
 
-* [Setup](http://koindart.dev/docs/setup)
-* [Koin in 5 minutes](http://koindart.dev/docs/start/quickstart/dart)
-* [Getting Started](http://koindart.dev/docs/start/getting-started/starting-koin)
-* [Documentation References](http://koindart.dev/docs/reference/koin-core/definitions)
+- Allows to dispose your objects at the moment that you are no longer using them.
 
+- It does not depend on the Flutter.
+  * The core does not depend on Flutter, so it is possible to use it with any Dart application.
 
-## What does Koin have and what can I do with it?
+- Define in which scope a variable can be accessed.
+  * The koin scope allows you to define in which part of the widget tree a variable will be accessible
 
-- Allows to dispose your objects at the exact moment that you are no longer using them.
-- Does not depend on the Flutter
-- Combine your state management classes in a simple way.
-- Standard support for the Bloc library, but it can be easily used with any state management.
+- Integration by default for [Bloc library](https://pub.dev/packages/bloc), but it can be easily used with any     state management.
 
-- DevTools to inspect the state of your objects.
-  * Inspect the internal state of each class at any time on a Flutter page.
+- Koin DevTools to inspect the state of your objects.
+  * Inspect the internal state of each object at any time on a Flutter page.
 
 - Dependencies are instances only when needed.
-  * Its class is instant when used for the first time. Koin has a implementation of [Lazy](https://www.lordcodes.com/articles/the-power-of-lazy-properties-in-kotlin) by Kotlin to provide this functionality.
-- Integration with the life cycle of widgets in Flutter without depending on the context.
-
-- Very tested
-  * Which tests were all ported from the original version, so expect the same internal behavior as the Kotlin version.
-  * In addition, Koin has more tests to a high level of test coverage, to ensure the correct internal behavior.
+  * Its class is instant when used for the first time.
+  * Koin has a implementation of [Lazy](https://www.lordcodes.com/articles/the-power-of-lazy-properties-in-kotlin) by Kotlin to enhance this functionality.
 
 - It is not invasive. 
-  * Insert Koin in your project without changing the structure of your Widgets or changing your state management package.
-  * Most of your application will not know that Koin exists,so you decrease the coupling and simplify the understanding and make testing easier.
-
-- As it does not depend on the context at any time you use it in applications that do not depend on Flutter.
-
-
-## What Koin.dart is not?
-
-It is not a state manager. Koin does not have any type of state management, use Koin with your
-favorite state management package.
+  * Insert Koin in your project without changing the structure of your widgets.
+  
+- Dependency injection by constructor  
+  *  Using dependency injection by constructor you decrease the coupling and make the test easier.
+  *  Makes it easy to know the dependencies of your components. Just look at your class's constructor to identify how dependencies it uses.
 
 
 ## Features
 
-- Pragmatic
 - Modules
 - Scopes
-- Singleton definition
-- Factory definition
-- Scoped definition
+- Singleton provider(definition)
+- Factory provider(definition)
+- Scoped provider(definition)
 - Support to multiple bindings
-- Support to named definition
+- Support to named provider(definition)
 - Easy testing
 - Lazy inject
 - Logging
-- Support to injection parameters
-- Standard support for Bloc library
+- Support to parameter injection 
+- Integration by default for Bloc library
 - DevTools for state inspection
 
 
-# Quick Start
+## What Koin.dart is not?
 
-## Setup
+It is not a state manager. Koin does not have any type of state management, use koin with any state manager.
+
+
+## Table Of Contents
+
+* [Quick Start](#Quick-Start)
+* [Setup](#setup)
+* [Getting Started](http://koindart.dev/docs/start/getting-started/starting-koin)
+* [Documentation References](http://koindart.dev/docs/reference/koin-core/definitions)
+* [Examples](#Examples)
+
+
+## Roadmap
+
+* Improve documentation
+* Add more examples
+* Create an external DevTools 
+* Add logger plugin for [logger](https://pub.dev/packages/logger) 
+
+
+## Quick Start
+
+### Basic Setup
 
 ### Dart 
 
@@ -101,7 +109,7 @@ dependencies:
 ```
 
 
-## Declare a Koin module
+### Declare a Koin module
 
 ```dart
 // Given some classes 
@@ -115,13 +123,15 @@ class Bloc {
 
 class Repository {}
 
-// just declare it
+// just declare your providers(definitions)
 var myModule = Module()
+  // Declare a single provider(definition) for Bloc class
   ..single((s) => Bloc(s.get()))
+  // Declare a single provider(definition) for Repository class
   ..single((s) => Repository());
 ```
 
-## Starting Koin
+### Starting Koin
 
 Use the startKoin() function to start Koin in your application.
 
@@ -140,14 +150,13 @@ In an Flutter app:
 ```dart
 void main() {
   startKoin((app) {
-    app.printLogger(level: Level.debug);
     app.module(homeModule);
   });
   runApp(MyApp());
 }
 ```
 
-## Injecting dependencies
+### Injecting dependencies
 ```dart
 class MyHomePage extends StatelessWidget {
   @override
@@ -162,23 +171,112 @@ class MyHomePage extends StatelessWidget {
 }
 ```
 
+## Setup 
 
-## Ask a Question? 🚑
+### Dart
+
+```yaml
+dependencies:
+koin: ^[version]
+# Koin for Unit tests
+dev_depencies:
+koin_test: ^[version]
+```
+
+### Flutter
+
+```yaml
+dependencies:
+  koin: ^[version]
+  koin_flutter: ^[version]
+
+# Koin for Unit tests
+dev_dependencies:
+  koin_test: ^[version]
+```
+
+### Flutter + Bloc
+
+```yaml
+dependencies:
+  koin: ^[version]
+  koin_flutter: ^[version]
+  koin_bloc: ^[version]
+
+# Koin for Unit tests
+dev_dependencies:
+  koin_test: ^[version]
+```
+
+## Examples
+
+### Basic
+An simple example in Flutter.
+Code: [Repository](https://github.com/pbissonho/koin.dart/tree/master/examples/basic)
+
+### Counter
+
+A more elaborate example using Bloc library as a state management.
+Code: [Repository](https://github.com/pbissonho/koin.dart/tree/master/examples/counter)
+
+### Real world
+
+A application to demonstrate the Koin in a real world application.
+
+#### Features
+ - Log in
+ - Sign up
+ - Loggout
+ - Password reset
+
+Code: [Repository](https://github.com/pbissonho/Flutter-Authentication)
+
+
+## DevTools 
+
+Koin DevTools allows you to inspect the internal state of the objects created by the providers(definitions).
+
+### Usage
+
+Just insert the KoinDevTools Widget somewhere in your application or use showDevTools.
+
+```dart
+class Page extends StatefulWidget {
+  @override
+  _PageState createState() => _PageState();
+}
+
+class _PageState extends State<Page> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+     /// Just insert the KoinDevTools
+      endDrawer: KoinDevTools(),
+      body: IconButton(icon: Text('Shod DevTools'), onPressed: () {
+        // Or use this
+        showDevTools(context);
+      },),
+    );
+  }
+}
+```
+
+## Ask a Question?
 
 - Post your question on [Stackoverflow - #koindart tag](https://stackoverflow.com/questions/tagged/koin)
 
-## Reporting issues 💥
+## Reporting issues
 
 Found a bug on a specific feature? Open an issue on [Github issues](https://github.com/pbissonho/koin.dart/issues)
 
-## Contribute 🛠
+## Contribute
 
 Want to help or share a proposal about Koin? problem on a specific feature? 
 
 - Open an issue to explain the issue you want to solve [Open an issue](https://github.com/pbissonho/koin.dart/issues)
 - After discussion to validate your ideas, you can open a PR or even a draft PR if the contribution is a big one [Current PRs](https://github.com/pbissonho/koin.dart/pulls)
 
-## Maintainers
+## Maintainers	
 
 - [Pedro Bissonho](https://github.com/pbissonho)
 
@@ -189,4 +287,4 @@ Want to help or share a proposal about Koin? problem on a specific feature?
 ## Dependencies
 
 - [Kt.dart](https://pub.dev/packages/kt_dart) port by [Pascal Welsch](https://github.com/passsy)
-- [Equatable](https://pub.dev/packages/equatable) created by [Felix Angelov](https://github.com/felangel)
+

@@ -10,7 +10,7 @@
 
 ---
 
-A pragmatic lightweight dependency injection framework. This is a port of [Koin](https://github.com/InsertKoinIO/koin) for Dart projects.
+An pragmatic and flexible lightweight dependency injection library. This is a port of [Koin](https://github.com/InsertKoinIO/koin) for Dart projects.
 
 Written in pure Dart, using functional resolution only: no code generation, no reflection.
 
@@ -29,11 +29,14 @@ Written in pure Dart, using functional resolution only: no code generation, no r
 - Allows to dispose your objects at the moment that you are no longer using them.
 
 - It does not depend on the Flutter.
-  * The core does not depend on Flutter, so it is possible to use any Dart application.
+  * The core does not depend on Flutter, so it is possible to use it with any Dart application.
 
-- Standard support for the Bloc library, but it can be easily used with any state management.
+- Define in which scope a variable can be accessed.
+  * The koin scope allows you to define in which part of the widget tree a variable will be accessible
 
-- DevTools to inspect the state of your objects.
+- Integration by default for [Bloc library](https://pub.dev/packages/bloc), but it can be easily used with any     state management.
+
+- Koin DevTools to inspect the state of your objects.
   * Inspect the internal state of each object at any time on a Flutter page.
 
 - Dependencies are instances only when needed.
@@ -41,9 +44,28 @@ Written in pure Dart, using functional resolution only: no code generation, no r
   * Koin has a implementation of [Lazy](https://www.lordcodes.com/articles/the-power-of-lazy-properties-in-kotlin) by Kotlin to enhance this functionality.
 
 - It is not invasive. 
-  * Insert Koin in your project without changing the structure of your Widgets or changing your state management package.
-  * Most of your application will not know that Koin exists,so you decrease the coupling and make testing easier.
+  * Insert Koin in your project without changing the structure of your widgets.
+  
+- Dependency injection by constructor  
+  *  Using dependency injection by constructor you decrease the coupling and make the test easier.
+  *  Makes it easy to know the dependencies of your components. Just look at your class's constructor to identify how dependencies it uses.
 
+
+## Features
+
+- Modules
+- Scopes
+- Singleton provider(definition)
+- Factory provider(definition)
+- Scoped provider(definition)
+- Support to multiple bindings
+- Support to named provider(definition)
+- Easy testing
+- Lazy inject
+- Logging
+- Support to parameter injection 
+- Integration by default for Bloc library
+- DevTools for state inspection
 
 
 ## What Koin.dart is not?
@@ -51,11 +73,9 @@ Written in pure Dart, using functional resolution only: no code generation, no r
 It is not a state manager. Koin does not have any type of state management, use koin with any state manager.
 
 
-
 ## Table Of Contents
 
 * [Quick Start](#Quick-Start)
-* [Features](#Features)
 * [Setup](#setup)
 * [Getting Started](http://koindart.dev/docs/start/getting-started/starting-koin)
 * [Documentation References](http://koindart.dev/docs/reference/koin-core/definitions)
@@ -103,11 +123,11 @@ class Bloc {
 
 class Repository {}
 
-// just declare your providers
+// just declare your providers(definitions)
 var myModule = Module()
-  // Declare a single provider for Bloc class
+  // Declare a single provider(definition) for Bloc class
   ..single((s) => Bloc(s.get()))
-  // Declare a single provider for Repository class
+  // Declare a single provider(definition) for Repository class
   ..single((s) => Repository());
 ```
 
@@ -130,7 +150,6 @@ In an Flutter app:
 ```dart
 void main() {
   startKoin((app) {
-    app.printLogger(level: Level.debug);
     app.module(homeModule);
   });
   runApp(MyApp());
@@ -151,24 +170,6 @@ class MyHomePage extends StatelessWidget {
   }
 }
 ```
-
-## Features
-
-- Pragmatic
-- Modules
-- Scopes
-- Singleton provider
-- Factory provider
-- Scoped provider
-- Support to multiple bindings
-- Support to named provider
-- Easy testing
-- Lazy inject
-- Logging
-- Support to parameter injection 
-- Standard support for Bloc library
-- DevTools for state inspection
-
 
 ## Setup 
 
@@ -233,7 +234,7 @@ Code: [Repository](https://github.com/pbissonho/Flutter-Authentication)
 
 ## DevTools 
 
-Koin DevTools allows you to inspect the internal state of the objects created by the providers.
+Koin DevTools allows you to inspect the internal state of the objects created by the providers(definitions).
 
 ### Usage
 
