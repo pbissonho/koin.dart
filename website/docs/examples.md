@@ -12,7 +12,7 @@ Code: [Repository](https://github.com/pbissonho/koin.dart/tree/master/examples/b
 A more elaborate example using Bloc library as a state management.
 Code: [Repository](https://github.com/pbissonho/koin.dart/tree/master/examples/counter)
 
-## Real world
+## Real World
 
 A application to demonstrate the Koin in a real application.
 

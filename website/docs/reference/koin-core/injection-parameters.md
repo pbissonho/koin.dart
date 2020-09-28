@@ -1,8 +1,8 @@
 ---
-title: Injection parameters
+title: Injection Parameter
 ---
 
-In any definition, you can use injection parameters: parameters that will be injected and used by your definition:
+In any definition, you can use injection parameter: parameter that will be injected and used by your definition:
 
 ## Defining an injection parameter
 

@@ -1,17 +1,17 @@
 ---
-title: DSL
+title: Definition API
 ---
 
-Thanks to the power of Dart language, Koin provides a DSL to help your describe your app instead of annotate it or generate code for it. With its Dart DSL, Koin offers a smart functional API to achieve to prepare your dependency injection.
+Thanks to the power of Dart language, Koin provides a flunt API to help your describe your app instead of annotate it or generate code for it. Koin offers a smart functional API to achieve to prepare your dependency injection.
 
-## Application & Module DSL
+## Application & Module API
 
 Koin offers several keywords to let you describe the elements of a Koin Application:
 
-- Application DSL, to describe the Koin container configuration
-- Module DSL, to describe the components that have to be injected
+- Application, to describe the Koin container configuration
+- Module, to describe the components that have to be injected
 
-## Application DSL
+## Application 
 
 A `KoinApplication` instance is a Koin container instance configuration. This will let your configure logging, properties loading and modules.
 
@@ -20,10 +20,10 @@ To build a new `KoinApplication`, use the following functions:
 * `koinApplication()` - create a `KoinApplication` container configuration 
 * `startKoin()` - create a `KoinApplication` container configuration and register it in the `GlobalContext` to allow the use of GlobalContext API
 
-To configure your `KoinApplication` instance, you can use any of the following functions :
+To configure your `KoinApplication` instance, you can use any of the following functions:
 
 * `logger( )` - describe what level and Logger implementation to use (by default use the EmptyLogger)
-* `modules( )` - set a list of Koin modules to load in the container (list or vararg list)
+* `modules( )` - set a list of Koin modules to load in the container
 
 ## KoinApplication instance: Global vs Local
 
@@ -60,19 +60,19 @@ A Koin module gather definitions that you will inject/combine for your applicati
 
 To describe your content in a module, you can use the following functions:
 
-* `factory((s) => //Definition())` - provide a factory bean definition
-* `single((s) => //Definition()) - provide a singleton bean definition (also aliased as `bean`)
+* `factory((s) => //MyClass())` - provide a factory bean definition
+* `single((s) => //MyClass()) - provide a singleton bean definition (also aliased as `bean`)
 * `get()` - resolve a component dependency (also can use name, scope or parameters)
 * `bind()` - add type to bind for given bean definition
 * `binds()` - add types array for given bean definition
 * `scope((scope){// scope group})` - define a logical group for `scoped` definition 
-* `scoped((s) => //Definition())`- provide a bean definition that will exists only in a scope
+* `scoped((s) => //MyClass())`- provide a bean definition that will exists only in a scope
 
 Note: the `named()` function allow you to give a qualifier either by a string, an enum or a type. It is used to name your definitions.
 
 ### Writing a module
 
-A Koin module is the *space to declare all your components*. Use the `module` function to declare a Koin module:
+A Koin Module class is the space to declare all your components. Use the `module` function or the `Module`constructor to declare a Koin module:
 
 ```dart
 final myModule = module()// your dependencies here;

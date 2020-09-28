@@ -53,7 +53,7 @@ Koin will then resolve dependencies from all given modules.
 
 ## Linking modules strategies
 
-*As definitions between modules are lazy*, we can use modules to implement different strategy implementation: declare an implementation per module.
+As definitions between modules are lazy, we can use modules to implement different strategy implementation: declare an implementation per module.
 
 Let's take an example, of a Repository and Datasource. A repository need a Datasource, and a Datasource can be implemented in 2 ways: Local or Remote.
 

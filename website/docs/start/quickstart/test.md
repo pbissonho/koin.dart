@@ -4,7 +4,7 @@ title: Test
 
 # Getting Started with Test
 
-> This tutorial lets you test a Dart application and use Koin inject and retrieve your components.
+This tutorial lets you test a Dart application and use Koin inject and retrieve your components.
 
 ## Setup
 
@@ -26,7 +26,7 @@ dev_dependencies:
 
 ## Declared dependencies
 
-We reuse the `koin-core` getting-started project, to use the koin module:
+We reuse the koin dart getting started example, to use the koin module:
 
 ```dart
 final helloModule = Module()
@@ -36,7 +36,7 @@ final helloModule = Module()
 
 ## Writing our first Test
 
-To make our first test, let's write a simple Junit test file and import `koin_test.dart`. We will be able then, to use `by inject()` operators.
+To make our first test, let's write a simple unit test file and import `koin_test.dart`. We will be able then, to use `by inject()` operators.
 
 ```dart
 void main() {
@@ -100,11 +100,10 @@ void main() {
 ## Verifying modules
 
 Let's write our check test as follow:
-- test modules with `testModule()` API
+- test modules with `testModule()` function
 
 ```dart
 void main(){
-    // 
     testModule('moduleChecktest - shoud be a valid module',helloModule);  
 }
 ```

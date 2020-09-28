@@ -9,7 +9,7 @@ an API to retrieve our instances outside of the container. That's the goal of Ko
 
 ## Create a Koin Component
 
-To give a class the capacity to use Koin features, we need to *tag it* with `KoinComponent` interface. Let's take an example.
+To give a class the capacity to use Koin features, we need to tag it with `KoinComponent` interface. Let's take an example.
 
 A module to define MyService instance
 ```dart
@@ -36,7 +36,7 @@ void main(vararg args : String){
 
 Here is how we can write our `MyComponent` to retrieve instances from Koin container.
 
-Use get() & by inject() to inject MyService instance
+Use `get()` & by `inject()` to inject MyService instance.
 
 ```dart
 class MyComponent extends View with KoinComponentMixin {
@@ -53,7 +53,7 @@ class MyComponent extends View with KoinComponentMixin {
 }
 ```
 
-## Unlock the Koin API with KoinComponents
+## Unlock the Koin API with KoinComponent
 
 Once you have tagged your class as `KoinComponent`, you gain access to:
 

@@ -2,12 +2,11 @@
 title: Definitions
 ---
 
-
 By using Koin, you describe definitions in modules. In this section we will see how to declare, organize & link your modules.
 
 ## Writing a module
 
-A Koin module is the *space to declare all your components*. Use the `module` function to declare a Koin module:
+A Koin module is the space to declare all your components. Use the `module` function to declare a Koin module:
 
 ```dart
 final myModule = module();// your dependencies here
@@ -19,7 +18,7 @@ In this module, you can declare components as described below.
 
 ## Defining a singleton
 
-Declaring a singleton component means that Koin container will keep a *unique instance* of yBy using Koin, you describe definitions in modules. In this section we will see how to declare, organize & link your modules.
+Declaring a singleton component means that Koin container will keep a unique instance of this definition, you describe definitions in modules. In this section we will see how to declare, organize & link your modules.
 
 ```dart
 // declare single instance for MyService class
@@ -37,7 +36,7 @@ The result type of your lambda is the main type of your component
 
 ## Defining a factory
 
-A factory component declaration is a definition that will gives you a *new instance each time* you ask for this definition (this instance is not retrained by Koin container, as it won't inject this instance in other definitions later). Use the `factory` function with a lambda expression to build a component.
+A factory component declaration is a definition that will gives you a new instance each time you ask for this definition (this instance is not retrained by Koin container, as it won't inject this instance in other definitions later). Use the `factory` function with a lambda expression to build a component.
 
 ```dart
 class Controller {}
@@ -55,7 +54,7 @@ Now that we can declare components definitions, we want to link instances with d
 function to the requested needed component instance. This `get()` function is usually used into constructor, to inject constructor values.
 
 :::info
-To make dependency injection with Koin container, we have to write it in *constructor injection* style: resolve dependencies in class constructors. This way, your instance will be created with injected instances from Koin.
+To make dependency injection with Koin container, we have to write it in constructor injection style: resolve dependencies in class constructors. This way, your instance will be created with injected instances from Koin.
 :::
 
 Let's take an example with several classes:
@@ -177,7 +176,7 @@ Then:
 
 ## Declaring injection parameters
 
-In any `single`, `factory` or `scoped` definition, you can use injection parameters: parameters that will be injected and used by your definition:
+In any `single`, `factory` or `scoped` definition, you can use injection parameter: parameters that will be injected and used by your definition:
 
 ```dart
 class MySingle {
@@ -187,21 +186,21 @@ class MySingle {
 }
 
 var myModule = module()
-  ..single1<MySingle,int>((s, value) => MySingle(value));
+  ..singleWithParam<MySingle,int>((s, value) => MySingle(value));
 ```
 
-In contrary to resolved dependencies (resolved with `get()`), injection parameters are *parameters passed through the resolution API*.
-This means that those parameters are values passed with `get()` and `by inject()`, with the `parametersOf` function:
+In contrary to resolved dependencies (resolved with `get()`), injection parameters are parameters passed through the resolution API.
+This means that those parameters are values passed with `get()` and `by inject()`.
 
 
 ```dart
-var mySingle = getWithParams<MySingle>(parameters: parametersOf([10]));
+var mySingle = getWithParam<MySingle, int>(10);
 ```
 
 
 ## Using definition flags
 
-Koin DSL also proposes some flags.
+The Koin API also proposes some flags.
 
 ### Create instances at start
 

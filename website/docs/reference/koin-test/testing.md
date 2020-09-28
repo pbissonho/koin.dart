@@ -59,8 +59,9 @@ setUp((){
   });
 ```
 :::note 
-koin-test project is not tied to mockito
+koin_test package does not have mockito as a dependency.
 :::
+
 ## Mocking out of the box
 
 Instead of making a new module each time you need a mock, you can declare a mock on the fly with `declare`:
@@ -107,6 +108,7 @@ void main() {
     expect(get<ComponentA>(), componentAMock);
   });
 }
+```
 
 ## Checking your Koin modules
 

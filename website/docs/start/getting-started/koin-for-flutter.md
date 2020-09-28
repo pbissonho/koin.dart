@@ -55,7 +55,7 @@ If you need to inject dependencies from another class and can't declare it in a 
 
 ## Extended Scope API 
 
-Scope API is more close to the Flutter platform. The `StatefulWidget`  have extensions for Scope API: `currentScope` get the current associated Koin scope. 
+Scope API is more close to the Flutter platform. The `StatefulWidget`  have extensions for Scope API: `currentScope` get the current associated Koin scope.  
 
 Koin gives the `ScopeStateMixin` mixin already bound to your Flutter `StatefulWidget` lifecycle. On `dispose()` is calld, it will close automatically. ScopeStateMixin overrides the `dispose` method to call the `close` method of the current scope.
 

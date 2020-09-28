@@ -2,7 +2,7 @@
 title: Koin Components
 ---
 
-Sometimes you can't declare only components via Koin. Dependening on your runtime technology, you might need to retrieve instances from Koin in a class that was not created with Koin (e.g. Android)
+Sometimes you can't declare only components via Koin. Dependening on your runtime technology, you might need to retrieve instances from Koin in a class that was not created with Koin (e.g. Flutter Widgets)
 
 ## The KoinComponent interface
 
@@ -68,7 +68,7 @@ void main() {
 
 #### Bootstrapping
 
-> `KoinComponent` interface is also used to help you bootstrap an application from outside of Koin. Also, you can bring  `KoinComponent` feature by extension functions directly on some target classes (i.e: Activity, Fragment have KoinComponent feature in Android). 
+> `KoinComponent` interface is also used to help you bootstrap an application from outside of Koin. Also, you can bring  `KoinComponent` feature by extension functions directly on some target classes. The koin_flutter pachage use extensions to provide the Koin API for Flutter Widgets.
 
 
 ## Bridge with Koin instance

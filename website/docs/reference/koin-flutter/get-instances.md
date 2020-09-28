@@ -3,22 +3,21 @@ title: Get Instances
 ---
 
 Once you have declared some modules and you have started Koin, how can you retrieve your instances in your
-Flutter Widgets or Services.
+Flutter widgets or Services.
 
 ## Widgets & Service as KoinComponents
 
-Widgets, & Service are extended with the KoinComponents extension. You gain access to:
+The Flutter widgets are extended with the KoinComponents extension. You gain access to:
 
 * `inject()` - lazy evaluated instance from Koin container
 * `get()` - eager fetch instance from Koin container
-* `release()` - release module's instances from its path
 
 For a module that declares a 'presenter' component:
 
 ```dart
 final flutterModule = module()
-    // a factory of Presenter
-  ..factory((s) => Presenter());
+    // a factory of CounterBloc
+  ..factory((s) => CounterBloc());
 ```
 
 
@@ -32,15 +31,15 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> {
-  Counter counter;
-  Lazy<Counter> lazyCounter;
+  CounterBloc counter;
+  Lazy<CounterBloc> lazyCounter;
 
   @override
   void initState() {
     // Retrieve a Presenter instance
-    counter = get<Counter>();
+    counter = get<CounterBloc>();
     // Lazy injected Presenter instance
-    lazyCounter = inject<Counter>();
+    lazyCounter = inject<CounterBloc>();
     super.initState();
   }
 

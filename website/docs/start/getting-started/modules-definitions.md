@@ -2,7 +2,7 @@
 title: Modules Definitions
 ---
 
-Writing definitions in Koin is done via Kotlin functions, that describe ishow is built your instance. Once you have configured your Koin application, let's write some modules and definitions.
+Writing definitions in Koin is done via Dart functions, that describe ishow is built your instance. Once you have configured your Koin application, let's write some modules and definitions.
 
 ## Module & definitions
 
@@ -73,7 +73,7 @@ class MyClass {
 
 ## Additional types
 
-In the module DSL, for a definition, you can give some extra type to bind, with the `bind` operator (`binds` for list of KClass):
+In the module API, for a definition, you can give some extra type to bind, with the `bind` operator (`binds` for list of Class):
 
 ```dart
 
@@ -95,7 +95,7 @@ final myModule = Module()
   ..single<Component2>(((s) => Component2())).bind<Component1Interface>();
 ```
 
-But here you won't be able to request an instance with `get<Simple.ComponentInterface1>()`. You will have to use `koin.bind<Component1,ComponentInterface1>()` to retrieve an instance of `ComponentInterface1`, with the `Component1` implementation.
+But here you won't be able to request an instance with `get<ComponentInterface1>()`. You will have to use `koin.bind<Component1,ComponentInterface1>()` to retrieve an instance of `ComponentInterface1`, with the `Component1` implementation.
 
 Note that you cal also look for all components binding a given type: `getAll<ComponentInterface1>()` will request all instances binding `ComponentInterface1` type.
 
@@ -146,7 +146,7 @@ void main() {
 
 ## Declare on the fly
 
-One of the last backport feature from Koin 1.0 is the ability to declare an instance on the fly. This is now available on Koin.declare() or Scope.declare()
+Allows you to declare an instance on the fly with Koin already initialized or in a scope already created.
 
 ```dart
 void main() {
@@ -171,16 +171,15 @@ You can also use a qualifier or secondary types to help create your definition:
 koin.declare(component, qualifier: named('qualifier'), secondaryTypes: []);
 ```
 
-## DSL Recap
+## Recap
 
-A quick recap of the Koin DSL keywords:
+A quick recap of the Koin keywords:
 
 * `module()` - create a Koin Module or a submodule (inside a module)
-* `factory()` - provide a *factory* bean definition
-* `single()` - provide a bean definition
+* `factory()` - provide a factory bean definition
+* `single()` - provide a single bean definition
 * `get()` - resolve a component dependency
 * `named()` - define a qualifier with type, enum or string
 * `bind()` - additional Dart type binding for given bean definition
 * `binds()` - list of additional Dart types binding for given bean definition
-* `getProperty()` - resolve a Koin property
 

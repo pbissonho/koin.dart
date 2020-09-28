@@ -4,11 +4,11 @@ title: Dart
 
 ## Getting Started with Dart
 
-> This tutorial lets you write a Dart application and use Koin inject and retrieve your components.
+This tutorial lets you write a Dart application and use Koin inject and retrieve your components.
 
 ## Setup
 
-First, check that the `koin-core` dependency is added like below:
+First, check that the `koin` package dependency is added like below:
 
 | Package                                                                            | Pub                                                                                                    |
 | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
@@ -99,7 +99,6 @@ final helloModule = Module()
     ..single<HelloService>((s) => HelloServiceImpl(s.get()))
 
 ```
-
 
 We declare each component as `single`, as singleton instances.
 

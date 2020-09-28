@@ -2,11 +2,11 @@
 title: Testing
 ---
 
-The `koin-test` project brings you small but powerful tools to test your Koin application.
+The `koin_test` package brings you small but powerful tools to test your Koin application.
 
 ## Getting your components
 
-Just tag your test class with `KoinTest`, and you will be able to unlock `KoinComponent` & testing features:
+Just import the `koin_test`package, and you will be able to unlock `KoinComponent` & testing features:
 
 * `inject()` - lazy inject an instance
 * `get()` - retrieve an instance
@@ -34,8 +34,7 @@ void main() {
 }
 ```
 
-
-you can use the `setUp` `tearDown` to statr/stop  your Koin context:
+you can use the `setUp` `tearDown` to start/stop your Koin context:
 
 ```dart
 setUp((){
@@ -49,7 +48,7 @@ setUp((){
 You can easily test module definitions.
 
 Let's write our check test as follow:
-- test modules with `testModules()` API
+- test modules with `testModules()` function
 
 Let's check our modules.
 

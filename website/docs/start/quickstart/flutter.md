@@ -4,7 +4,7 @@ title: Flutter
 
 # Getting Started with Flutter application
 
-> This tutorial lets you write an Flutter/Dart application and use Koin inject and retrieve your components.
+This tutorial lets you write an Flutter/Dart application and use Koin inject and retrieve your components.
 
 ## Setup
 
@@ -19,7 +19,7 @@ Add the Koin Flutter dependency like below:
 ```yaml
 dependencies:
   koin: ^[laste_version]
-  koin_fluter: ^[laste_version]
+  koin_flutter: ^[laste_version]
 ```
 ## Our components
 
@@ -106,6 +106,5 @@ class MyHomePage extends StatelessWidget {
 ```
 
 > The `by inject()` function allows us to retrieve lazy Koin instances
-
 > The `get()` function is here to retrieve directly an instance (non lazy)
 

@@ -8,15 +8,15 @@ The `koin_flutter` package is dedicated to bring Flutter scope features to the e
 
 ## Taming the Widgets lifecycle
 
-Flutter Widgets are mainly managed by ther widget tree, that use the lifecycle functions of the Widgets, such as
+Flutter widgets are mainly managed by ther widget tree, that use the lifecycle functions of the widgets, such as
 `initState()` and `dispose()`.
 
-That's why we can't describe our StatefulWidget/StatelessWidget/ in a Koin module. We need then to inject dependencies into properties and also respect the lifecycle.
+That's why we can't describe our StatefulWidget/StatelessWidget in a Koin module. We need then to inject dependencies into properties and also respect the lifecycle.
 Then we have:
 
 * long live components (Services, Data Repository ...) - used by several screens, never dropped
-* medium live components (BLoC) - used by several screens, must be dropped after an amount of time
-* short live components (BLoC) - used by only one screen & must be dropped at the end of the screen
+* medium live components (BLoC ...) - used by several screens, must be dropped after an amount of time
+* short live components (BLoC ...) - used by only one screen & must be dropped at the end of the screen
 
 Long live components can be easily described as `single` definitions. For medium and short live components we can have several approaches.
 

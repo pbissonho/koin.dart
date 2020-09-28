@@ -2,12 +2,12 @@
 title: Start Koin
 ---
 
-> Koin is a DSL, a container & a pragamtic API to leverage your dependencies. 
+> Koin is a container & a pragamtic API to leverage your dependencies. 
 
-The Koin DSL consists in:
+The Koin consists in:
 
-* KoinApplication DSL: describe how to configure your Koin application
-* Module DSL: describe your definitions
+* KoinApplication: describe how to configure your Koin application
+* Module: describe your definitions
 
 Starting Koin consists in using the `startKoin` fuction as below:
 
@@ -92,7 +92,7 @@ At start, Koin log what definition is bound by name or type (if log is activated
 
 ## DSL
 
-A quick recap of the Koin DSL keywords:
+A quick recap of the Koin keywords:
 
 * `startKoin()` - Create and register following KoinApplication instance
 * `koinApplication()` - create KoinApplication instance
