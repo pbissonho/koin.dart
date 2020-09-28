@@ -8,7 +8,42 @@
     * single1, single2 and single3 have been replaced by singleWithParam
     * scoped1, scoped2 and scoped3 have been replaced by scopedWithParam
 
- 
+   How to pass a list of parameters?
+   R: Insert the parameters as properties of a class.
+
+   Example:
+```dart
+    class MyClass {
+      final int param1;
+      final String param2;
+
+      MyClass(this.param1, this.param2);
+
+      void doDomething() {
+        print("$param1 $param2");
+      }
+    }
+
+    class MyClassParam {
+      final int param1;
+      final String param2;
+
+      MyClassParam(this.param1, this.param2);
+    }
+
+    final koinModule = Module()
+      ..singleWithParam<MyClass, MyClassParam>(
+          (s, p) => MyClass(p.param1, p.param2));
+
+    class App with KoinComponentMixin {
+      App() {
+        final myClass =
+            getWithParam<MyClass, MyClassParam>(MyClassParam(10, "Hello"));
+      }
+    }   
+```
+    
+
 - Added asyncStartKoin function to allow the koin to start asynchronously.
 
 ## 0.13.1+1

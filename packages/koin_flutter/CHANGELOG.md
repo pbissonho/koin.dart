@@ -2,13 +2,10 @@
 
 - Adeed ScopeProvider to allow passing a scope down the widget tree
 - It will no longer be possible to pass a list of parameters. Now it is only possible to pass a single parameter.
-- Added scopeContext to make the API more familiar to Flutter, is equivalent to using currentScope.
-
-
 
 ## 0.9.6
 
-- Improvements in ScopeWidgetObeserver
+- Improvements in ScopeWidgetObserver
 
 ## 0.9.5
 

@@ -34,7 +34,7 @@ Written in pure Dart, using functional resolution only: no code generation, no r
 - Define in which scope a variable can be accessed.
   * The koin scope allows you to define in which part of the widget tree a variable will be accessible
 
-- Integration by default for [Bloc library](https://pub.dev/packages/bloc), but it can be easily used with any     state management.
+- Integration by default for [Bloc library](https://pub.dev/packages/bloc), but it can be easily used with any state management.
 
 - Koin DevTools to inspect the state of your objects.
   * Inspect the internal state of each object at any time on a Flutter page.
@@ -45,11 +45,10 @@ Written in pure Dart, using functional resolution only: no code generation, no r
 
 - It is not invasive. 
   * Insert Koin in your project without changing the structure of your widgets.
-  
-- Dependency injection by constructor  
+
+- Facilitates dependency injection by constructor  
   *  Using dependency injection by constructor you decrease the coupling and make the test easier.
   *  Makes it easy to know the dependencies of your components. Just look at your class's constructor to identify how dependencies it uses.
-
 
 ## Features
 
@@ -86,8 +85,10 @@ It is not a state manager. Koin does not have any type of state management, use 
 
 * Improve documentation
 * Add more examples
+  * Example of use with Redux, Mobx and RxDart.
 * Create an external DevTools 
-* Add logger plugin for [logger](https://pub.dev/packages/logger) 
+* Add logger plugin for [logger](https://pub.dev/packages/logger)
+
 
 
 ## Quick Start
@@ -105,7 +106,7 @@ dependencies:
 ```yaml
 dependencies:
   koin: ^[version]
-  koin_fluter: ^[version]
+  koin_flutter: ^[version]
 ```
 
 
@@ -124,7 +125,7 @@ class Bloc {
 class Repository {}
 
 // just declare your providers(definitions)
-var myModule = Module()
+final myModule = Module()
   // Declare a single provider(definition) for Bloc class
   ..single((s) => Bloc(s.get()))
   // Declare a single provider(definition) for Repository class
@@ -163,7 +164,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     // Get a dependency
-    var bloc = get<Bloc>();
+    final bloc = get<Bloc>();
     return Container(
       child: Text("${bloc.state()}"),
     );
@@ -219,7 +220,7 @@ Code: [Repository](https://github.com/pbissonho/koin.dart/tree/master/examples/b
 A more elaborate example using Bloc library as a state management.
 Code: [Repository](https://github.com/pbissonho/koin.dart/tree/master/examples/counter)
 
-### Real world
+### Real World
 
 A application to demonstrate the Koin in a real world application.
 
