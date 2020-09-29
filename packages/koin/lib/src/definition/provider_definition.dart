@@ -183,9 +183,6 @@ class ProviderDefinition<T> {
   }
 
   @override
-  List<Object> get props => [primaryType, qualifier, scopeDefinition];
-
-  @override
   int get hashCode =>
       primaryType.hashCode ^ qualifier.hashCode ^ scopeDefinition.hashCode;
 

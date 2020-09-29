@@ -67,8 +67,6 @@ mixin KoinComponentMixin {
   ///
   /// Get instance instance from Koin by Primary Type K, as secondary type S
   /// @param parameters
-  ///
-  /// TODO
   S bindWithParam<S, K, P>(P param, {Qualifier qualifier}) {
     return getKoin().bindWithParam<S, K, P>(param, qualifier: qualifier);
   }
