@@ -86,6 +86,7 @@ It is not a state manager. Koin does not have any type of state management, use 
 * Improve documentation
 * Add more examples
   * Example of use with Redux, Mobx and RxDart.
+  * Example with HTTP server frameworks.
 * Create an external DevTools 
 * Add logger plugin for [logger](https://pub.dev/packages/logger)
 
@@ -180,7 +181,7 @@ class MyHomePage extends StatelessWidget {
 dependencies:
 koin: ^[version]
 # Koin for Unit tests
-dev_depencies:
+dev_dependencies:
 koin_test: ^[version]
 ```
 
@@ -212,6 +213,7 @@ dev_dependencies:
 ## Examples
 
 ### Basic
+
 An simple example in Flutter.
 Code: [Repository](https://github.com/pbissonho/koin.dart/tree/master/examples/basic)
 
