@@ -154,7 +154,7 @@ void main() {
     });
 
     testWidgets(
-        '''when the StatefulWidget is removed from tree - scope started by currentScope()
+        '''When the StatefulWidget is removed from tree - scope started by currentScope()
          extension''', (tester) async {
       // Create the widget by telling the tester to build it.
       loadKoinModule(testModule3);
