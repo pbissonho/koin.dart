@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:koin/koin.dart';
 import 'package:koin_flutter/koin_flutter.dart';
+import 'package:koin_test/koin_test.dart';
 
 final buttonKey = UniqueKey();
 final fisrtPage = UniqueKey();
@@ -73,6 +74,8 @@ void main() {
       app.module(scopeProviderModule);
     }).koin;
   });
+
+  koinTearDown();
 
   testWidgets('shoud get the scope passed to the context', (tester) async {
     await tester.pumpWidget(MaterialApp(
