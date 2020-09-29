@@ -9,7 +9,7 @@ import 'package:koin_flutter/koin_flutter.dart';
 // example using the Bloc library for state management.
 
 // Define your Counter
-var appModule = Module()..single((s) => Counter());
+var basiModule = Module()..single((s) => Counter());
 
 //A simple Counter to be used with setState
 class Counter {
