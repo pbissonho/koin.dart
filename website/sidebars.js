@@ -43,6 +43,7 @@ module.exports = {
           Flutter: [
             'reference/koin-flutter/start',
             'reference/koin-flutter/scope',
+            'reference/koin-flutter/scope_provider',
             'reference/koin-flutter/get-instances',
             'reference/koin-flutter/bloc_library',
             'reference/koin-flutter/disposable',
