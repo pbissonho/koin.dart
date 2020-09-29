@@ -1,9 +1,7 @@
-import 'package:flutter_test/flutter_test.dart';
+/*import 'package:flutter_test/flutter_test.dart';
 import 'package:koin/koin.dart';
 import 'package:koin_test/koin_test.dart';
 import 'package:mockito/mockito.dart';
-
-/*
 
 // Just a few services to exemplify.
 class ServiceA {

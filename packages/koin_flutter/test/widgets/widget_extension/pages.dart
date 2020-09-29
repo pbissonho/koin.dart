@@ -133,6 +133,7 @@ class _HomePageState3 extends State<HomePage3> {
     componentFactory =
         getWithParam<Component, int>(60, qualifier: named("Fac"));
     lazyComponent = inject<Component>();
+    super.initState();
   }
 
   @override

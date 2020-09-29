@@ -158,22 +158,12 @@ mixin ScopeStateMixin<T extends StatefulWidget> on State<T> {
   Scope get currentScope {
     if (_scope != null && !_scope.closed) return _scope;
     _scope = widget.scope;
-    FlutterKoinObserver.scopeRouterObserver
-        .onCreateScope(ScopeWidgetContext(widget, _scope, setState, _replace));
+    FlutterKoinScopeObserver.scopeWidgetObserver
+        .onCreateScope(ScopeWidgetContext(
+      widget,
+      _scope,
+    ));
     return _scope;
-  }
-
-  Scope get scopeContext => currentScope;
-
-  /// Replace the current `route` with a new one so that
-  /// the child states' hot restart.
-  void _replace() {
-    if (widget is HotRestartScopeMixin) {
-      Navigator.replace(context,
-          oldRoute: ModalRoute.of(context),
-          newRoute: MaterialPageRoute(
-              builder: (context) => (widget as HotRestartScopeMixin).route));
-    }
   }
 
   Scope _getScopeOrNull() {
@@ -190,12 +180,12 @@ mixin ScopeStateMixin<T extends StatefulWidget> on State<T> {
       }
     } else if (!_scope.closed) {
       _scope.close();
-      FlutterKoinObserver.scopeRouterObserver.onCloseScope(_scope.id);
+      FlutterKoinScopeObserver.scopeWidgetObserver.onCloseScope(_scope.id);
     }
   }
 }
 
-/// Class that propagate the 'Scope' down the tree.
+/// Class that propagate the [Scope] down the tree.
 ///
 /// Example of use:
 /// ```
@@ -291,7 +281,7 @@ extension ScopeContextExtension on BuildContext {
   }
 }
 
-/// Exception that should be thrown when a scope is not found.
+/// Exception that should be thrown when a [Scope] is not found.
 /// This occurs when 'context.scope' is used in a context that has not been
 /// scoped.
 class ScopeNotFoundException implements Exception {

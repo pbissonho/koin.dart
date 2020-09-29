@@ -1,6 +1,6 @@
 ## 0.10.0
 
-- Adeed ScopeProvider to allow passing a scope down the widget tree
+- Added ScopeProvider to allow passing a scope down the widget tree
 - It will no longer be possible to pass a list of parameters. Now it is only possible to pass a single parameter.
 
 ## 0.9.6

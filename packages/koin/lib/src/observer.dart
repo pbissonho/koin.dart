@@ -8,31 +8,13 @@ abstract class ScopeObserver {
   void onClose(Scope scope);
 }
 
-class KoinScopeObserver implements ScopeObserver {
-  @override
-  void onClose(Scope scope) {
-    // TODO: implement onClose
-  }
-
-  @override
-  void onCreate(Scope scope) {
-    // TODO: implement onCreate
-  }
-}
-
-abstract class LoggerInstanceObserverBase {
+abstract class InstanceObserver {
   void onCreate(InstanceFactory instanceFactory);
   void onDispose(InstanceFactory instanceFactory);
   void onResolve(String type, String duration);
 }
 
-abstract class InstanceObserverBase {
-  void onCreate(InstanceFactory instanceFactory);
-  void onDispose(InstanceFactory instanceFactory);
-  void onResolve(InstanceFactory instanceFactory, String duration);
-}
-
-class LoggerInstanceObserver implements LoggerInstanceObserverBase {
+class LoggerInstanceObserver implements InstanceObserver {
   final Koin koin;
 
   LoggerInstanceObserver(this.koin);

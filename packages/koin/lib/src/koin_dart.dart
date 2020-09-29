@@ -40,7 +40,7 @@ import 'scope/scope.dart';
 class Koin with ScopedComponentMixin {
   ScopeRegistry _scopeRegistry;
   Logger logger;
-  LoggerInstanceObserverBase loggerInstanceObserver;
+  LoggerInstanceObserver loggerInstanceObserver;
   final KtHashSet<ScopeObserver> scopeObserves =
       KtHashSet<ScopeObserver>.empty();
   final KtHashSet<Module> _modules = KtHashSet<Module>.empty();
@@ -55,7 +55,6 @@ class Koin with ScopedComponentMixin {
     _scopeRegistry = ScopeRegistry(this);
     logger = Logger.empty(Level.debug);
     loggerInstanceObserver = LoggerInstanceObserver(this);
-    scopeObserves.add(KoinScopeObserver());
   }
 
   ///

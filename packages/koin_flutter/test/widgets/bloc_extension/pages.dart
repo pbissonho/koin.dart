@@ -7,7 +7,7 @@ abstract class BlocBase {
   void dispose();
 }
 
-class Bloc extends BlocBase with Disposable {
+class Bloc extends BlocBase implements Disposable {
   bool isDisposed = false;
 
   @override

@@ -43,7 +43,7 @@ void main() {
     group('shoud close', () {
       test('the single bloc definition when the stop koin', () async {
         var bloc = koin.get<CounterCubit>();
-        expectLater(bloc, emits(emitsDone));
+        await expectLater(bloc, emits(emitsDone));
         stopKoin();
       });
 
@@ -53,7 +53,7 @@ void main() {
         var bloc = scope.get<CounterCubit>();
         scope.close();
 
-        expectLater(bloc, emits(emitsDone));
+        await expectLater(bloc, emits(emitsDone));
       });
     });
   });

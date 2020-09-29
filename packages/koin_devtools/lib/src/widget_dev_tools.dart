@@ -9,8 +9,11 @@ class _DevTools {
   static Map<String, ScopeWidgetContext> koinContextScopes() {
     final scopesMap = <String, ScopeWidgetContext>{};
     scopesMap['Root'] = ScopeWidgetContext(
-        null, KoinContextHandler.get().scopeRegistry.rootScope, null, null);
-    scopesMap.addAll(FlutterKoinObserver.scopeRouterObserver.scopeContexts);
+      null,
+      KoinContextHandler.get().scopeRegistry.rootScope,
+    );
+    scopesMap
+        .addAll(FlutterKoinScopeObserver.scopeWidgetObserver.scopeContexts);
     return scopesMap;
   }
 }
@@ -128,25 +131,6 @@ class _ScopeCardState extends State<_ScopeCard> {
                                 .copyWith(color: Colors.white),
                           ),
                         ),
-                        Expanded(
-                            flex: 1,
-                            child: LayoutBuilder(
-                              builder: (BuildContext context,
-                                  BoxConstraints constraints) {
-                                if (widget
-                                    .scopeContext.scope.scopeDefinition.isRoot)
-                                  return Container(
-                                    child: Text("Root"),
-                                  );
-
-                                return IconButton(
-                                  icon: Icon(Icons.restore),
-                                  onPressed: () {
-                                    widget.scopeContext.hotRestartScope();
-                                  },
-                                );
-                              },
-                            )),
                       ],
                     ),
                   ),
@@ -172,7 +156,6 @@ class _FactoryViewer {
   final InstanceFactory _instanceFactory;
   final Scope _scope;
   ProviderDefinition get _beanDefinition => _instanceFactory.beanDefinition;
-  //final bool created;
   String get instanceToString {
     if (_instanceFactory is FactoryInstanceFactory)
       return "The instance is not stored.";
