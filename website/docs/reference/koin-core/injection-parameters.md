@@ -6,60 +6,67 @@ In any definition, you can use injection parameter: parameter that will be injec
 
 ## Defining an injection parameter
 
-Below is an example of injection parameters. We established that we need a `view` parameter to build of `Presenter` class:
+Below is an example of injection parameter. We established that we need a `id` parameter to build of `MyClass` class:
 
 ```dart
-class View {}
+class MyClass {
+  final int id;
 
-class Presenter {
-  final View view;
-
-  Presenter(this.view);
+  Bloc(this.id);
 }
 
-final myModule = module(createdAtStart: true)
-  ..single1<Presenter, View>((s, view) => Presenter(view));
+final myModule = Module()
+  ..singleWithParam<MyClass, int>((s, id) => MyClass(id));
 ```
 
 
 ## Injecting with values
 
-In contrary to resolved dependencies (resolved with with `get()`), injection parameters are *parameters passed through the resolution API*.
-This means that those parameters are values passed with `get()` and `by inject()`, with the `parametersOf()` function:
+In contrary to resolved dependencies (resolved with with `get()` or `inject`), injection parameter are passed through the resolution API with parameter.
+
+For that it will be necessary to use `geWithParam()` or `injectWithParam()`.
 
 ```dart
-class MyComponent extends View with KoinComponentMixin {
-  Presenter presenter;
+class MyApp with KoinComponentMixin {
+  MyClass myClass;
   MyComponent() {
-    presenter = getWithParams<Presenter>(parameters: parametersOf([this]));
+    myClass = getWithParam<MyClass>(10);
   }
 }
 ```
 
 ## Multiple parameters
 
-If we want to have multiple parameters in our definition, we can use the *destructured declaration* to list our parameters:
+If we want to have multiple parameters in our definition, we can insert the parameters as properties of a class.
 
 ```dart
-class Presenter {
-  final View view;
-  final int id;
+class MyClass {
+  final int param1;
+  final String param2;
 
-  Presenter(this.view, this.id);
-}
+  MyClass(this.param1, this.param2);
 
-final myModule = module()
-  ..single2<Presenter, View, int>((s, view, id) => Presenter(view, id));
-```
-
-In a `KoinComponent`, just use the `parametersOf` function with your arguments like below:
-
-```dart
-class MyComponent extends View with KoinComponentMixin {
-  Presenter presenter;
-  MyComponent() {
-    presenter = getWithParams<Presenter>(parameters: parametersOf([this, 10]));
+  void doDomething() {
+    print("$param1 $param2");
   }
 }
+
+class MyClassParam {
+  final int param1;
+  final String param2;
+
+  MyClassParam(this.param1, this.param2);
+}
+
+final koinModule = Module()
+  ..singleWithParam<MyClass, MyClassParam>(
+      (s, p) => MyClass(p.param1, p.param2));
+
+class App with KoinComponentMixin {
+  App() {
+    final myClass =
+        getWithParam<MyClass, MyClassParam>(MyClassParam(10, "Hello"));
+  }
+}   
 ```
 

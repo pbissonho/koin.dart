@@ -136,11 +136,11 @@ void main() {
     app.modules([myModule]);
   }).koin;
 
-  koin.getWithParams<MySingle>(parameters: parametersOf([45])); // -> id is 45
+  koin.getWithParam<MySingle>(45); // -> id is 45
   unloadKoinModule(myModule);
   loadKoinModule(myModule);
 
-  koin.getWithParams<MySingle>(parameters: parametersOf([40])); // -> id is 40
+  koin.getWithParam<MySingle>(40); // -> id is 40
 }
 ```
 
