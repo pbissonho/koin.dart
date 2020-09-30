@@ -1,3 +1,7 @@
+## 0.2.1
+
+* Update to koin v0.14.0
+
 ## 0.2.0
 
 * Removed scope hot restart. It was not working as it should.
