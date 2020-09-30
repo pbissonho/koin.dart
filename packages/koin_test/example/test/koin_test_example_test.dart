@@ -1,4 +1,4 @@
-/*import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:koin/koin.dart';
 import 'package:koin_test/koin_test.dart';
 import 'package:mockito/mockito.dart';
@@ -15,13 +15,20 @@ class ServiceB {
   String getName() => 'Name';
 }
 
-class ServiceC {
+class ComponentC {
   final String firstName;
   final String lastName;
 
-  ServiceC(this.firstName, this.lastName);
+  ComponentC(this.firstName, this.lastName);
 
   String getName() => '$firstName $lastName';
+}
+
+class ComponentCParam {
+  final String firstName;
+  final String lastName;
+
+  ComponentCParam(this.firstName, this.lastName);
 }
 
 // Create a Mock for a particular service as usual.
@@ -36,8 +43,8 @@ class ServiceFake extends Fake implements ServiceA {
 
 var customModule = Module()
   ..single<ServiceA>(((s) => ServiceA()))
-  ..factory2<ServiceC, String, String>(
-      ((s, fisrt, second) => ServiceC(fisrt, second)));
+  ..factoryWithParam<ComponentC, ComponentCParam>(
+      (s, param) => ComponentC(param.firstName, param.lastName));
 
 // Since ServiceC has not been defined, koin will throw an exception when trying
 // to instantiate ServicoB.
@@ -49,7 +56,7 @@ void main() {
 
   testModule('shoud be a valid module', customModule,
       checkParameters: checkParametersOf({
-        ServiceC: parametersOf(['Name', 'LastName']),
+        ComponentC: ComponentCParam('Fisrt', "Last"),
       }));
 
   test('shoud be a invalid module', () {
@@ -62,10 +69,7 @@ void main() {
 
   test('shoud return mock instance', () {
     declareModule((module) {
-      module
-        ..single<ServiceA>(((s) => ServiceA()))
-        ..factory2<ServiceC, String, String>(
-            ((s, fisrt, second) => ServiceC(fisrt, second)));
+      module..single<ServiceA>(((s) => ServiceA()));
     });
 
     var serviceMock = ServiceAMock();
@@ -83,10 +87,7 @@ void main() {
 
   test(('shoud return a Fake instance'), () {
     declareModule((module) {
-      module
-        ..single<ServiceA>(((s) => ServiceA()))
-        ..factory2<ServiceC, String, String>(
-            ((s, fisrt, second) => ServiceC(fisrt, second)));
+      module..single<ServiceA>(((s) => ServiceA()));
     });
 
     var serviceMock = ServiceFake();
@@ -100,4 +101,3 @@ void main() {
     expect(service.getName(), 'FakeName');
   });
 }
-*/
