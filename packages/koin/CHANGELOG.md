@@ -3,6 +3,9 @@
 - Update readme
 - Refactoring performed to improve code maintenance
 - Breaking changes
+  * `get`, `inject` and `bind` methods no longer allows parameter passing, use `injectWithParam`, `getWithParam` and `bindWithParam`.
+  * `getWithParams` and `injectWithParams` renamed to `getWithParam` and `injectWithParam`.
+
   * It will no longer be possible to pass a list of parameters. Now it is only possible to pass a single parameter.This change was made to make the API more accurate and to avoid errors.
     * factory1, factory2 and factory3 have been replaced by factoryWithParam
     * single1, single2 and single3 have been replaced by singleWithParam
