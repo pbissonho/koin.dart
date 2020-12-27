@@ -47,7 +47,7 @@ class _ExamplesPageState extends State<ExamplesPage> {
               ExampleButton(
                 exampleName: 'Basic Counter',
                 page: CounterPage(),
-                modules: [basiModule],
+                modules: [basicModule],
               ),
               ExampleButton(
                 exampleName: 'Scope Provider',

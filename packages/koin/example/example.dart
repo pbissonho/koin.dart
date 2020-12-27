@@ -18,8 +18,7 @@ class RestPostRepository implements PostRepository {
   }
 }
 
-var postModule = Module()
-  ..single<PostRepository>((s) => RestPostRepository());
+var postModule = Module()..single<PostRepository>((s) => RestPostRepository());
 
 void main() {
   var koin = startKoin((app) {
@@ -27,6 +26,6 @@ void main() {
   }).koin;
 
   var postRepository = koin.get<PostRepository>();
-  
+
   print(postRepository.getAll());
 }

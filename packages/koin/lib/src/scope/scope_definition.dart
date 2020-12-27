@@ -74,9 +74,6 @@ with new definition typed '$type'""");
   }
 
   @override
-  List<Object> get props => [qualifier, isRoot];
-
-  @override
   int get hashCode => qualifier.hashCode ^ isRoot.hashCode;
 
   @override

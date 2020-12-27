@@ -76,8 +76,8 @@ It is not a state manager. Koin does not have any type of state management, use 
 
 * [Quick Start](#Quick-Start)
 * [Setup](#setup)
-* [Getting Started](http://koindart.dev/docs/start/getting-started/starting-koin)
-* [Documentation References](http://koindart.dev/docs/reference/koin-core/definitions)
+* [Getting Started](https://koindart.dev/docs/start/getting-started/starting-koin)
+* [Documentation References](https://koindart.dev/docs/reference/koin-core/definitions)
 * [Examples](#Examples)
 
 

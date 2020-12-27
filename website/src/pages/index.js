@@ -13,7 +13,7 @@ const features = [
     imageUrl: 'img/undraw_dev_productivity_umsq.svg',
     description: (
       <>
-        Koin is a lightweight container and a pragmatic API. Using functional resolution only: no proxy, no code generation, no reflection, not depend on the Flutter context!
+        Koin is a lightweight container and a pragmatic API. Using functional resolution only: no proxy, no code generation, no reflection.
       </>
     ),
   },
@@ -22,7 +22,7 @@ const features = [
     imageUrl: 'img/undraw_code_review_l1q9.svg',
     description: (
       <>
-       The code has a high level of test coverage and the Kotlin version has been used in thousands of applications.
+        The code has a high level of test coverage and the Kotlin version has been used in thousands of applications.
       </>
     ),
   },
@@ -32,13 +32,13 @@ const features = [
     description: (
       <>
         Koin has a powerful set of features, such as multiple bindings,
-        ,named definitions, lazy inject end injection parameters.
+        ,named definitions, lazy inject end parameter injection.
       </>
     ),
   },
 ];
 
-function Feature({imageUrl, title, description}) {
+function Feature({ imageUrl, title, description }) {
   const imgUrl = useBaseUrl(imageUrl);
   return (
     <div className={clsx('col col--4', styles.feature)}>
@@ -55,7 +55,7 @@ function Feature({imageUrl, title, description}) {
 
 function Home() {
   const context = useDocusaurusContext();
-  const {siteConfig = {}} = context;
+  const { siteConfig = {} } = context;
   return (
     <Layout
       title={`Hello from ${siteConfig.title}`}

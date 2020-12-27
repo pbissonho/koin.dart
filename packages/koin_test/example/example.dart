@@ -36,6 +36,7 @@ class ServiceAMock extends Mock implements ServiceA {}
 
 // Create a Fake for a particular service as usual.
 class ServiceFake extends Fake implements ServiceA {
+  @override
   String getName() {
     return 'FakeName';
   }

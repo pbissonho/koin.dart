@@ -1,6 +1,8 @@
 # koin_devtools
 
-A DevTools to Koin.dart.  
+### A DevTools to Koin.dart.  
+
+Koin DevTools allows you to inspect the internal state of the objects created by the providers(definitions).
 
 # Demo
 
