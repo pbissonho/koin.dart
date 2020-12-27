@@ -14,15 +14,6 @@
  * limitations under the License.
  */
 
-//
-// Measure functions
-//
-// @author - Arnaud GIULIANI
-//
-// Ported to Dart from Kotlin by:
-// @author - Pedro Bissonho
-//
-
 /// Measure functions
 class Measure {
   ///

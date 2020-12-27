@@ -72,7 +72,8 @@ class Scope with ScopedComponentMixin {
 
   ///
   /// Add parent Scopes to allow instance resolution
-  ///i.e: linkTo(scopeC) - allow to resolve instance to current scope and scopeC
+  /// i.e: linkTo(scopeC) - allow to resolve instance
+  /// to current scope and scope.
   ///
   /// @param scopes - Scopes to link with
   ///

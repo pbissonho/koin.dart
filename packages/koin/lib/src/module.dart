@@ -25,14 +25,7 @@ import 'scope/scope_dsl.dart';
 // ignore_for_file: avoid_positional_boolean_parameters
 
 ///
-///
-/// Koin Module
 /// Gather/help compose Koin definitions
-/// @author - Arnaud GIULIANI
-///
-/// Ported to Dart from Kotlin by:
-/// @author - Pedro Bissonho
-///
 class Module {
   final bool createAtStart;
   final bool override;

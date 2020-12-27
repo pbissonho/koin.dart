@@ -100,43 +100,4 @@ void main() {
     expect(component, isA<Component1>());
     expect(koin.get<ComponentInterface1>(named('2')), isA<Component2>());
   });
-
-  // TODO
-  /* 
-  test('can resolve a single with type', () {
-    var koin = koinApplication((app) {
-      app.module(module()..single((s) => ComponentA()));
-    }).koin;
-
-    var a = koin.getWithType(ComponentA);
-    var a2 = koin.getWithType(ComponentA);
-
-    expect(a, a2);
-  });
-
-  test('can resolve a single with type or null', () {
-    var koin = koinApplication((app) {
-      app.module(module()..single((s) => ComponentA()));
-    }).koin;
-
-    var a = koin.getOrNullWithType(ComponentA);
-    var a2 = koin.getOrNullWithType(ComponentA);
-    var a3 = koin.getOrNullWithType(ComponentB);
-
-    expect(a, a2);
-    expect(a3, isNull);
-  });
-
-  test('can resolve a single with type or null', () {
-    var koin = koinApplication((app) {
-      app.module(module()..single((s) => ComponentA()));
-    }).koin;
-
-    var a = koin.getOrNullWithType(ComponentA);
-    var a2 = koin.getOrNullWithType(ComponentA);
-    var a3 = koin.getOrNullWithType(ComponentB);
-
-    expect(a, a2);
-    expect(a3, isNull);
-  });*/
 }

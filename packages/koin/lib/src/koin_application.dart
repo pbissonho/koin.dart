@@ -20,14 +20,8 @@ import 'logger.dart';
 import 'module.dart';
 import 'observer/empty_logger_instance_observer.dart';
 
-//
 /// Koin Application
 /// Help prepare resources for Koin context
-// @author - Arnaud Giuliani
-//
-// Ported to Dart from Kotlin by:
-// @author - Pedro Bissonho
-//
 class KoinApplication {
   Koin koin = Koin();
 

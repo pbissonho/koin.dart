@@ -23,8 +23,6 @@ import 'instance_factory.dart';
 ///
 /// Factory Instance Holder
 ///
-/// @author Arnaud Giuliani
-///
 class FactoryInstanceFactory<T> extends InstanceFactory<T> {
   FactoryInstanceFactory(Koin koin, ProviderDefinition<T> beanDefinition)
       : super(koin: koin, beanDefinition: beanDefinition);

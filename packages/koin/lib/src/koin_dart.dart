@@ -32,20 +32,16 @@ import 'scope/scope.dart';
 ///
 /// Gather main features to use on Koin context
 ///
-/// @author Arnaud Giuliani
-/// Ported to Dart from Kotlin by:
-/// @author - Pedro Bissonho
-///
 class Koin with ScopedComponentMixin {
   late final ScopeRegistry _scopeRegistry;
   late Logger logger;
   late LoggerObserver loggerObserver;
-  final KtHashSet<ScopeObserver> scopeObserves =
+  final KtHashSet<ScopeObserver> _scopeObserves =
       KtHashSet<ScopeObserver>.empty();
   final KtHashSet<Module> _modules = KtHashSet<Module>.empty();
 
   void withScopeObserver(ScopeObserver scopeObserver) {
-    scopeObserves.add(scopeObserver);
+    _scopeObserves.add(scopeObserver);
   }
 
   ScopeRegistry get scopeRegistry => _scopeRegistry;
@@ -66,24 +62,24 @@ class Koin with ScopedComponentMixin {
     );
   }
 
-  // TODO
-  // VALIDAR
-  /*
   ///
-  /// Get a Koin instance
-  /// @return instance of type T
+  /// Get instance of primary type [primaryType] and return as secondary
+  /// type [S]
+  /// (not for scoped instances)
   ///
-  T getWithType<T>([Type type, Qualifier? qualifier, Parameter? parameter]) {
-    return _scopeRegistry.rootScope.getWithType<T>(type, qualifier, parameter);
+  /// @return instance of type [S]
+  ///
+  S bindWithType<S>(Type secondaryType, Type primaryType,
+      [Parameter? parameter]) {
+    return _scopeRegistry.rootScope
+        .bindWithType(primaryType, secondaryType, parameter);
   }
 
-  ///
-  /// Get a Koin instance if available
-  T? getOrNullWithType<T>(
-      [Type? type, Qualifier? qualifier, Parameter? parameter]) {
+  @override
+  S bindWithParam<S, K, P>(P param, {Qualifier? qualifier}) {
     return _scopeRegistry.rootScope
-        .getWithTypeOrNull(type, qualifier, parameter);
-  }*/
+        .bindWithParam<S, K, P>(param, qualifier: qualifier);
+  }
 
   ///
   /// Declare a component definition from the given instance
@@ -111,19 +107,6 @@ class Koin with ScopedComponentMixin {
   ///
   List<T> getAll<T>() {
     return _scopeRegistry.rootScope.getAll<T>();
-  }
-
-  ///
-  /// Get instance of primary type [primaryType] and return as secondary
-  /// type [S]
-  /// (not for scoped instances)
-  ///
-  /// @return instance of type [S]
-  ///
-  S bindWithType<S>(Type secondaryType, Type primaryType,
-      [Parameter? parameter]) {
-    return _scopeRegistry.rootScope
-        .bindWithType(primaryType, secondaryType, parameter);
   }
 
   void createEagerInstances() {
@@ -251,10 +234,4 @@ class Koin with ScopedComponentMixin {
 
   @override
   Scope get componentScope => _scopeRegistry.rootScope;
-
-  @override
-  S bindWithParam<S, K, P>(P param, {Qualifier? qualifier}) {
-    return _scopeRegistry.rootScope
-        .bindWithParam<S, K, P>(param, qualifier: qualifier);
-  }
 }

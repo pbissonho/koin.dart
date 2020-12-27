@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-/*
- * Koin Exceptions
- * @author - Arnaud Giuliani
- * @author - Pedro Bissonho
- * 
- * Ported to Dart from Kotlin by:
- * @author - Pedro Bissonho 
- */
 abstract class KoinException implements Exception {
   final String msg;
   KoinException(this.msg);

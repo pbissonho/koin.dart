@@ -27,8 +27,6 @@ import 'package:meta/meta.dart';
 /// Scope Registry
 /// create/find scopes for Koin
 ///
-// @author Arnaud Giuliani
-///
 class ScopeRegistry {
   final Koin koin;
 

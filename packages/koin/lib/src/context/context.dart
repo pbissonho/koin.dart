@@ -43,9 +43,6 @@ abstract class KoinContext {
   void stop();
 }
 
-//Ported to Dart from Kotlin by:
-//@author - Pedro Bissonho
-
 /// Global context - current Koin Application available globally
 ///
 ///Support to help inject automatically instances once KoinApp has been started

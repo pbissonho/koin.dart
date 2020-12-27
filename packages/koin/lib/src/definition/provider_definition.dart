@@ -49,19 +49,15 @@ class Options {
 ///
 /// Koin bean definition
 /// main structure to make definition in Koin
-// @author - Arnaud GIULIANI
-//
-// Ported to Dart from Kotlin by:
-// @author - Pedro Bissonho
 class ProviderDefinition<T> {
   final ScopeDefinition scopeDefinition;
   final Type primaryType;
   final Qualifier? qualifier;
   final ProviderCreateBase<T> definition;
   final Kind kind;
-  List<Type> secondaryTypes;
+  final List<Type> secondaryTypes;
   final Options options;
-  late Callback<T> onDispose;
+  late final Callback<T> onDispose;
 
   ProviderDefinition(
       {required this.scopeDefinition,
@@ -110,17 +106,17 @@ class ProviderDefinition<T> {
 
   @override
   String toString() {
-    var defKind = kind.toString();
-    var defType = "'${primaryType.toString()}'";
+    final defKind = kind.toString();
+    final defType = "'${primaryType.toString()}'";
 
-    var defName = qualifier != null ? 'qualifier:$qualifier' : '';
-    var defScope =
+    final defName = qualifier != null ? 'qualifier:$qualifier' : '';
+    final defScope =
         scopeDefinition.isRoot ? '' : 'scope:${scopeDefinition.qualifier}';
 
-    var defOtherTypes;
+    late final defOtherTypes;
 
     if (secondaryTypes.isNotEmpty) {
-      var typesAsString =
+      final typesAsString =
           secondaryTypes.map((type) => type.toString()).join(',').toString();
       defOtherTypes = 'binds:$typesAsString';
     } else {
@@ -148,10 +144,10 @@ class ProviderDefinition<T> {
   /// Definition Binding
   ///
   ProviderDefinition bind<S>() {
-    var newTypes = List<Type>.from([S]);
+    final newTypes = List<Type>.from([S]);
     newTypes.addAll(secondaryTypes);
 
-    var copyT = copy(secondaryTypes: newTypes);
+    final copyT = copy(secondaryTypes: newTypes);
     scopeDefinition.remove(this);
     scopeDefinition.save(copyT);
     return copyT;
@@ -163,7 +159,7 @@ class ProviderDefinition<T> {
   ProviderDefinition binds(List<Type> types) {
     types.addAll(secondaryTypes);
 
-    var copyT = copy(secondaryTypes: types);
+    final copyT = copy(secondaryTypes: types);
     scopeDefinition.remove(this);
     scopeDefinition.save(copyT);
     return copyT;
@@ -173,7 +169,7 @@ class ProviderDefinition<T> {
   /// OnCloseCallback is called when definition is closed.
   ProviderDefinition<T> onClose(void Function(T value) onDispose,
       {required void Function() onDisposeUnitialized}) {
-    var scopeDefinitionCopy = copy(
+    final scopeDefinitionCopy = copy(
         onDispose: Callback(
             callback: onDispose,
             callbackForUninitializedValue: onDisposeUnitialized));

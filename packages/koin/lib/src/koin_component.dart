@@ -22,9 +22,6 @@ import 'scope/scope.dart';
 ///
 /// KoinComponentMixin interface marker to bring Koin extensions features
 ///
-/// @author Arnaud Giuliani
-///
-
 mixin KoinComponentMixin {
   ///
   /// Get the associated Koin instance

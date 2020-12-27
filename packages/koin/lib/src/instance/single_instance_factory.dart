@@ -23,7 +23,6 @@ import 'instance_factory.dart';
 
 ///
 /// Single definition Instance holder
-// @author Arnaud Giuliani
 ///
 class SingleInstanceFactory<T> extends InstanceFactory<T> {
   SingleInstanceFactory(Koin koin, ProviderDefinition<T> beanDefinition)

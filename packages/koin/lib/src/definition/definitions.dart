@@ -9,7 +9,7 @@ class Definitions {
       ProviderCreateBase<T> providerCreate,
       ScopeDefinition scopeDefinition,
       Options options) {
-    var beanDefinition = createSingle<T>(
+    final beanDefinition = createSingle<T>(
         qualifier: qualifier,
         providerCreate: providerCreate,
         scopeDefinition: scopeDefinition,
@@ -56,7 +56,7 @@ class Definitions {
       ProviderCreateBase<T> providerCreate,
       ScopeDefinition scopeDefinition,
       Options options) {
-    var beanDefinition = createFactory<T>(
+    final beanDefinition = createFactory<T>(
         qualifier: qualifier,
         providerCreate: providerCreate,
         scopeDefinition: scopeDefinition,

@@ -16,17 +16,7 @@
 
 import 'package:meta/meta.dart';
 
-///
-/// Qualifier
-///
-/// @author - Arnaud GIULIANI
-///
-/// Ported to Dart from Kotlin by:
-/// @author - Pedro Bissonho
-///
-
 /// Help qualify a component
-
 @immutable
 abstract class Qualifier {
   final String _value;
@@ -41,7 +31,7 @@ abstract class Qualifier {
   int get hashCode => _value.hashCode;
 
   @override
-  bool operator ==(other) {
+  bool operator ==(Object other) {
     return other is Qualifier && other.value == value;
   }
 }
