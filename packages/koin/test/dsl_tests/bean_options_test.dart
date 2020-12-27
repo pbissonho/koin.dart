@@ -13,10 +13,10 @@ void main() {
     });
 
     var defA = app.getBeanDefinition(ComponentA);
-    expect(true, defA.options.isCreatedAtStart);
+    expect(true, defA?.options.isCreatedAtStart);
 
     var defB = app.getBeanDefinition(ComponentB);
-    expect(false, defB.options.isCreatedAtStart);
+    expect(false, defB?.options.isCreatedAtStart);
   });
 
   test('definition override', () {
@@ -27,9 +27,9 @@ void main() {
     });
 
     var defA = app.getBeanDefinition(ComponentA);
-    expect(false, defA.options.override);
+    expect(false, defA?.options.override);
 
     var defB = app.getBeanDefinition(ComponentB);
-    expect(true, defB.options.override);
+    expect(true, defB?.options.override);
   });
 }

@@ -47,7 +47,7 @@ abstract class Qualifier {
 }
 
 /// Give a String qualifier
-Qualifier named<T>([String name]) {
+Qualifier named<T>([String? name]) {
   if (name == null) {
     return TypeQualifier(T);
   }
@@ -55,7 +55,7 @@ Qualifier named<T>([String name]) {
 }
 
 /// Give a String qualifier
-Qualifier qualifier<T>([String name]) {
+Qualifier qualifier<T>([String? name]) {
   if (name == null) {
     return TypeQualifier(T);
   }

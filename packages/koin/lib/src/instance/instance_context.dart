@@ -10,9 +10,9 @@ import '../koin_dart.dart';
 class InstanceContext {
   final Koin koin;
   final Scope scope;
-  Parameter parameter;
+  Parameter? parameter;
 
-  InstanceContext({this.koin, this.scope, this.parameter}) {
+  InstanceContext({required this.koin, required this.scope, this.parameter}) {
     parameter ??= emptyParameter();
   }
 }

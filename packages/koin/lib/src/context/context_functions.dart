@@ -7,7 +7,7 @@ import 'context_handler.dart';
 /// Start a Koin Application as StandAlone
 ///
 KoinApplication startKoin(Function(KoinApplication app) appDeclaration,
-    {KoinContext koinContext}) {
+    {KoinContext? koinContext}) {
   koinContext ??= GlobalContext();
   KoinContextHandler.register(koinContext);
   var koinApplication = KoinApplication.init();
@@ -21,7 +21,7 @@ KoinApplication startKoin(Function(KoinApplication app) appDeclaration,
 /// Start a Koin Application as StandAlone
 ///
 Future<void> asyncStartKoin(Function(KoinApplication app) appDeclaration,
-    {KoinContext koinContext}) async {
+    {KoinContext? koinContext}) async {
   await Future.microtask(() {
     startKoin(appDeclaration, koinContext: koinContext);
   });

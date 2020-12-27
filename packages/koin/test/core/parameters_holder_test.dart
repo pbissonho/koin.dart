@@ -2,7 +2,7 @@ import 'package:koin/internals.dart';
 import 'package:test/test.dart';
 
 void main() {
-  Parameter definitionParameter;
+  late Parameter definitionParameter;
 
   setUp(() {
     definitionParameter = Parameter(50);

@@ -24,8 +24,8 @@ class Counter implements CounterInterface {
 }
 
 class MyAppMixin with KoinComponentMixin {
-  TaskView tasksView;
-  TaskPresenter taskPresenter;
+  late final TaskView tasksView;
+  late final TaskPresenter taskPresenter;
 
   MyAppMixin() {
     tasksView = get();
@@ -42,7 +42,7 @@ class MyAppMixin with KoinComponentMixin {
 }
 
 class CounterAppMixinWithParams with KoinComponentMixin {
-  Counter counter;
+  late final Counter counter;
 
   CounterAppMixinWithParams() {
     counter = getWithParam<Counter, int>(10);
@@ -138,8 +138,8 @@ void main() {
 
       var myApp = CounterAppMixinWithParams();
 
-      expect(myApp.testInject().value.value, 30);
-      expect(myApp.testInject().value.value,
+      expect(myApp.testInject().value?.value, 30);
+      expect(myApp.testInject().value?.value,
           koin.getWithParam<Counter, int>(30).value);
       stopKoin();
     });

@@ -32,11 +32,11 @@ mixin KoinComponentMixin {
   ///
   Koin getKoin() => KoinContextHandler.get();
 
-  T get<T>([Qualifier qualifier]) {
+  T get<T>([Qualifier? qualifier]) {
     return getKoin().get<T>(qualifier);
   }
 
-  T getWithParam<T, P>(P param, {Qualifier qualifier}) {
+  T getWithParam<T, P>(P param, {Qualifier? qualifier}) {
     return getKoin().getWithParam<T, P>(param);
   }
 
@@ -45,14 +45,14 @@ mixin KoinComponentMixin {
   /// @param qualifier
   /// @param parameters
   ///
-  Lazy<T> inject<T>([Qualifier qualifier]) {
+  Lazy<T> inject<T>([Qualifier? qualifier]) {
     return getKoin().inject<T>(qualifier);
   }
 
   ///
   /// Lazy inject instance from Koin
   ///
-  Lazy<T> injectWithParam<T, P>(P param, {Qualifier qualifier}) {
+  Lazy<T> injectWithParam<T, P>(P param, {Qualifier? qualifier}) {
     return getKoin().injectWithParam<T, P>(param, qualifier: qualifier);
   }
 
@@ -60,14 +60,14 @@ mixin KoinComponentMixin {
   /// Get instance instance from Koin by Primary Type P, as secondary type S
   /// @param parameters
   ///
-  S bind<S, P>([Qualifier qualifier]) {
+  S bind<S, P>([Qualifier? qualifier]) {
     return getKoin().bind<S, P>();
   }
 
   ///
   /// Get instance instance from Koin by Primary Type K, as secondary type S
   /// @param parameters
-  S bindWithParam<S, K, P>(P param, {Qualifier qualifier}) {
+  S bindWithParam<S, K, P>(P param, {Qualifier? qualifier}) {
     return getKoin().bindWithParam<S, K, P>(param, qualifier: qualifier);
   }
 }
@@ -78,11 +78,11 @@ mixin ScopedComponentMixin {
   ///
   Scope get componentScope;
 
-  T get<T>([Qualifier qualifier]) {
+  T get<T>([Qualifier? qualifier]) {
     return componentScope.get<T>(qualifier);
   }
 
-  T getWithParam<T, P>(P param, {Qualifier qualifier}) {
+  T getWithParam<T, P>(P param, {Qualifier? qualifier}) {
     return componentScope.getWithParam<T, P>(param, qualifier: qualifier);
   }
 
@@ -91,14 +91,14 @@ mixin ScopedComponentMixin {
   /// @param qualifier
   /// @param parameters
   ///
-  Lazy<T> inject<T>([Qualifier qualifier]) {
+  Lazy<T> inject<T>([Qualifier? qualifier]) {
     return componentScope.inject<T>(qualifier);
   }
 
   ///
   /// Lazy inject instance from Koin
   ///
-  Lazy<T> injectWithParam<T, P>(P param, {Qualifier qualifier}) {
+  Lazy<T> injectWithParam<T, P>(P param, {Qualifier? qualifier}) {
     return componentScope.injectWithParam<T, P>(param, qualifier: qualifier);
   }
 
@@ -106,7 +106,7 @@ mixin ScopedComponentMixin {
   /// Get instance instance from Koin by Primary Type P, as secondary type S
   /// @param parameters
   ///
-  S bind<S, P>([Qualifier qualifier]) {
+  S bind<S, P>([Qualifier? qualifier]) {
     return componentScope.bind<S, P>(qualifier);
   }
 

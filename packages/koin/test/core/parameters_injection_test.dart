@@ -39,7 +39,7 @@ void main() {
 
     var a = app.koin.injectWithParam<MySingle, int>(42);
 
-    expect(a.value.id, 42);
+    expect(a.value?.id, 42);
   });
 
   test('can create a scoped with parameters', () {
@@ -58,7 +58,7 @@ void main() {
     var lazyA = scope.injectWithParam<MySingle, int>(42);
 
     expect(a.id, 42);
-    expect(lazyA.value.id, 42);
+    expect(lazyA.value?.id, 42);
   });
 
   test('can get a single created with parameters - no need of give it again',
@@ -89,7 +89,7 @@ void main() {
 
     expect(a.id, 42);
     expect(b.id, 43);
-    expect(lazyB().id, 43);
+    expect(lazyB()?.id, 43);
   });
 
   test('can create a factories scoped with parameters', () {

@@ -5,7 +5,7 @@ import 'provider_definition.dart';
 
 class Definitions {
   static ProviderDefinition<T> saveSingle<T>(
-      Qualifier qualifier,
+      Qualifier? qualifier,
       ProviderCreateBase<T> providerCreate,
       ScopeDefinition scopeDefinition,
       Options options) {
@@ -13,17 +13,18 @@ class Definitions {
         qualifier: qualifier,
         providerCreate: providerCreate,
         scopeDefinition: scopeDefinition,
-        options: options);
+        options: options,
+        secondaryTypes: []);
     scopeDefinition.save(beanDefinition);
     return beanDefinition;
   }
 
   static ProviderDefinition<T> createSingle<T>(
-      {Qualifier qualifier,
-      ProviderCreateBase<T> providerCreate,
-      ScopeDefinition scopeDefinition,
-      Options options,
-      List<Type> secondaryTypes}) {
+      {Qualifier? qualifier,
+      required ProviderCreateBase<T> providerCreate,
+      required ScopeDefinition scopeDefinition,
+      required Options options,
+      required List<Type> secondaryTypes}) {
     return ProviderDefinition<T>(
         scopeDefinition: scopeDefinition,
         primaryType: T,
@@ -35,11 +36,11 @@ class Definitions {
   }
 
   static ProviderDefinition<T> createFactory<T>(
-      {Qualifier qualifier,
-      ProviderCreateBase<T> providerCreate,
-      ScopeDefinition scopeDefinition,
-      Options options,
-      List<Type> secondaryTypes}) {
+      {Qualifier? qualifier,
+      required ProviderCreateBase<T> providerCreate,
+      required ScopeDefinition scopeDefinition,
+      required Options options,
+      required List<Type> secondaryTypes}) {
     return ProviderDefinition<T>(
         scopeDefinition: scopeDefinition,
         primaryType: T,
@@ -51,7 +52,7 @@ class Definitions {
   }
 
   static ProviderDefinition<T> saveFactory<T>(
-      Qualifier qualifier,
+      Qualifier? qualifier,
       ProviderCreateBase<T> providerCreate,
       ScopeDefinition scopeDefinition,
       Options options) {
@@ -59,7 +60,8 @@ class Definitions {
         qualifier: qualifier,
         providerCreate: providerCreate,
         scopeDefinition: scopeDefinition,
-        options: options);
+        options: options,
+        secondaryTypes: []);
     scopeDefinition.save(beanDefinition);
     return beanDefinition;
   }

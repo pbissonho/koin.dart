@@ -1,5 +1,4 @@
 import 'package:koin/koin.dart';
-import 'package:koin/src/internal/exceptions.dart';
 import 'package:test/test.dart';
 
 import '../components.dart';
@@ -14,14 +13,6 @@ void main() {
     var a2 = koin.get<ComponentA>();
 
     expect(a, a2);
-  });
-
-  test('not can resolve a single with null definition instance', () {
-    var koin = koinApplication((app) {
-      app.module(module()..single<ComponentA>((s) => null));
-    }).koin;
-
-    expect(() => koin.get<ComponentA>(), throwsA(isA<IllegalStateException>()));
   });
 
   test('can resolve all ComponentInterface1', () {
@@ -50,15 +41,6 @@ void main() {
 
     var a = koin.getOrNull<ComponentA>(null, null);
     expect(a, null);
-  });
-
-  test('cannot inject a single', () {
-    var koin = koinApplication((app) {
-      app.module(module());
-    }).koin;
-
-    var a = koin.injectOrNull<ComponentA>(null, null);
-    expect(a.value, null);
   });
 
   test('can lazy resolve a single', () {
@@ -130,6 +112,8 @@ void main() {
     expect(koin.get<ComponentInterface1>(named('2')), isA<Component2>());
   });
 
+  // TODO
+  /* 
   test('can resolve a single with type', () {
     var koin = koinApplication((app) {
       app.module(module()..single((s) => ComponentA()));
@@ -165,5 +149,5 @@ void main() {
 
     expect(a, a2);
     expect(a3, isNull);
-  });
+  });*/
 }

@@ -58,7 +58,7 @@ abstract class Logger {
   factory Logger.empty(Level level) => _EmptyLogger(level);
   factory Logger.print(Level level) => _PrintLogger(level);
 
-  void debug(String msg, {Level level}) {
+  void debug(String msg) {
     log(Level.debug, msg);
   }
 
@@ -102,7 +102,7 @@ class _PrintLogger extends Logger {
     print('[${parse(level)}] $koinTage $msg');
   }
 
-  String parse(Object enumItem) {
+  String parse(Object? enumItem) {
     if (enumItem == null) return 'LogLevel';
     return enumItem.toString().split('.')[1];
   }

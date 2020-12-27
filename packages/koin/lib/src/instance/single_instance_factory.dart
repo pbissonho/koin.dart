@@ -29,22 +29,25 @@ class SingleInstanceFactory<T> extends InstanceFactory<T> {
   SingleInstanceFactory(Koin koin, ProviderDefinition<T> beanDefinition)
       : super(koin: koin, beanDefinition: beanDefinition);
 
-  T _state;
+  T? _state;
 
   bool get created => _state != null;
 
   @override
   void dispose() {
     if (created) {
-      beanDefinition?.onDispose?.runCallback(_state);
+      if (_state != null) {
+        beanDefinition.onDispose.runCallback(_state!);
+      }
+    } else {
+      beanDefinition.onDispose.runCallbackUninitializedValue();
     }
-    koin.loggerInstanceObserver?.onDispose(this);
-    _state = null;
+    koin.loggerObserver.onDispose(this);
   }
 
   @override
   T createState(InstanceContext context) {
-    if (_state != null) return _state;
+    if (_state != null) return _state!;
 
     final created = super.createState(context);
     if (created == null) {
@@ -59,6 +62,6 @@ class SingleInstanceFactory<T> extends InstanceFactory<T> {
     if (!created) {
       _state = createState(context);
     }
-    return _state;
+    return _state!;
   }
 }

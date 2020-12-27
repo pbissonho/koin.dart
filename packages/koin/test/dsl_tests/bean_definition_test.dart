@@ -17,7 +17,7 @@ import '../extensions/koin_application_ext.dart';
 
 void main() {
   Koin koin;
-  Scope rootScope;
+  late Scope rootScope;
 
   setUp(() {
     koin = koinApplication((app) {}).koin;
@@ -29,12 +29,14 @@ void main() {
         providerCreate:
             ProviderCreateDefinition<ComponentA>((s) => ComponentA()),
         scopeDefinition: rootScope.scopeDefinition,
-        options: Options());
+        options: Options(),
+        secondaryTypes: []);
     var def2 = Definitions.createSingle(
         providerCreate:
             ProviderCreateDefinition<ComponentA>((s) => ComponentA()),
         scopeDefinition: rootScope.scopeDefinition,
-        options: Options());
+        options: Options(),
+        secondaryTypes: []);
 
     expect(def1, def2);
   });
@@ -44,7 +46,8 @@ void main() {
         providerCreate:
             ProviderCreateDefinition<ComponentA>((s) => ComponentA()),
         scopeDefinition: rootScope.scopeDefinition,
-        options: Options());
+        options: Options(),
+        secondaryTypes: []);
 
     expect(def1.scopeDefinition, rootScope.scopeDefinition);
     expect(def1.kind, Kind.single);
@@ -55,12 +58,14 @@ void main() {
         providerCreate:
             ProviderCreateDefinition<ComponentA>((s) => ComponentA()),
         scopeDefinition: rootScope.scopeDefinition,
-        options: Options());
+        options: Options(),
+        secondaryTypes: []);
     var def2 = Definitions.createSingle(
         providerCreate:
             ProviderCreateDefinition<ComponentA>((s) => ComponentA()),
         scopeDefinition: rootScope.scopeDefinition,
-        options: Options());
+        options: Options(),
+        secondaryTypes: []);
 
     expect(def1, def2);
   });
@@ -73,10 +78,10 @@ void main() {
     });
 
     var defA = app.getBeanDefinition(ComponentA);
-    expect(Kind.single, defA.kind);
+    expect(Kind.single, defA?.kind);
 
     var defB = app.getBeanDefinition(ComponentB);
-    expect(Kind.factory, defB.kind);
+    expect(Kind.factory, defB?.kind);
   });
 
   test('definition name', () {
@@ -89,10 +94,10 @@ void main() {
     });
 
     var defA = app.getBeanDefinition(ComponentA);
-    expect(name, defA.qualifier);
+    expect(name, defA?.qualifier);
 
     var defB = app.getBeanDefinition(ComponentB);
-    expect(defB.qualifier, null);
+    expect(defB?.qualifier, null);
   });
 
   test('definition function', () {
@@ -101,10 +106,8 @@ void main() {
     });
 
     app.getBeanDefinition(ComponentA);
-    var instance = app.getInstanceFactory(ComponentA).get(InstanceContext(
-        koin: app.koin,
-        scope: rootScope,
-        parameter: emptyParameter()));
+    var instance = app.getInstanceFactory(ComponentA)?.get(InstanceContext(
+        koin: app.koin, scope: rootScope, parameter: emptyParameter()));
 
     expect(instance, app.koin.get<ComponentA>());
   });

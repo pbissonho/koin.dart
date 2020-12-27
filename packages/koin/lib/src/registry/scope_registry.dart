@@ -37,8 +37,8 @@ class ScopeRegistry {
   KtHashMap<String, ScopeDefinition> scopeDefinitions = KtHashMap.empty();
   final _scopes = KtHashMap<String, Scope>.empty();
 
-  Scope _rootScope;
-  Scope get rootScope => _rootScope;
+  Scope? _rootScope;
+  Scope get rootScope => _rootScope!;
 
   /// Returns the number of definitions adding up from all scopes
   int size() {
@@ -110,7 +110,7 @@ class ScopeRegistry {
         ScopeDefinition.rootScopeId, ScopeDefinition.rootScopeQualifier, null);
   }
 
-  Scope getScopeOrNull(String scopeId) {
+  Scope? getScopeOrNull(String scopeId) {
     return _scopes[scopeId];
   }
 
@@ -146,7 +146,7 @@ class ScopeRegistry {
     if (_rootScope == null) {
       links = emptyList();
     } else {
-      links = listOf(_rootScope);
+      links = listOf(_rootScope!);
     }
     scope.create(links);
     return scope;
@@ -164,7 +164,6 @@ class ScopeRegistry {
     clearScopes();
     _scopes.clear();
     scopeDefinitions.clear();
-    //  _rootScopeDefinition = null;
     _rootScope = null;
   }
 

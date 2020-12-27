@@ -30,7 +30,7 @@ class FactoryInstanceFactory<T> extends InstanceFactory<T> {
       : super(koin: koin, beanDefinition: beanDefinition);
   @override
   void dispose() {
-    beanDefinition.onDispose.runCallback(null);
+    beanDefinition.onDispose.runCallbackUninitializedValue();
   }
 
   @override

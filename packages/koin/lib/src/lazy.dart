@@ -1,4 +1,7 @@
-typedef Initializer<T> = T Function();
+typedef Initializer<T> = T? Function();
+
+// TODO
+// Remover a class Lazy
 
 /// A class that provides lazy object initialization.
 ///
@@ -23,7 +26,7 @@ typedef Initializer<T> = T Function();
 ///  ```
 ///
 class Lazy<T> {
-  T _value;
+  T? _value;
 
   final Initializer<T> _initializer;
 
@@ -32,20 +35,20 @@ class Lazy<T> {
   ///
   /// Get the lazily initialized value.
   ///
-  T get value => _resolve();
+  T? get value => _resolve();
 
   ///
   /// Returns whether the value has already been initialized or not.
   ///
   bool get isInitialized => _value != null;
 
-  T _resolve() {
+  T? _resolve() {
     if (_value != null) return _value;
     _value = _initializer();
     return _value;
   }
 
-  T call() => _resolve();
+  T? call() => _resolve();
 
   @override
   int get hashCode => _value.hashCode;

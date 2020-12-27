@@ -33,6 +33,6 @@ void main() {
     var bInject = koin.inject<ComponentB>();
 
     expect(a, b.a);
-    expect(aInject(), bInject().a);
+    expect(aInject(), bInject()?.a);
   });
 }

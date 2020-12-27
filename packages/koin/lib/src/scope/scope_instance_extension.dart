@@ -10,7 +10,7 @@ extension ScopeExt<T> on T {
 
   Scope get scope => getOrCreateScope();
 
-  Scope getOrCreateScope([Koin koin]) {
+  Scope getOrCreateScope([Koin? koin]) {
     koin ??= KoinContextHandler.get();
     var currentScope = getScopeOrNull(koin);
 
@@ -21,12 +21,12 @@ extension ScopeExt<T> on T {
     return currentScope;
   }
 
-  Scope getScopeOrNull([Koin koin]) {
+  Scope? getScopeOrNull([Koin? koin]) {
     koin ??= KoinContextHandler.get();
     return koin.getScopeOrNull((scopeId));
   }
 
-  Scope createScope([Koin koin]) {
+  Scope createScope([Koin? koin]) {
     koin ??= KoinContextHandler.get();
     return koin.createScopeWithQualifier(scopeId, scopeName, this);
   }

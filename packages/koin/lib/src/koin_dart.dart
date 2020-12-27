@@ -22,7 +22,7 @@ import 'koin_component.dart';
 import 'logger.dart';
 import 'module.dart';
 import 'package:kt_dart/kt.dart';
-import 'observer.dart';
+import 'observer/observer.dart';
 import 'scope/scope_definition.dart';
 import '../scope_instance.dart';
 import 'lazy.dart';
@@ -38,9 +38,9 @@ import 'scope/scope.dart';
 /// @author - Pedro Bissonho
 ///
 class Koin with ScopedComponentMixin {
-  ScopeRegistry _scopeRegistry;
-  Logger logger;
-  LoggerInstanceObserver loggerInstanceObserver;
+  late final ScopeRegistry _scopeRegistry;
+  late Logger logger;
+  late LoggerObserver loggerObserver;
   final KtHashSet<ScopeObserver> scopeObserves =
       KtHashSet<ScopeObserver>.empty();
   final KtHashSet<Module> _modules = KtHashSet<Module>.empty();
@@ -54,42 +54,45 @@ class Koin with ScopedComponentMixin {
   Koin() {
     _scopeRegistry = ScopeRegistry(this);
     logger = Logger.empty(Level.debug);
-    loggerInstanceObserver = LoggerInstanceObserver(this);
+    loggerObserver = LoggerObserver(this);
   }
 
   ///
   /// Lazy inject a Koin instance if available.
   /// Return Lazy instance of type T or null.
   ////
-  Lazy<T> injectOrNull<T>(Qualifier qualifier, Parameter parameter) {
-    return _scopeRegistry.rootScope.injectOrNull(parameter, qualifier);
+  Lazy<T>? injectOrNull<T>(Qualifier? qualifier) {
+    return _scopeRegistry.rootScope.injectOrNull(qualifier: qualifier);
   }
 
   ///
   /// Get a Koin instance if available with return instance of type T or null.
   ///
-  T getOrNull<T>([Qualifier qualifier, Parameter parameter]) {
+  T? getOrNull<T>([Qualifier? qualifier, Parameter? parameter]) {
     return _scopeRegistry.rootScope.getOrNull<T>(
       qualifier,
       parameter,
     );
   }
 
+  // TODO
+  // VALIDAR
+  /*
   ///
   /// Get a Koin instance
   /// @return instance of type T
   ///
-  T getWithType<T>([Type type, Qualifier qualifier, Parameter parameter]) {
+  T getWithType<T>([Type type, Qualifier? qualifier, Parameter? parameter]) {
     return _scopeRegistry.rootScope.getWithType<T>(type, qualifier, parameter);
   }
 
   ///
   /// Get a Koin instance if available
-  T getOrNullWithType<T>(
-      [Type type, Qualifier qualifier, Parameter parameter]) {
+  T? getOrNullWithType<T>(
+      [Type? type, Qualifier? qualifier, Parameter? parameter]) {
     return _scopeRegistry.rootScope
         .getWithTypeOrNull(type, qualifier, parameter);
-  }
+  }*/
 
   ///
   /// Declare a component definition from the given instance
@@ -97,7 +100,7 @@ class Koin with ScopedComponentMixin {
   /// the given instance
   ///
   void declare<T>(T instance,
-      {Qualifier qualifier,
+      {Qualifier? qualifier,
       List<Type> secondaryTypes = const <Type>[],
       bool override = false}) {
     var firstType = T;
@@ -127,7 +130,7 @@ class Koin with ScopedComponentMixin {
   /// @return instance of type [S]
   ///
   S bindWithType<S>(Type secondaryType, Type primaryType,
-      [Parameter parameter]) {
+      [Parameter? parameter]) {
     return _scopeRegistry.rootScope
         .bindWithType(primaryType, secondaryType, parameter);
   }
@@ -138,9 +141,7 @@ class Koin with ScopedComponentMixin {
   }
 
   void createContextIfNeeded() {
-    if (_scopeRegistry.rootScope == null) {
-      _scopeRegistry.createRootScope();
-    }
+    _scopeRegistry.createRootScope();
   }
 
   ///
@@ -207,7 +208,7 @@ class Koin with ScopedComponentMixin {
   /// get a scope instance
   /// @param scopeId
   ///
-  Scope getScopeOrNull(String scopeId) {
+  Scope? getScopeOrNull(String scopeId) {
     return _scopeRegistry.getScopeOrNull(scopeId);
   }
 
@@ -261,7 +262,7 @@ class Koin with ScopedComponentMixin {
   Scope get componentScope => _scopeRegistry.rootScope;
 
   @override
-  S bindWithParam<S, K, P>(P param, {Qualifier qualifier}) {
+  S bindWithParam<S, K, P>(P param, {Qualifier? qualifier}) {
     return _scopeRegistry.rootScope
         .bindWithParam<S, K, P>(param, qualifier: qualifier);
   }

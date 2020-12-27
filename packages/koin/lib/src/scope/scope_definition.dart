@@ -11,7 +11,7 @@ class ScopeDefinition {
   final bool isRoot;
   final KtHashSet<ProviderDefinition> definitions = KtHashSet.empty();
 
-  ScopeDefinition(this.qualifier, {this.isRoot});
+  ScopeDefinition(this.qualifier, {this.isRoot = false});
 
   void save(ProviderDefinition beanDefinition, {bool forceOverride = false}) {
     if (definitions.contains(beanDefinition)) {
@@ -34,8 +34,8 @@ class ScopeDefinition {
   int size() => definitions.size;
 
   ProviderDefinition<T> saveNewDefinition<T>(
-      T instance, Qualifier qualifier, List<Type> secondaryTypes,
-      {bool override}) {
+      T instance, Qualifier? qualifier, List<Type> secondaryTypes,
+      {bool override = false}) {
     var type = T;
 
     var found =

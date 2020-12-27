@@ -10,12 +10,12 @@ extension KoinApplicationEx<T> on KoinApplication {
     expect(koin.scopeRegistry.size(), count);
   }
 
-  ProviderDefinition<T> getBeanDefinition(Type type) {
+  ProviderDefinition? getBeanDefinition(Type type) {
     return koin.scopeRegistry.rootScope.scopeDefinition.definitions
         .firstOrNull((it) => it.primaryType == type);
   }
 
-  InstanceFactory getInstanceFactory(Type type) {
+  InstanceFactory? getInstanceFactory(Type type) {
     return koin.scopeRegistry.rootScope
         .getAllInstanceFactory()
         .firstOrNull((it) => it.beanDefinition.primaryType == type);
@@ -23,12 +23,12 @@ extension KoinApplicationEx<T> on KoinApplication {
 }
 
 extension ScopeEx<T> on Scope {
-  ProviderDefinition<T> getBeanDefinition(Type type) {
+  ProviderDefinition? getBeanDefinition(Type type) {
     return scopeDefinition.definitions
         .firstOrNull((it) => it.primaryType == type);
   }
 
-  InstanceFactory getInstanceFactory(Type type) {
+  InstanceFactory? getInstanceFactory(Type type) {
     return getAllInstanceFactory()
         .firstOrNull((it) => it.beanDefinition.primaryType == type);
   }

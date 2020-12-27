@@ -28,7 +28,7 @@ import 'dart:core';
 class Parameter<T> {
   final T parameter;
 
-  Parameter(this.parameter);
+  const Parameter(this.parameter);
 
   T get() => parameter;
 }

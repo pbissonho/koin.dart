@@ -87,7 +87,7 @@ class Module {
   ///```
   ProviderDefinition<T> scopeOne<T, TScope>(
     ProviderCreate<T> create, {
-    Qualifier qualifier,
+    Qualifier? qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
@@ -107,7 +107,7 @@ class Module {
   ///
   ProviderDefinition<T> single<T>(
     ProviderCreate<T> create, {
-    Qualifier qualifier,
+    Qualifier? qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
@@ -123,7 +123,7 @@ class Module {
   ///
   ProviderDefinition<T> singleWithParam<T, A>(
     ProviderCreateParam<T, A> create, {
-    Qualifier qualifier,
+    Qualifier? qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
@@ -134,7 +134,7 @@ class Module {
         makeOptions(override: override, createdAtStart: createdAtStart));
   }
 
-  Options makeOptions({bool override, bool createdAtStart = false}) {
+  Options makeOptions({bool override = false, bool createdAtStart = false}) {
     return Options(
         isCreatedAtStart: createAtStart || createdAtStart,
         override: this.override || override);
@@ -145,7 +145,7 @@ class Module {
   ///
   ProviderDefinition<T> factory<T>(
     ProviderCreate<T> create, {
-    Qualifier qualifier,
+    Qualifier? qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
@@ -161,7 +161,7 @@ class Module {
   ///
   ProviderDefinition<T> factoryWithParam<T, A>(
     ProviderCreateParam<T, A> create, {
-    Qualifier qualifier,
+    Qualifier? qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {

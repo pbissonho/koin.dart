@@ -18,6 +18,7 @@ import 'measure.dart';
 import 'koin_dart.dart';
 import 'logger.dart';
 import 'module.dart';
+import 'observer/empty_logger_instance_observer.dart';
 
 //
 /// Koin Application
@@ -88,8 +89,8 @@ class KoinApplication {
   /// Set Koin Logger
   /// @param logger - logger
   ///
-  KoinApplication emptyInstanceLoggerObserver() {
-    koin.loggerInstanceObserver = null;
+  KoinApplication emptyLoggerObserver() {
+    koin.loggerObserver = EmptyLoggerObserver();
     return this;
   }
 

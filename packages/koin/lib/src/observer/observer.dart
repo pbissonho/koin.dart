@@ -1,7 +1,7 @@
-import 'instance/instance_factory.dart';
-import 'koin_dart.dart';
-import 'logger.dart';
-import 'scope/scope.dart';
+import '../../instance_factory.dart';
+import '../scope/scope.dart';
+
+import '../../koin.dart';
 
 abstract class ScopeObserver {
   void onCreate(Scope scope);
@@ -14,25 +14,26 @@ abstract class InstanceObserver {
   void onResolve(String type, String duration);
 }
 
-class LoggerInstanceObserver implements InstanceObserver {
-  final Koin koin;
+class LoggerObserver implements InstanceObserver {
+  final Koin _koin;
 
-  LoggerInstanceObserver(this.koin);
+  LoggerObserver(this._koin);
 
   @override
   void onDispose(InstanceFactory instanceFactory) {
-    koin.logger.isAtdebug(
+    _koin.logger.isAtdebug(
         '''| dispose instance for ${instanceFactory.beanDefinition}''',
         Level.debug);
   }
 
+  @override
   void onResolve(String type, String duration) {
-    koin.logger.debug("+- get '${type.toString()} in $duration ms'");
+    _koin.logger.debug("+- get '${type.toString()} in $duration ms'");
   }
 
   @override
   void onCreate(InstanceFactory instanceFactory) {
-    koin.logger.isAtdebug(
+    _koin.logger.isAtdebug(
         '''| create instance for ${instanceFactory.beanDefinition}''',
         Level.debug);
   }
