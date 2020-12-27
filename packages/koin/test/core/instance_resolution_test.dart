@@ -43,17 +43,6 @@ void main() {
     expect(a, null);
   });
 
-  test('can lazy resolve a single', () {
-    var koin = koinApplication((app) {
-      app.module(module()..single((s) => ComponentA()));
-    }).koin;
-
-    var a = koin.inject<ComponentA>();
-    var ab = koin.get<ComponentA>();
-
-    expect(a.value, ab);
-  });
-
   test('can lazy resolve a single by name', () {
     var component = ComponentA();
 

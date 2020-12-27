@@ -32,14 +32,4 @@ class CofW {
   CofW(this.g);
 }
 
-class AInj extends KoinComponent {
-  late Lazy<B> b;
-  late Lazy<C> c;
-
-  AInj() {
-    b = inject();
-    c = inject();
-  }
-}
-
 void main() {}

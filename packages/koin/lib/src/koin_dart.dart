@@ -25,7 +25,6 @@ import 'package:kt_dart/kt.dart';
 import 'observer/observer.dart';
 import 'scope/scope_definition.dart';
 import '../scope_instance.dart';
-import 'lazy.dart';
 import 'qualifier.dart';
 import 'registry/scope_registry.dart';
 import 'scope/scope.dart';
@@ -55,14 +54,6 @@ class Koin with ScopedComponentMixin {
     _scopeRegistry = ScopeRegistry(this);
     logger = Logger.empty(Level.debug);
     loggerObserver = LoggerObserver(this);
-  }
-
-  ///
-  /// Lazy inject a Koin instance if available.
-  /// Return Lazy instance of type T or null.
-  ////
-  Lazy<T>? injectOrNull<T>(Qualifier? qualifier) {
-    return _scopeRegistry.rootScope.injectOrNull(qualifier: qualifier);
   }
 
   ///

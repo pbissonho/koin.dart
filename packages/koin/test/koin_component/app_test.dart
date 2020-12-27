@@ -32,10 +32,6 @@ class MyAppMixin with KoinComponentMixin {
     taskPresenter = get();
   }
 
-  Lazy<TaskView> testInject() {
-    return inject<TaskView>();
-  }
-
   TaskViewInterface testBind() {
     return bind<TaskViewInterface, TaskView>();
   }
@@ -46,10 +42,6 @@ class CounterAppMixinWithParams with KoinComponentMixin {
 
   CounterAppMixinWithParams() {
     counter = getWithParam<Counter, int>(10);
-  }
-
-  Lazy<Counter> testInject() {
-    return injectWithParam<Counter, int>(30);
   }
 
   CounterInterface testBind() {
@@ -70,19 +62,6 @@ void main() {
       var myApp = MyAppMixin();
       expect(myApp.taskPresenter.view, myApp.tasksView);
       expect(myApp.taskPresenter, koin.get<TaskPresenter>());
-      stopKoin();
-    });
-
-    test('can inject with KoinComponentMixin', () {
-      var koin = startKoin((appX) {
-        appX.printLogger();
-        appX.module(Module()
-          ..single((s) => TaskView()).bind<TaskViewInterface>()
-          ..single((s) => TaskPresenter(s.get())));
-      }).koin;
-
-      var myApp = MyAppMixin();
-      expect(myApp.testInject().value, koin.get<TaskView>());
       stopKoin();
     });
 
@@ -125,22 +104,6 @@ void main() {
       var myApp = CounterAppMixinWithParams();
       expect(myApp.counter.value, 10);
       expect(myApp.counter.value, koin.getWithParam<Counter, int>(10).value);
-      stopKoin();
-    });
-
-    test('can inject with KoinComponentMixin', () {
-      var koin = startKoin((appX) {
-        appX.printLogger();
-        appX.module(Module()
-          ..factoryWithParam<Counter, int>((s, value) => Counter(value))
-              .bind<CounterInterface>());
-      }).koin;
-
-      var myApp = CounterAppMixinWithParams();
-
-      expect(myApp.testInject().value?.value, 30);
-      expect(myApp.testInject().value?.value,
-          koin.getWithParam<Counter, int>(30).value);
       stopKoin();
     });
 

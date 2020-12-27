@@ -24,7 +24,6 @@ import '../registry/instance_registry.dart';
 import 'package:kt_dart/kt.dart';
 
 import '../definition/provider_definition.dart';
-import '../lazy.dart';
 import '../koin_dart.dart';
 
 import '../logger.dart';
@@ -94,39 +93,6 @@ class Scope with ScopedComponentMixin {
     } else {
       throw IllegalStateException("Can't remove scope link to a root scope");
     }
-  }
-
-  Lazy<T> inject<T>([
-    Qualifier? qualifier,
-  ]) {
-    return lazy<T>(() {
-      final type = T;
-      return getWithType(type, qualifier, emptyParameter());
-    });
-  }
-
-  Lazy<T> injectWithParam<T, P>(
-    P parameter, {
-    Qualifier? qualifier,
-  }) {
-    return lazy<T>(() {
-      final type = T;
-      return getWithType(type, qualifier, Parameter(parameter));
-    });
-  }
-
-  ///
-  /// Lazy inject a Koin instance if available
-  ///@param qualifier
-  /// @param scope
-  /// @param parameters
-  ///
-  ///@return Lazy instance of type T or null
-  ///
-  Lazy<T>? injectOrNull<T>({
-    Qualifier? qualifier,
-  }) {
-    return lazy<T>(() => getOrNull<T>(qualifier));
   }
 
   T get<T>([Qualifier? qualifier]) {
@@ -358,15 +324,11 @@ No definition found for class:'$type'$qualifierString. Check your definitions!""
   }
 
   void disposeInstances(ScopeDefinition scopeDefinition) {
-    scopeDefinition.definitions.forEach((definition) {
-      _instanceRegistry.disposeDefinition(definition);
-    });
+    scopeDefinition.definitions.forEach(_instanceRegistry.disposeDefinition);
   }
 
   void loadDefinitions(ScopeDefinition scopeDefinition) {
-    scopeDefinition.definitions.forEach((definition) {
-      _instanceRegistry.createDefinition(definition);
-    });
+    scopeDefinition.definitions.forEach(_instanceRegistry.createDefinition);
   }
 
   @override
