@@ -40,10 +40,10 @@ class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
     // Get the instance from root scope.
     CounterCubit counterSingle = get();
     // Get the factory instance of the scope defined for MyHomePage.
-    CounterCubit counterFactory = scopeContext
+    CounterCubit counterFactory = currentScope
         .getWithParam<CounterCubit, int>(50, qualifier: named("Fac"));
     //Get the singleton definition of the current instantiated scope for MyHomePage.
-    CounterCubit counterScoped = scopeContext.get<CounterCubit>();
+    CounterCubit counterScoped = currentScope.get<CounterCubit>();
     return ScopeProvider(
       scope: currentScope,
       child: Scaffold(
@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
                 // That allow to pass the current scope to another route.
                 Navigator.push(context, MaterialPageRoute(builder: (c) {
                   return ScopeProvider(
-                      scope: scopeContext, child: UseScopePage());
+                      scope: currentScope, child: UseScopePage());
                 }));
               },
             ),

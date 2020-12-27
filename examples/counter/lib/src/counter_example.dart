@@ -32,7 +32,7 @@ class _SimpleCounterPageState extends State<SimpleCounterPage>
         children: <Widget>[
           BlocBuilder<CounterCubit, int>(
               // Get the Counter of the scope instantiated for the SimpleCounterPage.
-              cubit: scopeContext.get<CounterCubit>(),
+              cubit: currentScope.get<CounterCubit>(),
               builder: (BuildContext context, state) => Text(state.toString())),
         ],
       )),
