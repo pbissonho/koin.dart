@@ -1,4 +1,8 @@
 
+## 0.14.2
+
+- Fix pub analysis issues
+
 ## 0.14.1
 - Update readme
 - Update dependencies
