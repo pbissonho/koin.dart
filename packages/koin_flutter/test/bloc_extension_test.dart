@@ -9,7 +9,7 @@ import 'widgets/bloc_extension/modules.dart';
 import 'widgets/bloc_extension/pages.dart';
 
 void main() {
-  Koin koin;
+  late Koin koin;
   group('bloc extension', () {
     setUp(() {
       koin = startKoin((app) {

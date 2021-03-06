@@ -27,21 +27,14 @@ class Counter {
 }
 
 class CounterPage extends StatefulWidget {
-  CounterPage({Key key}) : super(key: key);
+  CounterPage({Key? key}) : super(key: key);
 
   @override
   _MyCounterPageState createState() => _MyCounterPageState();
 }
 
 class _MyCounterPageState extends State<CounterPage> with ScopeStateMixin {
-  Counter counter;
-
-  @override
-  void initState() {
-    // Resolve the single counter instance
-    counter = get<Counter>();
-    super.initState();
-  }
+  late Counter counter = get<Counter>();
 
   @override
   Widget build(BuildContext context) {

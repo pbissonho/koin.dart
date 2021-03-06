@@ -62,10 +62,10 @@ class _ExamplesPageState extends State<ExamplesPage> {
 
 class ExampleButton extends StatefulWidget {
   const ExampleButton(
-      {Key key,
-      @required this.page,
-      @required this.exampleName,
-      @required this.modules})
+      {Key? key,
+      required this.page,
+      required this.exampleName,
+      required this.modules})
       : super(key: key);
   final Widget page;
   final String exampleName;
