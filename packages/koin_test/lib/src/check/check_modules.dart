@@ -21,12 +21,12 @@ import 'package:koin/internals.dart';
 import 'package:kt_dart/collection.dart';
 
 extension KoinApplicationExt on KoinApplication {
-  void checkModules(CheckParameters checkParameters) {
+  void checkModules(CheckParameters? checkParameters) {
     koin.checkModules(checkParameters);
   }
 }
 
-void checkModules(Level level, CheckParameters checkParameters,
+void checkModules(Level level, CheckParameters? checkParameters,
     Function(KoinApplication app) appDeclaration) {
   koinApplication(appDeclaration)
     ..logger(Logger.print(level))
@@ -37,10 +37,10 @@ extension KoinExt on Koin {
   ///
   /// Check all definition's dependencies - start all modules and check if definitions can run
   ///
-  void checkModules(CheckParameters checkParameters) {
+  void checkModules(CheckParameters? checkParameters) {
     logger.info('[Check] checking current modules ...');
 
-    var allParameters = makeParameters(checkParameters);
+    final allParameters = makeParameters(checkParameters);
     checkScopedDefinitions(allParameters);
 
     close();
@@ -49,11 +49,12 @@ extension KoinExt on Koin {
   }
 
   Map<CheckedComponent, Parameter> makeParameters(
-      CheckParameters checkParameters) {
-    var bindings = CheckParameters();
-    bindings.koin = this;
+      CheckParameters? checkParameters) {
+    final bindings = CheckParameters();
+    //bindings.koin = this;
 
-    bindings.creators = checkParameters.creators;
+    bindings.creators.clear();
+    bindings.addAll(checkParameters?.creators);
 
     return bindings.creators;
   }

@@ -74,24 +74,17 @@ void declareModule(Function(Module module) moduleDeclaration) {
 ///
 /// Declare a instance to be loaded in the global context of koin
 ///
-T declare<T>(T instance, [Qualifier qualifier]) {
+T declare<T>(T instance, [Qualifier? qualifier]) {
   var koin = KoinContextHandler.get();
   koin.declare(instance, qualifier: qualifier, override: true);
   return get(qualifier);
 }
 
 ///
-/// Lazy inject an instance from Koin in the test environment.
-///
-Lazy<T> inject<T>([Qualifier qualifier]) {
-  return KoinContextHandler.get().inject<T>(qualifier);
-}
-
-///
 /// Get an instance from Koin in the test environment.
 ///
 T get<T>([
-  Qualifier qualifier,
+  Qualifier? qualifier,
 ]) {
   return KoinContextHandler.get().get<T>(qualifier);
 }

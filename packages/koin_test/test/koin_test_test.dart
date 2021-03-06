@@ -1,6 +1,5 @@
 import 'package:koin/koin.dart';
 import 'package:koin_test/koin_test.dart';
-import 'package:mockito/mockito.dart';
 
 import 'package:test/test.dart';
 
@@ -37,9 +36,7 @@ class ServiceC {
   }
 }
 
-class ServiceMock extends Mock implements Service {}
-
-class ServiceFake extends Fake implements Service {
+class ServiceFake implements Service {
   @override
   String getName() {
     return 'FakeName';
@@ -105,6 +102,7 @@ void main() {
     }, throwsException);
   });
 
+  /*
   test('shoud return mock instance', () {
     declareModule((module) {
       module
@@ -123,7 +121,7 @@ void main() {
     expect(service, isNotNull);
     expect(service, isA<ServiceMock>());
     expect(service.getName(), 'MockName');
-  });
+  });*/
 
   test(('shoud return a Fake instance'), () {
     declareModule((module) {

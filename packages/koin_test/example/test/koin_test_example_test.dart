@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:koin/koin.dart';
 import 'package:koin_test/koin_test.dart';
-import 'package:mockito/mockito.dart';
 
 // Just a few services to exemplify.
 class ServiceA {
@@ -31,11 +30,9 @@ class ComponentCParam {
   ComponentCParam(this.firstName, this.lastName);
 }
 
-// Create a Mock for a particular service as usual.
-class ServiceAMock extends Mock implements ServiceA {}
-
 // Create a Fake for a particular service as usual.
-class ServiceFake extends Fake implements ServiceA {
+class ServiceFake implements ServiceA {
+  @override
   String getName() {
     return 'FakeName';
   }
@@ -67,9 +64,10 @@ void main() {
     }, throwsException);
   });
 
+/*
   test('shoud return mock instance', () {
     declareModule((module) {
-      module..single<ServiceA>(((s) => ServiceA()));
+      module.single<ServiceA>(((s) => ServiceA()));
     });
 
     var serviceMock = ServiceAMock();
@@ -84,10 +82,10 @@ void main() {
     expect(service, isA<ServiceAMock>());
     expect(service.getName(), 'MockName');
   });
-
+*/
   test(('shoud return a Fake instance'), () {
     declareModule((module) {
-      module..single<ServiceA>(((s) => ServiceA()));
+      module.single<ServiceA>(((s) => ServiceA()));
     });
 
     var serviceMock = ServiceFake();
