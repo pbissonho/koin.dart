@@ -43,8 +43,9 @@ void main() {
     group('shoud close', () {
       test('the single bloc definition when the stop koin', () async {
         var bloc = koin!.get<CounterCubit>();
-        await expectLater(bloc, emits(emitsDone));
         stopKoin();
+
+        await expectLater(bloc, emits(emitsDone));
       });
 
       test('the bloc instance is disposed when the scope is closed koin',
