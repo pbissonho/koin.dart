@@ -6,7 +6,7 @@ import 'cubits/counter_cubit.dart';
 import 'cubits/module.dart';
 
 void main() {
-  Koin koin;
+  Koin? koin;
   group('bloc extension', () {
     setUp(() {
       koin = startKoin((app) {
@@ -18,23 +18,23 @@ void main() {
       koinTearDown();
 
       test('a single bloc', () {
-        var bloc = koin.get<CounterCubit>();
+        var bloc = koin!.get<CounterCubit>();
         expect(bloc, isNotNull);
       });
 
       test('shoud resolve a single bloc', () {
-        var bloc = koin.get<CounterCubit>();
+        var bloc = koin!.get<CounterCubit>();
         expect(bloc, isNotNull);
       });
 
       test('shoud resolve a scoped bloc', () {
-        var scope = koin.createScope<ScopeKey>('myScope');
+        var scope = koin!.createScope<ScopeKey>('myScope');
         var bloc = scope.get<CounterCubit>();
         expect(bloc, isNotNull);
       });
 
       test('shoud resolve a scoped bloc - scopeOne', () {
-        var scope = koin.createScope<ScopeKey>('myScope');
+        var scope = koin!.createScope<ScopeKey>('myScope');
         var bloc = scope.get<CounterCubit>();
         expect(bloc, isNotNull);
       });
@@ -42,14 +42,14 @@ void main() {
 
     group('shoud close', () {
       test('the single bloc definition when the stop koin', () async {
-        var bloc = koin.get<CounterCubit>();
+        var bloc = koin!.get<CounterCubit>();
         await expectLater(bloc, emits(emitsDone));
         stopKoin();
       });
 
       test('the bloc instance is disposed when the scope is closed koin',
           () async {
-        var scope = koin.createScope<ScopeKey>('myScope');
+        var scope = koin!.createScope<ScopeKey>('myScope');
         var bloc = scope.get<CounterCubit>();
         scope.close();
 

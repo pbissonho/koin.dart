@@ -15,7 +15,7 @@ extension BlocModuleExtension on Module {
   ///
   ProviderDefinition<T> cubit<T extends Cubit>(
     ProviderCreate<T> create, {
-    Qualifier qualifier,
+    Qualifier? qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
@@ -24,7 +24,8 @@ extension BlocModuleExtension on Module {
         createdAtStart: createdAtStart,
         override: override);
 
-    providerDefinition.onClose((cubit) => cubit.close());
+    providerDefinition.onClose((cubit) => cubit.close(),
+        onDisposeUnitialized: () {});
     return providerDefinition;
   }
 
@@ -48,7 +49,7 @@ extension BlocModuleExtension on Module {
   ///```
   ProviderDefinition<T> scopeOneCubit<T extends Cubit, TScope>(
     ProviderCreate<T> create, {
-    Qualifier qualifier,
+    Qualifier? qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
@@ -56,7 +57,8 @@ extension BlocModuleExtension on Module {
         qualifier: qualifier,
         createdAtStart: createdAtStart,
         override: override);
-    providerDefinition.onClose((cubit) => cubit.close());
+    providerDefinition.onClose((cubit) => cubit.close(),
+        onDisposeUnitialized: () {});
     return providerDefinition;
   }
 }
@@ -74,14 +76,14 @@ extension ScopeSetCubitExtension on ScopeDSL {
   ///```
   ProviderDefinition<T> scopedCubit<T extends Cubit>(
     ProviderCreate<T> create, {
-    Qualifier qualifier,
+    Qualifier? qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
     var beanDefinition =
         scoped<T>(create, qualifier: qualifier, override: override);
 
-    beanDefinition.onClose((bloc) => bloc.close());
+    beanDefinition.onClose((bloc) => bloc.close(), onDisposeUnitialized: () {});
     return beanDefinition;
   }
 }
