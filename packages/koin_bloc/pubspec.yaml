@@ -16,4 +16,5 @@ dev_dependencies:
   koin_test:
     path: ../koin_test
   test: ^1.16.0-nullsafety.12
+  test_coverage: ^0.5.0
     
