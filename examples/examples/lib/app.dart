@@ -66,10 +66,10 @@ class ExampleButton extends StatefulWidget {
   final List<Module> modules;
 
   const ExampleButton(
-      {Key key,
-      @required this.page,
-      @required this.exampleName,
-      @required this.modules})
+      {Key? key,
+      required this.page,
+      required this.exampleName,
+      required this.modules})
       : super(key: key);
 
   @override
@@ -79,8 +79,7 @@ class ExampleButton extends StatefulWidget {
 class _ExampleButtonState extends State<ExampleButton> {
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      color: Colors.grey,
+    return TextButton(
       onPressed: () async {
         loadKoinModules(widget.modules);
 
@@ -91,7 +90,12 @@ class _ExampleButtonState extends State<ExampleButton> {
 
         unloadKoinModules(widget.modules);
       },
-      child: Text(widget.exampleName),
+      child: Text(
+        widget.exampleName,
+        style: TextStyle(
+          color: Colors.grey,
+        ),
+      ),
     );
   }
 }

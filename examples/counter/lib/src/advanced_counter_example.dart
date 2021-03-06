@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:koin/koin.dart';
-import 'package:koin_devtools/koin_devtools.dart';
 import 'package:koin_flutter/koin_flutter.dart';
 import 'package:koin_bloc/koin_bloc.dart';
 
@@ -48,7 +47,6 @@ class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
       scope: currentScope,
       child: Scaffold(
         // Inspect the state of your instances scope.
-        endDrawer: KoinDevTools(),
         appBar: AppBar(
           actions: <Widget>[
             IconButton(
@@ -96,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
                   'ScopedSingle Counter',
                 ),
                 BlocBuilder(
-                  cubit: counterScoped,
+                  bloc: counterScoped,
                   builder: (BuildContext context, state) {
                     return Text(
                       state.toString(),
@@ -108,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
                   'Factory Counter',
                 ),
                 BlocBuilder(
-                  cubit: counterFactory,
+                  bloc: counterFactory,
                   builder: (BuildContext context, state) {
                     return Text(
                       state.toString(),
@@ -120,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> with ScopeStateMixin {
                   'Single',
                 ),
                 BlocBuilder(
-                  cubit: counterSingle,
+                  bloc: counterSingle,
                   builder: (BuildContext context, state) {
                     return Text(
                       state.toString(),
