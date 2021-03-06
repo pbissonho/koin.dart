@@ -25,7 +25,7 @@ startKoin((app){
 });
 ```
 
-Once `startKoin` has been called, Koin will read all your modules & definitions. Koin is then ready for any `get()` or `by inject()` call to retrieve the needed instance.
+Once `startKoin` has been called, Koin will read all your modules & definitions. Koin is then ready for any `get()` call to retrieve the needed instance.
 
 Your Koin container can have several options:
 
@@ -119,7 +119,7 @@ And now, you register your context and run your own isolated Koin components:
 MyKoinContext.koinApp = myKoinApplication
 
 class ACustomKoinComponent extends CustomKoinComponent{
-    // inject & get will target MyKoinContext
+    // get will target MyKoinContext
 }
 ```
 

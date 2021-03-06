@@ -57,7 +57,6 @@ class MyComponent extends View with KoinComponentMixin {
 
 Once you have tagged your class as `KoinComponent`, you gain access to:
 
-* `inject()` - lazy evaluated instance from Koin container
 * `get()` - eager fetch instance from Koin container
 
 
@@ -65,24 +64,16 @@ Once you have tagged your class as `KoinComponent`, you gain access to:
 
 Koin offers two ways of retrieving instances from the Koin container:
 
-* `Lazy<T> t = inject<T>()` - lazy evaluated delegated instance
 * `T t = get<T>()` - eager access for instance
 
 ```dart
-// is lazy evaluated
-Lazy<MyService> myService = inject();
-
 // retrieve directly the instance
 MyService myService = get();
 ```
-:::note
-The lazy inject form is better to define property that need lazy evaluation.
-:::
-
 
 ## Resolving instance from its name
 
-If you need you can specify the following parameter with `get()` or `by inject()`
+If you need you can specify the following parameter with `get()`
 
 * `qualifier` - name of the definition (when specified name parameter in your definition)
 
@@ -110,7 +101,7 @@ var a = get<ComponentA>(named("A"))
 ```
 
 
-## No inject() or get() in your API?
+## No get() in your API?
 
 If your are using an API and want to use Koin inside it, just tag the desired class with `KoinComponent` interface.
 

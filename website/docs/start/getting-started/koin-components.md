@@ -8,7 +8,6 @@ Sometimes you can't declare only components via Koin. Dependening on your runtim
 
 Tag your class with the `KoinComponent` interface to unlock Koin injection features:
 
-* `inject()` - lazy inject an instance
 * `get()` - retrieve an instance
 
 We can inject the module above into class properties:

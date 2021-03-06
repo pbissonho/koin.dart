@@ -190,7 +190,7 @@ var myModule = module()
 ```
 
 In contrary to resolved dependencies (resolved with `get()`), injection parameters are parameters passed through the resolution API.
-This means that those parameters are values passed with `get()` and `by inject()`.
+This means that those parameters are values passed with `get()`.
 
 
 ```dart
@@ -236,7 +236,7 @@ startKoin((app){
 });
 ```
 :::info
-If you need to load some definition at a special time (in a background thread instead of UI for example), just get/inject the desired components.
+If you need to load some definition at a special time (in a background thread instead of UI for example), just get the desired components.
 :::
 
 

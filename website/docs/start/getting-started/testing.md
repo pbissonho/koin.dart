@@ -8,7 +8,6 @@ The `koin_test` package brings you small but powerful tools to test your Koin ap
 
 Just import the `koin_test`package, and you will be able to unlock `KoinComponent` & testing features:
 
-* `inject()` - lazy inject an instance
 * `get()` - retrieve an instance
 
 Given the definitions below:
@@ -26,8 +25,7 @@ void main() {
       app.module(appModule);
     });
 
-    // Lazy inject property
-    var componentA = inject<ComponentA>();
+    final componentA = get<ComponentA>();
 
     expect(componentA, isNotNull);
   });

@@ -9,7 +9,6 @@ Flutter widgets or Services.
 
 The Flutter widgets are extended with the KoinComponents extension. You gain access to:
 
-* `inject()` - lazy evaluated instance from Koin container
 * `get()` - eager fetch instance from Koin container
 
 For a module that declares a 'presenter' component:
@@ -21,8 +20,7 @@ final flutterModule = module()
 ```
 
 
-We can declare a property as lazy injected
-or we can just directly get an instance:
+We can just directly get an instance:
 
 ```dart
 class MyPage extends StatefulWidget {
@@ -38,8 +36,6 @@ class _MyPageState extends State<MyPage> {
   void initState() {
     // Retrieve a Presenter instance
     counter = get<CounterBloc>();
-    // Lazy injected Presenter instance
-    lazyCounter = inject<CounterBloc>();
     super.initState();
   }
 
@@ -48,5 +44,4 @@ class _MyPageState extends State<MyPage> {
     return Container();
   }
 }
-
 ```
