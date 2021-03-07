@@ -5,6 +5,7 @@ typedef ProviderCreate<T> = T Function(Scope scope);
 
 typedef ProviderCreateParam<T, A> = T Function(Scope scope, A param);
 
+// ignore: one_member_abstracts
 abstract class ProviderCreateBase<T> {
   T create(Parameter? parameter, Scope scope);
 }

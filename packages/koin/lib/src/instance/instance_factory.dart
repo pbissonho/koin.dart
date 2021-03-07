@@ -44,9 +44,9 @@ abstract class InstanceFactory<T> {
   ///
   T createState(InstanceContext context) {
     try {
-      final parameters = context.parameter;
+      final parameter = context.parameter;
       koin.loggerObserver.onCreate(this);
-      return beanDefinition.definition.create(parameters, context.scope);
+      return beanDefinition.definition.create(parameter, context.scope);
     } catch (erro) {
       koin.logger.error('''
 Instance creation error : could not create instance for $beanDefinition: ${erro.toString()}''');

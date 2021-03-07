@@ -30,6 +30,7 @@ import '../logger.dart';
 import '../qualifier.dart';
 import 'scope_definition.dart';
 
+// ignore: one_member_abstracts
 abstract class ScopeCallback {
   void onScopeClose();
 }

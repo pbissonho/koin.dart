@@ -86,12 +86,12 @@ void main() {
 
     // Create the Finders.
     final componentSingleIdFinder = find.text('1');
-    //final componentBSingleFinder = find.text('10');
+    final componentBSingleFinder = find.text('10');
     final componentIdFactoryFinder = find.text('60');
     final componentScopedFinder = find.text('30');
 
     expect(componentSingleIdFinder, findsNWidgets(1));
-    //expect(componentBSingleFinder, findsOneWidget);
+    expect(componentBSingleFinder, findsOneWidget);
     expect(componentIdFactoryFinder, findsOneWidget);
     expect(componentScopedFinder, findsOneWidget);
   });

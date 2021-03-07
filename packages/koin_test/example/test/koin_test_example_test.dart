@@ -53,7 +53,7 @@ void main() {
 
   testModule('shoud be a valid module', customModule,
       checkParameters: checkParametersOf({
-        ComponentC: ComponentCParam('Fisrt', "Last"),
+        ComponentC: ComponentCParam('Fisrt', 'Last'),
       }));
 
   test('shoud be a invalid module', () {

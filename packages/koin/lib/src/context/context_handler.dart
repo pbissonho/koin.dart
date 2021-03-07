@@ -19,9 +19,8 @@ import '../koin_application.dart';
 import '../koin_dart.dart';
 import 'context.dart';
 
-///
+//ignore: avoid_classes_with_only_static_members
 /// Help hold any implementation of KoinContext
-///
 class KoinContextHandler {
   static KoinContext? _context;
 

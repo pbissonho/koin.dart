@@ -59,8 +59,7 @@ class _HomePageWithParamsState extends State<HomePageWithParams>
       body: Column(
         children: <Widget>[
           Text("${componentSingle.id.toString()}"),
-          // TODO
-          // Text("${componentBSingle.id.toString()}"),
+          Text("${componentBSingle.testId().toString()}"),
           Text("${componentScoped.id.toString()}"),
           Text("${componentFactory.id.toString()}"),
         ],

@@ -96,18 +96,13 @@ void main() {
     expect(b.id, 43);
   });
 
-  // TODO
-  // Analyze if it is really necessary.
   test('shoud trow a exception when not pass parameters - getWithParams', () {
     var app = koinApplication((app) {
       app.module(
           Module()..singleWithParam<MySingle, int>((s, id) => MySingle(id)));
     });
 
-    final mySingle = app.koin.get<MySingle>();
-
     expect(() => app.koin.get<MySingle>(),
         throwsA(isA<InstanceCreationException>()));
-    print(mySingle);
-  }, skip: true);
+  });
 }
