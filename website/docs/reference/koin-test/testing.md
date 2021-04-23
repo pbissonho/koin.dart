@@ -6,7 +6,7 @@ title: Testing
 
 By import  `koin_test.dart`, you will be able to use all available test methods:
 
-* `inject()` & `get()` - function to retrieve yoru instances from Koin
+* `get()` - function to retrieve yoru instances from Koin
 * `testModules()`,`testModule()` & `testKoinDeclaration()`  - help you check your configuration. These are functions marked as isTest, that is, they are equivalent to test();
 * `declareModule()` - to declare a  module to be loaded in the global context of koin
 * `declare()` - to a instance to be loaded in the global context of koin
@@ -31,10 +31,9 @@ void main() {
         ..single((s) => ComponentB(s.get())));
     });
 
-    // Lazy inject property
-    var componentA = inject<ComponentA>();
+    final componentA = get<ComponentA>();
     // directly request an instance
-    var componentB = get<ComponentB>();
+    final componentB = get<ComponentB>();
 
     expect(componentA, isNotNull);
     expect(componentB.a, componentA);

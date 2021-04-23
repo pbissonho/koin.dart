@@ -39,7 +39,7 @@ extension ComponentWidgetExtension<T> on Diagnosticable {
   /// }
   /// ```
   ///
-  T get<T>([Qualifier qualifier]) {
+  T get<T>([Qualifier? qualifier]) {
     return getKoin().get<T>(qualifier);
   }
 
@@ -62,31 +62,17 @@ extension ComponentWidgetExtension<T> on Diagnosticable {
   ///
   /// {@macro koinsingle}
   ///
-  T getWithParam<T, P>(P param, {Qualifier qualifier}) {
+  T getWithParam<T, P>(P param, {Qualifier? qualifier}) {
     return getKoin().getWithParam<T, P>(param, qualifier: qualifier);
   }
 
-  /// Returns a Lazy object that provides the instance for [T].
-  ///
-  /// The `instance ` resolved is is created only when `value` by `Lazy` being
-  /// called for the first time.
-  Lazy<T> inject<T>([Qualifier qualifier]) {
-    return getKoin().inject<T>(qualifier);
-  }
-
-  /// Lazy inject instance from Koin
-  /// Use when it is necessary to pass [parameters] to the instance.
-  Lazy<T> injectWithParam<T, P>(P param, {Qualifier qualifier}) {
-    return getKoin().injectWithParam<T, P>(param, qualifier: qualifier);
-  }
-
   /// Get instance instance from Koin by Primary Type [P], as secondary type [S]
-  S bind<S, P>([Qualifier qualifier]) {
+  S bind<S, P>([Qualifier? qualifier]) {
     return getKoin().bind<S, P>();
   }
 
   /// Get instance instance from Koin by Primary Type [P], as secondary type [S]
-  S bindWithParam<S, T, P>(P param, {Qualifier qualifier}) {
+  S bindWithParam<S, T, P>(P param, {Qualifier? qualifier}) {
     return getKoin().bindWithParam<S, T, P>(param);
   }
 }
@@ -117,7 +103,7 @@ extension StatefulWidgetScopeExtensiont<T extends StatefulWidget> on T {
     return scopeOrNull;
   }
 
-  Scope _getScopeOrNull(Koin koin) {
+  Scope? _getScopeOrNull(Koin koin) {
     return koin.getScopeOrNull((scopeId));
   }
 
@@ -149,24 +135,24 @@ mixin HotRestartScopeMixin on StatefulWidget {
 /// `currentScope.close()`method of the current scope when the [T]
 /// is removed from widget tree.
 mixin ScopeStateMixin<T extends StatefulWidget> on State<T> {
-  Scope _scope;
+  Scope? _scope;
 
   /// Return the current scope of the `StatefulWidget` widget instance.
   ///
   /// `Scope` instance created and related to the `StatefulWidget`
   /// instance in the widget tree.
   Scope get currentScope {
-    if (_scope != null && !_scope.closed) return _scope;
+    if (_scope != null && !_scope!.closed) return _scope!;
     _scope = widget.scope;
     FlutterKoinScopeObserver.scopeWidgetObserver
         .onCreateScope(ScopeWidgetContext(
       widget,
-      _scope,
+      _scope!,
     ));
-    return _scope;
+    return _scope!;
   }
 
-  Scope _getScopeOrNull() {
+  Scope? _getScopeOrNull() {
     return KoinContextHandler.get().getScopeOrNull((widget.scopeId));
   }
 
@@ -178,9 +164,9 @@ mixin ScopeStateMixin<T extends StatefulWidget> on State<T> {
       if (widgetScope != null && !widgetScope.closed) {
         widgetScope.close();
       }
-    } else if (!_scope.closed) {
-      _scope.close();
-      FlutterKoinScopeObserver.scopeWidgetObserver.onCloseScope(_scope.id);
+    } else if (!_scope!.closed) {
+      _scope!.close();
+      FlutterKoinScopeObserver.scopeWidgetObserver.onCloseScope(_scope!.id);
     }
   }
 }
@@ -248,12 +234,10 @@ mixin ScopeStateMixin<T extends StatefulWidget> on State<T> {
 ///
 class ScopeProvider extends InheritedWidget {
   const ScopeProvider({
-    Key key,
-    @required this.scope,
-    @required Widget child,
-  })  : assert(scope != null),
-        assert(child != null),
-        super(key: key, child: child);
+    Key? key,
+    required this.scope,
+    required Widget child,
+  }) : super(key: key, child: child);
 
   final Scope scope;
 

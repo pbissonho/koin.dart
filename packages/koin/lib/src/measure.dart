@@ -14,15 +14,6 @@
  * limitations under the License.
  */
 
-//
-// Measure functions
-//
-// @author - Arnaud GIULIANI
-//
-// Ported to Dart from Kotlin by:
-// @author - Pedro Bissonho
-//
-
 /// Measure functions
 class Measure {
   ///
@@ -38,7 +29,7 @@ class Measure {
   ///
   /// Measure code execution and get result
   ///
-  static _Pair measureDuration(Object Function() function) {
+  static _Pair measureDuration(Object? Function() function) {
     var start = Stopwatch()..start();
     var result = function();
     var duration = start.elapsed.inMilliseconds.toDouble();

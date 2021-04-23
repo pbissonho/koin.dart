@@ -22,10 +22,9 @@ import 'koin_component.dart';
 import 'logger.dart';
 import 'module.dart';
 import 'package:kt_dart/kt.dart';
-import 'observer.dart';
+import 'observer/observer.dart';
 import 'scope/scope_definition.dart';
 import '../scope_instance.dart';
-import 'lazy.dart';
 import 'qualifier.dart';
 import 'registry/scope_registry.dart';
 import 'scope/scope.dart';
@@ -33,20 +32,16 @@ import 'scope/scope.dart';
 ///
 /// Gather main features to use on Koin context
 ///
-/// @author Arnaud Giuliani
-/// Ported to Dart from Kotlin by:
-/// @author - Pedro Bissonho
-///
 class Koin with ScopedComponentMixin {
-  ScopeRegistry _scopeRegistry;
-  Logger logger;
-  LoggerInstanceObserver loggerInstanceObserver;
-  final KtHashSet<ScopeObserver> scopeObserves =
+  late final ScopeRegistry _scopeRegistry;
+  late Logger logger;
+  late LoggerObserver loggerObserver;
+  final KtHashSet<ScopeObserver> _scopeObserves =
       KtHashSet<ScopeObserver>.empty();
   final KtHashSet<Module> _modules = KtHashSet<Module>.empty();
 
   void withScopeObserver(ScopeObserver scopeObserver) {
-    scopeObserves.add(scopeObserver);
+    _scopeObserves.add(scopeObserver);
   }
 
   ScopeRegistry get scopeRegistry => _scopeRegistry;
@@ -54,21 +49,13 @@ class Koin with ScopedComponentMixin {
   Koin() {
     _scopeRegistry = ScopeRegistry(this);
     logger = Logger.empty(Level.debug);
-    loggerInstanceObserver = LoggerInstanceObserver(this);
-  }
-
-  ///
-  /// Lazy inject a Koin instance if available.
-  /// Return Lazy instance of type T or null.
-  ////
-  Lazy<T> injectOrNull<T>(Qualifier qualifier, Parameter parameter) {
-    return _scopeRegistry.rootScope.injectOrNull(parameter, qualifier);
+    loggerObserver = LoggerObserver(this);
   }
 
   ///
   /// Get a Koin instance if available with return instance of type T or null.
   ///
-  T getOrNull<T>([Qualifier qualifier, Parameter parameter]) {
+  T? getOrNull<T>([Qualifier? qualifier, Parameter? parameter]) {
     return _scopeRegistry.rootScope.getOrNull<T>(
       qualifier,
       parameter,
@@ -76,19 +63,22 @@ class Koin with ScopedComponentMixin {
   }
 
   ///
-  /// Get a Koin instance
-  /// @return instance of type T
+  /// Get instance of primary type [primaryType] and return as secondary
+  /// type [S]
+  /// (not for scoped instances)
   ///
-  T getWithType<T>([Type type, Qualifier qualifier, Parameter parameter]) {
-    return _scopeRegistry.rootScope.getWithType<T>(type, qualifier, parameter);
+  /// @return instance of type [S]
+  ///
+  S bindWithType<S>(Type secondaryType, Type primaryType,
+      [Parameter? parameter]) {
+    return _scopeRegistry.rootScope
+        .bindWithType(primaryType, secondaryType, parameter);
   }
 
-  ///
-  /// Get a Koin instance if available
-  T getOrNullWithType<T>(
-      [Type type, Qualifier qualifier, Parameter parameter]) {
+  @override
+  S bindWithParam<S, K, P>(P param, {Qualifier? qualifier}) {
     return _scopeRegistry.rootScope
-        .getWithTypeOrNull(type, qualifier, parameter);
+        .bindWithParam<S, K, P>(param, qualifier: qualifier);
   }
 
   ///
@@ -97,7 +87,7 @@ class Koin with ScopedComponentMixin {
   /// the given instance
   ///
   void declare<T>(T instance,
-      {Qualifier qualifier,
+      {Qualifier? qualifier,
       List<Type> secondaryTypes = const <Type>[],
       bool override = false}) {
     var firstType = T;
@@ -119,28 +109,13 @@ class Koin with ScopedComponentMixin {
     return _scopeRegistry.rootScope.getAll<T>();
   }
 
-  ///
-  /// Get instance of primary type [primaryType] and return as secondary
-  /// type [S]
-  /// (not for scoped instances)
-  ///
-  /// @return instance of type [S]
-  ///
-  S bindWithType<S>(Type secondaryType, Type primaryType,
-      [Parameter parameter]) {
-    return _scopeRegistry.rootScope
-        .bindWithType(primaryType, secondaryType, parameter);
-  }
-
   void createEagerInstances() {
     createContextIfNeeded();
     _scopeRegistry.rootScope.createEagerInstances();
   }
 
   void createContextIfNeeded() {
-    if (_scopeRegistry.rootScope == null) {
-      _scopeRegistry.createRootScope();
-    }
+    _scopeRegistry.createRootScope();
   }
 
   ///
@@ -207,7 +182,7 @@ class Koin with ScopedComponentMixin {
   /// get a scope instance
   /// @param scopeId
   ///
-  Scope getScopeOrNull(String scopeId) {
+  Scope? getScopeOrNull(String scopeId) {
     return _scopeRegistry.getScopeOrNull(scopeId);
   }
 
@@ -259,10 +234,4 @@ class Koin with ScopedComponentMixin {
 
   @override
   Scope get componentScope => _scopeRegistry.rootScope;
-
-  @override
-  S bindWithParam<S, K, P>(P param, {Qualifier qualifier}) {
-    return _scopeRegistry.rootScope
-        .bindWithParam<S, K, P>(param, qualifier: qualifier);
-  }
 }

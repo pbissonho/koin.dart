@@ -20,7 +20,7 @@ void main() {
 
     var defA = app.getBeanDefinition(ComponentA);
 
-    expect(Kind.single, defA.kind);
+    expect(Kind.single, defA?.kind);
     expect(app.koin.get<ComponentA>(), isNotNull);
 
     app.unloadModule(currentModule);
@@ -43,10 +43,10 @@ void main() {
     var defA = app.getBeanDefinition(ComponentA);
     var defB = app.getBeanDefinition(ComponentB);
 
-    expect(Kind.single, defA.kind);
+    expect(Kind.single, defA?.kind);
     expect(app.koin.get<ComponentA>(), isNotNull);
 
-    expect(Kind.single, defB.kind);
+    expect(Kind.single, defB?.kind);
     expect(app.koin.get<ComponentB>(), isNotNull);
 
     app.unloadModules([currentModule, currentModuleB]);
@@ -71,7 +71,7 @@ void main() {
     });
 
     var defA = app.getBeanDefinition(Component1);
-    expect(Kind.single, defA.kind);
+    expect(Kind.single, defA?.kind);
 
     expect(app.koin.get<Component1>(), isNotNull);
     expect(app.koin.get<ComponentInterface1>(), isNotNull);
@@ -246,8 +246,8 @@ void main() {
     var scope = app.koin.createScopeWithQualifier('id', named<ScopeKey>());
     var defA = scope.getBeanDefinition(ComponentA);
 
-    expect(Kind.single, defA.kind);
-    expect(named<ScopeKey>(), defA.scopeDefinition.qualifier);
+    expect(Kind.single, defA?.kind);
+    expect(named<ScopeKey>(), defA?.scopeDefinition.qualifier);
 
     expect(scope.getBeanDefinition(ComponentA), isNotNull);
 
@@ -275,8 +275,8 @@ void main() {
     var scope = app.koin.createScopeWithQualifier('id', named<ScopeKey>());
     var defA = scope.getBeanDefinition(ComponentA);
 
-    expect(Kind.single, defA.kind);
-    expect(named<ScopeKey>(), defA.scopeDefinition.qualifier);
+    expect(Kind.single, defA?.kind);
+    expect(named<ScopeKey>(), defA?.scopeDefinition.qualifier);
     expect(scope.getBeanDefinition(ComponentA), isNotNull);
 
     koin.unloadModule(currentModule);

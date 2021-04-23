@@ -22,7 +22,8 @@ void main() {
           ..scope<ScopeType>((scope) {
             scope.scoped((s) => ComponentA());
           }))
-        .koin;
+        .koin
+      ..createEagerInstances();
 
     var scope1 = koin.createScopeWithQualifier('scope1', named<ScopeType>());
     var scope2 = koin.createScopeWithQualifier('scope2', named<ScopeType>());
@@ -50,7 +51,7 @@ void main() {
           scope.scoped((s) => MySingle(10))
             ..onClose((a) {
               print(a.id);
-            });
+            }, onDisposeUnitialized: () {});
         }));
     }).koin;
 
@@ -69,7 +70,7 @@ void main() {
           scope.scoped((s) => CustomSingle(10))
             ..onClose((a) {
               a.id = 50;
-            });
+            }, onDisposeUnitialized: () {});
         }));
     }).koin;
 

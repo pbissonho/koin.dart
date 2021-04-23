@@ -31,17 +31,6 @@ void main() {
     expect(a.id, 42);
   });
 
-  test('can create a single with parameters - inject', () {
-    var app = koinApplication((app) {
-      app.module(
-          Module()..singleWithParam<MySingle, int>((s, id) => MySingle(id)));
-    });
-
-    var a = app.koin.injectWithParam<MySingle, int>(42);
-
-    expect(a.value.id, 42);
-  });
-
   test('can create a scoped with parameters', () {
     var scopeKey = named('ScopeKey');
 
@@ -55,10 +44,8 @@ void main() {
     var scope = app.koin.createScopeWithQualifier('scopeId', scopeKey);
 
     var a = scope.getWithParam<MySingle, int>(42);
-    var lazyA = scope.injectWithParam<MySingle, int>(42);
 
     expect(a.id, 42);
-    expect(lazyA.value.id, 42);
   });
 
   test('can get a single created with parameters - no need of give it again',
@@ -85,11 +72,9 @@ void main() {
 
     var a = app.koin.getWithParam<MySingle, int>(42);
     var b = app.koin.getWithParam<MySingle, int>(43);
-    var lazyB = app.koin.injectWithParam<MySingle, int>(43);
 
     expect(a.id, 42);
     expect(b.id, 43);
-    expect(lazyB().id, 43);
   });
 
   test('can create a factories scoped with parameters', () {
@@ -111,18 +96,13 @@ void main() {
     expect(b.id, 43);
   });
 
-  // TODO
-  // Analyze if it is really necessary.
   test('shoud trow a exception when not pass parameters - getWithParams', () {
     var app = koinApplication((app) {
       app.module(
           Module()..singleWithParam<MySingle, int>((s, id) => MySingle(id)));
     });
 
-    final mySingle = app.koin.get<MySingle>();
-
     expect(() => app.koin.get<MySingle>(),
         throwsA(isA<InstanceCreationException>()));
-    print(mySingle);
-  }, skip: true);
+  });
 }

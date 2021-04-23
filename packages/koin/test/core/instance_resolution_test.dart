@@ -1,5 +1,4 @@
 import 'package:koin/koin.dart';
-import 'package:koin/src/internal/exceptions.dart';
 import 'package:test/test.dart';
 
 import '../components.dart';
@@ -14,14 +13,6 @@ void main() {
     var a2 = koin.get<ComponentA>();
 
     expect(a, a2);
-  });
-
-  test('not can resolve a single with null definition instance', () {
-    var koin = koinApplication((app) {
-      app.module(module()..single<ComponentA>((s) => null));
-    }).koin;
-
-    expect(() => koin.get<ComponentA>(), throwsA(isA<IllegalStateException>()));
   });
 
   test('can resolve all ComponentInterface1', () {
@@ -50,26 +41,6 @@ void main() {
 
     var a = koin.getOrNull<ComponentA>(null, null);
     expect(a, null);
-  });
-
-  test('cannot inject a single', () {
-    var koin = koinApplication((app) {
-      app.module(module());
-    }).koin;
-
-    var a = koin.injectOrNull<ComponentA>(null, null);
-    expect(a.value, null);
-  });
-
-  test('can lazy resolve a single', () {
-    var koin = koinApplication((app) {
-      app.module(module()..single((s) => ComponentA()));
-    }).koin;
-
-    var a = koin.inject<ComponentA>();
-    var ab = koin.get<ComponentA>();
-
-    expect(a.value, ab);
   });
 
   test('can lazy resolve a single by name', () {
@@ -128,42 +99,5 @@ void main() {
 
     expect(component, isA<Component1>());
     expect(koin.get<ComponentInterface1>(named('2')), isA<Component2>());
-  });
-
-  test('can resolve a single with type', () {
-    var koin = koinApplication((app) {
-      app.module(module()..single((s) => ComponentA()));
-    }).koin;
-
-    var a = koin.getWithType(ComponentA);
-    var a2 = koin.getWithType(ComponentA);
-
-    expect(a, a2);
-  });
-
-  test('can resolve a single with type or null', () {
-    var koin = koinApplication((app) {
-      app.module(module()..single((s) => ComponentA()));
-    }).koin;
-
-    var a = koin.getOrNullWithType(ComponentA);
-    var a2 = koin.getOrNullWithType(ComponentA);
-    var a3 = koin.getOrNullWithType(ComponentB);
-
-    expect(a, a2);
-    expect(a3, isNull);
-  });
-
-  test('can resolve a single with type or null', () {
-    var koin = koinApplication((app) {
-      app.module(module()..single((s) => ComponentA()));
-    }).koin;
-
-    var a = koin.getOrNullWithType(ComponentA);
-    var a2 = koin.getOrNullWithType(ComponentA);
-    var a3 = koin.getOrNullWithType(ComponentB);
-
-    expect(a, a2);
-    expect(a3, isNull);
   });
 }

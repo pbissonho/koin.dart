@@ -20,15 +20,10 @@ import 'dart:core';
 ///
 /// Usable with exploded declaration
 ///
-// @author - Arnaud GIULIANI
-//
-// Ported to Dart from Kotlin by:
-// @author - Pedro Bissonho
-
 class Parameter<T> {
   final T parameter;
 
-  Parameter(this.parameter);
+  const Parameter(this.parameter);
 
   T get() => parameter;
 }

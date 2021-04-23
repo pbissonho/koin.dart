@@ -4,8 +4,7 @@ import 'package:test/test.dart';
 
 void main() {
   var currentModule = module()
-    ..single((s) => List<String>.of(['a string']),
-        qualifier: named('strings'))
+    ..single((s) => List<String>.of(['a string']), qualifier: named('strings'))
     ..single((s) => List<int>.of([42]), qualifier: named('ints'));
 
   test('declare and retrieve generic definitions', () {

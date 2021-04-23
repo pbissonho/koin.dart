@@ -41,7 +41,6 @@ Written in pure Dart, using functional resolution only: no code generation, no r
 
 - Dependencies are instances only when needed.
   * Its class is instant when used for the first time.
-  * Koin has a implementation of [Lazy](https://www.lordcodes.com/articles/the-power-of-lazy-properties-in-kotlin) by Kotlin to enhance this functionality.
 
 - It is not invasive. 
   * Insert Koin in your project without changing the structure of your widgets.

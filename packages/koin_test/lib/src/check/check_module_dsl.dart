@@ -16,24 +16,37 @@
 
 import 'dart:collection';
 
-import 'package:equatable/equatable.dart';
 import 'package:koin/koin.dart';
 import 'package:koin/internals.dart';
 
-class CheckedComponent with EquatableMixin {
-  final Qualifier qualifier;
+class CheckedComponent {
+  final Qualifier? qualifier;
   final Type type;
   CheckedComponent(this.qualifier, this.type);
 
   @override
-  List<Object> get props => [type, qualifier];
+  int get hashCode => type.hashCode ^ qualifier.hashCode;
+
+  @override
+  bool operator ==(other) {
+    return other is CheckedComponent &&
+        other.qualifier == qualifier &&
+        other.type == type;
+  }
 }
 
 class CheckParameters {
-  Map creators = HashMap<CheckedComponent, Parameter>();
-  Koin koin;
-  void create<T, P>(P param, {Qualifier qualifier}) {
+  final Map<CheckedComponent, Parameter> creators =
+      HashMap<CheckedComponent, Parameter>();
+
+  void create<T, P>(P param, {Qualifier? qualifier}) {
     creators[CheckedComponent(qualifier, T)] = Parameter<P>(param);
+  }
+
+  void addAll(Map<CheckedComponent, Parameter<dynamic>>? other) {
+    if (other != null) {
+      creators.addAll(other);
+    }
   }
 }
 

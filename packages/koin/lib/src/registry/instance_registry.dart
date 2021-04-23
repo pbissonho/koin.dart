@@ -32,7 +32,7 @@ class InstanceRegistry {
     });
   }
 
-  void saveDefinition(ProviderDefinition definition, {bool override}) {
+  void saveDefinition(ProviderDefinition definition, {bool override = false}) {
     var defOverride = definition.options.override || override;
     var instanceFactory = createInstanceFactory(koin, definition);
     saveInstance(
@@ -68,7 +68,8 @@ class InstanceRegistry {
     return instance;
   }
 
-  void saveInstance(String key, InstanceFactory factory, {bool override}) {
+  void saveInstance(String key, InstanceFactory factory,
+      {bool override = false}) {
     if (_instances.containsKey(key) && !override) {
       throw IllegalStateException(
           "InstanceRegistry already contains index '$key'");
@@ -83,13 +84,14 @@ class InstanceRegistry {
     }
   }
 
-  T resolveInstance<T>(String indexKey, Parameter parameter) {
-    var instance =
-        _instances[indexKey]?.get(defaultInstanceContext(parameter)) as T;
-    return instance;
+  T? resolveInstance<T>(String indexKey, Parameter? parameter) {
+    // TODO
+    // Validar
+    var instance = _instances[indexKey]?.get(defaultInstanceContext(parameter));
+    return instance != null ? instance as T : null;
   }
 
-  InstanceContext defaultInstanceContext(Parameter parameter) {
+  InstanceContext defaultInstanceContext(Parameter? parameter) {
     return InstanceContext(koin: koin, scope: _scope, parameter: parameter);
   }
 
@@ -119,7 +121,7 @@ class InstanceRegistry {
 
   KtList<InstanceFactory> getAllFactoryAsList() => _instances.values.toList();
 
-  S bind<S>(Type primaryType, Type secondaryType, Parameter parameter) {
+  S bind<S>(Type primaryType, Type secondaryType, Parameter? parameter) {
     var instance = _instances.values.firstOrNull((instance) {
       final canBind =
           instance.beanDefinition.canBind(primaryType, secondaryType);

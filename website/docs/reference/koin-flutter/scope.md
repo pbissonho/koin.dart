@@ -45,7 +45,7 @@ class LoginBloc extends Bloc {
 We can describe it in a module:
 
 
-* as `factory` - to produce a new instance each time the `by inject()` or `get()` is called
+* as `factory` - to produce a new instance each time the `get()` is called
 
 Using the as factory you will have to manually close the bloc.
 

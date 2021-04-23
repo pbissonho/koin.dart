@@ -11,14 +11,14 @@ class ScopeDefinition {
   final bool isRoot;
   final KtHashSet<ProviderDefinition> definitions = KtHashSet.empty();
 
-  ScopeDefinition(this.qualifier, {this.isRoot});
+  ScopeDefinition(this.qualifier, {this.isRoot = false});
 
   void save(ProviderDefinition beanDefinition, {bool forceOverride = false}) {
     if (definitions.contains(beanDefinition)) {
       if (beanDefinition.options.override || forceOverride) {
         definitions.remove(beanDefinition);
       } else {
-        var current = definitions.firstOrNull((it) => it == beanDefinition);
+        final current = definitions.firstOrNull((it) => it == beanDefinition);
         throw DefinitionOverrideException("""
       Definition '$beanDefinition' try to override existing definition. 
       Please use override option or check for definition '$current'""");
@@ -34,11 +34,11 @@ class ScopeDefinition {
   int size() => definitions.size;
 
   ProviderDefinition<T> saveNewDefinition<T>(
-      T instance, Qualifier qualifier, List<Type> secondaryTypes,
-      {bool override}) {
-    var type = T;
+      T instance, Qualifier? qualifier, List<Type> secondaryTypes,
+      {bool override = false}) {
+    final type = T;
 
-    var found =
+    final found =
         definitions.firstOrNull((def) => def.isIt(type, qualifier, this));
 
     if (found != null) {
@@ -51,19 +51,13 @@ with new definition typed '$type'""");
       }
     }
 
-    var secondaryTypes2;
-    if (secondaryTypes != null) {
-      secondaryTypes2 = secondaryTypes;
-    } else {
-      secondaryTypes2 = <Type>[];
-    }
     //TODO
-    var beanDefinition = Definitions.createSingle<T>(
+    final beanDefinition = Definitions.createSingle<T>(
         qualifier: qualifier,
         providerCreate: ProviderCreateDefinition((s) => instance),
         scopeDefinition: this,
         options: Options(isCreatedAtStart: false, override: override),
-        secondaryTypes: secondaryTypes2);
+        secondaryTypes: secondaryTypes);
 
     save(beanDefinition, forceOverride: override);
     return beanDefinition;
@@ -77,14 +71,14 @@ with new definition typed '$type'""");
   int get hashCode => qualifier.hashCode ^ isRoot.hashCode;
 
   @override
-  bool operator ==(other) {
+  bool operator ==(Object other) {
     return other is ScopeDefinition &&
         other.qualifier == qualifier &&
         other.isRoot == isRoot;
   }
 
   ScopeDefinition copy() {
-    var copy = ScopeDefinition(qualifier, isRoot: isRoot);
+    final copy = ScopeDefinition(qualifier, isRoot: isRoot);
     copy.definitions.addAll(definitions);
     return copy;
   }

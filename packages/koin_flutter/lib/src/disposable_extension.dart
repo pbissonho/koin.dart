@@ -44,7 +44,7 @@ extension DisposableModuleExtension on Module {
   ///
   ProviderDefinition<T> disposable<T extends Disposable>(
     ProviderCreate<T> create, {
-    Qualifier qualifier,
+    Qualifier? qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
@@ -53,7 +53,8 @@ extension DisposableModuleExtension on Module {
         createdAtStart: createdAtStart,
         override: override);
 
-    beanDefinition.onClose((bloc) => bloc.dispose());
+    beanDefinition.onClose((bloc) => bloc.dispose(),
+        onDisposeUnitialized: () {});
     return beanDefinition;
   }
 
@@ -77,7 +78,7 @@ extension DisposableModuleExtension on Module {
   ///```
   ProviderDefinition<T> scopeOneDisposable<T extends Disposable, TScope>(
     ProviderCreate<T> create, {
-    Qualifier qualifier,
+    Qualifier? qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
@@ -85,7 +86,8 @@ extension DisposableModuleExtension on Module {
         qualifier: qualifier,
         createdAtStart: createdAtStart,
         override: override);
-    beanDefinition.onClose((value) => value.dispose());
+    beanDefinition.onClose((value) => value.dispose(),
+        onDisposeUnitialized: () {});
     return beanDefinition;
   }
 }
@@ -121,14 +123,15 @@ extension ScopeSetDisposableExtension on ScopeDSL {
   ///
   ProviderDefinition<T> scopedDisposable<T extends Disposable>(
     ProviderCreate<T> create, {
-    Qualifier qualifier,
+    Qualifier? qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
     var beanDefinition =
         scoped<T>(create, qualifier: qualifier, override: override);
 
-    beanDefinition.onClose((bloc) => bloc.dispose());
+    beanDefinition.onClose((bloc) => bloc.dispose(),
+        onDisposeUnitialized: () {});
     return beanDefinition;
   }
 }

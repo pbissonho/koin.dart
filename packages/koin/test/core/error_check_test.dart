@@ -41,6 +41,7 @@ void main() {
   });
 
   // TODO
+  // Analyze a way to treat
   /*
   test('cycle error', () {
     var app = koinApplication((app) {

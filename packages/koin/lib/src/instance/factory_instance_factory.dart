@@ -23,14 +23,12 @@ import 'instance_factory.dart';
 ///
 /// Factory Instance Holder
 ///
-/// @author Arnaud Giuliani
-///
 class FactoryInstanceFactory<T> extends InstanceFactory<T> {
   FactoryInstanceFactory(Koin koin, ProviderDefinition<T> beanDefinition)
       : super(koin: koin, beanDefinition: beanDefinition);
   @override
   void dispose() {
-    beanDefinition.onDispose.runCallback(null);
+    beanDefinition.onDispose.runCallbackUninitializedValue();
   }
 
   @override

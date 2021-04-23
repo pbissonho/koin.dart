@@ -31,10 +31,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    // Lazy Inject MyPresenter
-    lazyBloc = currentScope.inject();
-
-    // or directly retrieve instance
+   
+    // directly retrieve instance
     bloc = get();
     super.initState();
   }
@@ -48,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
 
 Those classes can then use:
 
-* `get()` or `by inject()` instance retrieving
+* `get()` instance retrieving
 * `getKoin()` to access th current `Koin` instance
 
 If you need to inject dependencies from another class and can't declare it in a module, you can still tag it with `KoinComponent` interface.

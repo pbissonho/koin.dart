@@ -25,14 +25,7 @@ import 'scope/scope_dsl.dart';
 // ignore_for_file: avoid_positional_boolean_parameters
 
 ///
-///
-/// Koin Module
 /// Gather/help compose Koin definitions
-/// @author - Arnaud GIULIANI
-///
-/// Ported to Dart from Kotlin by:
-/// @author - Pedro Bissonho
-///
 class Module {
   final bool createAtStart;
   final bool override;
@@ -58,7 +51,7 @@ class Module {
   ///
   /// Class Typed Scope
   ///
-  void scope<T>(Function(ScopeDSL dsl) makeScope) {
+  void scope<T>(void Function(ScopeDSL dsl) makeScope) {
     var scopeDefinition = ScopeDefinition(TypeQualifier(T), isRoot: false);
     var scopeCreated = ScopeDSL(scopeDefinition);
     makeScope(scopeCreated);
@@ -87,7 +80,7 @@ class Module {
   ///```
   ProviderDefinition<T> scopeOne<T, TScope>(
     ProviderCreate<T> create, {
-    Qualifier qualifier,
+    Qualifier? qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
@@ -107,7 +100,7 @@ class Module {
   ///
   ProviderDefinition<T> single<T>(
     ProviderCreate<T> create, {
-    Qualifier qualifier,
+    Qualifier? qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
@@ -123,7 +116,7 @@ class Module {
   ///
   ProviderDefinition<T> singleWithParam<T, A>(
     ProviderCreateParam<T, A> create, {
-    Qualifier qualifier,
+    Qualifier? qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
@@ -134,7 +127,7 @@ class Module {
         makeOptions(override: override, createdAtStart: createdAtStart));
   }
 
-  Options makeOptions({bool override, bool createdAtStart = false}) {
+  Options makeOptions({bool override = false, bool createdAtStart = false}) {
     return Options(
         isCreatedAtStart: createAtStart || createdAtStart,
         override: this.override || override);
@@ -145,7 +138,7 @@ class Module {
   ///
   ProviderDefinition<T> factory<T>(
     ProviderCreate<T> create, {
-    Qualifier qualifier,
+    Qualifier? qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
@@ -161,7 +154,7 @@ class Module {
   ///
   ProviderDefinition<T> factoryWithParam<T, A>(
     ProviderCreateParam<T, A> create, {
-    Qualifier qualifier,
+    Qualifier? qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {

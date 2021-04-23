@@ -4,15 +4,16 @@ version: 0.2.2
 homepage: https://github.com/pbissonho/koin.dart
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  kt_dart: ^0.8.0
-  koin: ^0.14.2
-  koin_flutter: ^0.10.0 
-  expandable: ^4.1.4
+  kt_dart: ^0.9.0-nullsafety.0
+  koin_flutter: ^0.11.0-nullsafety.0 
+  expandable: ^5.0.1
+  koin: ^0.15.0-nullsafety.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

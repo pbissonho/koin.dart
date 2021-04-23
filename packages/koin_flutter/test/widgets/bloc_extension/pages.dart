@@ -20,14 +20,14 @@ class BlocComponentTest extends KoinComponent {
   BlocComponentTest() {
     blocX = get();
   }
-  Bloc blocX;
+  late Bloc blocX;
 }
 
 class BlocComponentMixinTest with KoinComponentMixin {
   BlocComponentMixinTest() {
     blocX = get();
   }
-  Bloc blocX;
+  late Bloc blocX;
 }
 
 final buttonKey = UniqueKey();
@@ -43,7 +43,7 @@ class ScopeWidget extends StatefulWidget with HotRestartScopeMixin {
 }
 
 class ScopeWidgetState extends State<ScopeWidget> with ScopeStateMixin {
-  Bloc bloc;
+  late Bloc bloc;
 
   @override
   void initState() {
@@ -158,7 +158,7 @@ class UseScopeExtensionWidget extends StatefulWidget {
 }
 
 class UseScopeExtensionWidgetState extends State<UseScopeExtensionWidget> {
-  Bloc myBloc;
+  late Bloc myBloc;
 
   @override
   void initState() {

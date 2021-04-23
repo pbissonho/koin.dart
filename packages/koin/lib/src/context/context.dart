@@ -30,7 +30,7 @@ abstract class KoinContext {
   ///
   /// Retrieve current KoinContext or null
   ///
-  Koin getOrNull();
+  Koin? getOrNull();
 
   ///
   /// sets up a Koin Application
@@ -43,15 +43,12 @@ abstract class KoinContext {
   void stop();
 }
 
-//Ported to Dart from Kotlin by:
-//@author - Pedro Bissonho
-
 /// Global context - current Koin Application available globally
 ///
 ///Support to help inject automatically instances once KoinApp has been started
 ///
 class GlobalContext implements KoinContext {
-  Koin _koin;
+  Koin? _koin;
 
   ///
   /// Returns the global instance of the [Koin].
@@ -64,14 +61,14 @@ class GlobalContext implements KoinContext {
     if (_koin == null) {
       throw IllegalStateException('KoinApplication has not been started.');
     }
-    return _koin;
+    return _koin!;
   }
 
   ///
   /// StandAlone Koin App instance
   ///
   @override
-  Koin getOrNull() => _koin;
+  Koin? getOrNull() => _koin;
 
   ///
   /// Start a Koin Application as StandAlone

@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:koin/internals.dart';
 
+// ignore: avoid_classes_with_only_static_members
 class FlutterKoinScopeObserver {
   static ScopeWidgetObersever scopeWidgetObserver = ScopeWidgetObersever();
 }

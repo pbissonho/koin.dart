@@ -24,7 +24,7 @@ void main() {
     final componentScopedIdFinder = find.text('50');
     final componentIdFactoryFinder = find.text('60');
 
-    expect(componentIdFinder, findsNWidgets(3));
+    expect(componentIdFinder, findsNWidgets(2));
     expect(componentScopedIdFinder, findsOneWidget);
     expect(componentIdFactoryFinder, findsOneWidget);
   });
@@ -45,7 +45,7 @@ void main() {
 
     // Create the Finders.
     final componentIdFinder60 = find.text('60');
-    expect(componentIdFinder, findsNWidgets(3));
+    expect(componentIdFinder, findsNWidgets(2));
     expect(componentIdFinder60, findsOneWidget);
   });
 
@@ -67,7 +67,7 @@ void main() {
     // Create the Finders.
     final componentIdFactoryFinder = find.text('60');
 
-    expect(componentIdFinder, findsNWidgets(3));
+    expect(componentIdFinder, findsNWidgets(2));
     expect(componentScopedIdFinder, findsOneWidget);
     expect(componentIdFactoryFinder, findsOneWidget);
   });
@@ -90,7 +90,7 @@ void main() {
     final componentIdFactoryFinder = find.text('60');
     final componentScopedFinder = find.text('30');
 
-    expect(componentSingleIdFinder, findsNWidgets(2));
+    expect(componentSingleIdFinder, findsNWidgets(1));
     expect(componentBSingleFinder, findsOneWidget);
     expect(componentIdFactoryFinder, findsOneWidget);
     expect(componentScopedFinder, findsOneWidget);

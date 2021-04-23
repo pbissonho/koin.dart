@@ -22,9 +22,9 @@ final myModule = Module()
 
 ## Injecting with values
 
-In contrary to resolved dependencies (resolved with with `get()` or `inject`), injection parameter are passed through the resolution API with parameter.
+In contrary to resolved dependencies (resolved with with `get()`), injection parameter are passed through the resolution API with parameter.
 
-For that it will be necessary to use `geWithParam()` or `injectWithParam()`.
+For that it will be necessary to use `geWithParam()`.
 
 ```dart
 class MyApp with KoinComponentMixin {

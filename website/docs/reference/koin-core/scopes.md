@@ -117,7 +117,7 @@ A scope instance can be created with as follow: `var scope = koin.createScope(id
 
 To resolve a dependency using the scope we can do it like:
 
-* `var presenter = scope.get<Presenter>()` - directly using the get/inject functions from the scope instance
+* `var presenter = scope.get<Presenter>()` - directly using the get functions from the scope instance
 
 ### Create & retrieve a scope
 

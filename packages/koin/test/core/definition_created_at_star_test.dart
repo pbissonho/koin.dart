@@ -14,7 +14,7 @@ void main() {
     });
 
     var defA = app.getBeanDefinition(ComponentA);
-    expect(true, defA.options.isCreatedAtStart);
+    expect(true, defA?.options.isCreatedAtStart);
 
     var instanceFactory = app.getInstanceFactory(ComponentA);
     expect(false, (instanceFactory as SingleInstanceFactory).created);
@@ -27,7 +27,7 @@ void main() {
     });
 
     var defA = app.getBeanDefinition(ComponentA);
-    expect(true, defA.options.isCreatedAtStart);
+    expect(true, defA?.options.isCreatedAtStart);
     var instanceFactory = app.getInstanceFactory(ComponentA);
     expect(true, (instanceFactory as SingleInstanceFactory).created);
 
@@ -40,7 +40,7 @@ void main() {
     });
 
     var defA = app.getBeanDefinition(ComponentA);
-    expect(false, defA.options.isCreatedAtStart);
+    expect(false, defA?.options.isCreatedAtStart);
 
     var instanceFactory = app.getInstanceFactory(ComponentA);
     expect(false, (instanceFactory as SingleInstanceFactory).created);

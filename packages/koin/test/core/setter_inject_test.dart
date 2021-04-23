@@ -10,8 +10,8 @@ class D {}
 class G {}
 
 class A extends KoinComponent {
-  B b;
-  C c;
+  late B b;
+  late C c;
 }
 
 class BofA {
@@ -32,18 +32,4 @@ class CofW {
   CofW(this.g);
 }
 
-
-
-class AInj extends KoinComponent {
-  Lazy<B> b;
-  Lazy<C> c;
-
-  AInj() {
-    b = inject();
-    c = inject();
-  }
-}
-
-void main() {
-  
-}
+void main() {}

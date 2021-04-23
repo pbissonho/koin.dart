@@ -14,15 +14,6 @@
  * limitations under the License.
  * */
 
-//
-// Koin Loggers
-//
-// @author - Arnaud GIULIANI
-//
-// Ported to Dart from Kotlin by:
-// @author - Pedro Bissonho
-//
-
 const koinTage = '[Koin]';
 
 enum Level { info, error, debug, none }
@@ -30,16 +21,20 @@ enum Level { info, error, debug, none }
 /// Koin has a simple logging API to log any Koin activity
 /// (allocation, lookup ...) Koin proposes some implementation of logging,
 /// in function of the target platform:
+///
 /// * `PrintLogger` - directly log into console (included in `koin-core`)
 /// * `EmptyLogger` - log nothing (included in `koin-core`)
+///
 /// ## Set logging at start
+///
 /// By default Koin use the `EmptyLogger`. You can use directly
 /// the `PrintLogger` as following:
+///
 /// ```dart
 /// startKoin((app){
 ///    app.printLogger(level: Level.info);
 ///  });
-///```
+/// ```
 abstract class Logger {
   final Level level;
 
@@ -58,7 +53,7 @@ abstract class Logger {
   factory Logger.empty(Level level) => _EmptyLogger(level);
   factory Logger.print(Level level) => _PrintLogger(level);
 
-  void debug(String msg, {Level level}) {
+  void debug(String msg) {
     log(Level.debug, msg);
   }
 
@@ -102,7 +97,7 @@ class _PrintLogger extends Logger {
     print('[${parse(level)}] $koinTage $msg');
   }
 
-  String parse(Object enumItem) {
+  String parse(Object? enumItem) {
     if (enumItem == null) return 'LogLevel';
     return enumItem.toString().split('.')[1];
   }

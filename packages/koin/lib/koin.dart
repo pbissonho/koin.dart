@@ -4,7 +4,6 @@ export 'src/context/context_functions.dart';
 export 'src/scope/scope.dart' show ScopeCallback;
 
 export 'src/module.dart';
-export 'src/lazy.dart';
 export 'src/logger.dart';
 
 export 'src/qualifier.dart';

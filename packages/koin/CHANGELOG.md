@@ -1,4 +1,11 @@
 
+## 0.15.0-nullsafety.0 
+
+- Fix analysis issues
+- BREAKING: Migrate to null-safety
+- BREAKING: "inject" removed.
+
+
 ## 0.14.2
 
 - Fix pub analysis issues

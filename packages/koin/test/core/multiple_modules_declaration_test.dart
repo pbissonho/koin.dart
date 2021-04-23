@@ -29,10 +29,6 @@ void main() {
     var a = koin.get<ComponentA>();
     var b = koin.get<ComponentB>();
 
-    var aInject = koin.inject<ComponentA>();
-    var bInject = koin.inject<ComponentB>();
-
     expect(a, b.a);
-    expect(aInject(), bInject().a);
   });
 }

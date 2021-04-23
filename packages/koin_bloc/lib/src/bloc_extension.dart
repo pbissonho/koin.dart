@@ -4,34 +4,41 @@ import 'package:koin/extension.dart';
 import 'package:koin/internals.dart';
 
 extension BlocModuleExtension on Module {
-  /// Defines a [Cubit] as [single] provider that will be automatically closed.
-  /// The `close` method of the [Cubit] created by the [create] will be called when the global context of the koin is finalized.
+  /// Defines a [BlocBase] as [single] provider that will be automatically closed.
+  /// The `close` method of the [BlocBase] created by the [create] will be called when the global context of the koin is finalized.
   ///
   ///
-  /// Define the Cubit:
+  /// Define the Cubit or Bloc:
   /// ```
-  /// var myModule = Module()..cubit((s) => MyCubit());
+  /// final myModule = Module()..bloc((s) => MyBloc());
+  ///
+  ///
+  /// or
+  ///
+  /// final myModule = Module()..bloc((s) => MyCubit());
+  ///
   /// ```
   ///
-  ProviderDefinition<T> cubit<T extends Cubit>(
+  ProviderDefinition<T> bloc<T extends BlocBase>(
     ProviderCreate<T> create, {
-    Qualifier qualifier,
+    Qualifier? qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
-    var providerDefinition = single<T>(create,
+    final providerDefinition = single<T>(create,
         qualifier: qualifier,
         createdAtStart: createdAtStart,
         override: override);
 
-    providerDefinition.onClose((cubit) => cubit.close());
+    providerDefinition.onClose((cubit) => cubit.close(),
+        onDisposeUnitialized: () {});
     return providerDefinition;
   }
 
   /// Declare in a simplified way a scope that has
-  /// only one a Cubit by [create].
+  /// only one a BlocBase by [create].
 
-  /// Declare a Cubit scoped provider [T] for scope [TScope].
+  /// Declare a BlocBase scoped provider [T] for scope [TScope].
   /// Declare and define a scoped with just one line.
 
   ///
@@ -44,11 +51,11 @@ extension BlocModuleExtension on Module {
   ///```
   /// Declare a scope and define a scoped provider with just one line:
   ///```
-  /// Module()..scopeOneCubit<LoginCubit, MyScope>((s) => LoginCubit());
+  /// Module()..scopeOneBloc<LoginCubit, MyScope>((s) => LoginCubit());
   ///```
-  ProviderDefinition<T> scopeOneCubit<T extends Cubit, TScope>(
+  ProviderDefinition<T> scopeOneBloc<T extends BlocBase, TScope>(
     ProviderCreate<T> create, {
-    Qualifier qualifier,
+    Qualifier? qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
@@ -56,32 +63,34 @@ extension BlocModuleExtension on Module {
         qualifier: qualifier,
         createdAtStart: createdAtStart,
         override: override);
-    providerDefinition.onClose((cubit) => cubit.close());
+    providerDefinition.onClose((bloc) => bloc.close(),
+        onDisposeUnitialized: () {});
     return providerDefinition;
   }
 }
 
 extension ScopeSetCubitExtension on ScopeDSL {
-  /// Defines a Cubit as scoped provider that will be automatically closed when the scope is closed.
-  /// The `close` method of the Cubit instance created by the [create] will be called when the scope is closed.
+  /// Defines a BlocBase as scoped provider that will be automatically closed when the scope is closed.
+  /// The `close` method of the BlocBase instance created by the [create] will be called when the scope is closed.
   ///
-  ///Defines the Cubit for a scope:
+  ///Defines the BlocBase for a scope:
   ///```
-  ///var blocModule = Module()
+  ///final blocModule = Module()
   /// ..scope<ScopeWidget>((scope) {
-  ///   scope.scopedCubit<LoginCubit>((s) => LoginCubit());
+  ///   scope.scopedBloc<LoginCubit>((s) => LoginCubit());
   /// });
   ///```
-  ProviderDefinition<T> scopedCubit<T extends Cubit>(
+  ProviderDefinition<T> scopedBloc<T extends BlocBase>(
     ProviderCreate<T> create, {
-    Qualifier qualifier,
+    Qualifier? qualifier,
     bool createdAtStart = false,
     bool override = false,
   }) {
-    var beanDefinition =
+    final providerDefinition =
         scoped<T>(create, qualifier: qualifier, override: override);
 
-    beanDefinition.onClose((bloc) => bloc.close());
-    return beanDefinition;
+    providerDefinition.onClose((bloc) => bloc.close(),
+        onDisposeUnitialized: () {});
+    return providerDefinition;
   }
 }

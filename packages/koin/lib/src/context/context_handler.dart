@@ -19,11 +19,10 @@ import '../koin_application.dart';
 import '../koin_dart.dart';
 import 'context.dart';
 
-///
+//ignore: avoid_classes_with_only_static_members
 /// Help hold any implementation of KoinContext
-///
 class KoinContextHandler {
-  static KoinContext _context;
+  static KoinContext? _context;
 
   ////
   ///Retrieve current KoinContext
@@ -33,7 +32,7 @@ class KoinContextHandler {
       throw IllegalStateException('''
 No Koin Context configured. Please use startKoin or koinApplication DSL. ''');
     }
-    return _context;
+    return _context!;
   }
 
   ////
@@ -44,7 +43,7 @@ No Koin Context configured. Please use startKoin or koinApplication DSL. ''');
   ///
   /// Retrieve current KoinContext or null
   ///
-  static Koin getOrNull() => _context?.getOrNull();
+  static Koin? getOrNull() => _context?.getOrNull();
 
   ///
   ///Register new KoinContext

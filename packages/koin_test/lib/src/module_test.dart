@@ -9,14 +9,14 @@ import 'check/check_modules.dart';
 void testKoinDeclaration(
   String description,
   Function(KoinApplication app) appDeclaration, {
-  Level level,
-  CheckParameters checkParameters,
-  String testOn,
-  Timeout timeout,
-  dynamic skip,
-  dynamic tags,
-  Map<String, dynamic> onPlatform,
-  int retry,
+  Level level = Level.none,
+  CheckParameters? checkParameters,
+  String? testOn,
+  Timeout? timeout,
+  dynamic? skip,
+  dynamic? tags,
+  Map<String, dynamic>? onPlatform,
+  int? retry,
 }) {
   test(description, () {
     checkModules(level, checkParameters, appDeclaration);
@@ -31,16 +31,15 @@ void testKoinDeclaration(
 
 @isTest
 void testModules(String description, List<Module> modules,
-    {Level level,
-    CheckParameters checkParameters,
-    String testOn,
-    Timeout timeout,
+    {Level level = Level.none,
+    CheckParameters? checkParameters,
+    String? testOn,
+    Timeout? timeout,
     dynamic skip,
     dynamic tags,
-    Map<String, dynamic> onPlatform,
-    int retry}) {
+    Map<String, dynamic>? onPlatform,
+    int? retry}) {
   test(description, () {
-    checkParameters ??= CheckParameters();
     checkModules(level, checkParameters, (app) {
       app.modules(modules);
     });
@@ -55,16 +54,15 @@ void testModules(String description, List<Module> modules,
 
 @isTest
 void testModule(String description, Module module,
-    {Level level,
-    CheckParameters checkParameters,
-    String testOn,
-    Timeout timeout,
+    {Level level = Level.none,
+    CheckParameters? checkParameters,
+    String? testOn,
+    Timeout? timeout,
     dynamic skip,
     dynamic tags,
-    Map<String, dynamic> onPlatform,
-    int retry}) {
+    Map<String, dynamic>? onPlatform,
+    int? retry}) {
   test(description, () {
-    checkParameters ??= CheckParameters();
     checkModules(level, checkParameters, (app) {
       app.module(module);
     });

@@ -38,16 +38,14 @@ class HomePageWithParams extends StatefulWidget {
 
 class _HomePageWithParamsState extends State<HomePageWithParams>
     with ScopeStateMixin {
-  Component componentSingle;
-  ComponentB componentBSingle;
-  Lazy<Component> lazyComponent;
-  Component componentScoped;
-  Component componentFactory;
+  late Component componentSingle;
+  late ComponentBInterface componentBSingle;
+  late Component componentScoped;
+  late Component componentFactory;
 
   @override
   void initState() {
     componentSingle = getWithParam<Component, int>(1);
-    lazyComponent = injectWithParam<Component, int>(1);
     componentBSingle = bindWithParam<ComponentBInterface, ComponentB, int>(10);
     componentScoped = currentScope.getWithParam<Component, int>(30);
     componentFactory =
@@ -60,9 +58,8 @@ class _HomePageWithParamsState extends State<HomePageWithParams>
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Text("${lazyComponent().id.toString()}"),
           Text("${componentSingle.id.toString()}"),
-          Text("${componentBSingle.id.toString()}"),
+          Text("${componentBSingle.testId().toString()}"),
           Text("${componentScoped.id.toString()}"),
           Text("${componentFactory.id.toString()}"),
         ],
@@ -72,16 +69,14 @@ class _HomePageWithParamsState extends State<HomePageWithParams>
 }
 
 class _HomePageState extends State<HomePage> with ScopeStateMixin {
-  Component component;
-  ComponentInterface componentBind;
-  Lazy<Component> lazyComponent;
-  Component componentScoped;
-  Component componentFactory;
+  late Component component;
+  late ComponentInterface componentBind;
+  late Component componentScoped;
+  late Component componentFactory;
 
   @override
   void initState() {
     componentBind = bind<ComponentInterface, Component>();
-    lazyComponent = inject<Component>();
     component = get<Component>();
     componentScoped = currentScope.get<Component>();
     componentFactory =
@@ -95,7 +90,6 @@ class _HomePageState extends State<HomePage> with ScopeStateMixin {
       body: Column(
         children: <Widget>[
           Text("${componentBind.testId().toString()}"),
-          Text("${lazyComponent().id.toString()}"),
           Text("${component.id.toString()}"),
           Text("${componentScoped.id.toString()}"),
           Text("${componentFactory.id.toString()}"),
@@ -119,11 +113,10 @@ class HomePage3 extends StatefulWidget {
 }
 
 class _HomePageState3 extends State<HomePage3> {
-  Component component;
-  ComponentInterface componentBind;
-  Lazy<Component> lazyComponent;
-  Component componentScoped;
-  Component componentFactory;
+  late Component component;
+  late ComponentInterface componentBind;
+  late Component componentScoped;
+  late Component componentFactory;
 
   @override
   void initState() {
@@ -132,7 +125,6 @@ class _HomePageState3 extends State<HomePage3> {
     componentScoped = scopeContext.get<Component>();
     componentFactory =
         getWithParam<Component, int>(60, qualifier: named("Fac"));
-    lazyComponent = inject<Component>();
     super.initState();
   }
 
@@ -142,7 +134,6 @@ class _HomePageState3 extends State<HomePage3> {
       body: Column(
         children: <Widget>[
           Text("${componentBind.testId().toString()}"),
-          Text("${lazyComponent().id.toString()}"),
           Text("${component.id.toString()}"),
           Text("${componentScoped.id.toString()}"),
           Text("${componentFactory.id.toString()}"),
@@ -164,7 +155,6 @@ class HomePageStateless extends StatelessWidget {
         getWithParam<Component, int>(60, qualifier: named('Fac')).id.toString();
     final bindResult =
         bind<ComponentInterface, Component>().testId().toString();
-    final injectResult = inject<Component>().value.id.toString();
     final getResult = get<Component>().id.toString();
 
     return Scaffold(
@@ -172,7 +162,6 @@ class HomePageStateless extends StatelessWidget {
         children: <Widget>[
           Text("$getWithParamResult"),
           Text("$bindResult"),
-          Text("$injectResult"),
           Text(getResult),
         ],
       ),

@@ -20,17 +20,18 @@ import '../scope/scope_definition.dart';
 import 'definition.dart';
 
 class Callback<T> {
-  final void Function(T value) _callBack;
+  final void Function(T value) callback;
+  final void Function() callbackForUninitializedValue;
 
-  bool hasCallback() => _callBack != null;
-
+  const Callback(
+      {required this.callbackForUninitializedValue, required this.callback});
   void runCallback(T value) {
-    if (hasCallback()) {
-      _callBack(value);
-    }
+    callback(value);
   }
 
-  Callback({Function(T value) callback}) : _callBack = callback;
+  void runCallbackUninitializedValue() {
+    callbackForUninitializedValue();
+  }
 }
 
 enum Kind {
@@ -48,44 +49,35 @@ class Options {
 ///
 /// Koin bean definition
 /// main structure to make definition in Koin
-// @author - Arnaud GIULIANI
-//
-// Ported to Dart from Kotlin by:
-// @author - Pedro Bissonho
 class ProviderDefinition<T> {
   final ScopeDefinition scopeDefinition;
   final Type primaryType;
-  final Qualifier qualifier;
+  final Qualifier? qualifier;
   final ProviderCreateBase<T> definition;
   final Kind kind;
-  List<Type> secondaryTypes;
+  final List<Type> secondaryTypes;
   final Options options;
-  Callback<T> onDispose;
+  late final Callback<T> onDispose;
 
   ProviderDefinition(
-      {this.scopeDefinition,
-      this.primaryType,
-      this.qualifier,
-      this.definition,
-      this.kind,
+      {required this.scopeDefinition,
+      required this.primaryType,
+      required this.qualifier,
+      required this.definition,
+      required this.kind,
       this.options = const Options(),
-      Callback<T> onDispose,
-      List<Type> secondaryTypes}) {
-    if (secondaryTypes == null) {
-      this.secondaryTypes = <Type>[];
-    } else {
-      this.secondaryTypes = secondaryTypes;
-    }
-
+      Callback<T>? onDispose,
+      this.secondaryTypes = const <Type>[]}) {
     if (onDispose == null) {
-      this.onDispose = Callback<T>();
+      this.onDispose = Callback<T>(
+          callbackForUninitializedValue: () {}, callback: (value) {});
     } else {
       this.onDispose = onDispose;
     }
   }
 
   ProviderDefinition<T> copy(
-      {List<Type> secondaryTypes, Callback<T> onDispose}) {
+      {List<Type>? secondaryTypes, Callback<T>? onDispose}) {
     var newSecondaryTypes;
     var onDisposeCopy;
 
@@ -114,17 +106,17 @@ class ProviderDefinition<T> {
 
   @override
   String toString() {
-    var defKind = kind.toString();
-    var defType = "'${primaryType.toString()}'";
+    final defKind = kind.toString();
+    final defType = "'${primaryType.toString()}'";
 
-    var defName = qualifier != null ? 'qualifier:$qualifier' : '';
-    var defScope =
+    final defName = qualifier != null ? 'qualifier:$qualifier' : '';
+    final defScope =
         scopeDefinition.isRoot ? '' : 'scope:${scopeDefinition.qualifier}';
 
-    var defOtherTypes;
+    late final defOtherTypes;
 
     if (secondaryTypes.isNotEmpty) {
-      var typesAsString =
+      final typesAsString =
           secondaryTypes.map((type) => type.toString()).join(',').toString();
       defOtherTypes = 'binds:$typesAsString';
     } else {
@@ -138,7 +130,7 @@ class ProviderDefinition<T> {
     return primaryType == type || secondaryTypes.contains(type);
   }
 
-  bool isIt(Type type, Qualifier qualifier, ScopeDefinition scopeDefinition) {
+  bool isIt(Type type, Qualifier? qualifier, ScopeDefinition scopeDefinition) {
     return hasType(type) &&
         qualifier == this.qualifier &&
         this.scopeDefinition == scopeDefinition;
@@ -152,10 +144,10 @@ class ProviderDefinition<T> {
   /// Definition Binding
   ///
   ProviderDefinition bind<S>() {
-    var newTypes = List<Type>.from([S]);
+    final newTypes = List<Type>.from([S]);
     newTypes.addAll(secondaryTypes);
 
-    var copyT = copy(secondaryTypes: newTypes);
+    final copyT = copy(secondaryTypes: newTypes);
     scopeDefinition.remove(this);
     scopeDefinition.save(copyT);
     return copyT;
@@ -167,7 +159,7 @@ class ProviderDefinition<T> {
   ProviderDefinition binds(List<Type> types) {
     types.addAll(secondaryTypes);
 
-    var copyT = copy(secondaryTypes: types);
+    final copyT = copy(secondaryTypes: types);
     scopeDefinition.remove(this);
     scopeDefinition.save(copyT);
     return copyT;
@@ -175,8 +167,12 @@ class ProviderDefinition<T> {
 
   ///
   /// OnCloseCallback is called when definition is closed.
-  ProviderDefinition<T> onClose(void Function(T value) onDispose) {
-    var scopeDefinitionCopy = copy(onDispose: Callback(callback: onDispose));
+  ProviderDefinition<T> onClose(void Function(T value) onDispose,
+      {required void Function() onDisposeUnitialized}) {
+    final scopeDefinitionCopy = copy(
+        onDispose: Callback(
+            callback: onDispose,
+            callbackForUninitializedValue: onDisposeUnitialized));
     scopeDefinition.remove(this);
     scopeDefinition.save(scopeDefinitionCopy);
     return scopeDefinitionCopy;
@@ -198,9 +194,9 @@ class ProviderDefinition<T> {
 ///
 /// Converte the 'type' and 'qualifier'
 ///
-String indexKey(Type type, Qualifier qualifier) {
+String indexKey(Type type, Qualifier? qualifier) {
   if (qualifier?.value != null) {
-    return '${type.toString()}::${qualifier.value}';
+    return '${type.toString()}::${qualifier?.value}';
   } else {
     return type.toString();
   }

@@ -4,7 +4,7 @@ import 'package:koin_flutter/koin_bloc.dart';
 import 'pages.dart';
 
 final testModule1 = Module()
-  ..bloc((s) => Bloc())
+  ..disposable((s) => Bloc())
   ..scope<ScopeWidget>((scope) {
     scope.scopedDisposable<Bloc>((s) => Bloc());
   });
@@ -16,5 +16,5 @@ final testModule2 = Module()
 final testModule3 = Module()
   ..disposable((s) => Bloc())
   ..scope<UseScopeExtensionWidget>((scope) {
-    scope.scopedBloc<Bloc>((s) => Bloc());
+    scope.scopedDisposable<Bloc>((s) => Bloc());
   });

@@ -105,6 +105,5 @@ class MyHomePage extends StatelessWidget {
 }
 ```
 
-> The `by inject()` function allows us to retrieve lazy Koin instances
 > The `get()` function is here to retrieve directly an instance (non lazy)
 
