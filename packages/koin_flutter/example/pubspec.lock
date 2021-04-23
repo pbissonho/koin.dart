@@ -70,17 +70,17 @@ packages:
   koin:
     dependency: transitive
     description:
-      path: "../../koin"
-      relative: true
-    source: path
-    version: "0.14.2"
+      name: koin
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.15.0-nullsafety.0"
   koin_flutter:
     dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
-    version: "0.10.0"
+    version: "0.11.0-nullsafety.0"
   kt_dart:
     dependency: transitive
     description:

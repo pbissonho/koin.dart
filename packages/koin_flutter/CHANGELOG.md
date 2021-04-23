@@ -1,3 +1,10 @@
+
+## 0.11.0-nullsafety.0 
+
+- Fix analysis issues
+- BREAKING: Migrate to null-safety
+- BREAKING: "inject" removed.
+
 ## 0.10.0
 
 - Added ScopeProvider to allow passing a scope down the widget tree
