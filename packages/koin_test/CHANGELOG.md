@@ -1,3 +1,10 @@
+
+## 0.13.0-nullsafety.0 
+
+- Fix analysis issues
+- BREAKING: Migrate to null-safety
+- BREAKING: "inject" removed.
+
 ## 0.12.1
 
 - Update dependencies
