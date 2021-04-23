@@ -53,7 +53,7 @@ class KoinDevTools extends StatelessWidget {
 class _ScopesListWidget extends StatelessWidget {
   final Map<String, ScopeWidgetContext> scopes;
 
-  const _ScopesListWidget({Key key, this.scopes}) : super(key: key);
+  const _ScopesListWidget({Key? key, required this.scopes}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,7 @@ class _ScopesListWidget extends StatelessWidget {
 class _ScopeCard extends StatefulWidget {
   final ScopeWidgetContext scopeContext;
 
-  const _ScopeCard({Key key, this.scopeContext}) : super(key: key);
+  const _ScopeCard({Key? key, required this.scopeContext}) : super(key: key);
 
   @override
   _ScopeCardState createState() => _ScopeCardState();
@@ -104,6 +104,7 @@ class _ScopeCardState extends State<_ScopeCard> {
                   tapBodyToCollapse: false,
                   hasIcon: false,
                 ),
+                collapsed: Text("Collapased"),
                 header: Container(
                   color: Colors.indigoAccent,
                   child: Padding(
@@ -127,7 +128,7 @@ class _ScopeCardState extends State<_ScopeCard> {
                             '${widget.scopeContext.widgetScopeSource?.runtimeType ?? ''}  Id:${widget.scopeContext.scope.id.toString()}',
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1
+                                .bodyText1!
                                 .copyWith(color: Colors.white),
                           ),
                         ),
@@ -182,7 +183,8 @@ class _FactoryViewer {
 class _InstanceWidget extends StatelessWidget {
   final _FactoryViewer instanceViewer;
 
-  const _InstanceWidget({Key key, this.instanceViewer}) : super(key: key);
+  const _InstanceWidget({Key? key, required this.instanceViewer})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
