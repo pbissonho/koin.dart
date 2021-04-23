@@ -5,7 +5,7 @@ import 'src/advanced_counter_example.dart';
 
 void main() {
   startKoin((app) {
-    app.printLogger(level: Level.debug);
+    app.printLogger(level: Level.info);
     app.module(homeModule);
   });
   runApp(MyApp());

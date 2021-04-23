@@ -51,7 +51,7 @@ class Module {
   ///
   /// Class Typed Scope
   ///
-  void scope<T>(Function(ScopeDSL dsl) makeScope) {
+  void scope<T>(void Function(ScopeDSL dsl) makeScope) {
     var scopeDefinition = ScopeDefinition(TypeQualifier(T), isRoot: false);
     var scopeCreated = ScopeDSL(scopeDefinition);
     makeScope(scopeCreated);
