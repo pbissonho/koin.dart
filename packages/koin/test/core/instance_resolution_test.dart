@@ -100,4 +100,16 @@ void main() {
     expect(component, isA<Component1>());
     expect(koin.get<ComponentInterface1>(named('2')), isA<Component2>());
   });
+
+  test('can resolve nullable type', () {
+    var koin = koinApplication((app) {
+      app.module(
+        module()..single<String>((scope) => 'test_string'),
+      );
+    }).koin;
+
+    // ignore: omit_local_variable_types
+    String? variable = koin.get();
+    expect(variable, equals('test_string'));
+  });
 }

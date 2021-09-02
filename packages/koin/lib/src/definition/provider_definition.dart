@@ -195,9 +195,14 @@ class ProviderDefinition<T> {
 /// Converte the 'type' and 'qualifier'
 ///
 String indexKey(Type type, Qualifier? qualifier) {
+  var typeString = type.toString();
+  if (typeString.endsWith('?')) {
+    typeString = typeString.substring(0, typeString.length - 1);
+  }
+
   if (qualifier?.value != null) {
-    return '${type.toString()}::${qualifier?.value}';
+    return '$typeString::${qualifier?.value}';
   } else {
-    return type.toString();
+    return typeString;
   }
 }
