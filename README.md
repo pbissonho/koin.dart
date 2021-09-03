@@ -76,12 +76,10 @@ It is not a state manager. Koin does not have any type of state management, use 
 
 * [Quick Start](#Quick-Start)
 * [Setup](#setup)
-* [Getting Started](http://koindart.dev/docs/start/getting-started/starting-koin)
-* [Documentation References](http://koindart.dev/docs/reference/koin-core/definitions)
+* [Getting Started](https://pbissonho.github.io/docs/start/getting-started/starting-koin)
+* [Documentation References](https://pbissonho.github.io/docs/reference/koin-core/definitions)
 * [Examples](#Examples)
 
-
-Alternative link to documentation: (Link)(https://pbissonho.github.io/)
 
  
 ## Roadmap
