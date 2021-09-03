@@ -81,6 +81,9 @@ It is not a state manager. Koin does not have any type of state management, use 
 * [Examples](#Examples)
 
 
+Alternative link to documentation: (Link)(https://pbissonho.github.io/)
+
+ 
 ## Roadmap
 
 * Improve documentation
