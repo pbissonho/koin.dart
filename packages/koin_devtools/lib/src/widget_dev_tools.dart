@@ -9,7 +9,7 @@ class _DevTools {
   static Map<String, ScopeWidgetContext> koinContextScopes() {
     final scopesMap = <String, ScopeWidgetContext>{};
     scopesMap['Root'] = ScopeWidgetContext(
-      null,
+      KoinDebugDefaultWidget(),
       KoinContextHandler.get().scopeRegistry.rootScope,
     );
     scopesMap
@@ -88,6 +88,9 @@ class _ScopeCardState extends State<_ScopeCard> {
       views.add(_FactoryViewer(instanceFactory, widget.scopeContext.scope));
     });
 
+    final widgetType = widget.scopeContext.widgetScopeSource.runtimeType.toString();
+    final widgetName = widgetType == "KoinDebugDefaultWidget" ? "" : widgetType;
+
     return ExpandableNotifier(
         child: Padding(
       padding: EdgeInsets.all(10),
@@ -125,7 +128,7 @@ class _ScopeCardState extends State<_ScopeCard> {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            '${widget.scopeContext.widgetScopeSource?.runtimeType ?? ''}  Id:${widget.scopeContext.scope.id.toString()}',
+                            '${widgetName}  Id:${widget.scopeContext.scope.id.toString()}',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1!
@@ -220,4 +223,11 @@ Future<void> _showFactoryViewerDialog(
           ],
         );
       });
+}
+
+class KoinDebugDefaultWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }
