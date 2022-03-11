@@ -1,6 +1,6 @@
 name: koin_devtools
 description:  DevTools to inspect the state of Koin.dart scope instances.
-version: 0.2.2
+version: 0.2.3
 homepage: https://github.com/pbissonho/koin.dart
 
 environment:
